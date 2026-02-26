@@ -1,0 +1,16 @@
+{
+  "id": "egyptian_ancient_solar",
+  "title": "Egyptian Ancient Solar Calendar",
+  "version": "1.0.0",
+  "updatedAt": "2026-02-25",
+  "source": "12x30 civil months + 5 epagomenal days model.",
+  "status": "phase1_foundation",
+  "wheel": {
+    "type": "civil_12x30_plus_5",
+    "segments": 13
+  },
+  "domains": ["astrological", "semiotic", "symbolic"],
+  "notes": [
+    "Phase 1 applies deterministic civil cycle mapping from Gregorian year day."
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2026-02-25",
+  "categories": [
+    {
+      "id": "calendars",
+      "label": "Calendars",
+      "path": "src/data/datasets/calendars",
+      "datasets": [
+        "panchanga",
+        "buddhist",
+        "jewish",
+        "islamic",
+        "chinese",
+        "sambraielic",
+        "egyptian_ancient_solar",
+        "athenian_lunar",
+        "mayan"
+      ]
+    },
+    {
+      "id": "astrology",
+      "label": "Astrology",
+      "path": "src/data/datasets/astrology",
+      "datasets": ["symbolic_overlays"]
+    },
+    {
+      "id": "linguistics",
+      "label": "Linguistics",
+      "path": "src/data/datasets/linguistics",
+      "datasets": ["script_families","alphabet_index"]
+    },
+    {
+      "id": "semiotics",
+      "label": "Semiotics",
+      "path": "src/data/datasets/semiotics",
+      "datasets": ["symbol_taxonomy"]
+    }
+  ]
+}

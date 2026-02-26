@@ -1,0 +1,17 @@
+{
+  "id": "islamic",
+  "title": "Islamic (Hijri) Calendar",
+  "version": "1.0.0",
+  "updatedAt": "2026-02-25",
+  "source": "Umm al-Qura style display conversion via Intl calendar formatting.",
+  "status": "phase1_foundation",
+  "wheel": {
+    "type": "hijri_month_cycle",
+    "segments": 12
+  },
+  "domains": ["astrological", "symbolic", "cultural"],
+  "notes": [
+    "Phase 1 supports date conversion and month-cycle wheel.",
+    "Regional sighting differences are noted as metadata, not forced."
+  ]
+}

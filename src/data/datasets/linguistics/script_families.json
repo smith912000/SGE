@@ -1,0 +1,16 @@
+{
+  "id": "script_families",
+  "title": "Script Families and Lineages",
+  "version": "1.0.0",
+  "updatedAt": "2026-02-25",
+  "source": "Internal grammatical/linguistic taxonomy.",
+  "status": "phase1_foundation",
+  "domains": ["linguistic", "semiotic"],
+  "notes": [
+    "Stores script family metadata for crosswalk and grammatology sections.",
+    "Extended mappings are maintained in existing grammatology data modules."
+  ]
+  ,
+  "unicodeScriptsFile": "unicode_scripts.json",
+  "unicodeScriptsNote": "Run scripts/fetch_unicode_scripts.js to refresh from unicode.org/Public/UNIDATA/Scripts.txt"
+}

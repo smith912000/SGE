@@ -1,0 +1,16 @@
+{
+  "id": "buddhist",
+  "title": "Buddhist Calendar",
+  "version": "1.0.0",
+  "updatedAt": "2026-02-25",
+  "source": "Thai Buddhist Era conversion baseline (BE = CE + 543).",
+  "status": "phase1_foundation",
+  "wheel": {
+    "type": "month_cycle",
+    "segments": 12
+  },
+  "domains": ["astrological", "symbolic", "cultural"],
+  "notes": [
+    "Phase 1 prioritizes robust date conversion and month-cycle visualization."
+  ]
+}

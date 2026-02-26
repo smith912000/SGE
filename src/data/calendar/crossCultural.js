@@ -1,0 +1,46 @@
+export const OGHAM_TREES = [
+  {day:2,  end:30,  tree:"Birch",   ogham:"ᚁ Beith",   animal:"White Stag",  colour:"White",       crystal:"Clear Quartz"},
+  {day:31, end:58,  tree:"Rowan",   ogham:"ᚂ Luis",     animal:"Dragon",      colour:"Red/Grey",    crystal:"Peridot"},
+  {day:59, end:86,  tree:"Ash",     ogham:"ᚃ Nion",     animal:"Adder",       colour:"Pale Green",  crystal:"Coral"},
+  {day:87, end:114, tree:"Alder",   ogham:"ᚄ Fearn",    animal:"Fox",         colour:"Crimson",     crystal:"Ruby"},
+  {day:115,end:142, tree:"Willow",  ogham:"ᚅ Saille",   animal:"Hare",        colour:"Silver",      crystal:"Moonstone"},
+  {day:143,end:170, tree:"Hawthorn",ogham:"ᚆ Huath",    animal:"Owl",         colour:"Purple",      crystal:"Lapis Lazuli"},
+  {day:171,end:198, tree:"Oak",     ogham:"ᚇ Duir",     animal:"Wren",        colour:"Black",       crystal:"Diamond"},
+  {day:199,end:226, tree:"Holly",   ogham:"ᚈ Tinne",    animal:"Unicorn",     colour:"Dark Grey",   crystal:"Red Carnelian"},
+  {day:227,end:254, tree:"Hazel",   ogham:"ᚉ Coll",     animal:"Salmon",      colour:"Brown",       crystal:"Amethyst"},
+  {day:255,end:282, tree:"Vine",    ogham:"ᚊ Muin",     animal:"Swan",        colour:"Variegated",  crystal:"Emerald"},
+  {day:283,end:310, tree:"Ivy",     ogham:"ᚋ Gort",     animal:"Butterfly",   colour:"Blue",        crystal:"Opal"},
+  {day:311,end:338, tree:"Reed",    ogham:"ᚌ Ngetal",   animal:"Hound",       colour:"Green",       crystal:"Jasper"},
+  {day:339,end:365, tree:"Elder",   ogham:"ᚍ Ruis",     animal:"Raven",       colour:"Blood Red",   crystal:"Jet"},
+];
+
+export const INDIGENOUS_ZODIAC = [
+  {day:1,   end:28,  animal:"Goose",      element:"Earth", clan:"Turtle",  plant:"Bramble",     stone:"Quartz",     wind:"North"},
+  {day:29,  end:58,  animal:"Otter",      element:"Air",   clan:"Butterfly",plant:"Fern",       stone:"Silver",     wind:"North-Northeast"},
+  {day:59,  end:88,  animal:"Wolf",       element:"Water", clan:"Frog",    plant:"Plantain",    stone:"Turquoise",  wind:"Northeast"},
+  {day:89,  end:118, animal:"Falcon",     element:"Fire",  clan:"Thunderbird",plant:"Dandelion",stone:"Fire Opal",  wind:"East"},
+  {day:119, end:149, animal:"Beaver",     element:"Earth", clan:"Turtle",  plant:"Blue Camas",  stone:"Chrysocolla", wind:"East-Southeast"},
+  {day:150, end:180, animal:"Deer",       element:"Air",   clan:"Butterfly",plant:"Mullein",    stone:"Moss Agate", wind:"Southeast"},
+  {day:181, end:212, animal:"Woodpecker", element:"Water", clan:"Frog",    plant:"Wild Rose",   stone:"Rose Quartz",wind:"South"},
+  {day:213, end:243, animal:"Salmon",     element:"Fire",  clan:"Thunderbird",plant:"Raspberry",stone:"Carnelian",  wind:"South-Southwest"},
+  {day:244, end:274, animal:"Bear",       element:"Earth", clan:"Turtle",  plant:"Violet",      stone:"Topaz",      wind:"Southwest"},
+  {day:275, end:304, animal:"Raven",      element:"Air",   clan:"Butterfly",plant:"Ivy",        stone:"Jasper",     wind:"West"},
+  {day:305, end:334, animal:"Snake",      element:"Water", clan:"Frog",    plant:"Thistle",     stone:"Malachite",  wind:"West-Northwest"},
+  {day:335, end:365, animal:"Owl",        element:"Fire",  clan:"Thunderbird",plant:"Mistletoe",stone:"Obsidian",   wind:"Northwest"},
+];
+
+export const CHINESE_SOLAR_ZODIAC = [
+  {day:1,   end:14,  animal:"Rat",     yin:"Yang",  wuxing:"Water"},
+  {day:15,  end:44,  animal:"Ox",      yin:"Yin",   wuxing:"Earth"},
+  {day:45,  end:74,  animal:"Tiger",   yin:"Yang",  wuxing:"Wood"},
+  {day:75,  end:104, animal:"Rabbit",  yin:"Yin",   wuxing:"Wood"},
+  {day:105, end:134, animal:"Dragon",  yin:"Yang",  wuxing:"Earth"},
+  {day:135, end:164, animal:"Snake",   yin:"Yin",   wuxing:"Fire"},
+  {day:165, end:194, animal:"Horse",   yin:"Yang",  wuxing:"Fire"},
+  {day:195, end:224, animal:"Goat",    yin:"Yin",   wuxing:"Earth"},
+  {day:225, end:254, animal:"Monkey",  yin:"Yang",  wuxing:"Metal"},
+  {day:255, end:284, animal:"Rooster", yin:"Yin",   wuxing:"Metal"},
+  {day:285, end:320, animal:"Dog",     yin:"Yang",  wuxing:"Earth"},
+  {day:321, end:350, animal:"Pig",     yin:"Yin",   wuxing:"Water"},
+  {day:351, end:365, animal:"Rat",     yin:"Yang",  wuxing:"Water"},
+];

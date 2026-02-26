@@ -1,0 +1,16 @@
+{
+  "id": "athenian_lunar",
+  "title": "Athenian Lunar Calendar",
+  "version": "1.0.0",
+  "updatedAt": "2026-02-25",
+  "source": "Hellenion reference model; lunation-based civic month scaffold.",
+  "status": "phase1_foundation",
+  "wheel": {
+    "type": "lunation_month_cycle",
+    "segments": 12
+  },
+  "domains": ["astrological", "symbolic", "historical"],
+  "notes": [
+    "Phase 1 provides a lunation-aligned month scaffold with transparent approximation."
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "jewish",
+  "title": "Jewish (Hebrew) Calendar",
+  "version": "1.0.0",
+  "updatedAt": "2026-02-25",
+  "source": "Hebrew calendar conversion via locale calendar formatting.",
+  "status": "phase1_foundation",
+  "wheel": {
+    "type": "hebrew_month_cycle",
+    "segments": 13
+  },
+  "domains": ["astrological", "linguistic", "semiotic", "symbolic"],
+  "notes": [
+    "Phase 1 uses month/day/year conversion and symbolic month-wheel.",
+    "Leap-month handling remains visible in display metadata."
+  ]
+}

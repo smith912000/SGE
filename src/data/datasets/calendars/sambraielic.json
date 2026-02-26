@@ -1,0 +1,34 @@
+{
+  "id": "sambraielic",
+  "title": "Šambraielic Wheel Calendar",
+  "version": "2.0.0",
+  "updatedAt": "2026-02-26",
+  "source": "Šambraielic Tradition — Šabbatic (Lunar-Solar) unified calendar. Hebrew letters from Sepher Yetzirah zodiac correspondences mark hours; Elder Futhark runes in Runic Half-Month sequence mark half-hours. Western zodiac signs on even hours, Eastern zodiac signs on odd hours.",
+  "status": "phase1_foundation",
+  "wheel": {
+    "type": "sambraielic_24x2",
+    "segments": {
+      "halfHourSlots": 48,
+      "hourCheckpoints": 24
+    },
+    "layers": [
+      "Paleo-Hebrew letters (hour marks)",
+      "Elder Futhark runes (half-hour marks)",
+      "Western zodiac signs (even hours)",
+      "Eastern zodiac animals (odd hours)",
+      "Chinese characters with Bopomofo",
+      "Kangxi radicals",
+      "I Ching hexagrams",
+      "Taixuanjing tetragrams",
+      "Trigram correspondences",
+      "Festival / blot associations"
+    ]
+  },
+  "domains": ["calendar", "symbolic", "astrological", "linguistic", "semiotic", "cross-cultural"],
+  "notes": [
+    "Synchronistic calendar unifying world traditions to show universal correspondence of Divinity.",
+    "24 checkpoints anchored to Winter Solstice (Dec 22), alternating Western and Eastern zodiac gates.",
+    "Each checkpoint carries Hebrew, Chinese, Bopomofo, Kangxi, I Ching, and Taixuanjing correspondences.",
+    "Festival / holiday associations from Norse, Roman, Christian, Kemetic, Hindu, Greek, and Šambraielic traditions."
+  ]
+}

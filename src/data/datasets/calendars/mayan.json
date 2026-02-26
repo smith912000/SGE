@@ -1,0 +1,20 @@
+{
+  "id": "mayan",
+  "title": "Mayan Calendar",
+  "version": "1.0.0",
+  "updatedAt": "2026-02-25",
+  "source": "Phase-1 scaffold for Tzolkin + Haab overlays.",
+  "status": "phase1_scaffold_low_priority",
+  "wheel": {
+    "type": "mayan_compact_cycle",
+    "segments": {
+      "tzolkin": 260,
+      "haab": 365
+    }
+  },
+  "domains": ["astrological", "symbolic", "semiotic"],
+  "notes": [
+    "Phase 1 uses deterministic cycle indexing from a fixed epoch.",
+    "Long Count and correlation constant tuning reserved for later phases."
+  ]
+}

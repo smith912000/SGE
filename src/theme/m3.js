@@ -1,0 +1,32 @@
+export const M3 = {
+  surfaceDim:        "#060410",
+  surface:           "#0c0a1a",
+  surfaceContainer:  "#12102a",
+  surfaceBright:     "#1a1735",
+  surfaceVariant:    "#1e1a3a",
+  outline:           "#7b6fa0",
+  outlineVariant:    "#9e95b7",
+  primary:           "#cbb4ff",
+  onPrimary:         "#1a004a",
+  primaryContainer:  "#3d1e72",
+  onPrimaryContainer:"#e9d8ff",
+  secondary:         "#c0aee0",
+  onSecondary:       "#2b1a52",
+  secondaryContainer:"#40286a",
+  tertiary:          "#f6c840",
+  tertiaryContainer: "#3a2900",
+  onSurface:         "#e8e0f6",
+  onSurfaceVariant:  "#c8c0dc",
+  error:             "#ffb4ab",
+
+  glass:             "rgba(18,16,42,0.72)",
+  glassBorder:       "rgba(155,135,200,0.12)",
+  glassHighlight:    "rgba(203,180,255,0.06)",
+
+  fontDisplay: "'Cinzel', serif",
+  fontBody:    "'Inter', 'Georgia', serif",
+  fontMono:    "'Share Tech Mono', monospace",
+
+  radius: { sm: 8, md: 12, lg: 16, xl: 24 },
+  sp:     [0, 4, 8, 12, 16, 20, 24, 32, 48],
+};

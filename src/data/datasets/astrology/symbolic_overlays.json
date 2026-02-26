@@ -1,0 +1,13 @@
+{
+  "id": "symbolic_overlays",
+  "title": "Cross-Calendar Symbolic Overlays",
+  "version": "1.0.0",
+  "updatedAt": "2026-02-25",
+  "source": "Internal harmonization layer across calendar systems.",
+  "status": "phase1_foundation",
+  "domains": ["astrological", "symbolic"],
+  "notes": [
+    "Used to annotate normalized calendar outputs with symbolic correspondences.",
+    "Compatible with future database migration using stable IDs."
+  ]
+}

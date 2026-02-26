@@ -1,0 +1,31 @@
+/* ─────────────────────────────────────────────────────────────
+   OGHAM DETAIL — Trees, Aicme groupings, meanings
+   ───────────────────────────────────────────────────────────── */
+export const OGHAM_FULL = [
+  { glyph:"ᚁ", name:"Beith", ipa:"b", tree:"Birch", animal:"White Stag", crystal:"Rock Crystal", color:"White", meaning:"New beginnings, purification, fresh starts", aicme:"Beithe", hebrew:"ב" },
+  { glyph:"ᚂ", name:"Luis", ipa:"l", tree:"Rowan", animal:"Unicorn", crystal:"Peridot", color:"Grey/Red", meaning:"Protection, vision, inner fire that guards against enchantment", aicme:"Beithe", hebrew:"ל" },
+  { glyph:"ᚃ", name:"Fearn", ipa:"w/v/f", tree:"Alder", animal:"Fox", crystal:"Ruby", color:"Crimson", meaning:"Guidance, oracular power, bridging water and land", aicme:"Beithe", hebrew:"ו" },
+  { glyph:"ᚄ", name:"Sail", ipa:"s", tree:"Willow", animal:"Hare", crystal:"Moonstone", color:"Silver", meaning:"Intuition, lunar rhythms, flexibility in the face of grief", aicme:"Beithe", hebrew:"ס/ש" },
+  { glyph:"ᚅ", name:"Nion", ipa:"n", tree:"Ash", animal:"Snake", crystal:"Lapis Lazuli", color:"Clear/Green", meaning:"World-tree, connection between realms, inner and outer linking", aicme:"Beithe", hebrew:"נ" },
+  { glyph:"ᚆ", name:"Uath", ipa:"h/j", tree:"Hawthorn", animal:"Goat", crystal:"Topaz", color:"Purple", meaning:"Cleansing, patience, the test before transformation", aicme:"hÚatha", hebrew:"י" },
+  { glyph:"ᚇ", name:"Dair", ipa:"d", tree:"Oak", animal:"Wren", crystal:"Diamond", color:"Black/Dark Brown", meaning:"Strength, endurance, the door to deeper knowledge", aicme:"hÚatha", hebrew:"ד" },
+  { glyph:"ᚈ", name:"Tinne", ipa:"t", tree:"Holly", animal:"War Horse", crystal:"Carnelian", color:"Dark Grey", meaning:"Best in the fight, balance of dark and light, warrior spirit", aicme:"hÚatha", hebrew:"ט/ת" },
+  { glyph:"ᚉ", name:"Coll", ipa:"k", tree:"Hazel", animal:"Salmon", crystal:"Amethyst", color:"Brown", meaning:"Wisdom, poetic inspiration, the salmon of knowledge", aicme:"hÚatha", hebrew:"כ" },
+  { glyph:"ᚊ", name:"Ceirt", ipa:"kʷ/q", tree:"Apple", animal:"Hen", crystal:"Rose Quartz", color:"Green", meaning:"Beauty, choice, the fruit of the Otherworld", aicme:"hÚatha", hebrew:"ק" },
+  { glyph:"ᚋ", name:"Muin", ipa:"m", tree:"Vine", animal:"Lizard", crystal:"Malachite", color:"Variegated", meaning:"Prophecy, relaxation, truth released through loosened inhibition", aicme:"Muine", hebrew:"מ" },
+  { glyph:"ᚌ", name:"Gort", ipa:"g", tree:"Ivy", animal:"Boar", crystal:"Opal", color:"Blue", meaning:"Tenacity, spiral growth, the search that never ceases", aicme:"Muine", hebrew:"ג" },
+  { glyph:"ᚍ", name:"nGéadal", ipa:"gʷ", tree:"Broom/Fern", animal:"Goose", crystal:"Jade", color:"Grass Green", meaning:"Healing, cleansing, the physician's art", aicme:"Muine", hebrew:"(נג)" },
+  { glyph:"ᚎ", name:"Straif", ipa:"st/ts/sw", tree:"Blackthorn", animal:"Wolf", crystal:"Black Tourmaline", color:"Bright Red", meaning:"Fate, discipline, the thorn that protects the treasure", aicme:"Muine", hebrew:"צ/ז" },
+  { glyph:"ᚏ", name:"Ruis", ipa:"r", tree:"Elder", animal:"Rook/Raven", crystal:"Jet", color:"Blood Red", meaning:"Endings that renew, transition, the crone's wisdom", aicme:"Muine", hebrew:"ר" },
+  { glyph:"ᚐ", name:"Ailm", ipa:"a", tree:"Pine / Fir", animal:"Red-Tailed Hawk", crystal:"Amber", color:"Light Blue", meaning:"Clarity, overview, taking the long view from the summit", aicme:"Ailme", hebrew:"א" },
+  { glyph:"ᚑ", name:"Onn", ipa:"o", tree:"Furze / Gorse", animal:"Rabbit", crystal:"Citrine", color:"Gold/Yellow", meaning:"Gathering, sweetness drawn from harsh conditions", aicme:"Ailme", hebrew:"ע" },
+  { glyph:"ᚒ", name:"Úr", ipa:"u", tree:"Heath / Heather", animal:"Bee", crystal:"Garnet", color:"Russet", meaning:"Earth-soul, passion, soil-connected healing", aicme:"Ailme", hebrew:"ו" },
+  { glyph:"ᚓ", name:"Eadhadh", ipa:"e", tree:"Aspen", animal:"Swan", crystal:"Clear Quartz", color:"Silver-White", meaning:"Courage through fear, sensitivity, the whispering voice of the unseen", aicme:"Ailme", hebrew:"ה" },
+  { glyph:"ᚔ", name:"Iodhadh", ipa:"i", tree:"Yew", animal:"Eagle", crystal:"Obsidian", color:"Dark Green", meaning:"Death and rebirth, eternity, the passage between worlds", aicme:"Ailme", hebrew:"י" },
+  { glyph:"ᚕ", name:"Éabhadh", ipa:"ea/k/x", tree:"Aspen (disputed)", animal:"Crane", crystal:"Labradorite", color:"Shifting Grey", meaning:"Endurance, overcoming", aicme:"Forfeda", hebrew:"ח" },
+  { glyph:"ᚖ", name:"Ór", ipa:"oi", tree:"Spindle / Ivy", animal:"Otter", crystal:"Gold Nugget", color:"Gold", meaning:"Gold, sudden insight, alchemical illumination", aicme:"Forfeda", hebrew:"(וי)" },
+  { glyph:"ᚗ", name:"Uilleann", ipa:"ui", tree:"Honeysuckle", animal:"Butterfly", crystal:"Rhodonite", color:"Pale Yellow", meaning:"Pursuit, fragrance, drawing the beloved near", aicme:"Forfeda", hebrew:"(וי)" },
+  { glyph:"ᚘ", name:"Ifín", ipa:"p/io", tree:"Gooseberry / Thorn", animal:"Hedgehog", crystal:"Aventurine", color:"Thorn Green", meaning:"Sweetness guarded by sharpness", aicme:"Forfeda", hebrew:"(יה)" },
+  { glyph:"ᚙ", name:"Eamhancholl", ipa:"x/ai", tree:"Twin of Hazel", animal:"Pair of Salmon", crystal:"Double-Terminated Quartz", color:"Hazel Brown", meaning:"Double wisdom, the echo of knowledge", aicme:"Forfeda", hebrew:"ח" },
+  { glyph:"ᚚ", name:"Peith", ipa:"p", tree:"(later addition)", animal:"Dove", crystal:"Pearl", color:"Soft White", meaning:"Soft birch, gentle beginning", aicme:"Forfeda", hebrew:"פ" },
+];

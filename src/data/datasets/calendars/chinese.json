@@ -1,0 +1,16 @@
+{
+  "id": "chinese",
+  "title": "Chinese Calendar",
+  "version": "1.0.0",
+  "updatedAt": "2026-02-25",
+  "source": "Lunisolar calendar representation plus zodiac-cycle overlays.",
+  "status": "phase1_foundation",
+  "wheel": {
+    "type": "branch_animal_cycle",
+    "segments": 12
+  },
+  "domains": ["astrological", "linguistic", "semiotic", "symbolic"],
+  "notes": [
+    "Phase 1 integrates display conversion and existing Chinese zodiac overlays."
+  ]
+}

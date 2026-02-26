@@ -1,0 +1,6 @@
+pyswisseph
+numpy
+fastapi
+uvicorn[standard]
+pydantic
+pytz

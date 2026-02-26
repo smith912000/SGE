@@ -1,0 +1,13 @@
+{
+  "id": "symbol_taxonomy",
+  "title": "Symbol Taxonomy",
+  "version": "1.0.0",
+  "updatedAt": "2026-02-25",
+  "source": "Internal semiotic ontology for symbolic indexing.",
+  "status": "phase1_foundation",
+  "domains": ["semiotic", "symbolic"],
+  "notes": [
+    "Defines high-level symbolic classes for future query and filtering functions.",
+    "Supports migration-ready IDs for eventual DB persistence."
+  ]
+}
