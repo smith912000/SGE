@@ -51,6 +51,8 @@ import { NUM_PLANET, MASTER_NUMBERS } from './data/numerology/tables.js';
 import { SOLAR_DEEP, LUNAR_DEEP } from './data/deepAnalysis/solarLunar.js';
 import { RISING_SHADOW, VENUS_SHADOW, MARS_SHADOW, MERCURY_SHADOW } from './data/deepAnalysis/shadows.js';
 import { JUPITER_DEEP, SATURN_DEEP } from './data/deepAnalysis/outerPlanets.js';
+import { URANUS_DEEP, NEPTUNE_DEEP, PLUTO_DEEP } from './data/deepAnalysis/transpersonals.js';
+import { moonPhase } from './engines/astronomy.js';
 import { PAIR_INSIGHT } from './data/deepAnalysis/pairInsights.js';
 
 // Engines
@@ -389,7 +391,7 @@ export default function App() {
                 )}
 
                 {tab==="natal" && (
-                  <NatalTab ctx={{ M3, res, grid2, zodSign, SIGN_COL, SIGN_SYM, HOUSE_AREA, HOUSE_INFO, P_COL, P_SYM, Card, PlanetTable, WheelWithTooltip, ProfilePanel }} />
+                  <NatalTab ctx={{ M3, res, grid2, zodSign, SIGN_COL, SIGN_SYM, HOUSE_AREA, HOUSE_INFO, P_COL, P_SYM, Card, PlanetTable, WheelWithTooltip, ProfilePanel, moonPhase }} />
                 )}
 
                 {false && tab==="natal-old" && (
@@ -494,6 +496,7 @@ export default function App() {
                     M3, res, zodSign, SIGN_INFO, SIGN_COL, P_COL, P_SYM, P_ROLE, Card, grid2,
                     calcAspects, harmonic, SOLAR_DEEP, LUNAR_DEEP, RISING_SHADOW, VENUS_SHADOW,
                     MARS_SHADOW, MERCURY_SHADOW, JUPITER_DEEP, SATURN_DEEP, PAIR_INSIGHT,
+                    URANUS_DEEP, NEPTUNE_DEEP, PLUTO_DEEP, moonPhase,
                     EL_COL, MOD_COL, ANIMAL_INFO, CN_EL_INFO, POLARITY_INFO, HOUSE_AREA
                   }} />
                 )}

@@ -284,4 +284,44 @@ function phiEngine(day,cycle) {
   return { state:pp<0.382?"φ·Low":pp<0.618?"φ·Mid":"φ·High", mult:(1+(pp-0.5)*0.618).toFixed(4), phase:pp.toFixed(4) };
 }
 
-export { julianDay, sunLon, moonLon, nodeLon, lilithLon, planetLon, chironLon, allPlanets, calcAsc, calcMC, calcHouses, calcAspects, ayanamsa, harmonic, progChart, findSolarReturn, findLunarReturn, elemMod, phiEngine };
+function planetSpeeds(jd) {
+  const dt = 0.5;
+  const p1 = allPlanets(jd - dt);
+  const p2 = allPlanets(jd + dt);
+  const speeds = {};
+  for (const k of Object.keys(p1)) {
+    let diff = p2[k] - p1[k];
+    if (diff > 180) diff -= 360;
+    if (diff < -180) diff += 360;
+    speeds[k] = diff;
+  }
+  return speeds;
+}
+
+function moonPhase(sunLon, moonLonVal) {
+  const angle = norm(moonLonVal - sunLon);
+  const PHASES = [
+    { max:11.25, name:"New Moon", emoji:"🌑" },
+    { max:33.75, name:"Waxing Crescent", emoji:"🌒" },
+    { max:56.25, name:"Waxing Crescent", emoji:"🌒" },
+    { max:78.75, name:"First Quarter", emoji:"🌓" },
+    { max:101.25, name:"Waxing Gibbous", emoji:"🌔" },
+    { max:123.75, name:"Waxing Gibbous", emoji:"🌔" },
+    { max:146.25, name:"Waxing Gibbous", emoji:"🌔" },
+    { max:168.75, name:"Full Moon", emoji:"🌕" },
+    { max:191.25, name:"Full Moon", emoji:"🌕" },
+    { max:213.75, name:"Waning Gibbous", emoji:"🌖" },
+    { max:236.25, name:"Waning Gibbous", emoji:"🌖" },
+    { max:258.75, name:"Last Quarter", emoji:"🌗" },
+    { max:281.25, name:"Waning Crescent", emoji:"🌘" },
+    { max:303.75, name:"Waning Crescent", emoji:"🌘" },
+    { max:326.25, name:"Waning Crescent", emoji:"🌘" },
+    { max:348.75, name:"New Moon", emoji:"🌑" },
+    { max:360, name:"New Moon", emoji:"🌑" },
+  ];
+  const ph = PHASES.find(p => angle <= p.max) || PHASES[0];
+  const illum = Math.round((1 - Math.cos(angle * RAD)) / 2 * 100);
+  return { name: ph.name, emoji: ph.emoji, angle: Math.round(angle), illumination: illum };
+}
+
+export { julianDay, sunLon, moonLon, nodeLon, lilithLon, planetLon, chironLon, allPlanets, calcAsc, calcMC, calcHouses, calcAspects, ayanamsa, harmonic, progChart, findSolarReturn, findLunarReturn, elemMod, phiEngine, planetSpeeds, moonPhase };

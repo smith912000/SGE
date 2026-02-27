@@ -1,5 +1,5 @@
 export default function NatalTab({ ctx }) {
-  const { M3, res, grid2, zodSign, SIGN_COL, SIGN_SYM, HOUSE_AREA, HOUSE_INFO, P_COL, P_SYM, Card, PlanetTable, WheelWithTooltip, ProfilePanel } = ctx;
+  const { M3, res, grid2, zodSign, SIGN_COL, SIGN_SYM, HOUSE_AREA, HOUSE_INFO, P_COL, P_SYM, Card, PlanetTable, WheelWithTooltip, ProfilePanel, moonPhase } = ctx;
 
   const fmtDeg = (lon) => {
     const l = ((lon % 360) + 360) % 360;
@@ -10,6 +10,78 @@ export default function NatalTab({ ctx }) {
   };
 
   const AXIS_LABELS = { 1:"ASC", 4:"IC", 7:"DSC", 10:"MC" };
+
+  const SIGN_RULERS = {
+    Aries:"Mars", Taurus:"Venus", Gemini:"Mercury", Cancer:"Moon",
+    Leo:"Sun", Virgo:"Mercury", Libra:"Venus", Scorpio:"Pluto",
+    Sagittarius:"Jupiter", Capricorn:"Saturn", Aquarius:"Uranus", Pisces:"Neptune"
+  };
+  const TRAD_RULERS = { Scorpio:"Mars", Aquarius:"Saturn", Pisces:"Jupiter" };
+
+  const ascSign = zodSign(res.houses[1]);
+  const chartRuler = SIGN_RULERS[ascSign];
+  const tradRuler = TRAD_RULERS[ascSign];
+  const rulerLon = res.trop[chartRuler];
+  const rulerSign = rulerLon != null ? zodSign(rulerLon) : null;
+  const rulerHouse = (() => {
+    if (rulerLon == null) return null;
+    for (let h = 0; h < 12; h++) {
+      const cusp = res.houses[h + 1];
+      const next = res.houses[((h + 1) % 12) + 1];
+      const inH = next > cusp ? (rulerLon >= cusp && rulerLon < next) : (rulerLon >= cusp || rulerLon < next);
+      if (inH) return h + 1;
+    }
+    return null;
+  })();
+
+  const DIGNITY = {
+    Sun:{dom:"Leo",exa:"Aries",det:"Aquarius",fall:"Libra"},
+    Moon:{dom:"Cancer",exa:"Taurus",det:"Capricorn",fall:"Scorpio"},
+    Mercury:{dom:"Gemini",exa:"Virgo",det:"Sagittarius",fall:"Pisces"},
+    Venus:{dom:"Taurus",exa:"Pisces",det:"Scorpio",fall:"Virgo"},
+    Mars:{dom:"Aries",exa:"Capricorn",det:"Libra",fall:"Cancer"},
+    Jupiter:{dom:"Sagittarius",exa:"Cancer",det:"Gemini",fall:"Capricorn"},
+    Saturn:{dom:"Capricorn",exa:"Libra",det:"Cancer",fall:"Aries"},
+    Uranus:{dom:"Aquarius",exa:"Scorpio",det:"Leo",fall:"Taurus"},
+    Neptune:{dom:"Pisces",exa:"Cancer",det:"Virgo",fall:"Capricorn"},
+    Pluto:{dom:"Scorpio",exa:"Aries",det:"Taurus",fall:"Libra"},
+  };
+
+  function calcDominant() {
+    const scores = {};
+    const planets = ["Sun","Moon","Mercury","Venus","Mars","Jupiter","Saturn","Uranus","Neptune","Pluto"];
+    planets.forEach(p => { scores[p] = 0; });
+    if (res.trop.Sun != null) scores.Sun += 4;
+    if (res.trop.Moon != null) scores.Moon += 4;
+    const asc = zodSign(res.houses[1]);
+    const ascRuler = SIGN_RULERS[asc];
+    if (ascRuler && scores[ascRuler] != null) scores[ascRuler] += 3;
+    planets.forEach(p => {
+      if (res.trop[p] == null) return;
+      const s = zodSign(res.trop[p]);
+      const d = DIGNITY[p];
+      if (d) {
+        if (s === d.dom) scores[p] += 3;
+        if (s === d.exa) scores[p] += 2;
+        if (s === d.det) scores[p] -= 2;
+        if (s === d.fall) scores[p] -= 1;
+      }
+      for (let h = 0; h < 12; h++) {
+        const cusp = res.houses[h + 1];
+        const next = res.houses[((h + 1) % 12) + 1];
+        const inH = next > cusp ? (res.trop[p] >= cusp && res.trop[p] < next) : (res.trop[p] >= cusp || res.trop[p] < next);
+        if (inH) {
+          if ([0,3,6,9].includes(h)) scores[p] += 2;
+          break;
+        }
+      }
+    });
+    return Object.entries(scores).sort((a,b) => b[1] - a[1]).slice(0, 3);
+  }
+  const dominant = calcDominant();
+
+  const phase = (res.trop.Sun != null && res.trop.Moon != null && moonPhase)
+    ? moonPhase(res.trop.Sun, res.trop.Moon) : null;
 
   const HOUSE_DESC = [
     "Your identity, body, and how you present yourself to the world. Planets here strongly shape your personality.",
@@ -66,6 +138,72 @@ export default function NatalTab({ ctx }) {
           <strong>How to read it:</strong> Each planet represents a part of your psyche — ☉ Sun is your core identity, ☽ Moon is your emotions, ☿ Mercury is how you think, ♀ Venus is how you love, ♂ Mars is your drive. The sign a planet is in colors how that part of you expresses. The house it falls in shows which life area it activates.
         </p>
       </Card>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12 }}>
+        <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}44,${M3.surfaceContainer})` }}>
+          <div style={{ fontFamily: "Cinzel,serif", fontSize: "0.78rem", color: M3.primary, marginBottom: 6 }}>Chart Ruler</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+            <span style={{ fontSize: "1.6rem" }}>{P_SYM[chartRuler] || ""}</span>
+            <div>
+              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.8rem", color: M3.onSurface, fontWeight: 700 }}>
+                {chartRuler} <span style={{ color: M3.tertiary, fontWeight: 400, fontSize: "0.68rem" }}>(rules {ascSign} rising)</span>
+              </div>
+              {rulerSign && (
+                <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", color: M3.onSurfaceVariant }}>
+                  in {SIGN_SYM?.[rulerSign]} {rulerSign} {fmtDeg(rulerLon)}{rulerHouse ? ` — House ${rulerHouse}` : ""}
+                </div>
+              )}
+              {tradRuler && <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.64rem", color: M3.outlineVariant, fontStyle: "italic" }}>Traditional ruler: {tradRuler}</div>}
+            </div>
+          </div>
+          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.66rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: 0 }}>
+            The chart ruler steers the overall direction of your life. Its sign and house show the style and area where your life's energy naturally flows.
+          </p>
+        </Card>
+
+        {phase && (
+          <Card style={{ background: `linear-gradient(135deg,${M3.surfaceContainer},${M3.primaryContainer}33)` }}>
+            <div style={{ fontFamily: "Cinzel,serif", fontSize: "0.78rem", color: M3.primary, marginBottom: 6 }}>Moon Phase at Birth</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+              <span style={{ fontSize: "2rem" }}>{phase.emoji}</span>
+              <div>
+                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.8rem", color: M3.onSurface, fontWeight: 700 }}>{phase.name}</div>
+                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.64rem", color: M3.tertiary }}>
+                  {phase.angle}° separation &middot; {phase.illumination}% illumination
+                </div>
+              </div>
+            </div>
+            <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.66rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: 0 }}>
+              {phase.name === "New Moon" ? "Born under a New Moon — you are an initiator, instinctively starting new cycles and projects. Your emotional and conscious drives merge, giving you focused but subjective energy."
+              : phase.name === "Waxing Crescent" ? "Born under a Waxing Crescent — you carry a pioneering spirit, pushing forward despite uncertainty. There is a natural assertiveness to your emotional nature."
+              : phase.name === "First Quarter" ? "Born under a First Quarter Moon — you are a builder who thrives on challenge. Tension between instinct and will drives you to take decisive action."
+              : phase.name === "Waxing Gibbous" ? "Born under a Waxing Gibbous Moon — you are a refiner and perfectionist. You sense what is almost complete and work tirelessly to polish it."
+              : phase.name === "Full Moon" ? "Born under a Full Moon — you experience life through relationships and polarity. Your emotions are vivid, your awareness is broad, and objectivity is your gift."
+              : phase.name === "Waning Gibbous" ? "Born under a Waning Gibbous (Disseminating) Moon — you are a natural teacher and communicator. You distill experience into wisdom and share it."
+              : phase.name === "Last Quarter" ? "Born under a Last Quarter Moon — you are drawn to re-evaluate, release, and reform. An inner tension drives you to question systems and clear the old."
+              : "Born under a Waning Crescent (Balsamic) Moon — you carry deep intuition and karmic sensitivity. Endings and closure feel natural; you sense what must be released."}
+            </p>
+          </Card>
+        )}
+
+        <Card style={{ background: `linear-gradient(135deg,${M3.surfaceContainer},${M3.primaryContainer}22)` }}>
+          <div style={{ fontFamily: "Cinzel,serif", fontSize: "0.78rem", color: M3.primary, marginBottom: 6 }}>Dominant Planets</div>
+          {dominant.map(([p, score], i) => (
+            <div key={p} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+              <span style={{ fontSize: i === 0 ? "1.4rem" : "1rem", color: P_COL[p] || M3.primary }}>{P_SYM[p] || ""}</span>
+              <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: i === 0 ? "0.78rem" : "0.68rem", color: i === 0 ? M3.onSurface : M3.onSurfaceVariant, fontWeight: i === 0 ? 700 : 400 }}>{p}</span>
+              <div style={{ flex: 1, height: 4, borderRadius: 2, background: M3.outlineVariant + "33", overflow: "hidden" }}>
+                <div style={{ height: "100%", width: `${Math.max(10, (score / (dominant[0]?.[1] || 1)) * 100)}%`, background: P_COL[p] || M3.primary, borderRadius: 2 }} />
+              </div>
+              <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: M3.tertiary, minWidth: 16, textAlign: "right" }}>{score}</span>
+            </div>
+          ))}
+          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.66rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "6px 0 0" }}>
+            Dominance is scored by luminaries, ASC ruler dignity, essential dignity (domicile, exaltation, detriment, fall), and angular house placement.
+          </p>
+        </Card>
+      </div>
+
       <div style={grid2}>
         <Card title="☉ Where Each Planet Was — Western &amp; Vedic">
           <PlanetTable positions={res.trop} siderealPositions={res.sid} jd={res.jd} />
