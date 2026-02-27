@@ -4,7 +4,7 @@ export { EGYPTIAN_UNILITERALS, ACROPHONY_SHIFTS } from './egyptian.js';
 export { OGHAM_FULL } from './ogham.js';
 export { IPA_QUICK } from './ipa.js';
 export { DIGRAPH_MAP } from './digraphs.js';
-export { YETZIRAH_SIGN, YETZIRAH_PLANET, YETZIRAH_ELEMENT, signToLetter, planetToLetter, LATIN_TO_LETTER } from './yetzirah.js';
+export { YETZIRAH_SIGN, YETZIRAH_PLANET, YETZIRAH_ELEMENT, HERMETIC_PLANET, signToLetter, planetToLetter, hermeticPlanetToLetter, LATIN_TO_LETTER } from './yetzirah.js';
 export { ZODIAC_CHINESE_MAP, CHINESE_ZODIAC_HEBREW, MUSICAL_SCALE_OCCULT } from './correspondences.js';
 export { HEBREW_CHAR_MAP, FINAL_FORMS, KNOWN_HEBREW } from './hebrewMap.js';
 export { KANGXI_INFO, KANGXI_RADICALS, KANGXI_TOP_10_BY_FREQUENCY, KANGXI_MOST_USED, KANGXI_STANDALONE } from './kangxiRadicals.js';

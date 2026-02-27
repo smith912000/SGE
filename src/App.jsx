@@ -38,7 +38,7 @@ import { EGYPTIAN_UNILITERALS, ACROPHONY_SHIFTS } from './data/grammatology/egyp
 import { OGHAM_FULL } from './data/grammatology/ogham.js';
 import { IPA_QUICK } from './data/grammatology/ipa.js';
 import { DIGRAPH_MAP } from './data/grammatology/digraphs.js';
-import { signToLetter, planetToLetter } from './data/grammatology/yetzirah.js';
+import { signToLetter, planetToLetter, hermeticPlanetToLetter } from './data/grammatology/yetzirah.js';
 import { ZODIAC_CHINESE_MAP, CHINESE_ZODIAC_HEBREW, MUSICAL_SCALE_OCCULT } from './data/grammatology/correspondences.js';
 import { KANGXI_INFO, KANGXI_RADICALS, KANGXI_TOP_10_BY_FREQUENCY, KANGXI_MOST_USED, KANGXI_STANDALONE } from './data/grammatology/kangxiRadicals.js';
 import { SCRIPT_ATLAS, TWENTY_TWO_NOTE } from './data/grammatology/scriptAtlas.js';
