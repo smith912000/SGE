@@ -10,6 +10,14 @@ import { planetToLetter } from '../../data/grammatology/yetzirah.js';
 const zodSign = lon => SIGNS[Math.floor(((lon%360+360)%360)/30)];
 const zodDeg = lon => (((lon%360+360)%360)%30).toFixed(1);
 
+import { LETTER_DB } from '../../data/grammatology/letterDb.js';
+const MOTHER = Object.fromEntries(LETTER_DB.filter(l => l.yetzirah.type === "mother").map(l => [l.yetzirah.element, l]));
+const MODERN_PLANET_LETTER = {
+  Uranus:  MOTHER["Air"],
+  Neptune: MOTHER["Water"],
+  Pluto:   MOTHER["Fire"],
+};
+
 export default function PlanetTable({ positions, jd = null, siderealPositions = null }) {
   const speeds = jd ? planetSpeeds(jd) : null;
   const anime  = useAnime();
@@ -34,12 +42,14 @@ export default function PlanetTable({ positions, jd = null, siderealPositions = 
           {Object.entries(positions).map(([p,lon])=>{
             const sid = siderealPositions?.[p] ?? norm(lon-ay);
             const pl=planetToLetter(p);
+            const ml=!pl ? MODERN_PLANET_LETTER[p] : null;
+            const letter = pl || ml;
             return (
               <tr key={p} style={{ borderBottom:`1px solid ${M3.outlineVariant}22` }}>
                 <td style={{ ...TD, fontSize:"1.05rem", color:P_COL[p] }}>{P_SYM[p]}</td>
                 <td style={TD}>{p}</td>
                 <td style={{ ...TD, color:M3.onSurfaceVariant, fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.68rem", fontStyle:"italic" }}>{P_ROLE[p]||"—"}</td>
-                <td style={{ ...TD, fontSize:"0.85rem", letterSpacing:2 }}>{pl ? <span title={`${pl.hebrewName} (${pl.acrophony})`}>{pl.hiero} {pl.hebrew} {pl.phoenician}</span> : "—"}</td>
+                <td style={{ ...TD, fontSize:"0.85rem", letterSpacing:2 }}>{letter ? <span title={pl ? `${letter.hebrewName} (${letter.acrophony})` : `${letter.hebrewName} — modern Golden Dawn correspondence (${letter.yetzirah.element} mother letter)`}>{letter.hiero} {letter.hebrew} {letter.phoenician}{ml ? " *" : ""}</span> : "—"}</td>
                 <td style={{ ...TD, color:SIGN_COL[zodSign(lon)] }}>{zodSign(lon)}</td>
                 <td style={{ ...TD, color:M3.onSurfaceVariant }}>{zodDeg(lon)}°</td>
                 <td style={{ ...TD, textAlign:"center", fontSize:"0.8rem", color: speeds?.[p] < 0 ? "#f44336" : M3.outlineVariant }}>{speeds?.[p] < 0 ? "℞" : ""}</td>

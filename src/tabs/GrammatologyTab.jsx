@@ -97,7 +97,7 @@ export default function GrammatologyTab({ ctx }) {
           </div>
         )}
         <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
-          {[{id:"crosswalk",label:"✦ Word Crosswalk"},{id:"table",label:"Cross-Script Table"},{id:"atlas",label:"🌍 Script Atlas (179)"},{id:"systems",label:"Writing Systems"},{id:"egyptian",label:"Egyptian Signs"},{id:"ogham",label:"Ogham Trees"},{id:"tarot",label:"Tarot · Chinese"},{id:"kangxi",label:"康熙 Kangxi Radicals"},{id:"digraphs",label:"Digraphs"},{id:"ipa",label:"IPA Reference"},{id:"yetzirah",label:"Sefer Yetzirah"}].map(t=>(
+          {[{id:"crosswalk",label:"✦ Word Crosswalk"},{id:"table",label:"Cross-Script Table"},{id:"atlas",label:`🌍 Script Atlas (${(SCRIPT_ATLAS||[]).reduce((n,f)=>n+f.scripts.length,0)})`},{id:"systems",label:"Writing Systems"},{id:"egyptian",label:"Egyptian Signs"},{id:"ogham",label:"Ogham Trees"},{id:"tarot",label:"Tarot · Chinese"},{id:"kangxi",label:"康熙 Kangxi Radicals"},{id:"digraphs",label:"Digraphs"},{id:"ipa",label:"IPA Reference"},{id:"yetzirah",label:"Sefer Yetzirah"}].map(t=>(
             <button key={t.id} onClick={()=>setGramTab(t.id)} style={{ padding:"5px 12px", borderRadius:14, border:`1px solid ${gramTab===t.id?M3.primary:M3.outlineVariant}`, background:gramTab===t.id?M3.primaryContainer:M3.surfaceContainer, color:gramTab===t.id?M3.onPrimaryContainer:M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", cursor:"pointer", transition:"all 0.2s" }}>{t.label}</button>
           ))}
         </div>
@@ -381,7 +381,7 @@ export default function GrammatologyTab({ ctx }) {
       )}
 
       {gramTab==="atlas" && (SCRIPT_ATLAS || []).length > 0 && (
-      <Card title="🌍 Script Atlas — 179 Writing Systems by Cultural Family">
+      <Card title={`🌍 Script Atlas — ${SCRIPT_ATLAS.reduce((n,f)=>n+f.scripts.length,0)} Writing Systems by Cultural Family`}>
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 12px" }}>
           Every writing system on Earth catalogued by Unicode, organized by cultural family and geographic origin. The <strong>22-letter Proto-Sinaitic abjad</strong> is the ancestral root — but many daughter scripts expanded far beyond 22: Arabic has 28, Greek 24, Cyrillic 33, Armenian 38, Devanagari 46+, Ge'ez 182+ fidels, and Chinese tens of thousands of characters. Scripts marked with <span style={{ color:M3.primary, fontWeight:700 }}>●</span> have full letter-level mappings in the Cross-Script Table.
         </p>

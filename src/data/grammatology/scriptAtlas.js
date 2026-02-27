@@ -1,6 +1,6 @@
 /* ─────────────────────────────────────────────────────────────
-   SCRIPT ATLAS — All 179 Unicode Scripts Categorised by
-   Cultural Family, Region, Era & Writing System Type
+   SCRIPT ATLAS — Unicode Scripts Categorised by Cultural
+   Family, Region, Era & Writing System Type
    ─────────────────────────────────────────────────────────────
    Base: The Proto-Sinaitic / Phoenician 22-letter abjad is the
    ancestral root mapped in CROSS_SCRIPTS. Many descendant systems
@@ -97,7 +97,6 @@ export const SCRIPT_ATLAS = [
     scripts: [
       { name:"Ogham", letters:"20 + 5 forfeda = 25", type:"Alphabet", status:"Historical", cultures:["Ireland","Picts","Wales","Isle of Man"], mapped:true },
       { name:"Runic", letters:"24 (Elder Futhark)", type:"Alphabet", status:"Historical", cultures:["Norse","Anglo-Saxon","Goths","Germanic tribes"], mapped:true },
-      { name:"Old_Hungarian", letters:"42+", type:"Alphabet", status:"Historical", cultures:["Hungarians (Székely-Hungarian)"] },
     ]
   },
   {
