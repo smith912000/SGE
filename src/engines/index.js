@@ -1,4 +1,4 @@
-export { julianDay, sunLon, moonLon, plLon, allPlanets, calcAsc, calcMC, calcHouses, calcAspects, ayanamsa, harmonic, progChart, findSolarReturn, elemMod, phiEngine } from './astronomy.js';
+export { julianDay, sunLon, moonLon, nodeLon, lilithLon, planetLon, chironLon, allPlanets, calcAsc, calcMC, calcHouses, calcAspects, ayanamsa, harmonic, progChart, findSolarReturn, findLunarReturn, elemMod, phiEngine } from './astronomy.js';
 export { chineseLunarDate, chineseCycle } from './chinese.js';
 export { reduceToRoot, computeNumerology } from './numerology.js';
 export { transliterateToHebrew, calcGematria } from './gematria.js';

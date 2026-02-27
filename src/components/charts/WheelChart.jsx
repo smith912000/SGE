@@ -104,7 +104,7 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
   const visibleAspects = isAspectsMode ? aspects.slice(0, 30) : aspects.slice(0, 12);
 
   /* ── Planet placement: circumferential collision avoidance on tiered rings ── */
-  const PLANET_WEIGHT = { Sun:10, Moon:9, Mercury:5, Venus:6, Mars:7, Jupiter:8, Saturn:7, Uranus:4, Neptune:3, Pluto:3 };
+  const PLANET_WEIGHT = { Sun:10, Moon:9, Mercury:5, Venus:6, Mars:7, Jupiter:8, Saturn:7, Uranus:4, Neptune:3, Pluto:3, Chiron:2, Node:2, Lilith:2 };
   const entries = Object.entries(positions).sort(([,a],[,b])=>a-b);
   const planetPts = (()=>{
     const tiers = [rPlanetRing, rPlanetTier2, rPlanetTier3];
@@ -331,9 +331,8 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
         const p1Data = planetPts.find(p=>p.planet===asp.p1);
         const p2Data = planetPts.find(p=>p.planet===asp.p2);
         if (!p1Data || !p2Data) return null;
-        // Keep aspect chords inside the core ring for cleaner geometry.
-        const [x1,y1] = pt(rAspectRing, p1Data.a);
-        const [x2,y2] = pt(rAspectRing, p2Data.a);
+        const [x1,y1] = pt(p1Data.r, p1Data.a);
+        const [x2,y2] = pt(p2Data.r, p2Data.a);
         const isActive = hoveredPlanet && (asp.p1 === hoveredPlanet || asp.p2 === hoveredPlanet);
         const isFaded = hoveredPlanet && !isActive;
         const baseW = isAspectsMode ? (0.8 + asp.strength * 1.6) : (0.4 + asp.strength * 0.8);

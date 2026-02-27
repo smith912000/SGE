@@ -328,11 +328,12 @@ export default function App() {
                               Uranus:"you experience disruption and innovation here — expect the unexpected in this domain",
                               Neptune:"imagination and idealism colour this area — it can be both inspiring and confusing",
                               Pluto:"deep transformation happens here — power dynamics and rebirth are recurring themes",
-                              "N.Node":"your soul's growth direction points through this area — leaning into it feels unfamiliar but right",
+                              Node:"your soul's growth direction points through this area — leaning into it feels unfamiliar but right",
+                              Lilith:"your untamed shadow power sits here — this area exposes what you refuse to suppress or domesticate",
                               Chiron:"your deepest wound lives here — healing it becomes your greatest gift to others",
                             };
                             const housePlanets = Array.from({length:12},()=>[]);
-                            const allPlanets = ["Sun","Moon","Mercury","Venus","Mars","Jupiter","Saturn","Uranus","Neptune","Pluto","N.Node","Chiron"];
+                            const allPlanets = ["Sun","Moon","Mercury","Venus","Mars","Jupiter","Saturn","Uranus","Neptune","Pluto","Node","Lilith","Chiron"];
                             allPlanets.forEach(p => {
                               if (res.trop[p]==null) return;
                               const lon = res.trop[p];

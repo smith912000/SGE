@@ -1,23 +1,15 @@
-export const P_SYM = { Sun:"☉",Moon:"☽",Mercury:"☿",Venus:"♀",Mars:"♂",Jupiter:"♃",Saturn:"♄",Uranus:"⛢",Neptune:"♆",Pluto:"♇",Node:"☊" };
+export const P_SYM = { Sun:"☉",Moon:"☽",Mercury:"☿",Venus:"♀",Mars:"♂",Jupiter:"♃",Saturn:"♄",Uranus:"⛢",Neptune:"♆",Pluto:"♇",Chiron:"⚷",Node:"☊",Lilith:"⚸" };
 export const P_COL = {
   Sun:"#FFD700",Moon:"#d0dce8",Mercury:"#c9a840",Venus:"#ff80ab",
   Mars:"#ff5252",Jupiter:"#ffa726",Saturn:"#bcaa84",Uranus:"#4dd0e1",
-  Neptune:"#5c6bc0",Pluto:"#ab47bc",Node:"#78909c",
+  Neptune:"#5c6bc0",Pluto:"#ab47bc",Chiron:"#b388ff",Node:"#78909c",Lilith:"#e040fb",
 };
 export const P_ROLE = {
   Sun:"Identity",Moon:"Emotions",Mercury:"Thinking",Venus:"Love",Mars:"Drive",
-  Jupiter:"Growth",Saturn:"Discipline",Uranus:"Change",Neptune:"Imagination",Pluto:"Transformation",Node:"Life Purpose",
+  Jupiter:"Growth",Saturn:"Discipline",Uranus:"Change",Neptune:"Imagination",Pluto:"Transformation",
+  Chiron:"Healing",Node:"Life Purpose",Lilith:"Shadow Self",
 };
-export const PL = {
-  Mercury:{ L0:252.2503, dL:149472.6742 },
-  Venus:  { L0:181.9798, dL:58517.8156  },
-  Mars:   { L0:355.4330, dL:19140.2993  },
-  Jupiter:{ L0:34.3515,  dL:3034.9057   },
-  Saturn: { L0:50.0775,  dL:1222.1138   },
-  Uranus: { L0:314.0550, dL:428.4882    },
-  Neptune:{ L0:304.3487, dL:218.4656    },
-  Pluto:  { L0:238.9508, dL:144.9600    },
-};
+export const PL = {};
 export const PLANET_INFO = {
   Sun:     { title:"The Sun ☉", emoji:"☀️", hebrew:"כ", hiero:"𓂧", gematriaVal:20, letterName:"Kaph (Palm)", plain:"Your core identity — who you are at heart and what drives you forward. It's your ego, your life purpose, and the energy you radiate into the world.", detail:"Rules Leo. Represents vitality, willpower, and conscious self-expression. The house it occupies shows where you shine." },
   Moon:    { title:"The Moon ☽", emoji:"🌙", hebrew:"ת", hiero:"𓏴", gematriaVal:400, letterName:"Tav (Mark)", plain:"Your emotional nature — how you feel things, what makes you feel safe, and your instinctive reactions. It reflects your inner world and childhood patterns.", detail:"Rules Cancer. Represents emotions, intuition, memory, and the unconscious. House placement shows where you seek comfort." },
@@ -29,5 +21,7 @@ export const PLANET_INFO = {
   Uranus:  { title:"Uranus ⛢", emoji:"⚡", hebrew:null, hiero:null, gematriaVal:null, letterName:null, plain:"Where you rebel and innovate. Uranus brings sudden change, originality, and a need for freedom. It shakes up anything that has become too rigid.", detail:"Rules Aquarius. Represents revolution, technology, eccentricity, and liberation. Slow-moving — shapes a whole generation." },
   Neptune: { title:"Neptune ♆", emoji:"🌊", hebrew:null, hiero:null, gematriaVal:null, letterName:null, plain:"Where you dream and idealize. Neptune dissolves boundaries, bringing imagination, spirituality, and sometimes confusion or illusion to the area of life it touches.", detail:"Rules Pisces. Represents mysticism, art, deception, and transcendence. Slow-moving — marks a generational spiritual theme." },
   Pluto:   { title:"Pluto ♇", emoji:"💀", hebrew:null, hiero:null, gematriaVal:null, letterName:null, plain:"Where deep transformation happens. Pluto destroys what is no longer needed so something more powerful can be reborn. Intense, but ultimately regenerative.", detail:"Rules Scorpio. Represents power, death & rebirth, obsession, and hidden forces. House shows where life forces radical change." },
+  Chiron:  { title:"Chiron ⚷", emoji:"🩹", hebrew:null, hiero:null, gematriaVal:null, letterName:null, plain:"Your deepest wound and your greatest gift as a healer. Chiron shows where you carry pain that never fully heals but becomes the source of your ability to help others through similar struggles.", detail:"A small body orbiting between Saturn and Uranus, discovered 1977. Called 'the wounded healer' — its house and sign show your core wound and where you develop mastery through suffering." },
   Node:    { title:"North Node ☊", emoji:"🧭", hebrew:null, hiero:null, gematriaVal:null, letterName:null, plain:"Your soul's compass — the direction you are meant to grow toward in this lifetime. The North Node points to unfamiliar qualities you must develop; the South Node (opposite point) shows what comes naturally but keeps you stuck.", detail:"Not a physical body but the Moon's orbital intersection with the ecliptic. The North Node (Rahu) is your evolutionary edge; the South Node (Ketu) is your comfort zone. House and sign placement reveal your karmic growth direction." },
+  Lilith:  { title:"Black Moon Lilith ⚸", emoji:"🌑", hebrew:null, hiero:null, gematriaVal:null, letterName:null, plain:"Your raw, untamed feminine power — the part of you that refuses to be domesticated. Lilith represents suppressed desires, primal instincts, and the shadow side of your sexuality and personal power that society taught you to hide.", detail:"The lunar apogee — the point where the Moon is farthest from Earth. Not a physical body but a mathematical point. Its sign and house reveal where you rebel against convention, where your hidden power lives, and what you refuse to compromise on." },
 };
