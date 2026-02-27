@@ -101,7 +101,7 @@ export default function SolarTab({ ctx }) {
               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
                 These are the exact positions of each planet at your Solar Return moment - the raw data behind the descriptions above.
               </p>
-              {res.srPos && <PlanetTable positions={res.srPos} />}
+              {res.srPos && <PlanetTable positions={res.srPos} jd={res.srJD} />}
             </Card>
             <Card title="↩ Year-Ahead Wheel">
               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>

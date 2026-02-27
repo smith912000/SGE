@@ -58,7 +58,7 @@ export default function NatalTab({ ctx }) {
       </Card>
       <div style={grid2}>
         <Card title="☉ Where Each Planet Was — Western &amp; Vedic">
-          <PlanetTable positions={res.trop} />
+          <PlanetTable positions={res.trop} siderealPositions={res.sid} jd={res.jd} />
         </Card>
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <Card title="⊙ Your Birth Chart">

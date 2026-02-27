@@ -1,5 +1,6 @@
 from datetime import datetime
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from sge import SGE
@@ -13,6 +14,14 @@ app = FastAPI(
 )
 
 engine = SGE()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # ── Request Models ──────────────────────────────────────────────────

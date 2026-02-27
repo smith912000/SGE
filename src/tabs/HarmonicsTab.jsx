@@ -182,7 +182,7 @@ export default function HarmonicsTab({ ctx }) {
           <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
             Each planet's birth position × {n}, wrapped to 360°. Planets in the same sign here share a hidden {n}-fold resonance.
           </p>
-          <PlanetTable positions={hPos}/>
+          <PlanetTable positions={hPos} jd={res.jd}/>
         </Card>
         <Card title={`∞ Pattern #${n} — Wheel`}>
           <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>

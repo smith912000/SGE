@@ -109,14 +109,65 @@ import CalendarTab from './tabs/CalendarTab.jsx';
 const RAD = Math.PI / 180;
 const zodSign = lon => SIGNS[Math.floor(((lon % 360 + 360) % 360) / 30)];
 const zodDeg = lon => (((lon % 360 + 360) % 360) % 30).toFixed(1);
+const to24Hour = (hour12, meridiem) => {
+  const h = Number(hour12);
+  if (!Number.isFinite(h)) return 0;
+  const clamped = Math.min(12, Math.max(1, Math.trunc(h)));
+  if (meridiem === "PM") return clamped === 12 ? 12 : clamped + 12;
+  return clamped === 12 ? 0 : clamped;
+};
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000";
+const normalizePlanet = (k) => (k === "North Node" ? "Node" : k);
+const flattenPlanetMap = (obj = {}) =>
+  Object.fromEntries(Object.entries(obj).map(([k, v]) => [normalizePlanet(k), typeof v === "object" ? v.longitude : v]));
+const toUtcBirthPayload = (input) => {
+  const h24 = to24Hour(input.hour, input.meridiem);
+  const utcMs = Date.UTC(input.year, input.month - 1, input.day, h24, input.min || 0, 0, 0) - (Number(input.tz) || 0) * 3600000;
+  const d = new Date(utcMs);
+  return {
+    year: d.getUTCFullYear(),
+    month: d.getUTCMonth() + 1,
+    day: d.getUTCDate(),
+    hour: d.getUTCHours(),
+    minute: d.getUTCMinutes(),
+    second: 0,
+    timezone: "UTC",
+    latitude: Number(input.lat),
+    longitude: Number(input.lon),
+  };
+};
+const mapBackendHouses = (housesData) => {
+  const placidus = housesData?.placidus;
+  const out = {};
+  (placidus?.cusps || []).forEach((c) => { out[c.house] = c.longitude; });
+  out.ASC = placidus?.ascendant ?? 0;
+  out.MC = placidus?.mc ?? 0;
+  out.IC = norm(out.MC + 180);
+  out.DSC = norm(out.ASC + 180);
+  return out;
+};
+const backendAspectToUi = (aspect) => {
+  const name = String(aspect.aspect || "").split("-").map((s) => s ? (s[0].toUpperCase() + s.slice(1)) : "").join("-");
+  const def = ASPECTS.find((a) => a.angle === aspect.angle) || ASPECTS.find((a) => a.name === name);
+  return {
+    p1: normalizePlanet(aspect.planet1),
+    p2: normalizePlanet(aspect.planet2),
+    name: def?.name || name || "Aspect",
+    angle: aspect.angle,
+    orb: Number(aspect.orb ?? 0).toFixed(2),
+    strength: Number(aspect.strength ?? 0),
+    col: def?.col || "#8ea7ff",
+    sym: def?.sym || "•",
+  };
+};
 
 export default function App() {
   const anime     = useAnime();
   const headerRef = useRef(null);
 
   const _now = new Date();
-  const [A, setA]     = useState({ year:_now.getFullYear(),month:_now.getMonth()+1,day:_now.getDate(),hour:_now.getHours(),min:_now.getMinutes(),lat:51.5,lon:-0.1,tz:0,name:"" });
-  const [B, setB]     = useState({ year:1988,month:3,day:22,hour:9,min:30,lat:40.7,lon:-74.0,tz:-5 });
+  const [A, setA]     = useState({ year:_now.getFullYear(),month:_now.getMonth()+1,day:_now.getDate(),hour:((_now.getHours()+11)%12)+1,meridiem:_now.getHours()>=12?"PM":"AM",min:_now.getMinutes(),lat:51.5,lon:-0.1,tz:0,tzName:"Etc/UTC",place:"",name:"" });
+  const [B, setB]     = useState({ year:1988,month:3,day:22,hour:9,meridiem:"AM",min:30,lat:40.7,lon:-74.0,tz:-5,tzName:"America/New_York",place:"" });
   const [age, setAge] = useState(0);
   const [n,   setN]   = useState(5);
   const [syn, setSyn] = useState(false);
@@ -133,14 +184,6 @@ export default function App() {
   const [calShowMonth, setCalShowMonth] = useState(false);
 
   useEffect(()=>{
-    setA(p => ({ ...p, tz: Math.round(p.lon / 15 * 2) / 2 }));
-  }, [A.lon]);
-
-  useEffect(()=>{
-    setB(p => ({ ...p, tz: Math.round(p.lon / 15 * 2) / 2 }));
-  }, [B.lon]);
-
-  useEffect(()=>{
     const now = new Date();
     const birthDate = new Date(A.year, A.month - 1, A.day);
     let a = now.getFullYear() - A.year;
@@ -155,14 +198,83 @@ export default function App() {
       delay:anime.stagger(70), duration:650, easing:"easeOutQuart" });
   }, [anime]);
 
-  const compute = useCallback(()=>{
+  const compute = useCallback(async ()=>{
     setLoading(true);
-    setTimeout(()=>{
-      const jd      = julianDay(A.year,A.month,A.day, A.hour-A.tz+A.min/60);
+    try {
+      const birthPayload = toUtcBirthPayload(A);
+      const req = { birth: birthPayload, age, harmonic_n: n, phi_cycle_length: 30 };
+      const r = await fetch(`${BACKEND_URL}/full-analysis`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(req),
+      });
+      if (!r.ok) throw new Error(`Backend /full-analysis ${r.status}`);
+      const data = await r.json();
+
+      const jd = data.jd;
+      const trop = flattenPlanetMap(data.tropical);
+      const sid = flattenPlanetMap(data.sidereal);
+      const houses = mapBackendHouses(data.houses);
+      const ay = ayanamsa(jd);
+      const sidHouses = Object.fromEntries(Object.entries(houses).map(([k, v]) => [k, norm(v - ay)]));
+      const aspects = (data.aspects || []).map(backendAspectToUi);
+      const prog = data.progressions?.tropical ? flattenPlanetMap(data.progressions.tropical) : progChart(jd, age);
+      const srJD = data.solar_return?.jd ?? findSolarReturn(trop.Sun, A.year + 1);
+      const srPos = data.solar_return?.tropical ? flattenPlanetMap(data.solar_return.tropical) : (srJD ? allPlanets(srJD) : null);
+      const harm = data.harmonic?.positions ? flattenPlanetMap(data.harmonic.positions) : harmonic(trop, n);
+      const cn = chineseCycle(A.year, A.month, A.day);
+      const phi = data.phi ? { state: data.phi.phi_state, mult: Number(data.phi.multiplier || 1).toFixed(4), phase: Number(data.phi.cycle_position || 0).toFixed(4) } : phiEngine(A.day, 30);
+      const el = data.element_modality?.elements || elemMod(trop).el;
+      const mod = data.element_modality?.modalities || elemMod(trop).mod;
+      const tJD = julianDay(new Date().getFullYear(),new Date().getMonth()+1,new Date().getDate(),12);
+      const trPos = allPlanets(tJD);
+      const trAsp = calcAspects({ ...trop, ...Object.fromEntries(Object.entries(trPos).map(([k,v])=>[`T_${k}`,v])) });
+
+      let synR = null;
+      if (syn) {
+        try {
+          const birthBPayload = toUtcBirthPayload(B);
+          const rb = await fetch(`${BACKEND_URL}/natal`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ birth: birthBPayload }),
+          });
+          if (rb.ok) {
+            const dB = await rb.json();
+            const tB = flattenPlanetMap(dB.tropical);
+            const hB = mapBackendHouses(dB.houses);
+            synR = {
+              positions: tB,
+              houses: hB,
+              aspects: calcAspects({ ...trop, ...Object.fromEntries(Object.entries(tB).map(([k,v])=>[`B_${k}`,v])) }),
+            };
+          }
+        } catch (_e) {
+          // fall through to local synastry fallback below
+        }
+        if (!synR) {
+          const hourB24 = to24Hour(B.hour, B.meridiem);
+          const jd2 = julianDay(B.year, B.month, B.day, hourB24 - B.tz + B.min / 60);
+          const tB = allPlanets(jd2);
+          const hB = calcHouses(jd2, B.lat, B.lon);
+          synR = {
+            positions: tB,
+            houses: hB,
+            aspects: calcAspects({ ...trop, ...Object.fromEntries(Object.entries(tB).map(([k,v])=>[`B_${k}`,v])) }),
+          };
+        }
+      }
+
+      setRes({ jd,trop,sid,houses,sidHouses,aspects,prog,srJD,srPos,harm,cn,phi,el,mod,trPos,trAsp,synR });
+    } catch (err) {
+      console.warn("Backend compute failed, using frontend fallback:", err);
+      const hourA24 = to24Hour(A.hour, A.meridiem);
+      const jd      = julianDay(A.year,A.month,A.day, hourA24-A.tz+A.min/60);
       const trop    = allPlanets(jd);
       const ay      = ayanamsa(jd);
       const sid     = Object.fromEntries(Object.entries(trop).map(([k,v])=>[k,norm(v-ay)]));
       const houses  = calcHouses(jd,A.lat,A.lon);
+      const sidHouses = Object.fromEntries(Object.entries(houses).map(([k,v])=>[k,norm(v-ay)]));
       const aspects = calcAspects(trop);
       const prog    = progChart(jd,age);
       const srJD    = findSolarReturn(trop.Sun, A.year+1);
@@ -176,15 +288,17 @@ export default function App() {
       const trAsp   = calcAspects({ ...trop, ...Object.fromEntries(Object.entries(trPos).map(([k,v])=>[`T_${k}`,v])) });
       let synR=null;
       if (syn) {
-        const jd2=julianDay(B.year,B.month,B.day,B.hour-B.tz+B.min/60);
+        const hourB24 = to24Hour(B.hour, B.meridiem);
+        const jd2=julianDay(B.year,B.month,B.day,hourB24-B.tz+B.min/60);
         const tB=allPlanets(jd2);
         const hB=calcHouses(jd2,B.lat,B.lon);
         synR={ positions:tB, houses:hB,
           aspects:calcAspects({ ...trop, ...Object.fromEntries(Object.entries(tB).map(([k,v])=>[`B_${k}`,v])) }) };
       }
-      setRes({ jd,trop,sid,houses,aspects,prog,srJD,srPos,harm,cn,phi,el,mod,trPos,trAsp,synR });
+      setRes({ jd,trop,sid,houses,sidHouses,aspects,prog,srJD,srPos,harm,cn,phi,el,mod,trPos,trAsp,synR });
+    } finally {
       setLoading(false);
-    },50);
+    }
   },[A,B,age,n,syn]);
 
   const TABS=[
@@ -290,7 +404,7 @@ export default function App() {
                     </Card>
                     <div style={grid2}>
                       <Card title="☉ Where Each Planet Was — Western & Vedic">
-                        <PlanetTable positions={res.trop}/>
+                        <PlanetTable positions={res.trop} jd={res.jd} siderealPositions={res.sid}/>
                       </Card>
                       <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
                         <Card title="⊙ Your Birth Chart">
@@ -1610,7 +1724,7 @@ export default function App() {
 
                     <div style={grid2}>
                       <Card title={`→ Evolved Positions — Age ${age}`}>
-                        <PlanetTable positions={res.prog}/>
+                        <PlanetTable positions={res.prog} jd={res.jd}/>
                       </Card>
                       <Card title="→ Evolved Chart Wheel">
                         <div style={{ display:"flex", justifyContent:"center" }}>
@@ -1718,7 +1832,7 @@ export default function App() {
                             <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
                               These are the exact positions of each planet at your Solar Return moment — the raw data behind the descriptions above.
                             </p>
-                            {res.srPos && <PlanetTable positions={res.srPos}/>}
+                            {res.srPos && <PlanetTable positions={res.srPos} jd={res.srJD}/>}
                           </Card>
                           <Card title="↩ Year-Ahead Wheel">
                             <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
@@ -1911,7 +2025,7 @@ export default function App() {
                           <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
                             Each planet's birth position × {n}, wrapped to 360°. Planets in the same sign here share a hidden {n}-fold resonance.
                           </p>
-                          <PlanetTable positions={hPos}/>
+                          <PlanetTable positions={hPos} jd={res.jd}/>
                         </Card>
                         <Card title={`∞ Pattern #${n} — Wheel`}>
                           <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>

@@ -142,7 +142,7 @@ export default function ProgressionsTab({ ctx }) {
 
       <div style={grid2}>
         <Card title={`→ Evolved Positions - Age ${age}`}>
-          <PlanetTable positions={res.prog} />
+          <PlanetTable positions={res.prog} jd={res.jd} />
         </Card>
         <Card title="→ Evolved Chart Wheel">
           <div style={{ display: "flex", justifyContent: "center" }}>

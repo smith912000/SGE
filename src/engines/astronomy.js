@@ -115,8 +115,8 @@ function helioToGeo(helioLon, helioLat, helioR, sunLonDeg) {
   const earthR = 1.00014;
   const hLon = helioLon * RAD;
   const hR = helioR;
-  const x = hR * Math.cos(hLon) + earthR * Math.cos(sLon + Math.PI);
-  const y = hR * Math.sin(hLon) + earthR * Math.sin(sLon + Math.PI);
+  const x = hR * Math.cos(hLon) + earthR * Math.cos(sLon);
+  const y = hR * Math.sin(hLon) + earthR * Math.sin(sLon);
   return norm(Math.atan2(y, x) * DEG);
 }
 
@@ -245,12 +245,16 @@ function calcAspects(pos) {
 const ayanamsa  = jd => 23.85 + 0.013004*((jd-2451545)/36525)*100;
 const harmonic  = (pos, n) => Object.fromEntries(Object.entries(pos).map(([k,v])=>[k,norm(v*n)]));
 const progChart = (nJD, age) => allPlanets(nJD+age);
+const angSep = (a, b) => {
+  const d = Math.abs(norm(a) - norm(b));
+  return d > 180 ? 360 - d : d;
+};
 
 function findSolarReturn(natalSun, year) {
   const base = julianDay(year,1,1,0);
   for (let i=0;i<3660;i++) {
     const jd = base+i*0.1;
-    if (Math.abs(sunLon(jd)-natalSun)<0.05) return jd;
+    if (angSep(sunLon(jd), natalSun) < 0.05) return jd;
   }
   return null;
 }
@@ -258,7 +262,7 @@ function findSolarReturn(natalSun, year) {
 function findLunarReturn(natalMoon, jdStart) {
   for (let i=0;i<3000;i++) {
     const jd = jdStart + i*0.01;
-    if (Math.abs(moonLon(jd) - natalMoon) < 0.15) return jd;
+    if (angSep(moonLon(jd), natalMoon) < 0.15) return jd;
   }
   return null;
 }

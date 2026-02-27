@@ -10,10 +10,10 @@ import { planetToLetter } from '../../data/grammatology/yetzirah.js';
 const zodSign = lon => SIGNS[Math.floor(((lon%360+360)%360)/30)];
 const zodDeg = lon => (((lon%360+360)%360)%30).toFixed(1);
 
-export default function PlanetTable({ positions }) {
+export default function PlanetTable({ positions, jd = null, siderealPositions = null }) {
   const anime  = useAnime();
   const tRef   = useRef(null);
-  const ay     = ayanamsa(2451545);
+  const ay     = ayanamsa(jd ?? 2451545);
   useEffect(()=>{
     if (!anime||!tRef.current) return;
     anime({ targets:tRef.current.querySelectorAll("tbody tr"),
@@ -31,7 +31,7 @@ export default function PlanetTable({ positions }) {
         </tr></thead>
         <tbody>
           {Object.entries(positions).map(([p,lon])=>{
-            const sid=norm(lon-ay);
+            const sid = siderealPositions?.[p] ?? norm(lon-ay);
             const pl=planetToLetter(p);
             return (
               <tr key={p} style={{ borderBottom:`1px solid ${M3.outlineVariant}22` }}>

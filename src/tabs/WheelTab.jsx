@@ -120,7 +120,7 @@ export default function WheelTab({ ctx }) {
             The sidereal zodiac is anchored to the fixed stars. Used in Vedic (Jyotish) astrology, it accounts for the precession of the equinoxes - currently about <strong>{ayanamsa(res.jd).toFixed(1)}°</strong> offset from the tropical system. Notice how all your planet positions have shifted compared to the Western wheel.
           </p>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <WheelWithTooltip positions={res.sid} houses={res.houses} size={Math.min(560, window.innerWidth - 64)} id="sidwheel" />
+            <WheelWithTooltip positions={res.sid} houses={res.sidHouses || res.houses} size={Math.min(560, window.innerWidth - 64)} id="sidwheel" />
           </div>
           <div style={{ marginTop: 12, padding: "10px 14px", borderRadius: 10, background: M3.surfaceDim, textAlign: "center" }}>
             <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: "#ce93d8" }}>Ayanamsa offset: {ayanamsa(res.jd).toFixed(2)}°</span>
