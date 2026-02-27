@@ -1,5 +1,15 @@
 export default function NatalTab({ ctx }) {
-  const { M3, res, grid2, zodSign, SIGN_COL, HOUSE_AREA, P_COL, P_SYM, Card, PlanetTable, WheelWithTooltip, ProfilePanel } = ctx;
+  const { M3, res, grid2, zodSign, SIGN_COL, SIGN_SYM, HOUSE_AREA, HOUSE_INFO, P_COL, P_SYM, Card, PlanetTable, WheelWithTooltip, ProfilePanel } = ctx;
+
+  const fmtDeg = (lon) => {
+    const l = ((lon % 360) + 360) % 360;
+    const deg = Math.floor(l % 30);
+    const frac = (l % 1) * 60;
+    const min = Math.floor(frac);
+    return `${deg}°${String(min).padStart(2,"0")}'`;
+  };
+
+  const AXIS_LABELS = { 1:"ASC", 4:"IC", 7:"DSC", 10:"MC" };
 
   const HOUSE_DESC = [
     "Your identity, body, and how you present yourself to the world. Planets here strongly shape your personality.",
@@ -66,6 +76,40 @@ export default function NatalTab({ ctx }) {
               <WheelWithTooltip positions={res.trop} houses={res.houses} size={340} id="natal" />
             </div>
           </Card>
+          <Card title="⌂ House Cusps — Exact Positions">
+            <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
+              Each house cusp marks where a life domain begins. The degree and sign show the exact zodiacal position. Equal House system (30° per house from the Ascendant).
+            </p>
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead><tr>
+                  {["House","Cusp","Sign","Degree","Area","Planets"].map(h => (
+                    <th key={h} style={{ padding: "5px 8px", textAlign: "left", color: M3.secondary, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", letterSpacing: "0.06em", borderBottom: `1px solid ${M3.outlineVariant}`, whiteSpace: "nowrap" }}>{h}</th>
+                  ))}
+                </tr></thead>
+                <tbody>
+                  {Array.from({ length: 12 }, (_, i) => {
+                    const lon = res.houses[i + 1];
+                    const sign = zodSign(lon);
+                    const pls = housePlanets[i];
+                    const axis = AXIS_LABELS[i + 1];
+                    return (
+                      <tr key={i} style={{ borderBottom: `1px solid ${M3.outlineVariant}22`, background: axis ? M3.primaryContainer + "11" : "transparent" }}>
+                        <td style={{ padding: "4px 8px", fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: axis ? M3.primary : M3.onSurface, fontWeight: axis ? "700" : "400" }}>
+                          {i + 1}{axis ? ` (${axis})` : ""}
+                        </td>
+                        <td style={{ padding: "4px 8px", fontFamily: "'Share Tech Mono',monospace", fontSize: "0.64rem", color: M3.tertiary }}>{lon.toFixed(2)}°</td>
+                        <td style={{ padding: "4px 8px", fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: SIGN_COL[sign], fontWeight: "600" }}>{SIGN_SYM?.[sign] || ""} {sign}</td>
+                        <td style={{ padding: "4px 8px", fontFamily: "'Share Tech Mono',monospace", fontSize: "0.64rem", color: M3.onSurfaceVariant }}>{fmtDeg(lon)}</td>
+                        <td style={{ padding: "4px 8px", fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.64rem", color: M3.onSurfaceVariant, fontStyle: "italic" }}>{HOUSE_AREA[i]}</td>
+                        <td style={{ padding: "4px 8px", fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", color: M3.primary }}>{pls.map(p => P_SYM[p] || p).join(" ") || "—"}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </Card>
           <Card title="⌂ Life Areas (Houses) — Where Things Happen For You">
             <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
               Houses are life domains — each one governs a specific area. The sign on the house sets the style; planets inside bring activity and focus to that area.
@@ -74,11 +118,15 @@ export default function NatalTab({ ctx }) {
               const h = res.houses[i + 1];
               const sign = zodSign(h);
               const pls = housePlanets[i];
+              const axis = AXIS_LABELS[i + 1];
+              const hi = HOUSE_INFO?.[i];
               return (
                 <div key={i} style={{ padding: "10px 14px", marginBottom: 6, borderRadius: 10, background: SIGN_COL[sign] + "08", borderLeft: `3px solid ${SIGN_COL[sign]}33` }}>
                   <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: pls.length ? 4 : 0 }}>
                     <span style={{ color: M3.secondary, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "700", minWidth: 22 }}>{i + 1}.</span>
-                    <span style={{ color: SIGN_COL[sign], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "700" }}>{sign}</span>
+                    <span style={{ color: SIGN_COL[sign], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "700" }}>{SIGN_SYM?.[sign] || ""} {sign}</span>
+                    <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: M3.tertiary }}>{fmtDeg(h)}</span>
+                    {axis && <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: M3.primary, fontWeight: "700", padding: "1px 6px", borderRadius: 6, background: M3.primaryContainer + "44" }}>{axis}</span>}
                     <span style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.68rem", fontStyle: "italic", color: M3.onSurfaceVariant }}>{HOUSE_AREA[i]}</span>
                     {pls.length > 0 && <span style={{ marginLeft: "auto", fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.primary }}>{pls.map(p => P_SYM[p] || p).join(" ")}</span>}
                   </div>

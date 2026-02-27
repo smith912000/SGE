@@ -8,3 +8,4 @@ export { YETZIRAH_SIGN, YETZIRAH_PLANET, YETZIRAH_ELEMENT, signToLetter, planetT
 export { ZODIAC_CHINESE_MAP, CHINESE_ZODIAC_HEBREW, MUSICAL_SCALE_OCCULT } from './correspondences.js';
 export { HEBREW_CHAR_MAP, FINAL_FORMS, KNOWN_HEBREW } from './hebrewMap.js';
 export { KANGXI_INFO, KANGXI_RADICALS, KANGXI_TOP_10_BY_FREQUENCY, KANGXI_MOST_USED, KANGXI_STANDALONE } from './kangxiRadicals.js';
+export { SCRIPT_ATLAS, TWENTY_TWO_NOTE } from './scriptAtlas.js';

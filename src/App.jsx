@@ -41,6 +41,7 @@ import { DIGRAPH_MAP } from './data/grammatology/digraphs.js';
 import { signToLetter, planetToLetter } from './data/grammatology/yetzirah.js';
 import { ZODIAC_CHINESE_MAP, CHINESE_ZODIAC_HEBREW, MUSICAL_SCALE_OCCULT } from './data/grammatology/correspondences.js';
 import { KANGXI_INFO, KANGXI_RADICALS, KANGXI_TOP_10_BY_FREQUENCY, KANGXI_MOST_USED, KANGXI_STANDALONE } from './data/grammatology/kangxiRadicals.js';
+import { SCRIPT_ATLAS, TWENTY_TWO_NOTE } from './data/grammatology/scriptAtlas.js';
 
 // Data - Numerology
 import { LIFE_PATH_MEANING, EXPRESSION_MEANING, SOUL_URGE_MEANING, PERSONALITY_MEANING, BIRTHDAY_MEANING } from './data/numerology/meanings.js';
@@ -388,7 +389,7 @@ export default function App() {
                 )}
 
                 {tab==="natal" && (
-                  <NatalTab ctx={{ M3, res, grid2, zodSign, SIGN_COL, HOUSE_AREA, P_COL, P_SYM, Card, PlanetTable, WheelWithTooltip, ProfilePanel }} />
+                  <NatalTab ctx={{ M3, res, grid2, zodSign, SIGN_COL, SIGN_SYM, HOUSE_AREA, HOUSE_INFO, P_COL, P_SYM, Card, PlanetTable, WheelWithTooltip, ProfilePanel }} />
                 )}
 
                 {false && tab==="natal-old" && (
@@ -2556,6 +2557,7 @@ export default function App() {
                       res, P_COL, P_SYM, SIGN_COL, SIGN_SYM, SIGN_INFO, EL_COL,
                       gramScriptFilter, setGramScriptFilter, expandedLetter, setExpandedLetter,
                       KANGXI_INFO, KANGXI_RADICALS, KANGXI_TOP_10_BY_FREQUENCY, KANGXI_MOST_USED, KANGXI_STANDALONE,
+                      SCRIPT_ATLAS, TWENTY_TWO_NOTE,
                       Card,
                     }}
                   />

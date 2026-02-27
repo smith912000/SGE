@@ -19,6 +19,7 @@ PLANETS = {
     "Pluto": swe.PLUTO,
     "North Node": swe.MEAN_NODE,
     "Chiron": swe.CHIRON,
+    "Lilith": swe.MEAN_APOG,
 }
 
 

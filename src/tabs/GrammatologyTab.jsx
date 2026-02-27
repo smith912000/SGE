@@ -9,9 +9,13 @@ export default function GrammatologyTab({ ctx }) {
     grid2, cwInput, setCwInput, cwResult, setCwResult, analyzeWord,
     res, P_COL, P_SYM, SIGN_COL, SIGN_SYM, SIGN_INFO, EL_COL,
     KANGXI_INFO, KANGXI_RADICALS, KANGXI_TOP_10_BY_FREQUENCY, KANGXI_MOST_USED, KANGXI_STANDALONE,
+    SCRIPT_ATLAS, TWENTY_TWO_NOTE,
     gramScriptFilter, setGramScriptFilter, expandedLetter, setExpandedLetter,
     Card
   } = ctx;
+
+  const [atlasSearch, setAtlasSearch] = useState("");
+  const [atlasExpanded, setAtlasExpanded] = useState(null);
 
   const [selectedScript, setSelectedScript] = useState(null);
 
@@ -56,7 +60,14 @@ export default function GrammatologyTab({ ctx }) {
     Georgian: "georgian",
     Brahmi: "brahmi",
     Han: "hiero",
-    "Egyptian_Hieroglyphs": "hiero",
+    Egyptian_Hieroglyphs: "hiero",
+    Imperial_Aramaic: "aramaic",
+    Samaritan: "samaritan",
+    Syriac: "syriac",
+    Gothic: "gothic",
+    Glagolitic: "glagolitic",
+    Old_South_Arabian: "oldSouthArabian",
+    Cuneiform: "cuneiform",
   };
 
   const selectedField = selectedScript ? SCRIPT_TO_FIELD[selectedScript] : null;
@@ -86,7 +97,7 @@ export default function GrammatologyTab({ ctx }) {
           </div>
         )}
         <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
-          {[{id:"crosswalk",label:"✦ Word Crosswalk"},{id:"table",label:"Cross-Script Table"},{id:"systems",label:"Writing Systems"},{id:"egyptian",label:"Egyptian Signs"},{id:"ogham",label:"Ogham Trees"},{id:"tarot",label:"Tarot · Chinese"},{id:"kangxi",label:"康熙 Kangxi Radicals"},{id:"digraphs",label:"Digraphs"},{id:"ipa",label:"IPA Reference"},{id:"yetzirah",label:"Sefer Yetzirah"}].map(t=>(
+          {[{id:"crosswalk",label:"✦ Word Crosswalk"},{id:"table",label:"Cross-Script Table"},{id:"atlas",label:"🌍 Script Atlas (179)"},{id:"systems",label:"Writing Systems"},{id:"egyptian",label:"Egyptian Signs"},{id:"ogham",label:"Ogham Trees"},{id:"tarot",label:"Tarot · Chinese"},{id:"kangxi",label:"康熙 Kangxi Radicals"},{id:"digraphs",label:"Digraphs"},{id:"ipa",label:"IPA Reference"},{id:"yetzirah",label:"Sefer Yetzirah"}].map(t=>(
             <button key={t.id} onClick={()=>setGramTab(t.id)} style={{ padding:"5px 12px", borderRadius:14, border:`1px solid ${gramTab===t.id?M3.primary:M3.outlineVariant}`, background:gramTab===t.id?M3.primaryContainer:M3.surfaceContainer, color:gramTab===t.id?M3.onPrimaryContainer:M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", cursor:"pointer", transition:"all 0.2s" }}>{t.label}</button>
           ))}
         </div>
@@ -258,11 +269,20 @@ export default function GrammatologyTab({ ctx }) {
       )}
 
       {gramTab==="table" && (
-      <Card title="𐤀 Cross-Script Evolution — 22 Letters Across 20+ Writing Systems">
+      <Card title="𐤀 Cross-Script Evolution — 22 Root Letters Across 20+ Writing Systems">
+        <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.55, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
+          {TWENTY_TWO_NOTE || "The 22-letter Proto-Sinaitic abjad is the ancestral core mapped below. Many descendant scripts expanded beyond 22 to accommodate new phonemes."}
+        </p>
         <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginBottom:10 }}>
-          <span style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color:M3.secondary, padding:"3px 0" }}>COLUMNS:</span>
-          {[{id:"core",label:"Core (Hiero→Latin)"},{id:"semitic",label:"Semitic Family"},{id:"european",label:"European Scripts"},{id:"indic",label:"Indic Scripts"},{id:"all",label:"All Scripts"}].map(f=>(
-            <button key={f.id} onClick={()=>setGramScriptFilter(f.id)} style={{ padding:"3px 10px", borderRadius:12, border:`1px solid ${gramScriptFilter===f.id?M3.tertiary:M3.outlineVariant}`, background:gramScriptFilter===f.id?M3.tertiaryContainer||M3.secondaryContainer:M3.surfaceContainer, color:gramScriptFilter===f.id?M3.tertiary:M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.58rem", cursor:"pointer" }}>{f.label}</button>
+          <span style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color:M3.secondary, padding:"3px 0" }}>CULTURAL FAMILIES:</span>
+          {[
+            {id:"core",label:"Proto-Sinaitic Core",sub:"Egypt → Phoenicia → Greece → Rome"},
+            {id:"semitic",label:"Semitic Branches",sub:"Levant, Arabia, Horn of Africa"},
+            {id:"european",label:"Classical & European",sub:"Caucasus, Slavic, Celtic, Nordic"},
+            {id:"indic",label:"Indic & East Asian",sub:"Brahmi, Devanagari, Tamil, Bopomofo"},
+            {id:"all",label:"All Mapped Scripts",sub:"22 letters × 25+ writing systems"},
+          ].map(f=>(
+            <button key={f.id} onClick={()=>setGramScriptFilter(f.id)} title={f.sub} style={{ padding:"3px 10px", borderRadius:12, border:`1px solid ${gramScriptFilter===f.id?M3.tertiary:M3.outlineVariant}`, background:gramScriptFilter===f.id?M3.tertiaryContainer||M3.secondaryContainer:M3.surfaceContainer, color:gramScriptFilter===f.id?M3.tertiary:M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.58rem", cursor:"pointer" }}>{f.label}</button>
           ))}
         </div>
         <div style={{ overflowX:"auto" }}>
@@ -357,6 +377,66 @@ export default function GrammatologyTab({ ctx }) {
             </tbody>
           </table>
         </div>
+      </Card>
+      )}
+
+      {gramTab==="atlas" && (SCRIPT_ATLAS || []).length > 0 && (
+      <Card title="🌍 Script Atlas — 179 Writing Systems by Cultural Family">
+        <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 12px" }}>
+          Every writing system on Earth catalogued by Unicode, organized by cultural family and geographic origin. The <strong>22-letter Proto-Sinaitic abjad</strong> is the ancestral root — but many daughter scripts expanded far beyond 22: Arabic has 28, Greek 24, Cyrillic 33, Armenian 38, Devanagari 46+, Ge'ez 182+ fidels, and Chinese tens of thousands of characters. Scripts marked with <span style={{ color:M3.primary, fontWeight:700 }}>●</span> have full letter-level mappings in the Cross-Script Table.
+        </p>
+        <div style={{ display:"flex", gap:8, marginBottom:12 }}>
+          <input value={atlasSearch} onChange={e=>setAtlasSearch(e.target.value)} placeholder="Search scripts, cultures, regions..." style={{ flex:1, padding:"8px 12px", borderRadius:8, border:`1px solid ${M3.outline}`, background:M3.surfaceContainer, color:M3.onSurface, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem", outline:"none" }} />
+          <span style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", color:M3.tertiary, alignSelf:"center" }}>
+            {SCRIPT_ATLAS.reduce((n,f) => n + f.scripts.length, 0)} scripts
+          </span>
+        </div>
+        {SCRIPT_ATLAS.map(fam => {
+          const q = atlasSearch.trim().toLowerCase();
+          const scripts = q ? fam.scripts.filter(s => [s.name,s.letters,s.type,s.status,...(s.cultures||[])].join(" ").toLowerCase().includes(q)) : fam.scripts;
+          if (scripts.length === 0) return null;
+          const isOpen = atlasExpanded === fam.family;
+          return (
+            <div key={fam.family} style={{ marginBottom:12, borderRadius:10, border:`1px solid ${fam.color}33`, overflow:"hidden" }}>
+              <div onClick={()=>setAtlasExpanded(isOpen?null:fam.family)} style={{ padding:"10px 14px", background:`${fam.color}11`, cursor:"pointer", display:"flex", alignItems:"center", gap:10 }}>
+                <span style={{ width:8, height:8, borderRadius:4, background:fam.color, flexShrink:0 }} />
+                <div style={{ flex:1 }}>
+                  <div style={{ fontFamily:"Cinzel,serif", fontSize:"0.88rem", color:fam.color }}>{fam.family}</div>
+                  <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.56rem", color:M3.onSurfaceVariant }}>{fam.region} · {fam.era} · {scripts.length} scripts</div>
+                </div>
+                <span style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.72rem", color:M3.onSurfaceVariant }}>{isOpen ? "▲" : "▼"}</span>
+              </div>
+              {isOpen && (
+                <div style={{ padding:"10px 14px" }}>
+                  <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.55, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>{fam.desc}</p>
+                  <div style={{ overflowX:"auto" }}>
+                    <table style={{ width:"100%", borderCollapse:"collapse" }}>
+                      <thead><tr>
+                        {["Script","Letters","Type","Status","Cultures"].map(h => (
+                          <th key={h} style={{ padding:"4px 8px", textAlign:"left", color:M3.secondary, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.54rem", letterSpacing:"0.06em", borderBottom:`1px solid ${M3.outlineVariant}`, whiteSpace:"nowrap" }}>{h}</th>
+                        ))}
+                      </tr></thead>
+                      <tbody>
+                        {scripts.map(s => (
+                          <tr key={s.name} style={{ borderBottom:`1px solid ${M3.outlineVariant}22` }}>
+                            <td style={{ padding:"4px 8px", fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", color:M3.onSurface }}>
+                              {s.mapped && <span style={{ color:M3.primary, marginRight:4 }}>●</span>}
+                              {s.name.replace(/_/g," ")}
+                            </td>
+                            <td style={{ padding:"4px 8px", fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", color:M3.tertiary }}>{s.letters}</td>
+                            <td style={{ padding:"4px 8px", fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color:M3.onSurfaceVariant }}>{s.type}</td>
+                            <td style={{ padding:"4px 8px", fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color: s.status==="Living"?"#4caf50":s.status?.includes("Extinct")?"#999":s.status?.includes("Historical")?"#b39ddb":"#90a4ae" }}>{s.status}</td>
+                            <td style={{ padding:"4px 8px", fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.64rem", color:M3.onSurfaceVariant }}>{(s.cultures||[]).join(", ")}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </Card>
       )}
 
