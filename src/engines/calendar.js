@@ -11,7 +11,7 @@ import { NAMES_72, NAMES_99, PATHS_32 } from '../data/calendar/sacredNames.js';
 import { MONTH_DAY_TAROT } from '../data/calendar/tarot.js';
 import { OGHAM_TREES, INDIGENOUS_ZODIAC, CHINESE_SOLAR_ZODIAC } from '../data/calendar/crossCultural.js';
 import { MASTER_TEACHER_DAYS, REFLECTIVE_FESTIVALS, SAMB_WEEKDAYS } from '../data/calendar/festivals.js';
-import { HEBREW_LUNAR_MONTHS, EGYPTIAN_MONTHS } from '../data/calendar/lunarEgyptian.js';
+import { HEBREW_LUNAR_MONTHS, EGYPTIAN_MONTHS, HINDU_MONTHS, ATHENIAN_MONTHS } from '../data/calendar/lunarEgyptian.js';
 
 /* ── Phase 1: Gregorian to Samb Conversion ── */
 function gregorianToSamb(year, month, day) {
@@ -334,11 +334,13 @@ function computeSambCalendar(year, month, day) {
   const weekday = getSambWeekday(d);
   const hebrewMonth = HEBREW_LUNAR_MONTHS[(core.month - 1) % 12];
   const egyptianMonth = EGYPTIAN_MONTHS[(core.month - 1) % 12];
+  const hinduMonth = HINDU_MONTHS[(core.month - 1) % 12];
 
   return { ...core, subdivisions: subs, numSequences: numSeqs, cycles, holidays,
     dayMeaning, activeMarkers, activeSeqs,
     ogham, indigenous, chineseSolar, masterTeacher, reflective, weekday,
-    hebrewMonth, egyptianMonth };
+    hebrewMonth, egyptianMonth, hinduMonth,
+    athenianMonth: ATHENIAN_MONTHS[(core.month - 1) % 12] };
 }
 
 export { gregorianToSamb, computeSubdivisions, computeNumSequences, findCycleEntry, computeSymbolicCycles, SAMB_HOLIDAYS_MAP, DAY_MEANINGS, getOghamTree, getIndigenousAnimal, getChineseSolarAnimal, getMasterTeacher, getReflectiveFestival, getSambWeekday, computeSambCalendar };

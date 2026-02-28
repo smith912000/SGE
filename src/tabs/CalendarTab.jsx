@@ -191,7 +191,7 @@ export default function CalendarTab({ ctx }) {
           {cd.weekday}, Day {cd.dayOfYear} of {cd.maxDay} — {cd.monthName} {cd.dayOfMonth}
         </div>
         <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.72rem", color:M3.onSurfaceVariant, margin:"4px 0" }}>
-          Hebrew: {cd.hebrewMonth?.heb} ({cd.hebrewMonth?.en}) · Egyptian: {cd.egyptianMonth?.name} (of {cd.egyptianMonth?.deity})
+          Hebrew: {cd.hebrewMonth?.heb} ({cd.hebrewMonth?.en}) · Hindu: {cd.hinduMonth?.san} ({cd.hinduMonth?.en}) · Athenian: {cd.athenianMonth?.gk} ({cd.athenianMonth?.en}) · Egyptian: {cd.egyptianMonth?.name} (of {cd.egyptianMonth?.deity})
         </div>
         <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.78rem", color:M3.onSurfaceVariant }}>
           {cd.zodiacPrimary?.sign}

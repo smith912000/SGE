@@ -1,0 +1,158 @@
+// ════════════════════════════════════════════════════════════════════
+// Lunar Mansion Systems — Arabic, Vedic, Chinese
+// Three parallel systems of dividing the Moon's monthly path
+// ════════════════════════════════════════════════════════════════════
+
+export const MANAZIL_AL_QAMAR = [
+  { n:1, ar:"ﭐلْشَّرَطَيْن", en:"Ash-Sharatain", meaning:"The Two Signs", star:"β Arietis (Sheratan)", degree:"0°0' Aries", angel:"Israfil (إِسْرَافِيل)", letter:"أ", letterName:"alif", gematria:1, hebrew:"א", spirit:"Geniel", withMoon:"Buy cattle, plant and take voyages", general:"Causes discords and journeys", magical:"For the destruction of someone" },
+  { n:2, ar:"ﭐلْبُطَيْن", en:"Al-Butain", meaning:"The Belly", star:"δ Arietis (Botein)", degree:"12°51' Aries", angel:"Jibra'il (جِبْرَائِيل)", letter:"ب", letterName:"ba'", gematria:2, hebrew:"ב", spirit:"Enediel", withMoon:"Buy and sell but avoid the sea", general:"Helps finding treasures and retaining captives", magical:"For reconciliations with royalty" },
+  { n:3, ar:"ﭐلْثُّرَيَّا", en:"Ath-Thurayya", meaning:"The Many Little Ones", star:"η Tauri (Alcyone)", degree:"25°43' Aries", angel:"Kalka'il (كلكائيل)", letter:"ج", letterName:"jim", gematria:3, hebrew:"ג", spirit:"Anixiel", withMoon:"Plant and sow but do not marry or travel by water", general:"Profitable to sailors, huntsmen and alchemists", magical:"For general good fortune and happiness" },
+  { n:4, ar:"ﭐلْدَّبَرَان", en:"Ad-Dabaran", meaning:"The Follower", star:"α Tauri (Aldebaran)", degree:"8°34' Taurus", angel:"Darda'il (دردَائِيل)", letter:"د", letterName:"dal", gematria:4, hebrew:"ד", spirit:"Azariel", withMoon:"Pursue business, travel, marry and take medicine", general:"Causes destruction and hindrances of buildings, fountains, wells, gold mines, flight of creeping things, and begets discord", magical:"For revenge, separation, enmity and ill will" },
+  { n:5, ar:"ﭐلْهَقْعَة", en:"Al-Haq'ah", meaning:"A White Spot", star:"λ Orionis (Meissa)", degree:"21°26' Taurus", angel:"Durya'il (دوريَائِيل)", letter:"ه", letterName:"ha'", gematria:5, hebrew:"ה", spirit:"Gabriel", withMoon:"Begin war but do not sow or undertake any good", general:"Helps return from journey, instruction of scholars, building, gives health and goodwill", magical:"For royal and official favor and good entertainment" },
+  { n:6, ar:"ﭐلْهَنْعَة", en:"Al-Han'ah", meaning:"A Brand / Mark", star:"γ Geminorum (Alhena)", degree:"4°17' Gemini", angel:"Fatma'il (فتمَائِيل)", letter:"و", letterName:"waw", gematria:6, hebrew:"ו", spirit:"Dirachiel", withMoon:"Plough, sow, but do not travel", general:"Favorable for hunting, besieging towns, revenge of princes, destroys harvests and fruits, hinders physician", magical:"To procure love between two people" },
+  { n:7, ar:"ﭐلْذِّرَاعْ", en:"Adh-Dhira", meaning:"The Forearm", star:"α Geminorum (Castor)", degree:"17°9' Gemini", angel:"Sharfa'il (شرفَائِيل)", letter:"ز", letterName:"zayn", gematria:7, hebrew:"ז", spirit:"Scheliel", withMoon:"Travel and take medicine", general:"Favorable for gain and friendship and for lovers, destroys magistracies", magical:"To obtain every good thing" },
+  { n:8, ar:"ﭐلْنَّثْرَة", en:"An-Nathrah", meaning:"The Gap / Crib", star:"M44 Cancri (Praesepe)", degree:"0°0' Cancer", angel:"Tankafil (تنكفيل)", letter:"ح", letterName:"ha'", gematria:8, hebrew:"ח", spirit:"Amnediel", withMoon:"Navigate", general:"Causes love, friendship and society of fellow travelers, drives away mice, afflicts captives", magical:"For victory in war" },
+  { n:9, ar:"ﭐلْطَّرْف", en:"At-Tarf", meaning:"The Glance (Of The Lion's Eye)", star:"λ Leonis (Alterf)", degree:"12°51' Cancer", angel:"Isma'il (إِسْمَاعِيل)", letter:"ط", letterName:"ta'", gematria:9, hebrew:"ט", spirit:"Barbiel", withMoon:"Plant, build, marry, but do not travel", general:"Hinders harvest and travelers, causes discord", magical:"To cause infirmities" },
+  { n:10, ar:"ﭐلْجَبْهَة", en:"Al-Jab'hah", meaning:"The Forehead", star:"η Leonis (Al Jabhah)", degree:"25°43' Cancer", angel:"Kita'il (كيطَائِيل)", letter:"ي", letterName:"ya'", gematria:10, hebrew:"י", spirit:"Ardefiel", withMoon:"Sow, plant, release prisoners but take no purgatives", general:"Strengthens buildings, promotes love, benevolence, help against enemies", magical:"To facilitate child-bearing and cure illness" },
+  { n:11, ar:"ﭐلْزُّبْرَة", en:"Az-Zubrah", meaning:"The Mane", star:"δ Leonis (Zosma)", degree:"8°34' Leo", angel:"Haruza'il (حروزَائِيل)", letter:"ك", letterName:"kaf", gematria:20, hebrew:"כ", spirit:"Neciel", withMoon:"Plant, marry but do not navigate", general:"Good for voyages, gain by merchandise, redemption of captives", magical:"For fear, reverence and worship" },
+  { n:12, ar:"ﭐلْصَّرْفَة", en:"As-Sarfah", meaning:"The Changer (Of The Weather)", star:"β Leonis (Denebola)", degree:"21°26' Leo", angel:"Tata'il (طَاطَائِيل)", letter:"ل", letterName:"lam", gematria:30, hebrew:"ל", spirit:"Abdizuel", withMoon:"Travel, navigate, sow, plow, marry and send messengers", general:"Gives prosperity to harvest and plantations, hinders seamen, good for bettering servants and captives", magical:"For separation of lovers" },
+  { n:13, ar:"ﭐلْعَوَّاء", en:"Al-Awwa'", meaning:"The Barker", star:"β Virginis (Zavijava)", degree:"4°17' Virgo", angel:"Ruma'il (رومَائِيل)", letter:"م", letterName:"mim", gematria:40, hebrew:"מ", spirit:"Jazeriel", withMoon:"Sow, plant, take medicine but do not travel or marry", general:"Gives benevolence, gain, voyages, harvests and freedom of captives", magical:"For agreement of married people" },
+  { n:14, ar:"ﭐلْسِّمَاك", en:"As-Simak", meaning:"The Unarmed", star:"α Virginis (Spica)", degree:"17°9' Virgo", angel:"Hula'il (حولَائِيل)", letter:"ن", letterName:"nun", gematria:50, hebrew:"נ", spirit:"Ergediel", withMoon:"Dig but do not marry or travel", general:"Causes marital love, cures sick, helps sailors but hinders journeys by land", magical:"For separation and divorce" },
+  { n:15, ar:"ﭐلْغَفْر", en:"Al-Ghafr", meaning:"The Covering", star:"ι Virginis (Syrma)", degree:"0°0' Libra", angel:"Hamrakil (همرَاكيل)", letter:"س", letterName:"sin", gematria:60, hebrew:"ס", spirit:"Atliel", withMoon:"Unfortunate for anything", general:"Favorable for extracting treasures, digging pits, helps divorce, discord, destruction of houses and enemies, hinders travelers", magical:"For friendship and goodwill" },
+  { n:16, ar:"ﭐلْزُّبَانَى", en:"Az-Zubana", meaning:"The Claws", star:"α Librae (Zubenelgenubi)", degree:"12°51' Libra", angel:"Luma'il (لومَائِيل)", letter:"ع", letterName:"ayn", gematria:70, hebrew:"ע", spirit:"Azeruel", withMoon:"Buy cattle but do not navigate", general:"Hinders journeys and marriage, harvest and merchandise, favorable for redemption of captives", magical:"For gaining merchandise" },
+  { n:17, ar:"ﭐلْإِكْلِيل", en:"Al-Iklil", meaning:"The Crown (of the Forehead)", star:"δ Scorpii (Dschubba)", degree:"25°43' Libra", angel:"Sarhamakil (سرهمَاكيل)", letter:"ف", letterName:"fa'", gematria:80, hebrew:"פ", spirit:"Adriel", withMoon:"Build, sow, plant, navigate but do not marry", general:"Improves misfortune, makes love durable, strengthens buildings, helps seamen", magical:"Against thieves and robbers" },
+  { n:18, ar:"ﭐلْقَلْب", en:"Al-Qalb", meaning:"The Heart", star:"α Scorpii (Antares)", degree:"8°34' Scorpio", angel:"Ahjama'il (اهجمَائِيل)", letter:"ص", letterName:"sad", gematria:90, hebrew:"צ", spirit:"Egibiel", withMoon:"Plant, sow, travel and go to war", general:"Causes discord, sedition, conspiracy against princes, revenge from enemies, but frees captives and helps building", magical:"Against fevers and venomous creatures" },
+  { n:19, ar:"ﭐلْشَّوْلَة", en:"Ash-Shawlah", meaning:"The Sting", star:"λ Scorpii (Shaula)", degree:"21°26' Scorpio", angel:"Atra'il (عطرَائِيل)", letter:"ق", letterName:"qaf", gematria:100, hebrew:"ק", spirit:"Amutiel", withMoon:"Buy cattle, hunt but do not marry", general:"Helps besieging cities, taking towns, driving men from places, destruction of seamen and captives", magical:"For facilitation of birth" },
+  { n:20, ar:"ﭐلْنَّعَائَم", en:"An-Na'am", meaning:"The Ostriches", star:"φ Sagittarii", degree:"4°17' Sagittarius", angel:"Amwakil (امواكيل)", letter:"ر", letterName:"ra'", gematria:200, hebrew:"ר", spirit:"Kyriel", withMoon:"Build, ask favors but do not marry", general:"Helps taming wild beasts, strengthens prisons, destroys wealth of societies, compels a man to come to a certain place", magical:"For hunting" },
+  { n:21, ar:"ﭐلْبَلْدَة", en:"Al-Baldah", meaning:"The City / District", star:"π Sagittarii (Albaldah)", degree:"17°9' Sagittarius", angel:"Hamra'il (همرَائِيل)", letter:"ش", letterName:"shin", gematria:300, hebrew:"ש", spirit:"Bethnael", withMoon:"Take medicine, navigate and put on new clothes", general:"Favorable for harvest, gain, buildings and travelers, but causes divorce", magical:"For the destruction of someone" },
+  { n:22, ar:"سَعْدُ ﭐلْذَّابِح", en:"Sa'd adh-Dhabih", meaning:"The Lucky One of the Slaughterers", star:"β Capricorni (Dabih)", degree:"0°0' Capricorn", angel:"Azra'il (عَزْرَائِيل)", letter:"ت", letterName:"ta'", gematria:400, hebrew:"ת", spirit:"Geliel", withMoon:"Take medicine, travel, but do not lend money or marry", general:"Helps escape of servants and captives, curing diseases", magical:"For the security of runaways" },
+  { n:23, ar:"سَعْدُ ﭐلْبُلْعَ", en:"Sa'd al-Bula", meaning:"Good Fortune of the Swallower", star:"μ Aquarii (Albulaan)", degree:"12°51' Capricorn", angel:"Mika'il (مِيكَائِيل)", letter:"ث", letterName:"tha'", gematria:500, hebrew:"ך", spirit:"Requiel", withMoon:"Marry, sow, take medicine and lead an army", general:"Causes divorces, liberty of captives, heals sick", magical:"For destruction and wasting" },
+  { n:24, ar:"سَعْدُ ﭐلْسُّعُود", en:"Sa'd as-Su'ud", meaning:"The Luckiest of the Lucky", star:"β Aquarii (Sadalsuud)", degree:"25°43' Capricorn", angel:"Mahka'il (مهكَائِيل)", letter:"خ", letterName:"kha'", gematria:600, hebrew:"ם", spirit:"Abrinael", withMoon:"Build, marry, make friends and travel", general:"Gives marital happiness, victory of soldiers but prevents execution of government", magical:"For multiplying herds of cattle" },
+  { n:25, ar:"سَعْدُ ﭐلْأَخْبِيَّه", en:"Sa'd al-Akhbiyya", meaning:"Lucky Star of Hidden Things", star:"γ Aquarii (Sadachbia)", degree:"8°34' Aquarius", angel:"Ahrafil (اهرَافِيل)", letter:"ذ", letterName:"dhal", gematria:700, hebrew:"ן", spirit:"Aziel", withMoon:"Unfortunate for everything except taking medicine", general:"Favorable for besieging and revenge, destroys enemies, causes divorce, helps prisons and buildings, hastens messengers, hinders childbirth", magical:"For preservation of trees and harvest" },
+  { n:26, ar:"فَرْغُ ﭐلْدَّلُو ﭐلْمُقْدِم", en:"Al-Fargh al-Muqaddam", meaning:"The Fore-spout of the Water-bucket", star:"α Pegasi (Markab)", degree:"21°26' Aquarius", angel:"Atka'il (عطكَائِيل)", letter:"ض", letterName:"dad", gematria:800, hebrew:"ף", spirit:"Tagriel", withMoon:"Plant, sow, bargain, marry but do not navigate", general:"Causes union, health of captives, destroys buildings and prisons", magical:"For love and favor" },
+  { n:27, ar:"فَرْغُ ﭐلْدَّلُو ﭐلْمُؤْخَر", en:"Al-Fargh al-Mu'akhkhar", meaning:"The Second Spout of the Water-bucket", star:"γ Pegasi (Algenib)", degree:"4°17' Pisces", angel:"Tura'il (تورَائِيل)", letter:"ظ", letterName:"za'", gematria:900, hebrew:"ץ", spirit:"Atheniel", withMoon:"Marry, take medicine, pursue business but do not travel or lend money", general:"Increases harvests, revenues, gain, heals infirmities, hinders building, upholds prisons, causes danger to seamen, destruction of enemies", magical:"To destroy fountains, pits, medicinal waters and baths" },
+  { n:28, ar:"بَطْنُ ﭐلْحُوت", en:"Batn al-Hut", meaning:"The Belly of the Fish", star:"β Andromedae (Mirach)", degree:"17°9' Pisces", angel:"Lukha'il (لوخَائِيل)", letter:"غ", letterName:"ghayn", gematria:1000, hebrew:"⚕", spirit:"Amnixiel", withMoon:"Travel and take purgatives", general:"Increases harvest and merchandise, helps travelers through danger, strengthens prisons, causes marital happiness and loss of treasure", magical:"For catching fish" },
+];
+
+export const NAKSHATRAS = [
+  { n:1, san:"अश्विनी", en:"Ashvini", meaning:"The Horsemen", stars:"β and γ Arietis", ruler:"Ketu", symbol:"Horse's head", deity:"Ashvins", sidereal:"0°–13°20' Aries", tropical:"26° Aries–9°20' Taurus", ppiadas:["Chu","Che","Cho","La"] },
+  { n:2, san:"भरणी", en:"Bharani", meaning:"The Bearer", stars:"35, 39, 41 Arietis", ruler:"Venus", symbol:"Yoni", deity:"Yama", sidereal:"13°20'–26°40' Aries", tropical:"9°20'–22°40' Taurus", padas:["Li","Lu","Le","Lo"] },
+  { n:3, san:"कृत्तिका", en:"Krittika", meaning:"To Cut", stars:"Pleiades", ruler:"Sun", symbol:"Knife or spear", deity:"Agni", sidereal:"26°40' Aries–10° Taurus", tropical:"22°40' Taurus–6° Gemini", padas:["A","I","U","E"] },
+  { n:4, san:"रोहिणी", en:"Rohini", meaning:"Radiant Maiden", stars:"Aldebaran", ruler:"Moon", symbol:"Cart or chariot, temple, banyan tree", deity:"Prajapati (Brahma)", sidereal:"10°–23°20' Taurus", tropical:"6°–19°20' Gemini", padas:["O","Va","Vi","Vu"] },
+  { n:5, san:"मृगशीर्षा", en:"Mrigashirsha", meaning:"The Deer's Head", stars:"λ, φ Orionis", ruler:"Mars", symbol:"Deer's head", deity:"Soma (Moon god)", sidereal:"23°20' Taurus–6°40' Gemini", tropical:"19°20' Gemini–2°40' Cancer", padas:["Ve","Vo","Ka","Ke"] },
+  { n:6, san:"आर्द्रा", en:"Ardra", meaning:"The Moist One", stars:"Betelgeuse", ruler:"Rahu", symbol:"Teardrop, diamond, human head", deity:"Rudra (Shiva)", sidereal:"6°40'–20° Gemini", tropical:"2°40'–16° Cancer", padas:["Ku","Gha","Ng","Chha"] },
+  { n:7, san:"पुनर्वसु", en:"Punarvasu", meaning:"Return Of The Light", stars:"Castor and Pollux", ruler:"Jupiter", symbol:"Bow and quiver", deity:"Aditi", sidereal:"20° Gemini–3°20' Cancer", tropical:"16°–29°20' Cancer", padas:["Ke","Ko","Ha","Hi"] },
+  { n:8, san:"पुष्य", en:"Pushya", meaning:"The Nourisher", stars:"γ, δ, θ Cancri", ruler:"Saturn", symbol:"Cow's udder, lotus, arrow, circle", deity:"Brihaspati", sidereal:"3°20'–16°40' Cancer", tropical:"29°20' Cancer–12°40' Leo", padas:["Hu","He","Ho","Da"] },
+  { n:9, san:"आश्लेषा", en:"Ashlesha", meaning:"The Embrace", stars:"δ, ε, η, ρ, σ Hydrae", ruler:"Mercury", symbol:"Serpent", deity:"Nagas", sidereal:"16°40'–30° Cancer", tropical:"12°40'–26° Leo", padas:["Di","Du","De","Do"] },
+  { n:10, san:"मघा", en:"Magha", meaning:"The Mighty", stars:"Regulus", ruler:"Ketu", symbol:"Royal Throne", deity:"Pitrs (Ancestors)", sidereal:"0°–13°20' Leo", tropical:"26° Leo–9°20' Virgo", padas:["Ma","Mi","Mu","Me"] },
+  { n:11, san:"पूर्व फाल्गुनी", en:"Purva Phalguni", meaning:"The Former Reddish One", stars:"δ, θ Leonis", ruler:"Venus", symbol:"Front legs of bed, hammock, fig tree", deity:"Bhaga", sidereal:"13°20'–26°40' Leo", tropical:"9°20'–22°40' Virgo", padas:["Mo","Ta","Ti","Tu"] },
+  { n:12, san:"उत्तर फाल्गुनी", en:"Uttara Phalguni", meaning:"The Latter Reddish One", stars:"Denebola", ruler:"Sun", symbol:"Four legs of bed, hammock", deity:"Aryaman", sidereal:"26°40' Leo–10° Virgo", tropical:"22°40' Virgo–6° Libra", padas:["Te","To","Pa","Pi"] },
+  { n:13, san:"हस्त", en:"Hasta", meaning:"The Hand", stars:"α, β, γ, δ, ε Corvi", ruler:"Moon", symbol:"Hand or fist", deity:"Savitr", sidereal:"10°–23°20' Virgo", tropical:"6°–19°20' Libra", padas:["Pu","Sha","Na","Tha"] },
+  { n:14, san:"चित्रा", en:"Chitra", meaning:"The Bright One", stars:"Spica", ruler:"Mars", symbol:"Bright jewel or pearl", deity:"Vishwakarma", sidereal:"23°20' Virgo–6°40' Libra", tropical:"19°20' Libra–2°40' Scorpio", padas:["Pe","Po","Ra","Ri"] },
+  { n:15, san:"स्वाति", en:"Svati", meaning:"The Independent One", stars:"Arcturus", ruler:"Rahu", symbol:"Shoot of plant, coral", deity:"Vayu", sidereal:"6°40'–20° Libra", tropical:"2°40'–16° Scorpio", padas:["Ru","Re","Ro","Ta"] },
+  { n:16, san:"विशाखा", en:"Vishakha", meaning:"Branching Out", stars:"α, β, γ, ι Librae", ruler:"Jupiter", symbol:"Triumphal arch, potter's wheel", deity:"Indra and Agni", sidereal:"20° Libra–3°20' Scorpio", tropical:"16°–29°20' Scorpio", padas:["Ti","Tu","Te","To"] },
+  { n:17, san:"अनुराधा", en:"Anuradha", meaning:"Following Radha", stars:"β, δ, π Scorpionis", ruler:"Saturn", symbol:"Triumphal archway, lotus, bamboo", deity:"Mitra", sidereal:"3°20'–16°40' Scorpio", tropical:"29°20' Scorpio–12°40' Sagittarius", padas:["Na","Ni","Nu","Ne"] },
+  { n:18, san:"ज्येष्ठा", en:"Jyeshtha", meaning:"The Eldest", stars:"α, σ, τ Scorpionis", ruler:"Mercury", symbol:"Circular amulet, umbrella, earring", deity:"Indra", sidereal:"16°40'–30° Scorpio", tropical:"12°40'–26° Sagittarius", padas:["No","Ya","Yi","Yu"] },
+  { n:19, san:"मूल", en:"Mula", meaning:"The Root", stars:"ε, ζ, η, θ, ι, κ, λ, μ, ν Scorpionis", ruler:"Ketu", symbol:"Bunch of roots, elephant goad", deity:"Nirrti", sidereal:"0°–13°20' Sagittarius", tropical:"26° Sagittarius–9°20' Capricorn", padas:["Ye","Yo","Bha","Bhi"] },
+  { n:20, san:"पूर्वाषाढ़ा", en:"Purva Ashadha", meaning:"The Former Unconquered", stars:"δ, ε Sagittarii", ruler:"Venus", symbol:"Elephant tusk, fan, winnowing basket", deity:"Apah", sidereal:"13°20'–26°40' Sagittarius", tropical:"9°20'–22°40' Capricorn", padas:["Bhu","Dha","Bha/Pha","Dha"] },
+  { n:21, san:"उत्तराषाढ़ा", en:"Uttara Ashadha", meaning:"The Latter Unconquered", stars:"ζ, σ Sagittarii", ruler:"Sun", symbol:"Elephant tusk, small bed", deity:"Visvedevas", sidereal:"26°40' Sagittarius–10° Capricorn", tropical:"22°40' Capricorn–6° Aquarius", padas:["Bhe","Bho","Ja","Ji"] },
+  { n:22, san:"अभिजित", en:"Abhijit", meaning:"The Invincible", stars:"ζ, σ Lyrae", ruler:"Brahma", symbol:"Vina (lute)", deity:"Brahma", sidereal:"6°40'–10°53' Capricorn", tropical:"2°40'–6°53' Aquarius", padas:[], intercalary:true, note:"Not a standard nakshatra — spans 4th pada of Uttara Ashadha to 1st pada of Shravana" },
+  { n:23, san:"श्रवण", en:"Shravana", meaning:"To Hear", stars:"α, β, γ Aquilae", ruler:"Moon", symbol:"Ear or Three Footprints", deity:"Vishnu", sidereal:"10°–23°20' Capricorn", tropical:"6°–19°20' Aquarius", padas:["Ju/Khi","Je/Khu","Jo/Khe","Gha/Kho"] },
+  { n:24, san:"धनिष्ठा", en:"Dhanishtha", meaning:"Wealthiest", stars:"α, β, γ, δ Delphini", ruler:"Mars", symbol:"Drum or flute", deity:"Vasus", sidereal:"23°20' Capricorn–6°40' Aquarius", tropical:"19°20' Aquarius–2°40' Pisces", padas:["Ga","Gi","Gu","Ge"] },
+  { n:25, san:"शतभिषा", en:"Shatabhisha", meaning:"A Hundred Physicians", stars:"γ Aquarii (Sadachbia)", ruler:"Rahu", symbol:"Empty circle, 1000 flowers or stars", deity:"Varuna", sidereal:"6°40'–20° Aquarius", tropical:"2°40'–16° Pisces", padas:["Go","Sa","Si","Su"] },
+  { n:26, san:"पूर्वभाद्रपदा", en:"Purva Bhadrapada", meaning:"The Former Blessed Feet", stars:"α, β Pegasi", ruler:"Jupiter", symbol:"Swords, two front legs of funeral cot, man with two faces", deity:"Ajaikapada", sidereal:"20° Aquarius–3°20' Pisces", tropical:"16°–29°20' Pisces", padas:["Se","So","Da","Di"] },
+  { n:27, san:"उत्तरभाद्रपदा", en:"Uttara Bhadrapada", meaning:"The Latter Blessed Feet", stars:"γ Pegasi, α Andromedae", ruler:"Saturn", symbol:"Twins, back legs of funeral cot, snake in water", deity:"Ahirbudhnya", sidereal:"3°20'–16°40' Pisces", tropical:"29°20' Pisces–12°40' Aries", padas:["Du","Tha","Jha","Da/Tra"] },
+  { n:28, san:"रेवती", en:"Revati", meaning:"Prosperous", stars:"ζ Piscium", ruler:"Mercury", symbol:"Fish or pair of fish, drum", deity:"Pushan", sidereal:"16°40'–30° Pisces", tropical:"12°40'–26° Aries", padas:["De","Do","Cha","Chi"] },
+];
+
+export const NAKSHATRA_INFO = {
+  title: "Nakshatra (नक्षत्रम्) — Vedic Lunar Mansions",
+  count: "27 standard (28 with intercalary Abhijit)",
+  span: "Each nakshatra covers 13°20' of the ecliptic",
+  padas: "Each nakshatra has 4 padas (quarters) of 3°20' each",
+  totalPadas: "27 × 4 = 108 — the number of beads in a japa mala",
+  note: "The 108 padas represent all the elements (ansh) of Vishnu. Each pada has a starting syllable used for naming children born under that nakshatra.",
+};
+
+// ── Chinese 28 Mansions (二十八宿) ─────────────────────────────────
+
+export const CHINESE_MANSIONS = [
+  { n:1, zh:"角", pinyin:"Jiǎo", en:"Horn", star:"α Vir", symbol:"Azure Dragon", season:"Spring" },
+  { n:2, zh:"亢", pinyin:"Kàng", en:"Neck", star:"κ Vir", symbol:"Azure Dragon", season:"Spring" },
+  { n:3, zh:"氐", pinyin:"Dī", en:"Root", star:"α Lib", symbol:"Azure Dragon", season:"Spring" },
+  { n:4, zh:"房", pinyin:"Fáng", en:"Room", star:"π Sco", symbol:"Azure Dragon", season:"Spring" },
+  { n:5, zh:"心", pinyin:"Xīn", en:"Heart", star:"α Sco", symbol:"Azure Dragon", season:"Spring" },
+  { n:6, zh:"尾", pinyin:"Wěi", en:"Tail", star:"μ¹ Sco", symbol:"Azure Dragon", season:"Spring" },
+  { n:7, zh:"箕", pinyin:"Jī", en:"Winnowing Basket", star:"γ Sgr", symbol:"Azure Dragon", season:"Spring" },
+  { n:8, zh:"斗", pinyin:"Dǒu", en:"Southern Dipper", star:"φ Sgr", symbol:"Black Tortoise", season:"Winter" },
+  { n:9, zh:"牛", pinyin:"Niú", en:"Ox", star:"β Cap", symbol:"Black Tortoise", season:"Winter" },
+  { n:10, zh:"女", pinyin:"Nǚ", en:"Girl", star:"ε Aqr", symbol:"Black Tortoise", season:"Winter" },
+  { n:11, zh:"虛", pinyin:"Xū", en:"Emptiness", star:"β Aqr", symbol:"Black Tortoise", season:"Winter" },
+  { n:12, zh:"危", pinyin:"Wēi", en:"Rooftop", star:"α Aqr", symbol:"Black Tortoise", season:"Winter" },
+  { n:13, zh:"室", pinyin:"Shì", en:"Encampment", star:"α Peg", symbol:"Black Tortoise", season:"Winter" },
+  { n:14, zh:"壁", pinyin:"Bì", en:"Wall", star:"γ Peg", symbol:"Black Tortoise", season:"Winter" },
+  { n:15, zh:"奎", pinyin:"Kuí", en:"Legs", star:"η And", symbol:"White Tiger", season:"Autumn" },
+  { n:16, zh:"婁", pinyin:"Lóu", en:"Bond", star:"β Ari", symbol:"White Tiger", season:"Autumn" },
+  { n:17, zh:"胃", pinyin:"Wèi", en:"Stomach", star:"35 Ari", symbol:"White Tiger", season:"Autumn" },
+  { n:18, zh:"昴", pinyin:"Mǎo", en:"Hairy Head", star:"17 Tau", symbol:"White Tiger", season:"Autumn" },
+  { n:19, zh:"畢", pinyin:"Bì", en:"Net", star:"ε Tau", symbol:"White Tiger", season:"Autumn" },
+  { n:20, zh:"觜", pinyin:"Zī", en:"Turtle Beak", star:"λ Ori", symbol:"White Tiger", season:"Autumn" },
+  { n:21, zh:"参", pinyin:"Shēn", en:"Three Stars", star:"ζ Ori", symbol:"White Tiger", season:"Autumn" },
+  { n:22, zh:"井", pinyin:"Jǐng", en:"Well", star:"μ Gem", symbol:"Vermilion Bird", season:"Summer" },
+  { n:23, zh:"鬼", pinyin:"Guǐ", en:"Ghost", star:"θ Cnc", symbol:"Vermilion Bird", season:"Summer" },
+  { n:24, zh:"柳", pinyin:"Liǔ", en:"Willow", star:"δ Hya", symbol:"Vermilion Bird", season:"Summer" },
+  { n:25, zh:"星", pinyin:"Xīng", en:"Star", star:"α Hya", symbol:"Vermilion Bird", season:"Summer" },
+  { n:26, zh:"張", pinyin:"Zhāng", en:"Extended Net", star:"υ¹ Hya", symbol:"Vermilion Bird", season:"Summer" },
+  { n:27, zh:"翼", pinyin:"Yì", en:"Wings", star:"α Crt", symbol:"Vermilion Bird", season:"Summer" },
+  { n:28, zh:"軫", pinyin:"Zhěn", en:"Chariot", star:"γ Crv", symbol:"Vermilion Bird", season:"Summer" },
+];
+
+export const CHINESE_FOUR_SYMBOLS = [
+  { zh:"東方青龍", pinyin:"Dōngfāng Qīnglóng", en:"Azure Dragon of the East", season:"Spring", mansions:[1,2,3,4,5,6,7] },
+  { zh:"北方玄武", pinyin:"Běifāng Xuánwǔ", en:"Black Tortoise of the North", season:"Winter", mansions:[8,9,10,11,12,13,14] },
+  { zh:"西方白虎", pinyin:"Xīfāng Báihǔ", en:"White Tiger of the West", season:"Autumn", mansions:[15,16,17,18,19,20,21] },
+  { zh:"南方朱雀", pinyin:"Nánfāng Zhūquè", en:"Vermilion Bird of the South", season:"Summer", mansions:[22,23,24,25,26,27,28] },
+];
+
+// ── Cross-system letter mapping (Arabic → Hebrew → Chinese) ──────
+
+export const MANSION_CROSSWALK = [
+  { n:1,  arabic:"أ", hebrew:"א", hebrewFinal:"א", chinese:"角" },
+  { n:2,  arabic:"ب", hebrew:"ב", hebrewFinal:"ב", chinese:"亢" },
+  { n:3,  arabic:"ج", hebrew:"ג", hebrewFinal:"ג", chinese:"氐" },
+  { n:4,  arabic:"د", hebrew:"ד", hebrewFinal:"ד", chinese:"房" },
+  { n:5,  arabic:"ه", hebrew:"ה", hebrewFinal:"ה", chinese:"心" },
+  { n:6,  arabic:"و", hebrew:"ו", hebrewFinal:"ו", chinese:"尾" },
+  { n:7,  arabic:"ز", hebrew:"ז", hebrewFinal:"ז", chinese:"箕" },
+  { n:8,  arabic:"ح", hebrew:"ח", hebrewFinal:"ח", chinese:"斗" },
+  { n:9,  arabic:"ط", hebrew:"ט", hebrewFinal:"ט", chinese:"牛" },
+  { n:10, arabic:"ي", hebrew:"י", hebrewFinal:"י", chinese:"女" },
+  { n:11, arabic:"ك", hebrew:"כ", hebrewFinal:"כ", chinese:"虛" },
+  { n:12, arabic:"ل", hebrew:"ל", hebrewFinal:"ל", chinese:"危" },
+  { n:13, arabic:"م", hebrew:"מ", hebrewFinal:"מ", chinese:"室" },
+  { n:14, arabic:"ن", hebrew:"נ", hebrewFinal:"נ", chinese:"壁" },
+  { n:15, arabic:"س", hebrew:"ס", hebrewFinal:"ס", chinese:"奎" },
+  { n:16, arabic:"ع", hebrew:"ע", hebrewFinal:"ע", chinese:"婁" },
+  { n:17, arabic:"ف", hebrew:"פ", hebrewFinal:"פ", chinese:"胃" },
+  { n:18, arabic:"ص", hebrew:"צ", hebrewFinal:"צ", chinese:"昴" },
+  { n:19, arabic:"ق", hebrew:"ק", hebrewFinal:"ק", chinese:"畢" },
+  { n:20, arabic:"ر", hebrew:"ר", hebrewFinal:"ר", chinese:"觜" },
+  { n:21, arabic:"ش", hebrew:"ש", hebrewFinal:"ש", chinese:"参" },
+  { n:22, arabic:"ت", hebrew:"ת", hebrewFinal:"ת", chinese:"井" },
+  { n:23, arabic:"ث", hebrew:"ך", hebrewFinal:"ך", chinese:"鬼" },
+  { n:24, arabic:"خ", hebrew:"ם", hebrewFinal:"ם", chinese:"柳" },
+  { n:25, arabic:"ذ", hebrew:"ן", hebrewFinal:"ן", chinese:"星" },
+  { n:26, arabic:"ض", hebrew:"ף", hebrewFinal:"ף", chinese:"張" },
+  { n:27, arabic:"ظ", hebrew:"ץ", hebrewFinal:"ץ", chinese:"翼" },
+  { n:28, arabic:"غ", hebrew:"⚕", hebrewFinal:"⚕", chinese:"軫" },
+];
+
+export const LUNAR_MANSIONS_INFO = {
+  title: "Lunar Mansion Systems — Three Parallel Divisions of the Moon's Path",
+  systems: [
+    { name:"Manāzil al-Qamar (منازل القمر)", tradition:"Arabic/Islamic", count:28, letterSystem:"Arabic Abjadi order (28 letters)" },
+    { name:"Nakshatra (नक्षत्रम्)", tradition:"Vedic/Hindu", count:"27 standard + Abhijit = 28", letterSystem:"Sanskrit syllabary (108 padas)" },
+    { name:"二十八宿 (Èrshíbā Xiù)", tradition:"Chinese", count:28, letterSystem:"Four Symbols (四象) seasonal grouping" },
+  ],
+  note: "All three systems divide the lunar month into ~28 stations based on the Moon's nightly position against the fixed stars. The Arabic and Chinese systems use 28 divisions; the Vedic uses 27 (with an optional 28th, Abhijit). The crosswalk maps Arabic letters → Hebrew letters (including final forms for mansions 23–28) → Chinese mansion characters.",
+};
