@@ -34,6 +34,7 @@ export default function WheelTab({ ctx }) {
     { id: "western", label: "Western (Tropical)", col: M3.primary, tip: "Season-based zodiac used in Western astrology. Your main birth chart." },
     { id: "sidereal", label: "Lunar (Sidereal)", col: "#ce93d8", tip: "Star-based zodiac used in Vedic/Jyotish astrology. Accounts for Earth's wobble." },
     { id: "solar", label: "Solar Return", col: "#ffa726", tip: "Chart for when the Sun returns to its birth position each year - maps your year ahead." },
+    { id: "transit_now", label: "⟳ Transit Sky", col: "#66bb6a", tip: "Current live sky positions of planets today (transits)." },
     { id: "chinese", label: "Chinese Astrology", col: "#ffd54f", tip: "Your Chinese zodiac wheel - animals, elements, trigrams, and Yin/Yang." },
     ...calendarModes.map((m) => ({
       id: m.id,
@@ -158,6 +159,17 @@ export default function WheelTab({ ctx }) {
             </p>
           </Card>
         ))}
+
+      {wheelMode === "transit_now" && (
+        <Card title="⟳ Transit Sky Wheel - Planets Right Now">
+          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
+            This wheel plots today's planetary positions. Use it to spot concentration zones, conjunction clusters, and compare today's sky to your natal chart shown in other wheel modes.
+          </p>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <WheelWithTooltip positions={res.trPos} size={Math.min(560, window.innerWidth - 64)} id="transit_wheel_mode" />
+          </div>
+        </Card>
+      )}
 
       {wheelMode === "chinese" && (
         <Card title={`☯ Chinese Zodiac Wheel - ${res.cn.element} ${res.cn.animal}`}>

@@ -370,7 +370,7 @@ export default function App() {
                   <SolarTab ctx={{ M3, RAD, grid2, res, SIGN_INFO, SIGN_COL, P_COL, zodSign, Card, PlanetTable, WheelWithTooltip }} />
                 )}
                 {tab==="transits" && (
-                  <TransitsTab ctx={{ M3, res, norm, ASPECTS, ASP_EXPLAIN, P_COL, P_SYM, zodSign, zodDeg, Card, AspectTable }} />
+                  <TransitsTab ctx={{ M3, res, norm, ASPECTS, ASP_EXPLAIN, P_COL, P_SYM, zodSign, zodDeg, Card, AspectTable, WheelWithTooltip }} />
                 )}
                 {tab==="synastry" && (
                   <SynastryTab ctx={{ M3, res, grid2, P_COL, P_SYM, P_ROLE, Card, WheelWithTooltip, AspectTable }} />

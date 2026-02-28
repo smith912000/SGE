@@ -11,7 +11,10 @@ export default function TransitsTab({ ctx }) {
     zodDeg,
     Card,
     AspectTable,
+    WheelWithTooltip,
   } = ctx;
+
+  const SIGN_ORDER = ["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
 
   const TRANSIT_MEANING = {
     Sun: { slow: false, flavor: "spotlight, vitality, conscious focus" },
@@ -34,6 +37,37 @@ export default function TransitsTab({ ctx }) {
     return { p, lon, aspMatch };
   });
   const hits = activeTransits.filter((t) => t.aspMatch);
+
+  const majorTransitPlanets = ["Sun","Moon","Mercury","Venus","Mars","Jupiter","Saturn","Uranus","Neptune","Pluto"]
+    .filter((p) => res.trPos?.[p] != null)
+    .map((p) => ({ p, lon: res.trPos[p], sign: zodSign(res.trPos[p]) }));
+
+  const signCounts = majorTransitPlanets.reduce((acc, t) => {
+    acc[t.sign] = (acc[t.sign] || 0) + 1;
+    return acc;
+  }, {});
+
+  const topSign = Object.entries(signCounts).sort((a, b) => b[1] - a[1])[0] || [null, 0];
+
+  let bestBand = { signs: [], planets: [] };
+  for (let i = 0; i < SIGN_ORDER.length; i++) {
+    const s1 = SIGN_ORDER[i];
+    const s2 = SIGN_ORDER[(i + 1) % SIGN_ORDER.length];
+    const bandPlanets = majorTransitPlanets.filter((t) => t.sign === s1 || t.sign === s2);
+    if (bandPlanets.length > bestBand.planets.length) bestBand = { signs: [s1, s2], planets: bandPlanets };
+  }
+
+  const conjunctionPairs = [];
+  for (let i = 0; i < majorTransitPlanets.length; i++) {
+    for (let j = i + 1; j < majorTransitPlanets.length; j++) {
+      const a = majorTransitPlanets[i];
+      const b = majorTransitPlanets[j];
+      const raw = Math.abs(norm(a.lon - b.lon));
+      const sep = raw > 180 ? 360 - raw : raw;
+      if (sep <= 6) conjunctionPairs.push({ a: a.p, b: b.p, sep });
+    }
+  }
+  conjunctionPairs.sort((x, y) => x.sep - y.sep);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -87,6 +121,48 @@ export default function TransitsTab({ ctx }) {
               </div>
             );
           })}
+        </div>
+      </Card>
+
+      <Card title="✦ Planetary Alignment Radar — Today">
+        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
+          Alignment is measured two ways: <strong>sign concentration</strong> (many planets in one sign) and <strong>conjunction clusters</strong> (planets within ~6° of each other). This helps detect events like "six planets are aligned."
+        </p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: 10 }}>
+          <div style={{ padding: "10px 12px", borderRadius: 10, background: M3.surfaceDim }}>
+            <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.64rem", color: M3.secondary, marginBottom: 6 }}>TOP SINGLE-SIGN CLUSTER</div>
+            <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", color: M3.onSurface }}>
+              {topSign[0] ? `${topSign[1]} planets in ${topSign[0]}` : "No data"}
+            </div>
+          </div>
+          <div style={{ padding: "10px 12px", borderRadius: 10, background: M3.surfaceDim }}>
+            <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.64rem", color: M3.secondary, marginBottom: 6 }}>BEST TWO-SIGN BAND</div>
+            <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", color: M3.onSurface }}>
+              {bestBand.signs.length ? `${bestBand.planets.length} planets across ${bestBand.signs[0]} + ${bestBand.signs[1]}` : "No data"}
+            </div>
+            {bestBand.planets.length > 0 && (
+              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.onSurfaceVariant, marginTop: 4 }}>
+                {bestBand.planets.map((t) => `${P_SYM[t.p]} ${t.p}`).join(" · ")}
+              </div>
+            )}
+          </div>
+        </div>
+        <div style={{ marginTop: 10, padding: "8px 10px", borderRadius: 8, background: M3.primaryContainer + "22" }}>
+          <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.primary, marginBottom: 4 }}>TIGHT CONJUNCTIONS (≤6°)</div>
+          <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", color: M3.onSurfaceVariant }}>
+            {conjunctionPairs.length
+              ? conjunctionPairs.slice(0, 8).map((c) => `${P_SYM[c.a]} ${c.a} - ${P_SYM[c.b]} ${c.b} (${c.sep.toFixed(1)}°)`).join(" | ")
+              : "No tight major-planet conjunctions right now."}
+          </div>
+        </div>
+      </Card>
+
+      <Card title="⊙ Transit Wheel — Current Sky Positions">
+        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
+          Yes — transits are now shown as a dedicated wheel map of where planets are in the sky today.
+        </p>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <WheelWithTooltip positions={res.trPos} size={340} id="transit_now" />
         </div>
       </Card>
 
