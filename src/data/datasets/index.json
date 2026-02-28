@@ -1,17 +1,16 @@
 {
   "version": "1.0.0",
-  "updatedAt": "2026-02-25",
+  "updatedAt": "2026-02-28",
   "categories": [
     {
       "id": "calendars",
       "label": "Calendars",
       "path": "src/data/datasets/calendars",
       "datasets": [
-        "panchanga",
         "buddhist",
         "jewish",
         "islamic",
-        "chinese",
+        "vedic",
         "sambraielic",
         "egyptian_ancient_solar",
         "athenian_lunar",

@@ -1,5 +1,4 @@
 import { getDatasetById } from "./datasetStore.js";
-import { chineseCycle } from "./chinese.js";
 import { julianDay, sunLon } from "./astronomy.js";
 import { ELDER_FUTHARK, SAMBRAIELIC_HOURLY_CHECKPOINTS, SAMBRAIELIC_HALF_HOUR_NOTES, resolveCheckpointForDate } from "../data/calendar/sambraielicWheel.js";
 
@@ -10,11 +9,6 @@ const CONFIDENCE_BY_STATUS = {
   phase1_foundation: "baseline",
   phase1_scaffold_low_priority: "provisional",
 };
-
-const CHINESE_ANIMALS = [
-  "Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake",
-  "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig",
-];
 
 const TZOLKIN_DAY_NAMES = [
   "Imix", "Ik", "Akbal", "Kan", "Chikchan", "Kimi", "Manik", "Lamat", "Muluk", "Ok",
@@ -130,24 +124,6 @@ function baseModel(datasetId, ctx) {
   };
 }
 
-function buildChineseModel(ctx = {}) {
-  const model = baseModel("chinese", ctx);
-  const y = ctx?.year;
-  const m = ctx?.month;
-  const d = ctx?.day;
-  const cn = ctx?.cn || chineseCycle(y, m, d);
-  const segments = buildSegments(12, (idx) => CHINESE_ANIMALS[idx]);
-  const activeIndex = Math.max(0, CHINESE_ANIMALS.indexOf(cn.animal));
-  model.nativeRings.push({
-    id: "animal",
-    label: "Earthly branch animals",
-    segments,
-    activeIndex,
-    plain: `${cn.element} ${cn.animal} (${cn.polarity})`,
-  });
-  return model;
-}
-
 function buildBuddhistModel(ctx = {}) {
   const model = baseModel("buddhist", ctx);
   const date = new Date(`${model.dateISO}T00:00:00Z`);
@@ -218,33 +194,48 @@ function buildEgyptianSolarModel(ctx = {}) {
   return model;
 }
 
+const VEDIC_MONTHS = ["Chaitra","Vaisakha","Jyeshtha","Ashadha","Shravana","Bhadrapada","Ashvina","Kartika","Margashirsha","Pausha","Magha","Phalguna"];
+const VEDIC_NAKSHATRAS = ["Ashvini","Bharani","Krittika","Rohini","Mrigashirsha","Ardra","Punarvasu","Pushya","Ashlesha","Magha","Purva Phalguni","Uttara Phalguni","Hasta","Chitra","Svati","Vishakha","Anuradha","Jyeshtha","Mula","Purva Ashadha","Uttara Ashadha","Shravana","Dhanishtha","Shatabhisha","Purva Bhadrapada","Uttara Bhadrapada","Revati"];
+const VEDIC_VARAS = ["Ravivara (Sun)","Somavara (Mon)","Mangalavara (Tue)","Buddhavara (Wed)","Guruvara (Thu)","Shukravara (Fri)","Shanivara (Sat)"];
+const VEDIC_TITHIS = ["Pratipada","Dwitiya","Tritiya","Chaturthi","Panchami","Shashthi","Saptami","Ashtami","Navami","Dashami","Ekadashi","Dwadashi","Trayodashi","Chaturdashi","Purnima/Amavasya"];
+
 function buildPanchangaModel(ctx = {}) {
-  const model = baseModel("panchanga", ctx);
+  const model = baseModel("vedic", ctx);
   const date = new Date(`${model.dateISO}T00:00:00Z`);
   const doy = dayOfYearFromUTC(date);
   const weekday = date.getUTCDay();
+  const monthIdx = Math.floor(((doy + 334) % 365) / 30.4) % 12;
   const tithi = (doy % 30);
+  const tithiName = VEDIC_TITHIS[tithi % 15];
+  const paksha = tithi < 15 ? "Shukla" : "Krishna";
   const nakshatra = (doy % 27);
   model.nativeRings.push({
-    id: "tithi",
-    label: "Tithi (30)",
-    segments: buildSegments(30, (idx) => `Tithi ${idx + 1}`),
-    activeIndex: tithi,
-    plain: `Tithi index ${tithi + 1}.`,
+    id: "month",
+    label: "Hindu Month (12)",
+    segments: buildSegments(12, (idx) => VEDIC_MONTHS[idx]),
+    activeIndex: monthIdx,
+    plain: `Month: ${VEDIC_MONTHS[monthIdx]}.`,
   });
   model.nativeRings.push({
     id: "nakshatra",
     label: "Nakshatra (27)",
-    segments: buildSegments(27, (idx) => `Nakshatra ${idx + 1}`),
+    segments: buildSegments(27, (idx) => VEDIC_NAKSHATRAS[idx]),
     activeIndex: nakshatra,
-    plain: `Nakshatra index ${nakshatra + 1}.`,
+    plain: `Nakshatra: ${VEDIC_NAKSHATRAS[nakshatra]}.`,
+  });
+  model.nativeRings.push({
+    id: "tithi",
+    label: "Tithi (30)",
+    segments: buildSegments(30, (idx) => `${idx < 15 ? "Sh" : "Kr"} ${VEDIC_TITHIS[idx % 15]}`),
+    activeIndex: tithi,
+    plain: `${paksha} ${tithiName} (Tithi ${tithi + 1}).`,
   });
   model.nativeRings.push({
     id: "vara",
     label: "Vara (7 weekdays)",
-    segments: buildSegments(7, (idx) => `Vara ${idx + 1}`),
+    segments: buildSegments(7, (idx) => VEDIC_VARAS[idx]),
     activeIndex: weekday,
-    plain: `Weekday index ${weekday + 1}.`,
+    plain: `${VEDIC_VARAS[weekday]}.`,
   });
   return model;
 }
@@ -381,8 +372,7 @@ function buildSambraielicModel(ctx = {}) {
 }
 
 const BUILDERS = {
-  chinese: buildChineseModel,
-  panchanga: buildPanchangaModel,
+  vedic: buildPanchangaModel,
   islamic: buildIslamicModel,
   jewish: buildJewishModel,
   buddhist: buildBuddhistModel,
@@ -410,8 +400,7 @@ function buildCalendarWheelModel(id, ctx = {}) {
 }
 
 const CALENDAR_WHEEL_IDS = [
-  "chinese",
-  "panchanga",
+  "vedic",
   "islamic",
   "jewish",
   "buddhist",

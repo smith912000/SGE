@@ -1,21 +1,26 @@
 {
   "id": "panchanga",
-  "title": "Panchanga (Hindu Calendar)",
+  "title": "Panchanga (Vedic/Hindu Calendar)",
   "version": "1.0.0",
-  "updatedAt": "2026-02-25",
-  "source": "Traditional Panchanga structure (Tithi, Vara, Nakshatra, Yoga, Karana).",
+  "updatedAt": "2026-02-28",
+  "source": "Panchāngam lunisolar system with Vikram Samvat era, 12 Hindu months, tithi/vara/nakshatra rings, and 6 Ritus.",
   "status": "phase1_foundation",
   "wheel": {
-    "type": "panchanga_cycle",
+    "type": "vedic_month_nakshatra_cycle",
     "segments": {
+      "months": 12,
       "tithi": 30,
       "nakshatra": 27,
-      "vara": 7
+      "vara": 7,
+      "ritus": 6
     }
   },
-  "domains": ["astrological", "symbolic"],
+  "domains": ["astrological", "symbolic", "calendar"],
   "notes": [
-    "Phase 1 computes normalized components from Gregorian date and weekday.",
-    "Advanced jyotisha precision layers can be attached in later phases."
+    "Panchāngam means 'five limbs': Tithi, Vara, Nakshatra, Yoga, Karana.",
+    "Month cycle uses: Chaitra, Vaisakha, Jyeshtha, Ashadha, Shravana, Bhadrapada, Ashvina, Kartika, Margashirsha, Pausha, Magha, Phalguna.",
+    "Two month-ending systems are supported conceptually: Amanta and Purnimanta (regional variation).",
+    "Intercalary month Adhika-masa (Purushottama-masa) is recognized in metadata.",
+    "Vikram Samvat 2082 corresponds roughly to March 2025 - March 2026."
   ]
 }

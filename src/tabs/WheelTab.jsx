@@ -21,8 +21,7 @@ export default function WheelTab({ ctx }) {
 
   const calendarModes = [
     { id: "cal_sambraielic", datasetId: "sambraielic", label: "Cal Sambraielic", col: "#f48fb1" },
-    { id: "cal_chinese", datasetId: "chinese", label: "Cal Chinese", col: "#ffd54f" },
-    { id: "cal_panchanga", datasetId: "panchanga", label: "Cal Panchanga", col: "#ffcc80" },
+    { id: "cal_vedic", datasetId: "vedic", label: "Cal Vedic", col: "#ffcc80" },
     { id: "cal_islamic", datasetId: "islamic", label: "Cal Islamic", col: "#80cbc4" },
     { id: "cal_jewish", datasetId: "jewish", label: "Cal Jewish", col: "#b39ddb" },
     { id: "cal_buddhist", datasetId: "buddhist", label: "Cal Buddhist", col: "#ffe082" },

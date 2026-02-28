@@ -1,9 +1,8 @@
 import registry from "../data/datasets/index.json";
-import panchanga from "../data/datasets/calendars/panchanga.json";
 import buddhist from "../data/datasets/calendars/buddhist.json";
 import jewish from "../data/datasets/calendars/jewish.json";
 import islamic from "../data/datasets/calendars/islamic.json";
-import chinese from "../data/datasets/calendars/chinese.json";
+import vedic from "../data/datasets/calendars/vedic.json";
 import sambraielic from "../data/datasets/calendars/sambraielic.json";
 import egyptianSolar from "../data/datasets/calendars/egyptian_ancient_solar.json";
 import athenianLunar from "../data/datasets/calendars/athenian_lunar.json";
@@ -13,11 +12,10 @@ import scriptFamilies from "../data/datasets/linguistics/script_families.json";
 import symbolTaxonomy from "../data/datasets/semiotics/symbol_taxonomy.json";
 
 const CALENDAR_DATASETS = {
-  panchanga,
   buddhist,
   jewish,
   islamic,
-  chinese,
+  vedic,
   sambraielic,
   egyptian_ancient_solar: egyptianSolar,
   athenian_lunar: athenianLunar,

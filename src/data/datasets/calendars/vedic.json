@@ -1,0 +1,23 @@
+{
+  "id": "vedic",
+  "title": "Vedic (Hindu) Calendar",
+  "version": "1.0.0",
+  "updatedAt": "2026-02-28",
+  "source": "Panchāngam lunisolar structure with Vikram Samvat era, 12 months, 27 nakshatras, and 6 Ritus.",
+  "status": "phase1_foundation",
+  "wheel": {
+    "type": "vedic_month_nakshatra_cycle",
+    "segments": {
+      "months": 12,
+      "nakshatras": 27,
+      "ritus": 6
+    }
+  },
+  "domains": ["astrological", "symbolic", "calendar"],
+  "notes": [
+    "Hindu lunisolar calendar starting from Chaitra (March/April).",
+    "Months based on moon cycles. Adhika-masa (intercalary month) added ~every 32.5 months.",
+    "Six seasons (Ritus): Vasanta, Grishma, Varsha, Sharad, Hemanta, Shishira.",
+    "Vikram Samvat 2082 (current year, March 2025 – March 2026)."
+  ]
+}
