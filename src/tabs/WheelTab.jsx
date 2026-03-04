@@ -28,6 +28,8 @@ export default function WheelTab({ ctx }) {
     { id: "cal_egyptian", datasetId: "egyptian_ancient_solar", label: "Cal Egyptian", col: "#ffab91" },
     { id: "cal_athenian", datasetId: "athenian_lunar", label: "Cal Athenian", col: "#90caf9" },
     { id: "cal_mayan", datasetId: "mayan", label: "Cal Mayan", col: "#a5d6a7" },
+    { id: "cal_ogham", datasetId: "ogham", label: "Cal Ogham", col: "#4db6ac" },
+    { id: "cal_indigenous", datasetId: "indigenous", label: "Cal Native", col: "#d4e157" },
   ];
 
   const allModes = [
@@ -101,7 +103,7 @@ export default function WheelTab({ ctx }) {
             The tropical zodiac is anchored to the seasons - 0° Aries begins at the spring equinox. This is the standard system in Western astrology. AC (Ascendant) sits at the <strong>left</strong> - this is your rising sign. MC (Midheaven) is near the <strong>top</strong> - your career/public point. Hover any symbol for details.
           </p>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <WheelWithTooltip positions={res.trop} houses={res.houses} size={Math.min(560, window.innerWidth - 64)} id="full" />
+            <WheelWithTooltip positions={res.trop} houses={res.houses} size={Math.min(560, window.innerWidth - 64)} id="full" theme="western" />
           </div>
           <div style={{ display: "flex", justifyContent: "center", gap: 16, marginTop: 12, flexWrap: "wrap" }}>
             {[{ l: "AC", c: M3.tertiary, d: "Ascendant (left) - your rising sign, first impressions" }, { l: "MC", c: M3.primary, d: "Midheaven (top) - career, public reputation" }, { l: "DC", c: M3.tertiary, d: "Descendant (right) - partnerships, what you attract" }, { l: "IC", c: M3.primary, d: "Imum Coeli (bottom) - home, roots, private self" }].map((a) => (
@@ -120,7 +122,7 @@ export default function WheelTab({ ctx }) {
             The sidereal zodiac is anchored to the fixed stars. Used in Vedic (Jyotish) astrology, it accounts for the precession of the equinoxes - currently about <strong>{ayanamsa(res.jd).toFixed(1)}°</strong> offset from the tropical system. Notice how all your planet positions have shifted compared to the Western wheel.
           </p>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <WheelWithTooltip positions={res.sid} houses={res.sidHouses || res.houses} size={Math.min(560, window.innerWidth - 64)} id="sidwheel" />
+            <WheelWithTooltip positions={res.sid} houses={res.sidHouses || res.houses} size={Math.min(560, window.innerWidth - 64)} id="sidwheel" theme="vedic" />
           </div>
           <div style={{ marginTop: 12, padding: "10px 14px", borderRadius: 10, background: M3.surfaceDim, textAlign: "center" }}>
             <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: "#ce93d8" }}>Ayanamsa offset: {ayanamsa(res.jd).toFixed(2)}°</span>
@@ -136,7 +138,7 @@ export default function WheelTab({ ctx }) {
               The Solar Return chart is cast for the exact moment the Sun returns to its birth position each year. It maps the themes and energies of your coming year. Compare planet positions here to your natal wheel to see what's shifted.
             </p>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <WheelWithTooltip positions={res.srPos} houses={res.houses} size={Math.min(560, window.innerWidth - 64)} id="srwheel" />
+              <WheelWithTooltip positions={res.srPos} houses={res.houses} size={Math.min(560, window.innerWidth - 64)} id="srwheel" theme="solar" />
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(130px,1fr))", gap: 6, marginTop: 12 }}>
               {["Sun", "Moon", "Venus", "Mars", "Jupiter", "Saturn"].map((p) => {
@@ -166,7 +168,7 @@ export default function WheelTab({ ctx }) {
             This wheel plots today's planetary positions. Use it to spot concentration zones, conjunction clusters, and compare today's sky to your natal chart shown in other wheel modes.
           </p>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <WheelWithTooltip positions={res.trPos} size={Math.min(560, window.innerWidth - 64)} id="transit_wheel_mode" />
+            <WheelWithTooltip positions={res.trPos} size={Math.min(560, window.innerWidth - 64)} id="transit_wheel_mode" theme="transit" />
           </div>
         </Card>
       )}
@@ -178,6 +180,19 @@ export default function WheelTab({ ctx }) {
           </p>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <ChineseWheelWithTooltip cn={res.cn} size={Math.min(500, window.innerWidth - 64)} />
+          </div>
+          <div style={{ marginTop: 12, padding: "12px 14px", borderRadius: 10, background: M3.surfaceContainerHighest + "44", borderLeft: `4px solid ${M3.primary}` }}>
+            <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: "0.68rem", color: M3.primary, fontWeight: "700", marginBottom: 4 }}>
+              ARCHETYPE: "{ctx.ANIMAL_INFO[res.cn.animal]?.archetype || "Explorer"}"
+            </div>
+            <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.5, color: M3.onSurface, margin: 0 }}>
+              {ctx.ANIMAL_INFO[res.cn.animal]?.desc.slice(0, 180)}...
+            </p>
+            <div style={{ marginTop: 8, display: "flex", gap: 6, flexWrap: "wrap" }}>
+              {(ctx.ANIMAL_INFO[res.cn.animal]?.trait || "").split(", ").map(t => (
+                <span key={t} style={{ padding: "3px 10px", borderRadius: 12, background: M3.primaryContainer, color: M3.onPrimaryContainer, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem" }}>{t}</span>
+              ))}
+            </div>
           </div>
           {res.cn.lunar && (
             <div style={{ textAlign: "center", marginTop: 12, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", color: M3.secondary }}>
@@ -195,11 +210,21 @@ export default function WheelTab({ ctx }) {
           <div style={{ display: "flex", justifyContent: "center" }}>
             <CalendarWheelWithTooltip model={calendarModel} size={Math.min(560, window.innerWidth - 64)} showOverlay />
           </div>
-          <div style={{ marginTop: 12, padding: "10px 12px", borderRadius: 10, background: M3.surfaceDim, border: `1px solid ${M3.outlineVariant}` }}>
-            <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: "0.66rem", color: M3.secondary, marginBottom: 6 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {calendarModel.nativeRings.map((ring) => (
+              <div key={ring.id} style={{ padding: "8px 12px", borderRadius: 8, background: M3.surfaceContainerHighest + "44", borderLeft: `4px solid ${M3.primary}` }}>
+                <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: "0.65rem", color: M3.primary, textTransform: "uppercase", marginBottom: 2 }}>{ring.label}</div>
+                <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.45, color: M3.onSurface }}>
+                  {ring.plain}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: 12, padding: "10px 12px", borderRadius: 10, background: M3.surfaceDim, border: `1px solid ${M3.outlineVariant}`, opacity: 0.8 }}>
+            <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: "0.6rem", color: M3.secondary, marginBottom: 4 }}>
               SOURCE: {calendarModel.metadata.source}
             </div>
-            <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", color: M3.onSurfaceVariant }}>
+            <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.68rem", color: M3.onSurfaceVariant }}>
               Status: <strong>{calendarModel.metadata.status}</strong> - Confidence: <strong>{calendarModel.confidence}</strong>
               {calendarModel.caveats.length > 0 ? ` - Caveats: ${calendarModel.caveats.join(" | ")}` : ""}
             </div>

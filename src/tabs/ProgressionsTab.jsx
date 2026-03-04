@@ -146,7 +146,7 @@ export default function ProgressionsTab({ ctx }) {
         </Card>
         <Card title="→ Evolved Chart Wheel">
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <WheelWithTooltip positions={res.prog} houses={res.houses} size={300} id="prog" />
+            <WheelWithTooltip positions={res.prog} houses={res.houses} size={300} id="prog" theme="lunar" />
           </div>
         </Card>
       </div>

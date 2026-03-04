@@ -11,6 +11,7 @@ export default function WheelWithTooltip(props) {
     if (!t.visible) { setTip(t); return; }
     setTip(t);
   },[]);
+  const theme = props.theme || "western";
   return (
     <div ref={wrapRef} style={{ position:"relative", width:"100%", overflowX:"auto" }}>
       <div style={{
@@ -24,7 +25,7 @@ export default function WheelWithTooltip(props) {
           <Tooltip {...tip} pinLeft/>
         </div>
         <div style={{ display:"flex", flexDirection:"column", alignItems:"center", minWidth:320 }}>
-          <WheelChart {...props} onTooltip={handleTip}/>
+          <WheelChart {...props} onTooltip={handleTip} theme={theme}/>
           <div style={{ textAlign:"center", marginTop:8, fontFamily:"'Share Tech Mono', monospace",
             fontSize:"0.6rem", color:M3.outlineVariant, letterSpacing:"0.1em" }}>
             HOVER PLANETS · SIGNS · HOUSES · ASPECTS FOR INFO

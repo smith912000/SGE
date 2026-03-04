@@ -69,8 +69,42 @@ export default function TransitsTab({ ctx }) {
   }
   conjunctionPairs.sort((x, y) => x.sep - y.sep);
 
+  // Compute alignment intensity score
+  const maxInSign = topSign[1] || 0;
+  const tightConj = conjunctionPairs.length;
+  const alignScore = maxInSign + tightConj * 1.5 + bestBand.planets.length * 0.4;
+  let alignLabel, alignCol, alignDesc;
+  if (alignScore >= 7) {
+    alignLabel = "STRONG"; alignCol = "#ff6b6b";
+    alignDesc = "Exceptional planetary clustering — rare concentration of cosmic energy.";
+  } else if (alignScore >= 4) {
+    alignLabel = "ACTIVE"; alignCol = "#FFB347";
+    alignDesc = "Multiple planets converging — heightened themes and intensified events.";
+  } else {
+    alignLabel = "CALM"; alignCol = "#4dd0a4";
+    alignDesc = "Planets spread across the sky — varied, dispersed energies at work.";
+  }
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      {/* ── Alignment intensity badge ── */}
+      <div style={{ display:"flex", alignItems:"center", gap:10, padding:"10px 16px", borderRadius:12,
+        background: alignCol+"12", border:`1px solid ${alignCol}44`, flexWrap:"wrap" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:8, flex:1, minWidth:200 }}>
+          <div style={{ width:10, height:10, borderRadius:"50%", background:alignCol,
+            boxShadow:`0 0 8px ${alignCol}` }}/>
+          <span style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem", color:alignCol, letterSpacing:"0.12em" }}>
+            ALIGNMENT INTENSITY
+          </span>
+          <span style={{ fontFamily:"Cinzel,serif", fontSize:"0.82rem", color:alignCol, fontWeight:"700", letterSpacing:"0.08em" }}>
+            {alignLabel}
+          </span>
+        </div>
+        <span style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.74rem", color:M3.onSurfaceVariant, flex:2, minWidth:180 }}>
+          {alignDesc} {maxInSign >= 5 ? `${maxInSign} planets in ${topSign[0]}.` : bestBand.planets.length >= 5 ? `${bestBand.planets.length} across ${bestBand.signs.join(" + ")}.` : ""}
+        </span>
+      </div>
+
       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Transits — Where the Planets Are Right Now vs Your Birth</div>
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
@@ -161,8 +195,11 @@ export default function TransitsTab({ ctx }) {
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
           Yes — transits are now shown as a dedicated wheel map of where planets are in the sky today.
         </p>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <WheelWithTooltip positions={res.trPos} size={340} id="transit_now" />
+        <div style={{ display: "flex", flexDirection:"column", alignItems: "center", gap: 8 }}>
+          <WheelWithTooltip positions={res.trPos} size={340} id="transit_now" theme="transit" />
+          <div style={{ display:"flex", gap:16, alignItems:"center", fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color:M3.outlineVariant, letterSpacing:"0.1em" }}>
+            <span style={{color:"#4dd0a4"}}>■</span> TRANSIT POSITIONS (CURRENT SKY)
+          </div>
         </div>
       </Card>
 

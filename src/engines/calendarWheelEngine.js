@@ -1,6 +1,14 @@
 import { getDatasetById } from "./datasetStore.js";
 import { julianDay, sunLon } from "./astronomy.js";
 import { ELDER_FUTHARK, SAMBRAIELIC_HOURLY_CHECKPOINTS, SAMBRAIELIC_HALF_HOUR_NOTES, resolveCheckpointForDate } from "../data/calendar/sambraielicWheel.js";
+import {
+  HEBREW_MONTH_DATA,
+  ISLAMIC_MONTH_DATA,
+  EGYPTIAN_SEASON_DATA,
+  MAYAN_TZOLKIN_DATA,
+  VEDIC_TITHI_DATA
+} from "../data/calendar/interpretations.js";
+import { OGHAM_TREES, INDIGENOUS_ZODIAC } from "../data/calendar/crossCultural.js";
 
 const MAYAN_EPOCH_JDN = 584283;
 const SYNODIC_MONTH = 29.530588;
@@ -147,12 +155,13 @@ function buildIslamicModel(ctx = {}) {
   const dayNum = parseNumericPart(parts, "day");
   const yearNum = parseNumericPart(parts, "year");
   const segments = buildSegments(12, (idx) => `Hijri ${idx + 1}`);
+  const monthData = ISLAMIC_MONTH_DATA[monthNum] || { name: `Month ${monthNum}`, theme: "Cycle of Faith", advice: "Observe the lunar rhythms with gratitude." };
   model.nativeRings.push({
     id: "hijriMonth",
     label: "Hijri month cycle",
     segments,
     activeIndex: monthNum ? monthNum - 1 : 0,
-    plain: `Hijri date ${dayNum || "?"}/${monthNum || "?"}/${yearNum || "?"}.`,
+    plain: monthNum ? `Hijri: ${monthData.name} — ${monthData.theme}. ${monthData.advice}` : `Hijri date ${dayNum || "?"}/${monthNum || "?"}/${yearNum || "?"}.`,
   });
   return model;
 }
@@ -165,12 +174,13 @@ function buildJewishModel(ctx = {}) {
   const dayNum = parseNumericPart(parts, "day");
   const yearNum = parseNumericPart(parts, "year");
   const segments = buildSegments(13, (idx) => `Hebrew ${idx + 1}`);
+  const monthData = HEBREW_MONTH_DATA[monthNum] || { name: `Month ${monthNum}`, theme: "Covenant Path", advice: "Follow the sacred rhythms of the heart." };
   model.nativeRings.push({
     id: "hebrewMonth",
     label: "Hebrew month cycle",
     segments,
     activeIndex: monthNum ? Math.min(12, Math.max(0, monthNum - 1)) : 0,
-    plain: `Hebrew date ${dayNum || "?"}/${monthNum || "?"}/${yearNum || "?"}.`,
+    plain: monthNum ? `Hebrew: ${monthData.name} — ${monthData.theme}. ${monthData.advice}` : `Hebrew date ${dayNum || "?"}/${monthNum || "?"}/${yearNum || "?"}.`,
   });
   return model;
 }
@@ -184,20 +194,24 @@ function buildEgyptianSolarModel(ctx = {}) {
     ...buildSegments(12, (idx) => `Month ${idx + 1}`),
     { idx: 12, start: 360, end: 360, label: "Epagomenal 5", color: "hsla(40, 80%, 70%, 0.28)" },
   ];
+  const seasonKey = segmentIndex < 4 ? "Akhet" : segmentIndex < 8 ? "Peret" : segmentIndex < 12 ? "Shemu" : "Epagomenal";
+  const seasonData = EGYPTIAN_SEASON_DATA[seasonKey] || { name: "Ancient Solar Cycle", theme: "Universal Order", advice: "Live in Ma'at (harmony) with the cosmic flow." };
   model.nativeRings.push({
     id: "civilYear",
     label: "12x30 + 5 civil cycle",
     segments,
     activeIndex: segmentIndex,
-    plain: segmentIndex === 12 ? "In epagomenal days." : `Civil month ${segmentIndex + 1}.`,
+    plain: segmentIndex === 12
+      ? "Intercallary Epagomenal Days — A time of sacred threshold."
+      : `Egyptian: ${seasonData.name} Month ${(segmentIndex % 4) + 1}. ${seasonData.theme}: ${seasonData.advice}`,
   });
   return model;
 }
 
-const VEDIC_MONTHS = ["Chaitra","Vaisakha","Jyeshtha","Ashadha","Shravana","Bhadrapada","Ashvina","Kartika","Margashirsha","Pausha","Magha","Phalguna"];
-const VEDIC_NAKSHATRAS = ["Ashvini","Bharani","Krittika","Rohini","Mrigashirsha","Ardra","Punarvasu","Pushya","Ashlesha","Magha","Purva Phalguni","Uttara Phalguni","Hasta","Chitra","Svati","Vishakha","Anuradha","Jyeshtha","Mula","Purva Ashadha","Uttara Ashadha","Shravana","Dhanishtha","Shatabhisha","Purva Bhadrapada","Uttara Bhadrapada","Revati"];
-const VEDIC_VARAS = ["Ravivara (Sun)","Somavara (Mon)","Mangalavara (Tue)","Buddhavara (Wed)","Guruvara (Thu)","Shukravara (Fri)","Shanivara (Sat)"];
-const VEDIC_TITHIS = ["Pratipada","Dwitiya","Tritiya","Chaturthi","Panchami","Shashthi","Saptami","Ashtami","Navami","Dashami","Ekadashi","Dwadashi","Trayodashi","Chaturdashi","Purnima/Amavasya"];
+const VEDIC_MONTHS = ["Chaitra", "Vaisakha", "Jyeshtha", "Ashadha", "Shravana", "Bhadrapada", "Ashvina", "Kartika", "Margashirsha", "Pausha", "Magha", "Phalguna"];
+const VEDIC_NAKSHATRAS = ["Ashvini", "Bharani", "Krittika", "Rohini", "Mrigashirsha", "Ardra", "Punarvasu", "Pushya", "Ashlesha", "Magha", "Purva Phalguni", "Uttara Phalguni", "Hasta", "Chitra", "Svati", "Vishakha", "Anuradha", "Jyeshtha", "Mula", "Purva Ashadha", "Uttara Ashadha", "Shravana", "Dhanishtha", "Shatabhisha", "Purva Bhadrapada", "Uttara Bhadrapada", "Revati"];
+const VEDIC_VARAS = ["Ravivara (Sun)", "Somavara (Mon)", "Mangalavara (Tue)", "Buddhavara (Wed)", "Guruvara (Thu)", "Shukravara (Fri)", "Shanivara (Sat)"];
+const VEDIC_TITHIS = ["Pratipada", "Dwitiya", "Tritiya", "Chaturthi", "Panchami", "Shashthi", "Saptami", "Ashtami", "Navami", "Dashami", "Ekadashi", "Dwadashi", "Trayodashi", "Chaturdashi", "Purnima/Amavasya"];
 
 function buildPanchangaModel(ctx = {}) {
   const model = baseModel("vedic", ctx);
@@ -223,12 +237,13 @@ function buildPanchangaModel(ctx = {}) {
     activeIndex: nakshatra,
     plain: `Nakshatra: ${VEDIC_NAKSHATRAS[nakshatra]}.`,
   });
+  const tithiAdvice = VEDIC_TITHI_DATA[tithiName] || "A sacred day of the lunar cycle.";
   model.nativeRings.push({
     id: "tithi",
     label: "Tithi (30)",
     segments: buildSegments(30, (idx) => `${idx < 15 ? "Sh" : "Kr"} ${VEDIC_TITHIS[idx % 15]}`),
     activeIndex: tithi,
-    plain: `${paksha} ${tithiName} (Tithi ${tithi + 1}).`,
+    plain: `${paksha} ${tithiName} (Tithi ${tithi + 1}): ${tithiAdvice}`,
   });
   model.nativeRings.push({
     id: "vara",
@@ -270,19 +285,52 @@ function buildMayanModel(ctx = {}) {
   const tzolkinNameIdx = ((days + 19) % 20 + 20) % 20;
   const haabDay = ((days + 348) % 365 + 365) % 365;
   const haabMonthIdx = haabDay < 360 ? Math.floor(haabDay / 20) : 18;
+  const tzolkinData = MAYAN_TZOLKIN_DATA[TZOLKIN_DAY_NAMES[tzolkinNameIdx]];
   model.nativeRings.push({
     id: "tzolkin",
     label: "Tzolkin day-name ring",
     segments: buildSegments(20, (idx) => TZOLKIN_DAY_NAMES[idx]),
     activeIndex: tzolkinNameIdx,
-    plain: `Tzolkin ${tzolkinNumber} ${TZOLKIN_DAY_NAMES[tzolkinNameIdx]}.`,
+    plain: `Tzolkin ${tzolkinNumber} ${TZOLKIN_DAY_NAMES[tzolkinNameIdx]}: ${tzolkinData.power} & ${tzolkinData.theme}. ${tzolkinData.advice}`,
   });
   model.nativeRings.push({
     id: "haab",
     label: "Haab month ring",
     segments: buildSegments(19, (idx) => HAAB_MONTHS[idx]),
     activeIndex: haabMonthIdx,
-    plain: `Haab month ${HAAB_MONTHS[haabMonthIdx]}.`,
+    plain: `Haab month: ${HAAB_MONTHS[haabMonthIdx]}. (20-day Solar cycle component)`,
+  });
+  return model;
+}
+
+function buildOghamModel(ctx = {}) {
+  const model = baseModel("ogham", ctx);
+  const date = new Date(`${model.dateISO}T00:00:00Z`);
+  const doy = dayOfYearFromUTC(date);
+  const activeIdx = OGHAM_TREES.findIndex(t => doy >= t.day && doy <= (t.end || 366));
+  const tree = OGHAM_TREES[activeIdx === -1 ? 0 : activeIdx];
+  model.nativeRings.push({
+    id: "ogham",
+    label: "Celtic Ogham (Tree) Cycle",
+    segments: buildSegments(13, (idx) => OGHAM_TREES[idx].tree),
+    activeIndex: activeIdx === -1 ? 0 : activeIdx,
+    plain: tree ? `Tree: ${tree.tree} (${tree.ogham}). Animal: ${tree.animal}. Crystal: ${tree.crystal}. Theme: Wisdom of the Forest.` : "Celtic Moon Cycle.",
+  });
+  return model;
+}
+
+function buildIndigenousModel(ctx = {}) {
+  const model = baseModel("indigenous", ctx);
+  const date = new Date(`${model.dateISO}T00:00:00Z`);
+  const doy = dayOfYearFromUTC(date);
+  const activeIdx = INDIGENOUS_ZODIAC.findIndex(z => doy >= z.day && doy <= (z.end || 366));
+  const zod = INDIGENOUS_ZODIAC[activeIdx === -1 ? 0 : activeIdx];
+  model.nativeRings.push({
+    id: "indigenous",
+    label: "Indigenous (Turtle Island) Zodiac",
+    segments: buildSegments(12, (idx) => INDIGENOUS_ZODIAC[idx].animal),
+    activeIndex: activeIdx === -1 ? 0 : activeIdx,
+    plain: zod ? `Animal: ${zod.animal}. Element: ${zod.element}. Clan: ${zod.clan}. Plant: ${zod.plant}. Stone: ${zod.stone}. Wind: ${zod.wind}.` : "Earth Medicine Wheel.",
   });
   return model;
 }
@@ -380,6 +428,8 @@ const BUILDERS = {
   egyptian_ancient_solar: buildEgyptianSolarModel,
   athenian_lunar: buildAthenianLunarModel,
   mayan: buildMayanModel,
+  ogham: buildOghamModel,
+  indigenous: buildIndigenousModel,
 };
 
 function buildCalendarWheelModel(id, ctx = {}) {
@@ -408,6 +458,8 @@ const CALENDAR_WHEEL_IDS = [
   "egyptian_ancient_solar",
   "athenian_lunar",
   "mayan",
+  "ogham",
+  "indigenous",
 ];
 
 export { CALENDAR_WHEEL_IDS, buildCalendarWheelModel };

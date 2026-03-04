@@ -189,7 +189,7 @@ export default function HarmonicsTab({ ctx }) {
             The harmonic wheel — planets near each other here are connected at this deeper frequency, even if they're far apart in your birth chart.
           </p>
           <div style={{ display:"flex", justifyContent:"center" }}>
-            <WheelWithTooltip positions={hPos} size={300} id={`h${n}`}/>
+              <WheelWithTooltip positions={hPos} size={300} id={`h${n}`} theme="vedic"/>
           </div>
         </Card>
       </div>

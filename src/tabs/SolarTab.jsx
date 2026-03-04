@@ -108,7 +108,7 @@ export default function SolarTab({ ctx }) {
                 The wheel shows where each planet sits in the zodiac for your year ahead. Hover or tap any planet for details.
               </p>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <WheelWithTooltip positions={res.srPos} size={300} id="sr" />
+                <WheelWithTooltip positions={res.srPos} size={300} id="sr" theme="solar" />
               </div>
             </Card>
           </div>

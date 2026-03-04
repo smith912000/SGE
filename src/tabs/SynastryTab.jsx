@@ -79,9 +79,52 @@ export default function SynastryTab({ ctx }) {
             </div>
           ))}
         </div>
-        <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:0, textAlign:"center" }}>
+        <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 16px", textAlign:"center" }}>
           {ratio>=65 ? "This pairing has strong natural harmony — the ease between you is palpable, though growth edges keep things dynamic." : ratio>=45 ? "A balanced mix of harmony and friction — this combination keeps both people growing while maintaining connection." : "This pairing has significant friction — it's growth-oriented rather than comfort-oriented. Challenges build depth if both people are willing."}
         </p>
+
+        {/* Sub-scores */}
+        {(() => {
+          const EMO_PLANETS = ["Moon","Venus","Neptune"];
+          const COM_PLANETS = ["Mercury","Sun","Uranus"];
+          const LT_PLANETS  = ["Saturn","Jupiter","Pluto"];
+          const INT_PLANETS = ["Venus","Mars","Pluto"];
+          const subScore = (planets) => {
+            const relevant = res.synR.aspects.filter(a => {
+              const p1 = a.p1.replace(/^[AB]_/,""), p2 = a.p2.replace(/^[AB]_/,"");
+              return planets.includes(p1) || planets.includes(p2);
+            });
+            const h = relevant.filter(a=>["Trine","Sextile","Conjunction"].includes(a.name)).length;
+            const f = relevant.filter(a=>["Square","Opposition"].includes(a.name)).length;
+            const total = h + f;
+            return total > 0 ? Math.round((h/total)*100) : 50;
+          };
+          const subs = [
+            { label:"Emotional Bond", score:subScore(EMO_PLANETS), desc:"Moon, Venus, Neptune" },
+            { label:"Communication", score:subScore(COM_PLANETS), desc:"Mercury, Sun, Uranus" },
+            { label:"Long-term Fit",  score:subScore(LT_PLANETS),  desc:"Saturn, Jupiter, Pluto" },
+            { label:"Chemistry",      score:subScore(INT_PLANETS),  desc:"Venus, Mars, Pluto" },
+          ];
+          return (
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(150px,1fr))", gap:10 }}>
+              {subs.map(s=>{
+                const col = s.score >= 65 ? "#69ff8e" : s.score >= 45 ? "#FFB347" : "#ff6b6b";
+                return (
+                  <div key={s.label} style={{ padding:"10px 12px", borderRadius:10, background:col+"0a", border:`1px solid ${col}22` }}>
+                    <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
+                      <span style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", color:M3.onSurfaceVariant }}>{s.label.toUpperCase()}</span>
+                      <span style={{ fontFamily:"Cinzel,serif", fontSize:"0.9rem", color:col }}>{s.score}%</span>
+                    </div>
+                    <div style={{ height:4, borderRadius:2, background:M3.surfaceDim, overflow:"hidden" }}>
+                      <div style={{ width:`${s.score}%`, height:"100%", background:col, borderRadius:2, transition:"width 0.5s" }}/>
+                    </div>
+                    <div style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.62rem", color:M3.outlineVariant, marginTop:4 }}>{s.desc}</div>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })()}
       </Card>
 
       {frictionAsp.length > 0 && (
@@ -106,15 +149,43 @@ export default function SynastryTab({ ctx }) {
         </Card>
       )}
 
+      {/* Top supportive aspects */}
+      {(() => {
+        const supportive = [...trines, ...conj].sort((a,b)=>b.strength-a.strength).slice(0,3);
+        if (!supportive.length) return null;
+        return (
+          <Card title="✨ Strongest Supportive Connections">
+            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurfaceVariant, margin:"0 0 12px" }}>
+              These connections flow naturally — they're the glue of this relationship.
+            </p>
+            {supportive.map((a,i)=>{
+              const p1=a.p1.replace(/^[AB]_/,""), p2=a.p2.replace(/^[AB]_/,"");
+              const roleDesc = `Your ${(P_ROLE[p1]||p1).toLowerCase()} and their ${(P_ROLE[p2]||p2).toLowerCase()} resonate through a ${a.name.toLowerCase()} — this creates ${a.name==="Conjunction" ? "a fused, amplified energy between you in this area" : "natural ease and mutual support in how you approach this part of life"}.`;
+              return (
+                <div key={i} style={{ padding:"12px 16px", marginBottom:8, borderRadius:10, background:a.col+"0a", borderLeft:`3px solid ${a.col}` }}>
+                  <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.72rem", color:M3.onSurface, marginBottom:4 }}>
+                    <span style={{color:P_COL[p1]||M3.primary}}>{P_SYM[p1]||""} A's {p1}</span>
+                    <span style={{color:a.col, margin:"0 6px"}}>{a.sym} {a.name}</span>
+                    <span style={{color:P_COL[p2]||M3.primary}}>{P_SYM[p2]||""} B's {p2}</span>
+                    <span style={{color:M3.outlineVariant, marginLeft:8, fontSize:"0.62rem"}}>{(a.strength*100).toFixed(0)}%</span>
+                  </div>
+                  <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>{roleDesc}</p>
+                </div>
+              );
+            })}
+          </Card>
+        );
+      })()}
+
       <div style={grid2}>
         <Card title="♡ Person A — Birth Chart">
           <div style={{ display:"flex", justifyContent:"center" }}>
-            <WheelWithTooltip positions={res.trop} houses={res.houses} size={280} id="synA"/>
+            <WheelWithTooltip positions={res.trop} houses={res.houses} size={280} id="synA" theme="western"/>
           </div>
         </Card>
         <Card title="♡ Person B — Birth Chart">
           <div style={{ display:"flex", justifyContent:"center" }}>
-            <WheelWithTooltip positions={res.synR.positions} houses={res.synR.houses} size={280} id="synB"/>
+            <WheelWithTooltip positions={res.synR.positions} houses={res.synR.houses} size={280} id="synB" theme="lunar"/>
           </div>
         </Card>
       </div>
