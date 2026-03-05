@@ -189,7 +189,7 @@ export default function WheelTab({ ctx }) {
               {ctx.ANIMAL_INFO[res.cn.animal]?.desc.slice(0, 180)}...
             </p>
             <div style={{ marginTop: 8, display: "flex", gap: 6, flexWrap: "wrap" }}>
-              {(ctx.ANIMAL_INFO[res.cn.animal]?.trait || "").split(", ").map(t => (
+              {((ctx.ANIMAL_INFO && res.cn && ctx.ANIMAL_INFO[res.cn.animal]?.trait) || "").split(", ").filter(Boolean).map(t => (
                 <span key={t} style={{ padding: "3px 10px", borderRadius: 12, background: M3.primaryContainer, color: M3.onPrimaryContainer, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem" }}>{t}</span>
               ))}
             </div>
