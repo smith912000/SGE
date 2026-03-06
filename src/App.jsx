@@ -370,7 +370,7 @@ export default function App() {
               <TabContent id={tab}>
 
                 {tab === "wheel" && (
-                  <WheelTab ctx={{ M3, A, res, Card, wheelMode, setWheelMode, WheelWithTooltip, ChineseWheelWithTooltip, ayanamsa, zodSign, P_COL, P_SYM, SIGN_COL }} />
+                  <WheelTab ctx={{ M3, A, res, Card, wheelMode, setWheelMode, WheelWithTooltip, ChineseWheelWithTooltip, ayanamsa, zodSign, P_COL, P_SYM, SIGN_COL, ANIMAL_INFO }} />
                 )}
                 {tab === "aspects" && (
                   <AspectsTab ctx={{ M3, RAD, SIGNS, SIGN_COL, SIGN_SYM, ASPECTS, ASP_EXPLAIN, P_COL, P_SYM, res, Card, WheelWithTooltip, AspectTable }} />
