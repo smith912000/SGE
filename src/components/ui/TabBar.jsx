@@ -2,10 +2,11 @@ import { useRef, useEffect, useState } from 'react';
 import { M3 } from '../../theme/m3.js';
 
 const GROUPS = [
-  { label: 'Chart',    ids: ['natal','deep','struggles','wheel','aspects'] },
-  { label: 'Time',     ids: ['progressions','solar','harmonics','transits'] },
-  { label: 'People',   ids: ['synastry','chinese','phi'] },
-  { label: 'Symbolic', ids: ['numerology','grammatology','calendar','education'] },
+  { label: 'Chart', ids: ['today', 'natal', 'deep', 'struggles', 'wheel', 'aspects'] },
+  { label: 'Time', ids: ['progressions', 'solar', 'harmonics', 'transits'] },
+  { label: 'People', ids: ['synastry', 'chinese', 'phi'] },
+  { label: 'Daily', ids: ['horoscope', 'tarot'] },
+  { label: 'Symbolic', ids: ['numerology', 'grammatology', 'calendar', 'education'] },
 ];
 
 export default function TabBar({ tabs, active, onChange }) {
