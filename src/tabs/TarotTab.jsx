@@ -110,14 +110,15 @@ export default function TarotTab({ ctx }) {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    justifyContent: "center",
-                    gap: 24,
+                    justifyContent: "space-between", // Space between top content and bottom reason
+                    padding: "32px 20px 24px",     // Better internal padding
                     position: "relative",
                     boxShadow: card ? `0 0 60px ${card.col}18` : "none",
                     transition: "all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
                     transform: isPulling ? "rotateY(180deg) scale(0.9)" : "rotateY(0deg) scale(1)",
                     cursor: hasDrawnToday ? "default" : "pointer",
-                    overflow: "hidden"
+                    overflow: "hidden",
+                    boxSizing: "border-box"
                 }}>
                     {/* Decorative border */}
                     <div style={{
@@ -129,36 +130,44 @@ export default function TarotTab({ ctx }) {
                         <div style={{
                             fontSize: "3rem",
                             animation: "pulse 1s infinite alternate",
-                            color: M3.primary
+                            color: M3.primary,
+                            margin: "auto" // Center the spinner
                         }}>🎴</div>
                     ) : card ? (
                         <>
-                            <div style={{
-                                fontSize: "100px",
-                                filter: `drop-shadow(0 0 20px ${card.col}66)`,
-                                margin: "20px 0"
-                            }}>{card.emoji}</div>
+                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+                                <div style={{
+                                    fontSize: "80px", // Slightly smaller to fit better
+                                    filter: `drop-shadow(0 0 20px ${card.col}66)`,
+                                    margin: "10px 0"
+                                }}>{card.emoji}</div>
 
-                            <div style={{ textAlign: "center", padding: "0 28px", zIndex: 1 }}>
-                                <div style={{ fontSize: "0.6rem", letterSpacing: "0.2em", color: card.col, marginBottom: 4, opacity: 0.8 }}>
-                                    {card.astro.toUpperCase()}
+                                <div style={{ textAlign: "center", zIndex: 1 }}>
+                                    <div style={{ fontSize: "0.6rem", letterSpacing: "0.2em", color: card.col, marginBottom: 4, opacity: 0.8 }}>
+                                        {card.astro.toUpperCase()}
+                                    </div>
+                                    <h3 style={{ margin: 0, color: card.col, fontFamily: "Cinzel, serif", fontSize: "1.3rem" }}>{card.name}</h3>
+                                    <p style={{ fontSize: "0.85rem", marginTop: 12, color: M3.onSurface, lineHeight: 1.5, fontFamily: "'EB Garamond', serif" }}>
+                                        {card.meaning}
+                                    </p>
                                 </div>
-                                <h3 style={{ margin: 0, color: card.col, fontFamily: "Cinzel, serif", fontSize: "1.4rem" }}>{card.name}</h3>
-                                <p style={{ fontSize: "0.85rem", marginTop: 16, color: M3.onSurface, lineHeight: 1.6, fontFamily: "'EB Garamond', serif" }}>
-                                    {card.meaning}
-                                </p>
                             </div>
 
                             <div style={{
-                                position: "absolute", bottom: 20, fontSize: "0.65rem",
-                                color: M3.onSurfaceVariant, fontStyle: "italic", opacity: 0.6,
-                                padding: "0 20px", textAlign: "center"
+                                fontSize: "0.65rem",
+                                color: M3.onSurfaceVariant,
+                                fontStyle: "italic",
+                                opacity: 0.6,
+                                textAlign: "center",
+                                width: "100%",
+                                borderTop: `1px solid ${card.col}22`,
+                                paddingTop: 16
                             }}>
                                 {reason}
                             </div>
                         </>
                     ) : (
-                        <div style={{ textAlign: "center", opacity: 0.4 }}>
+                        <div style={{ textAlign: "center", opacity: 0.4, margin: "auto" }}>
                             <div style={{ fontSize: "4rem", marginBottom: 16 }}>🎴</div>
                             <div style={{ fontSize: "0.7rem", letterSpacing: "0.1em" }}>YOUR DAILY CARD</div>
                         </div>
