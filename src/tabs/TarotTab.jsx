@@ -74,6 +74,19 @@ export default function TarotTab({ ctx }) {
         }, 1200);
     };
 
+    if (!res) {
+        return (
+            <div style={{ padding: 40, textAlign: "center", color: M3.onSurfaceVariant }}>
+                <div style={{ fontSize: "3rem", marginBottom: 20 }}>🌌</div>
+                <h3 style={{ fontFamily: "Cinzel, serif", color: M3.primary }}>Chart Required</h3>
+                <p style={{ fontSize: "0.9rem", maxWidth: 300, margin: "10px auto" }}>
+                    The Tarot Synchronicity Engine needs your birth details to align the cards with your unique astrological blueprint.
+                </p>
+                <p style={{ fontSize: "0.8rem", opacity: 0.7 }}>Please go to the <strong>Natal</strong> tab or click "Compute Chart" above.</p>
+            </div>
+        );
+    }
+
     return (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 32, padding: "20px 0" }}>
             <div style={{ textAlign: "center" }}>

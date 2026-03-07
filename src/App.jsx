@@ -412,7 +412,7 @@ export default function App() {
                   <HoroscopeTab ctx={{ M3, res, zodSign, SIGN_COL, P_COL, P_SYM }} />
                 )}
                 {tab === "tarot" && (
-                  <TarotTab ctx={{ M3 }} />
+                  <TarotTab ctx={{ M3, res, zodSign }} />
                 )}
 
                 {false && tab === "natal-old" && (
