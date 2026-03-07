@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
 const DECK = [
     { id: 0, name: "The Fool", emoji: "🃏", meaning: "Spontaneous beginnings, trust in the universe, an adventure of spirit.", astro: "Air / Uranus", col: "#b2ebf2" },
@@ -30,18 +30,17 @@ export default function TarotTab({ ctx }) {
     const [card, setCard] = useState(null);
     const [isPulling, setIsPulling] = useState(false);
     const [reason, setReason] = useState("");
+    const [hasDrawnToday, setHasDrawnToday] = useState(false);
 
-    // The "Synchronicity Engine"
-    // Instead of random, we derive the card today from Chart + Date
-    const getDestinedCard = () => {
-        if (!res) return DECK[0];
+    const todayStr = useMemo(() => new Date().toISOString().split('T')[0], []);
 
+    // Derives fixed card from Chart + Date
+    const getDestinedCard = useMemo(() => {
+        if (!res) return null;
         const daySeed = Math.floor(Date.now() / 86400000);
         const sunIdx = Number(daySeed % 12);
         const moonIdx = Math.floor((res.jd % 29.5) / (29.5 / 12)) % 12;
         const asc = zodSign(res.houses.ASC);
-
-        // A unique hash for the user today
         const hash = (daySeed + sunIdx + moonIdx + res.jd) % DECK.length;
         const destined = DECK[Math.floor(hash)];
 
@@ -52,16 +51,26 @@ export default function TarotTab({ ctx }) {
         else r = `Drawn through the alignment of your ${asc} ascendant and today's planetary positions.`;
 
         return { card: destined, reason: r };
-    };
+    }, [res, zodSign]);
+
+    useEffect(() => {
+        const lastDraw = localStorage.getItem('sge-tarot-last-draw');
+        if (lastDraw === todayStr && getDestinedCard) {
+            setCard(getDestinedCard.card);
+            setReason(getDestinedCard.reason);
+            setHasDrawnToday(true);
+        }
+    }, [todayStr, getDestinedCard]);
 
     const pullCard = () => {
+        if (!getDestinedCard || hasDrawnToday) return;
         setIsPulling(true);
-        setCard(null);
         setTimeout(() => {
-            const { card, reason } = getDestinedCard();
-            setCard(card);
-            setReason(reason);
+            setCard(getDestinedCard.card);
+            setReason(getDestinedCard.reason);
+            setHasDrawnToday(true);
             setIsPulling(false);
+            localStorage.setItem('sge-tarot-last-draw', todayStr);
         }, 1200);
     };
 
@@ -70,7 +79,7 @@ export default function TarotTab({ ctx }) {
             <div style={{ textAlign: "center" }}>
                 <h2 style={{ fontFamily: "Cinzel, serif", color: M3.primary, margin: 0, fontSize: "1.8rem" }}>Today's Arcana</h2>
                 <p style={{ color: M3.onSurfaceVariant, fontSize: "0.85rem", marginTop: 8, maxWidth: 400 }}>
-                    A card drawn through <strong>Synchronicity</strong> — aligning your birth chart with the current planetary energies.
+                    A unique card drawn through <strong>Synchronicity</strong> — revealed once every 24 hours based on your astrological alignment.
                 </p>
             </div>
 
@@ -94,7 +103,7 @@ export default function TarotTab({ ctx }) {
                     boxShadow: card ? `0 0 60px ${card.col}18` : "none",
                     transition: "all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
                     transform: isPulling ? "rotateY(180deg) scale(0.9)" : "rotateY(0deg) scale(1)",
-                    cursor: "pointer",
+                    cursor: hasDrawnToday ? "default" : "pointer",
                     overflow: "hidden"
                 }}>
                     {/* Decorative border */}
@@ -146,32 +155,41 @@ export default function TarotTab({ ctx }) {
 
             <button
                 onClick={pullCard}
-                disabled={isPulling}
+                disabled={isPulling || hasDrawnToday}
                 style={{
                     padding: "14px 40px",
                     borderRadius: 30,
-                    background: card ? M3.surfaceContainer : M3.primary,
-                    color: card ? M3.primary : M3.onPrimary,
-                    border: card ? `1px solid ${M3.primary}44` : "none",
+                    background: hasDrawnToday ? M3.surfaceContainer : M3.primary,
+                    color: hasDrawnToday ? M3.onSurfaceVariant : M3.onPrimary,
+                    border: hasDrawnToday ? `1px solid ${M3.outlineVariant}` : "none",
                     fontFamily: "Cinzel, serif",
                     fontWeight: "700",
                     fontSize: "0.9rem",
                     letterSpacing: "0.05em",
-                    cursor: isPulling ? "wait" : "pointer",
-                    boxShadow: card ? "none" : `0 8px 16px ${M3.primary}33`,
-                    transition: "all 0.3s"
+                    cursor: (isPulling || hasDrawnToday) ? "default" : "pointer",
+                    boxShadow: hasDrawnToday ? "none" : `0 8px 16px ${M3.primary}33`,
+                    transition: "all 0.3s",
+                    opacity: hasDrawnToday ? 0.7 : 1
                 }}
                 onMouseEnter={e => {
+                    if (hasDrawnToday || isPulling) return;
                     e.currentTarget.style.transform = "translateY(-2px)";
-                    if (!card) e.currentTarget.style.boxShadow = `0 12px 20px ${M3.primary}44`;
+                    e.currentTarget.style.boxShadow = `0 12px 20px ${M3.primary}44`;
                 }}
                 onMouseLeave={e => {
+                    if (hasDrawnToday || isPulling) return;
                     e.currentTarget.style.transform = "translateY(0)";
-                    if (!card) e.currentTarget.style.boxShadow = `0 8px 16px ${M3.primary}33`;
+                    e.currentTarget.style.boxShadow = `0 8px 16px ${M3.primary}33`;
                 }}
             >
-                {isPulling ? "CONSULTING THE STARS..." : card ? "DRAW AGAIN" : "REVEAL TODAY'S CARD"}
+                {isPulling ? "CONSULTING THE STARS..." : hasDrawnToday ? "TODAY'S READING IS SET" : "REVEAL TODAY'S CARD"}
             </button>
+
+            {hasDrawnToday && (
+                <p style={{ color: M3.onSurfaceVariant, fontSize: "0.75rem", opacity: 0.7 }}>
+                    Return tomorrow for your next destined alignment.
+                </p>
+            )}
 
             <style>{`
                 @keyframes pulse {
