@@ -296,96 +296,136 @@ export default function GrammatologyTab({ ctx }) {
           ))}
         </div>
         <div style={{ overflowX:"auto" }}>
-          <table style={{ width:"100%", borderCollapse:"collapse" }}>
-            <thead><tr>
-              {[
-                ...(selectedField ? [{ k: selectedScript }] : []),
-                ...[{k:"#"},{k:"IPA"},{k:"Kemet"},{k:"Egypt."}],
-                ...(gramScriptFilter!=="indic"?[{k:"Phoen."},{k:"Greek"},{k:"Hebrew"},{k:"Name"},{k:"Gem."},{k:"Runic"},{k:"Latin"}]:[{k:"Hebrew"},{k:"Name"},{k:"Gem."}]),
-                ...(gramScriptFilter==="semitic"||gramScriptFilter==="all"?[{k:"Aram."},{k:"Samar."},{k:"Arabic"},{k:"Syriac"},{k:"OSA"},{k:"Ge'ez"},{k:"Cunei."}]:[]),
-                ...(gramScriptFilter==="european"||gramScriptFilter==="all"?[{k:"Coptic"},{k:"Gothic"},{k:"Armen."},{k:"Georg."},{k:"Cyril."},{k:"Glagol."},{k:"Ogham"}]:[]),
-                ...(gramScriptFilter==="indic"||gramScriptFilter==="all"?[{k:"Phoen."},{k:"Greek"},{k:"Runic"},{k:"Latin"},{k:"Brahmi"},{k:"Devan."},{k:"Tamil"},{k:"Bopo."}]:[]),
-                ...(!["semitic","european","indic"].includes(gramScriptFilter)?[{k:"Tarot"}]:[]),
-                ...(gramScriptFilter==="core"?[{k:"Meaning"}]:[]),
-              ].map(h=>(
-                <th key={h.k} style={{ padding:"4px 6px", textAlign:"left", color:M3.secondary, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.56rem", letterSpacing:"0.06em", borderBottom:`1px solid ${M3.outlineVariant}`, whiteSpace:"nowrap" }}>{h.k}</th>
-              ))}
-            </tr></thead>
-            <tbody>
-              {LETTER_DB.map(l=>{
-                const isSign = l.yetzirah.sign, isPlanet = l.yetzirah.planet, isElement = l.yetzirah.element;
-                const highlight = isSign ? SIGN_COL[isSign] : isPlanet ? P_COL[isPlanet] : isElement ? EL_COL[isElement] : null;
-                const expanded = expandedLetter === l.order;
-                const td = (c,fs,col) => <td style={{ padding:"4px 6px", fontSize:fs||"0.72rem", color:col||M3.onSurface, fontFamily:fs&&fs>"1"?"inherit":"'Share Tech Mono',monospace" }}>{c}</td>;
-                const tds = (c) => <td style={{ padding:"4px 6px", fontSize:"1.1rem" }}>{c}</td>;
-                return [
-                  <tr key={l.order} onClick={()=>setExpandedLetter(expanded?null:l.order)} style={{ cursor:"pointer", borderBottom:`1px solid ${M3.outlineVariant}22`, background:expanded?M3.surfaceVariant:"transparent", transition:"background 0.2s" }}>
-                    {td(l.order,"0.66rem",highlight||M3.onSurfaceVariant)}
-                    {selectedField && td(l[selectedField] || "", "1.1rem")}
-                    {td(l.ipa,"0.62rem",M3.onSurfaceVariant)}
-                    {tds(l.hiero)}
-                    <td style={{ padding:"4px 6px", fontSize:"1.1rem" }}><span title={l.hieroEgypName} style={{ borderBottom:l.egyptColor?`2px solid ${({polychrome:"#c0a",red:"#d44",green:"#4a4",yellow:"#da0",blue:"#48d",black:"#444",multiple:"#a8a"})[l.egyptColor]||M3.outline}`:"none" }}>{l.hieroEgyp}</span></td>
-                    {gramScriptFilter!=="indic" && <>
-                      {tds(l.phoenician)}
-                      {td(l.greek,"0.74rem",M3.onSurface)}
-                      <td style={{ padding:"4px 6px", fontSize:"1.1rem", color:highlight||M3.primary }}>{l.hebrew}</td>
-                      {td(l.hebrewName,"0.64rem",highlight||M3.onSurface)}
-                      {td(l.gematria,"0.68rem",M3.tertiary)}
-                      {tds(l.runic)}
-                      {td(l.latin,"0.68rem")}
-                    </>}
-                    {gramScriptFilter==="indic" && <>
-                      <td style={{ padding:"4px 6px", fontSize:"1.1rem", color:highlight||M3.primary }}>{l.hebrew}</td>
-                      {td(l.hebrewName,"0.64rem",highlight||M3.onSurface)}
-                      {td(l.gematria,"0.68rem",M3.tertiary)}
-                    </>}
-                    {(gramScriptFilter==="semitic"||gramScriptFilter==="all") && <>
-                      {tds(l.aramaic)}{tds(l.samaritan)}{tds(l.arabic)}{tds(l.syriac)}{tds(l.oldSouthArabian)}{tds(l.geez)}{tds(l.cuneiform)}
-                    </>}
-                    {(gramScriptFilter==="european"||gramScriptFilter==="all") && <>
-                      {tds(l.coptic)}{tds(l.gothic)}{tds(l.armenian)}{tds(l.georgian)}{td(l.cyrillic,"0.78rem")}{tds(l.glagolitic)}{tds(l.ogham)}
-                    </>}
-                    {(gramScriptFilter==="indic"||gramScriptFilter==="all") && <>
-                      {tds(l.phoenician)}{td(l.greek,"0.74rem")}{tds(l.runic)}{td(l.latin,"0.68rem")}
-                      {tds(l.brahmi)}{tds(l.devanagari)}{tds(l.tamil)}{td(l.bopomofo,"0.78rem")}
-                    </>}
-                    {!["semitic","european","indic"].includes(gramScriptFilter) && td(l.tarotName?`${l.tarot} ${l.tarotName}`:"","0.58rem",M3.onSurfaceVariant)}
-                    {gramScriptFilter==="core" && <td style={{ padding:"4px 6px", fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.62rem", color:M3.onSurfaceVariant, fontStyle:"italic" }}>{l.acrophony}</td>}
-                  </tr>,
-                  expanded && (
-                    <tr key={l.order+"x"}>
-                      <td colSpan={30} style={{ padding:"12px 14px", background:M3.surfaceDim, borderBottom:`1px solid ${M3.outlineVariant}` }}>
-                        <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
-                          <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>{l.pictographic}</p>
-                          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(180px,1fr))", gap:"6px 12px", fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem" }}>
-                            <span style={{ color:M3.secondary }}>Semitic origin: <span style={{fontSize:"1.2rem"}}>{l.hiero}</span> {l.hieroName}</span>
-                            <span style={{ color:M3.secondary }}>Egyptian sign: <span style={{fontSize:"1.2rem"}}>{l.hieroEgyp}</span> {l.hieroEgypName} <span style={{ color:({polychrome:"#c0a",red:"#d44",green:"#4a4",yellow:"#da0",blue:"#48d",black:"#666",multiple:"#a8a"})[l.egyptColor]||M3.outline }}>({l.egyptColor})</span></span>
-                            <span style={{ color:M3.secondary }}>Hebrew: <span style={{fontSize:"0.9rem"}}>{l.hebrewSpelling}</span></span>
-                            <span style={{ color:M3.secondary }}>Aramaic: <span style={{fontSize:"1.1rem"}}>{l.aramaic}</span> · Samaritan: <span style={{fontSize:"1.1rem"}}>{l.samaritan}</span></span>
-                            <span style={{ color:M3.secondary }}>Coptic: <span style={{fontSize:"1rem"}}>{l.coptic}</span> · Gothic: <span style={{fontSize:"1rem"}}>{l.gothic}</span> ({l.gothicName})</span>
-                            <span style={{ color:M3.secondary }}>Armenian: <span style={{fontSize:"1rem"}}>{l.armenian}</span> ({l.armenianName}) · Georgian: <span style={{fontSize:"1rem"}}>{l.georgian}</span> ({l.georgianName})</span>
-                            <span style={{ color:M3.secondary }}>Ge'ez: <span style={{fontSize:"1rem"}}>{l.geez}</span> · Syriac: <span style={{fontSize:"1rem"}}>{l.syriac}</span> · Arabic: <span style={{fontSize:"1rem"}}>{l.arabic}</span> {l.cuneiform && <>· Cuneiform: <span style={{fontSize:"1rem"}}>{l.cuneiform}</span> ({l.cuneiformName})</>}</span>
-                            <span style={{ color:M3.secondary }}>Brahmi: <span style={{fontSize:"1rem"}}>{l.brahmi}</span> · Devanagari: <span style={{fontSize:"1rem"}}>{l.devanagari}</span> · Tamil: <span style={{fontSize:"1rem"}}>{l.tamil}</span></span>
-                            <span style={{ color:M3.secondary }}>Ogham: <span style={{fontSize:"1rem"}}>{l.ogham}</span> {l.oghamName} ({l.oghamTree})</span>
-                            <span style={{ color:M3.secondary }}>Old South Arabian: <span style={{fontSize:"1rem"}}>{l.oldSouthArabian}</span> · Bopomofo: <span style={{fontSize:"0.9rem"}}>{l.bopomofo}</span></span>
-                            {l.tarotName && <span style={{ color:M3.tertiary }}>Tarot: {l.tarot} — {l.tarotName} · Chinese: <span style={{fontSize:"1rem"}}>{l.tarotChinese}</span> ({l.tarotPinyin})</span>}
-                          </div>
-                          {(isSign||isPlanet||isElement) && (
-                            <div style={{ padding:"8px 12px", borderRadius:8, background:(highlight||M3.primary)+"11", border:`1px solid ${highlight||M3.primary}33` }}>
-                              <span style={{ color:highlight||M3.primary, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem", fontWeight:"700" }}>
-                                {l.yetzirah.type==="mother" ? `Mother Letter — Element: ${isElement}` : l.yetzirah.type==="double" ? `Double Letter — Planet: ${isPlanet}` : `Simple Letter — Sign: ${isSign}`}
-                              </span>
-                              {isSign && SIGN_INFO[isSign] && <span style={{ color:M3.onSurfaceVariant, fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.68rem", marginLeft:8, fontStyle:"italic" }}>{SIGN_INFO[isSign].letterMeaning}</span>}
+          {(() => {
+            /* ── unified column definitions ── */
+            const f = gramScriptFilter;
+            const showCore     = f === "core" || f === "all";
+            const showSemitic  = f === "semitic" || f === "all";
+            const showEuropean = f === "european" || f === "all";
+            const showIndic    = f === "indic" || f === "all";
+
+            /* each col: { key, label, get(l)=>content, fs, colFn? } */
+            const cols = [
+              /* ── identity / non-language columns first ── */
+              { key:"#",       label:"#",          get: l => l.order,      fs:"0.66rem", colFn: l => { const s=l.yetzirah.sign,p=l.yetzirah.planet,e=l.yetzirah.element; return s?SIGN_COL[s]:p?P_COL[p]:e?EL_COL[e]:M3.onSurfaceVariant; } },
+              { key:"hebrew",  label:"Hebrew",     get: l => l.hebrew,     fs:"1.1rem",  colFn: l => { const s=l.yetzirah.sign,p=l.yetzirah.planet,e=l.yetzirah.element; return s?SIGN_COL[s]:p?P_COL[p]:e?EL_COL[e]:M3.primary; } },
+              { key:"name",    label:"Name",       get: l => l.hebrewName, fs:"0.64rem", colFn: l => { const s=l.yetzirah.sign,p=l.yetzirah.planet,e=l.yetzirah.element; return s?SIGN_COL[s]:p?P_COL[p]:e?EL_COL[e]:M3.onSurface; } },
+              { key:"tarot",   label:"🃏 Tarot",   get: l => l.tarotName ? `${l.tarot} ${l.tarotName}` : "", fs:"0.6rem", highlight:true, colFn: () => M3.tertiary },
+              { key:"gem",     label:"Gem.",       get: l => l.gematria,   fs:"0.68rem", colFn: () => M3.tertiary },
+              { key:"elem",    label:"Element",    get: l => l.yetzirah?.element || l.yetzirah?.planet || l.yetzirah?.sign || "—", fs:"0.62rem", colFn: l => l.yetzirah?.element==="Fire"?"#f66":l.yetzirah?.element==="Water"?"#6af":l.yetzirah?.element==="Air"?"#af6":M3.onSurfaceVariant },
+              { key:"ipa",     label:"IPA",        get: l => l.ipa,        fs:"0.62rem", colFn: () => M3.onSurfaceVariant },
+              { key:"latin",   label:"Latin",      get: l => l.latin,      fs:"0.68rem" },
+
+              /* ── always-visible ancestral scripts ── */
+              { key:"kemet",   label:"Kemet",      get: l => l.hiero,      fs:"1.1rem" },
+              { key:"egypt",   label:"Egypt.",      get: l => l.hieroEgyp,  fs:"1.1rem", isEgyp:true },
+              { key:"phoen",   label:"Phoen.",     get: l => l.phoenician,  fs:"1.1rem" },
+              { key:"greek",   label:"Greek",      get: l => l.greek,      fs:"0.74rem" },
+
+              /* ── semitic branch ── */
+              ...(showSemitic ? [
+                { key:"aram",  label:"Aram.",     get: l => l.aramaic,         fs:"1.1rem" },
+                { key:"samar", label:"Samar.",    get: l => l.samaritan,       fs:"1.1rem" },
+                { key:"arabic",label:"Arabic",    get: l => l.arabic,          fs:"1.1rem" },
+                { key:"syriac",label:"Syriac",    get: l => l.syriac,          fs:"1.1rem" },
+                { key:"osa",   label:"OSA",       get: l => l.oldSouthArabian, fs:"1.1rem" },
+                { key:"geez",  label:"Ge'ez",     get: l => l.geez,            fs:"1.1rem" },
+                { key:"cunei", label:"Cunei.",    get: l => l.cuneiform,       fs:"1.1rem" },
+              ] : []),
+
+              /* ── european branch ── */
+              ...(showEuropean ? [
+                { key:"coptic", label:"Coptic",   get: l => l.coptic,      fs:"1.1rem" },
+                { key:"gothic", label:"Gothic",   get: l => l.gothic,      fs:"1.1rem" },
+                { key:"armen",  label:"Armen.",   get: l => l.armenian,    fs:"1.1rem" },
+                { key:"georg",  label:"Georg.",   get: l => l.georgian,    fs:"1.1rem" },
+                { key:"cyril",  label:"Cyril.",   get: l => l.cyrillic,    fs:"0.78rem" },
+                { key:"glagol", label:"Glagol.",  get: l => l.glagolitic,  fs:"1.1rem" },
+                { key:"runic",  label:"Runic",    get: l => l.runic,       fs:"1.1rem" },
+                { key:"ogham",  label:"Ogham",    get: l => l.ogham,       fs:"1.1rem" },
+              ] : [
+                /* runic always visible outside european filter */
+                { key:"runic",  label:"Runic",    get: l => l.runic,       fs:"1.1rem" },
+              ]),
+
+              /* ── indic branch ── */
+              ...(showIndic ? [
+                { key:"brahmi", label:"Brahmi",   get: l => l.brahmi,      fs:"1.1rem" },
+                { key:"devan",  label:"Devan.",   get: l => l.devanagari,  fs:"1.1rem" },
+                { key:"tamil",  label:"Tamil",    get: l => l.tamil,       fs:"1.1rem" },
+                { key:"bopo",   label:"Bopo.",    get: l => l.bopomofo,    fs:"0.78rem" },
+              ] : []),
+
+              /* ── meaning (core only) ── */
+              ...(showCore ? [
+                { key:"meaning", label:"Meaning", get: l => l.acrophony,   fs:"0.62rem", colFn: () => M3.onSurfaceVariant, italic:true },
+              ] : []),
+
+              /* ── selected script from ScriptSelector ── */
+              ...(selectedField ? [
+                { key:"sel", label:selectedScript, get: l => l[selectedField] || "", fs:"1.1rem", colFn: () => M3.primary },
+              ] : []),
+            ];
+
+            return (
+              <table style={{ width:"100%", borderCollapse:"collapse" }}>
+                <thead><tr>
+                  {cols.map(c => (
+                    <th key={c.key} style={{ padding:"4px 6px", textAlign:"left", color: c.highlight ? M3.tertiary : M3.secondary, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.56rem", letterSpacing:"0.06em", borderBottom:`1px solid ${M3.outlineVariant}`, whiteSpace:"nowrap", background: c.highlight ? (M3.tertiaryContainer || M3.secondaryContainer) + "22" : "transparent" }}>{c.label}</th>
+                  ))}
+                </tr></thead>
+                <tbody>
+                  {LETTER_DB.map(l => {
+                    const isSign = l.yetzirah.sign, isPlanet = l.yetzirah.planet, isElement = l.yetzirah.element;
+                    const highlight = isSign ? SIGN_COL[isSign] : isPlanet ? P_COL[isPlanet] : isElement ? EL_COL[isElement] : null;
+                    const expanded = expandedLetter === l.order;
+                    return [
+                      <tr key={l.order} onClick={()=>setExpandedLetter(expanded?null:l.order)} style={{ cursor:"pointer", borderBottom:`1px solid ${M3.outlineVariant}22`, background:expanded?M3.surfaceVariant:"transparent", transition:"background 0.2s" }}>
+                        {cols.map(c => {
+                          const val = c.get(l);
+                          const color = c.colFn ? c.colFn(l) : M3.onSurface;
+                          if (c.isEgyp) {
+                            return <td key={c.key} style={{ padding:"4px 6px", fontSize:c.fs }}><span title={l.hieroEgypName} style={{ borderBottom:l.egyptColor?`2px solid ${({polychrome:"#c0a",red:"#d44",green:"#4a4",yellow:"#da0",blue:"#48d",black:"#444",multiple:"#a8a"})[l.egyptColor]||M3.outline}`:"none" }}>{val}</span></td>;
+                          }
+                          return <td key={c.key} style={{ padding:"4px 6px", fontSize:c.fs, color, fontFamily: parseFloat(c.fs) >= 1 ? "inherit" : "'Share Tech Mono',monospace", fontStyle: c.italic ? "italic" : "normal", background: c.highlight ? (M3.tertiaryContainer || M3.secondaryContainer) + "11" : "transparent" }}>{val}</td>;
+                        })}
+                      </tr>,
+                      expanded && (
+                        <tr key={l.order+"x"}>
+                          <td colSpan={cols.length} style={{ padding:"12px 14px", background:M3.surfaceDim, borderBottom:`1px solid ${M3.outlineVariant}` }}>
+                            <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+                              <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>{l.pictographic}</p>
+                              <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(180px,1fr))", gap:"6px 12px", fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem" }}>
+                                <span style={{ color:M3.secondary }}>Semitic origin: <span style={{fontSize:"1.2rem"}}>{l.hiero}</span> {l.hieroName}</span>
+                                <span style={{ color:M3.secondary }}>Egyptian sign: <span style={{fontSize:"1.2rem"}}>{l.hieroEgyp}</span> {l.hieroEgypName} <span style={{ color:({polychrome:"#c0a",red:"#d44",green:"#4a4",yellow:"#da0",blue:"#48d",black:"#666",multiple:"#a8a"})[l.egyptColor]||M3.outline }}>({l.egyptColor})</span></span>
+                                <span style={{ color:M3.secondary }}>Hebrew: <span style={{fontSize:"0.9rem"}}>{l.hebrewSpelling}</span></span>
+                                <span style={{ color:M3.secondary }}>Aramaic: <span style={{fontSize:"1.1rem"}}>{l.aramaic}</span> · Samaritan: <span style={{fontSize:"1.1rem"}}>{l.samaritan}</span></span>
+                                <span style={{ color:M3.secondary }}>Coptic: <span style={{fontSize:"1rem"}}>{l.coptic}</span> · Gothic: <span style={{fontSize:"1rem"}}>{l.gothic}</span> ({l.gothicName})</span>
+                                <span style={{ color:M3.secondary }}>Armenian: <span style={{fontSize:"1rem"}}>{l.armenian}</span> ({l.armenianName}) · Georgian: <span style={{fontSize:"1rem"}}>{l.georgian}</span> ({l.georgianName})</span>
+                                <span style={{ color:M3.secondary }}>Ge'ez: <span style={{fontSize:"1rem"}}>{l.geez}</span> · Syriac: <span style={{fontSize:"1rem"}}>{l.syriac}</span> · Arabic: <span style={{fontSize:"1rem"}}>{l.arabic}</span> {l.cuneiform && <>· Cuneiform: <span style={{fontSize:"1rem"}}>{l.cuneiform}</span> ({l.cuneiformName})</>}</span>
+                                <span style={{ color:M3.secondary }}>Brahmi: <span style={{fontSize:"1rem"}}>{l.brahmi}</span> · Devanagari: <span style={{fontSize:"1rem"}}>{l.devanagari}</span> · Tamil: <span style={{fontSize:"1rem"}}>{l.tamil}</span></span>
+                                <span style={{ color:M3.secondary }}>Ogham: <span style={{fontSize:"1rem"}}>{l.ogham}</span> {l.oghamName} ({l.oghamTree})</span>
+                                <span style={{ color:M3.secondary }}>Old South Arabian: <span style={{fontSize:"1rem"}}>{l.oldSouthArabian}</span> · Bopomofo: <span style={{fontSize:"0.9rem"}}>{l.bopomofo}</span></span>
+                                {l.tarotName && <span style={{ color:M3.tertiary }}>Tarot: {l.tarot} — {l.tarotName} · Chinese: <span style={{fontSize:"1rem"}}>{l.tarotChinese}</span> ({l.tarotPinyin})</span>}
+                              </div>
+                              {(isSign||isPlanet||isElement) && (
+                                <div style={{ padding:"8px 12px", borderRadius:8, background:(highlight||M3.primary)+"11", border:`1px solid ${highlight||M3.primary}33` }}>
+                                  <span style={{ color:highlight||M3.primary, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem", fontWeight:"700" }}>
+                                    {l.yetzirah.type==="mother" ? `Mother Letter — Element: ${isElement}` : l.yetzirah.type==="double" ? `Double Letter — Planet: ${isPlanet}` : `Simple Letter — Sign: ${isSign}`}
+                                  </span>
+                                  {isSign && SIGN_INFO[isSign] && <span style={{ color:M3.onSurfaceVariant, fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.68rem", marginLeft:8, fontStyle:"italic" }}>{SIGN_INFO[isSign].letterMeaning}</span>}
+                                </div>
+                              )}
                             </div>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  ),
-                ];
-              })}
-            </tbody>
-          </table>
+                          </td>
+                        </tr>
+                      ),
+                    ];
+                  })}
+                </tbody>
+              </table>
+            );
+          })()}
         </div>
       </Card>
       )}
