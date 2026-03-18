@@ -142,9 +142,6 @@ export default function CalendarTab({ ctx }) {
       })()}
 
       {/* Upcoming Events */}
-      );
-    })()}
-
       {/* Ancient Egyptian Solar Calendar Layer */}
       {cd.egyptianSolar && (
         <Card title="The Ancient Egyptian Solar (Civil) Calendar" style={{ background: `linear-gradient(135deg,${M3.primaryContainer}22,${M3.surfaceContainer})`, borderColor: `${M3.primary}33` }}>
