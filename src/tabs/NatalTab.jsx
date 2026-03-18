@@ -1,3 +1,5 @@
+import { getPreferenceFocus } from '../store/userPreferences.js';
+
 export default function NatalTab({ ctx }) {
   const { M3, res, grid2, zodSign, SIGN_COL, SIGN_SYM, HOUSE_AREA, HOUSE_INFO, P_COL, P_SYM, Card, PlanetTable, WheelWithTooltip, ProfilePanel, moonPhase } = ctx;
 
@@ -139,21 +141,35 @@ export default function NatalTab({ ctx }) {
         </p>
       </Card>
 
-      {Array.isArray(res.trAsp) && res.trAsp.length > 0 && (
-        <Card>
-          <div style={{ fontFamily: "Cinzel,serif", fontSize: "0.86rem", color: M3.primary, marginBottom: 4 }}>Today&apos;s Activations</div>
-          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: 0 }}>
-            {(() => {
-              const strong = res.trAsp.filter(a => (a.strength || 0) >= 0.7).length;
-              const total = res.trAsp.length;
-              if (strong >= 4) return `The sky is very active for you today — ${strong} strong transits out of ${total}. Expect noticeable shifts and opportunities.`;
-              if (strong >= 2) return `You have ${strong} strong transits live today out of ${total} connections — enough to feel like a distinct chapter in motion.`;
-              if (total > 0) return `Transits are relatively gentle today — ${total} connections, mostly soft. This is a good day to integrate rather than force change.`;
-              return "Today is quiet transit-wise — a good window for rest, reflection, and grounding in your natal strengths.";
-            })()}
-          </p>
-        </Card>
-      )}
+      {Array.isArray(res.trAsp) && res.trAsp.length > 0 && (() => {
+        const strong = res.trAsp.filter(a => (a.strength || 0) >= 0.7).length;
+        const total = res.trAsp.length;
+        const focus = getPreferenceFocus();
+        const focusLabel = focus === "all" ? "balanced" : focus === "love" ? "love & connection" : focus === "career" ? "work & purpose" : focus === "spiritual" ? "spiritual growth" : "body & energy";
+        return (
+          <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}66,${M3.surfaceContainer})`, borderLeft: `3px solid ${M3.primary}` }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
+              <div style={{ fontFamily: "Cinzel,serif", fontSize: "0.95rem", color: M3.primary }}>Today&apos;s Guided Theme</div>
+              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.tertiary, letterSpacing: "0.08em", padding: "2px 8px", borderRadius: 12, border: `1px solid ${M3.tertiary}44` }}>
+                FOCUS: {focusLabel.toUpperCase()}
+              </div>
+            </div>
+            <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.6, color: M3.onSurface, margin: "0 0 10px" }}>
+              {strong >= 4 ? `The sky is highly active for you today with ${strong} strong transits out of ${total}. Expect noticeable shifts — this is a distinct chapter of motion.` 
+               : strong >= 2 ? `You have ${strong} strong transits active today out of ${total} connections. Your personalized theme is currently shaping this momentum.` 
+               : total > 0 ? `Transits are relatively gentle today with ${total} connections. This is a good day to integrate rather than force rapid change.` 
+               : "Today is quiet transit-wise — a good window for rest, reflection, and grounding in your natal strengths."}
+            </p>
+            <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: M3.secondary, cursor: "pointer", display: "inline-block", background: M3.primary+"1a", padding: "4px 12px", borderRadius: 16 }} onClick={() => {
+              // Simulating a tab switch by clicking the "Today" tab button, which would be ideal, but for now we just show text.
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              document.querySelector("button") && setTimeout(() => alert("Navigate to 'Today' tab for the full breakdown."), 10);
+            }}>
+              → VIEW FULL DAILY FORECAST
+            </div>
+          </Card>
+        );
+      })()}
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12 }}>
         <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}44,${M3.surfaceContainer})` }}>

@@ -14,6 +14,7 @@ from chinese_cycle import chinese_year, chinese_day
 from chronometric_engine import ChronometricEngine
 from phi_engine import PhiEngine
 from element_modality import ElementModalityEngine
+from resonance_engine import ResonanceEngine
 
 
 class SGE:
@@ -35,6 +36,7 @@ class SGE:
         self.chronometric_engine = ChronometricEngine()
         self.phi_engine = PhiEngine()
         self.element_modality_engine = ElementModalityEngine()
+        self.resonance_engine = ResonanceEngine()
 
     def natal_chart(self, birth_dt: datetime, tz: str, lat: float, lon: float) -> dict:
         dt_utc = self.time_engine.to_utc(birth_dt, tz)
@@ -165,5 +167,9 @@ class SGE:
 
             synastry = self.synastry_engine.compare(chart_a, chart_b)
             output["synastry"] = synastry
+
+        # --- Mathematical Resonance (Harmonization) ---
+        resonance_summary = self.resonance_engine.batch_resonance(tropical)
+        output["mathematical_resonance"] = resonance_summary
 
         return output

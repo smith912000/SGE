@@ -1,4 +1,6 @@
 from itertools import combinations
+from math_utils import vortex_mathematics_369
+
 
 ASPECT_DEFINITIONS = {
     "conjunction":    {"angle": 0,   "orb": 8.0},
@@ -49,9 +51,11 @@ class AspectEngine:
                         "aspect": asp_name,
                         "angle": asp_def["angle"],
                         "orb": round(actual_orb, 6),
+                        "actual_angle": round(diff, 6),
                         "max_orb": orb_limit,
                         "strength": strength,
                         "applying": applying,
+                        "resonance": vortex_mathematics_369(diff)
                     })
                     break
 

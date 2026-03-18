@@ -190,6 +190,16 @@ export default function SynastryTab({ ctx }) {
         </Card>
       </div>
 
+      <Card title="★ Composite Chart (Midpoint Map)">
+        <div style={{ display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", height:200, background:M3.surfaceDim, borderRadius: 12, border:`1px dashed ${M3.outlineVariant}` }}>
+          <span style={{ fontSize: "2rem", marginBottom: 8, opacity: 0.5 }}>⚮</span>
+          <p style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.72rem", color:M3.secondary, letterSpacing:"0.1em" }}>COMPOSITE CHART MODULE IN DEVELOPMENT</p>
+          <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.74rem", color:M3.onSurfaceVariant, marginTop: 6 }}>
+            Soon, this section will generate a single chart derived from the midpoint of your two natal charts, revealing the energetic 'entity' that is your relationship.
+          </p>
+        </div>
+      </Card>
+
       <Card title={`♡ All Cross-Chart Connections (${res.synR.aspects.length} links)`}>
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.74rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
           Each row shows a connection between one of Person A's planets and one of Person B's.

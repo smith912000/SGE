@@ -1,4 +1,6 @@
 from datetime import datetime
+from math_utils import vortex_mathematics_369, phi_resonance
+
 
 # Chaldean planetary order (descending orbital period)
 CHALDEAN_ORDER = [
@@ -35,6 +37,10 @@ class ChronometricEngine:
                 "hour_start": slot,
                 "hour_end": (slot + 1) % 24,
                 "ruler": ruling_planet,
+                "resonance": {
+                    "vortex": vortex_mathematics_369(slot),
+                    "phi": round(phi_resonance(slot, 24), 6)
+                }
             })
 
         current_hour = dt_utc.hour

@@ -2,14 +2,7 @@ import { useState } from "react";
 import { ASP_SHORT } from "../data/astrology/aspects.js";
 import { P_SYM, P_ROLE } from "../data/astrology/planets.js";
 import { PAIR_INSIGHT } from "../data/deepAnalysis/pairInsights.js";
-
-const FOCUS_OPTIONS = [
-  { id: "all",      label: "✦ All Themes",      desc: "Show every life area equally" },
-  { id: "love",     label: "♡ Love & Relationships", desc: "Heart, connection, partnership" },
-  { id: "career",   label: "⊕ Career & Purpose", desc: "Goals, money, achievement" },
-  { id: "spiritual",label: "☽ Spiritual Growth", desc: "Inner life, soul, transformation" },
-  { id: "body",     label: "◎ Body & Energy",    desc: "Vitality, mood, physical rhythms" },
-];
+import { getPreferenceFocus, setPreferenceFocus, FOCUS_OPTIONS } from "../store/userPreferences.js";
 
 export default function TodayTab({ ctx }) {
   const {
@@ -25,12 +18,10 @@ export default function TodayTab({ ctx }) {
     Card,
   } = ctx;
 
-  const [focus, setFocus] = useState(() => {
-    try { return localStorage.getItem("sge_focus") || "all"; } catch { return "all"; }
-  });
+  const [focus, setFocus] = useState(() => getPreferenceFocus());
   const saveFocus = (f) => {
     setFocus(f);
-    try { localStorage.setItem("sge_focus", f); } catch {}
+    setPreferenceFocus(f);
   };
 
   const P_SYM_USE = P_SYM_CTX || P_SYM;
@@ -91,11 +82,11 @@ export default function TodayTab({ ctx }) {
 
   // Reorder based on focus preference
   const FOCUS_ORDER = {
-    love:     ["love","body","growth","work"],
-    career:   ["work","growth","body","love"],
-    spiritual:["growth","love","body","work"],
-    body:     ["body","love","work","growth"],
-    all:      ["love","work","growth","body"],
+    love: ["love", "body", "growth", "work"],
+    career: ["work", "growth", "body", "love"],
+    spiritual: ["growth", "love", "body", "work"],
+    body: ["body", "love", "work", "growth"],
+    all: ["love", "work", "growth", "body"],
   };
   const catOrder = FOCUS_ORDER[focus] || FOCUS_ORDER.all;
   const sortedCategories = [...themedCategories].sort(
@@ -115,25 +106,27 @@ export default function TodayTab({ ctx }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
       {/* ── Focus Preference Picker ── */}
-      <div style={{ padding:"12px 16px", borderRadius:12, background:M3.surfaceContainer, border:`1px solid ${M3.outlineVariant}` }}>
-        <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", color:M3.secondary, letterSpacing:"0.12em", marginBottom:8 }}>
+      <div style={{ padding: "12px 16px", borderRadius: 12, background: M3.surfaceContainer, border: `1px solid ${M3.outlineVariant}` }}>
+        <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.secondary, letterSpacing: "0.12em", marginBottom: 8 }}>
           YOUR FOCUS — PERSONALISE THIS VIEW
         </div>
-        <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
           {FOCUS_OPTIONS.map(opt => (
-            <button key={opt.id} onClick={()=>saveFocus(opt.id)}
-              style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.74rem", cursor:"pointer",
-                padding:"5px 12px", borderRadius:20, border:`1px solid ${focus===opt.id ? M3.primary : M3.outlineVariant}`,
-                background: focus===opt.id ? M3.primary+"22" : "transparent",
-                color: focus===opt.id ? M3.primary : M3.onSurfaceVariant,
-                transition:"all 0.2s" }}>
+            <button key={opt.id} onClick={() => saveFocus(opt.id)}
+              style={{
+                fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", cursor: "pointer",
+                padding: "5px 12px", borderRadius: 20, border: `1px solid ${focus === opt.id ? M3.primary : M3.outlineVariant}`,
+                background: focus === opt.id ? M3.primary + "22" : "transparent",
+                color: focus === opt.id ? M3.primary : M3.onSurfaceVariant,
+                transition: "all 0.2s"
+              }}>
               {opt.label}
             </button>
           ))}
         </div>
         {focus !== "all" && (
-          <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.7rem", color:M3.onSurfaceVariant, margin:"8px 0 0", fontStyle:"italic" }}>
-            {FOCUS_OPTIONS.find(o=>o.id===focus)?.desc} — your priority theme is shown first below.
+          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.7rem", color: M3.onSurfaceVariant, margin: "8px 0 0", fontStyle: "italic" }}>
+            {FOCUS_OPTIONS.find(o => o.id === focus)?.desc} — your priority theme is shown first below.
           </p>
         )}
       </div>
@@ -236,6 +229,49 @@ export default function TodayTab({ ctx }) {
             })()}
           </div>
         )}
+        {res.mathematical_resonance && (
+          <div
+            style={{
+              marginTop: 10,
+              padding: "10px 12px",
+              borderRadius: 10,
+              background: M3.tertiary + "08",
+              border: `1px solid ${M3.tertiary}22`,
+            }}
+          >
+            <div
+              style={{
+                fontFamily: "'Share Tech Mono',monospace",
+                fontSize: "0.66rem",
+                color: M3.tertiary,
+                letterSpacing: "0.1em",
+                marginBottom: 4,
+                display: "flex", justifyContent: "space-between"
+              }}
+            >
+              <span>SYSTEMIC MATHEMATICAL HARMONY</span>
+              <span>{res.mathematical_resonance.systemic_harmony.toUpperCase()}</span>
+            </div>
+            <p
+              style={{
+                fontFamily: "'EB Garamond',Georgia,serif",
+                fontSize: "0.76rem",
+                lineHeight: 1.6,
+                color: M3.onSurface,
+                margin: 0,
+              }}
+            >
+              The geometry of your profile currently resonates at{" "}
+              <strong>
+                {(res.mathematical_resonance.average_correlation_index * 100).toFixed(1)}%
+              </strong>{" "}
+              systemic harmony. This indicates how proportionally aligned your
+              current configuration is with the Golden Ratio (Phi),
+              Fibonacci sequences, and Tesla&apos;s 369 Vortex Mathematics.
+              Highly resonant periods often feel more "synchronic" or orderly.
+            </p>
+          </div>
+        )}
       </Card>
 
       <div
@@ -260,23 +296,22 @@ export default function TodayTab({ ctx }) {
             const expl = ASP_EXPLAIN[top.name] || short;
             const flavor1 = role1 ? `${role1}` : n1;
             const flavor2 = role2 ? `${role2}` : n2;
-            body = `Transiting ${n1 === n2 ? n1 : `${n1} and ${n2}`} links your ${flavor1}${
-              role2 ? ` with your ${flavor2}` : ""
-            } via a ${top.name} aspect — ${expl}.`;
+            body = `Transiting ${n1 === n2 ? n1 : `${n1} and ${n2}`} links your ${flavor1}${role2 ? ` with your ${flavor2}` : ""
+              } via a ${top.name} aspect — ${expl}.`;
           }
           const isPriority = focus !== "all" && sortedCategories.indexOf(cat) === 0;
           return (
-            <Card key={cat.id} style={isPriority ? { border:`1.5px solid ${M3.primary}44`, background:`linear-gradient(135deg,${M3.primaryContainer}22,${M3.surfaceContainer})` } : {}}>
+            <Card key={cat.id} style={isPriority ? { border: `1.5px solid ${M3.primary}44`, background: `linear-gradient(135deg,${M3.primaryContainer}22,${M3.surfaceContainer})` } : {}}>
               <div
                 style={{
                   fontFamily: "Cinzel,serif",
                   fontSize: isPriority ? "0.9rem" : "0.82rem",
                   color: isPriority ? M3.primary : M3.secondary,
                   marginBottom: 4,
-                  display:"flex", alignItems:"center", gap:6
+                  display: "flex", alignItems: "center", gap: 6
                 }}
               >
-                {isPriority && <span style={{ fontSize:"0.6rem", background:M3.primary+"22", color:M3.primary, padding:"1px 8px", borderRadius:20, fontFamily:"'Share Tech Mono',monospace", letterSpacing:"0.08em" }}>FOCUS</span>}
+                {isPriority && <span style={{ fontSize: "0.6rem", background: M3.primary + "22", color: M3.primary, padding: "1px 8px", borderRadius: 20, fontFamily: "'Share Tech Mono',monospace", letterSpacing: "0.08em" }}>FOCUS</span>}
                 {cat.label}
               </div>
               <p

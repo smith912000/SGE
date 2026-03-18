@@ -208,7 +208,7 @@ export default function WheelTab({ ctx }) {
             Native rings use each calendar's own cycle semantics. The golden overlay marker is a normalized 0-360 reference so cross-system comparisons remain visually aligned without replacing native rules.
           </p>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <CalendarWheelWithTooltip model={calendarModel} size={Math.min(560, window.innerWidth - 64)} showOverlay />
+            <CalendarWheelWithTooltip model={calendarModel} size={Math.min(560, window.innerWidth - 64)} showOverlay theme="vedic" />
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {calendarModel.nativeRings.map((ring) => (

@@ -50,20 +50,6 @@ export default function ProgressionsTab({ ctx }) {
       {(() => {
         const nSun = zodSign(res.trop.Sun), pSun = zodSign(res.prog.Sun), nMoon = zodSign(res.trop.Moon), pMoon = zodSign(res.prog.Moon);
         const sunChanged = nSun !== pSun, moonChanged = nMoon !== pMoon;
-        const PROG_SIGN_ARC = {
-          Aries: "assertiveness, independence, and a pioneering spirit - you're learning to put yourself first",
-          Taurus: "patience, sensory pleasure, and building real value - you're learning what truly lasts",
-          Gemini: "curiosity, communication, and intellectual exploration - you're learning to ask better questions",
-          Cancer: "emotional depth, nurturing, and creating home - you're learning what it means to belong",
-          Leo: "creative self-expression, courage, and visibility - you're learning to let yourself be seen",
-          Virgo: "precision, service, and practical mastery - you're learning that excellence is a form of love",
-          Libra: "partnership, balance, and aesthetic refinement - you're learning that you don't have to do it alone",
-          Scorpio: "depth, transformation, and radical honesty - you're learning to let go of what no longer serves you",
-          Sagittarius: "expansion, adventure, and philosophical inquiry - you're learning that the truth is bigger than you thought",
-          Capricorn: "ambition, structure, and earned authority - you're learning that real power comes with real responsibility",
-          Aquarius: "individuality, innovation, and community vision - you're learning to be yourself in service to something larger",
-          Pisces: "compassion, imagination, and spiritual surrender - you're learning that letting go is the deepest form of strength",
-        };
         return (
           <Card title="📖 Your Growth Arc - Where Life Has Taken You">
             <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.7, color: M3.onSurface, margin: "0 0 14px" }}>
@@ -127,11 +113,11 @@ export default function ProgressionsTab({ ctx }) {
                 </div>
                 {changed && (
                   <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.71rem", color: M3.onSurface, lineHeight: 1.5, margin: "6px 0 0" }}>
-                    {planet === "Sun" ? `Your core identity is now expressing through ${progSign} - a different register than birth.`
-                      : planet === "Moon" ? `Your emotional needs have shifted toward ${progSign} themes.`
-                        : planet === "Venus" ? `What you find beautiful and how you love carries ${progSign} flavour now.`
-                          : planet === "Mars" ? `Your drive and action style now operates through ${progSign} energy.`
-                            : `Your thinking and communication has evolved to ${progSign} mode.`}
+                    {planet === "Sun" ? `Your core identity is now expressing through ${progSign} - a different register than birth. You are learning ${PROG_SIGN_ARC[progSign]}.`
+                      : planet === "Moon" ? `Your emotional needs have shifted toward ${progSign} themes. You crave ${PROG_SIGN_ARC[progSign]?.split(" - ")[0]}.`
+                        : planet === "Venus" ? `What you find beautiful and how you love carries ${progSign} flavour now. Love means ${PROG_SIGN_ARC[progSign]?.split(" - ")[0]}.`
+                          : planet === "Mars" ? `Your drive and action style now operates through ${progSign} energy. You pursue goals with ${PROG_SIGN_ARC[progSign]?.split(" - ")[0]}.`
+                            : `Your thinking and communication has evolved to ${progSign} mode. Your mind focuses on ${PROG_SIGN_ARC[progSign]?.split(" - ")[0]}.`}
                   </p>
                 )}
               </div>

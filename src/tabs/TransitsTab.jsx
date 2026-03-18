@@ -141,7 +141,10 @@ export default function TransitsTab({ ctx }) {
                   <div style={{ marginTop: 5, marginLeft: 26 }}>
                     <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: 0 }}>
                       Transiting {p} ({tm.flavor || ""}) is forming a <strong style={{ color: aspMatch.col }}>{aspMatch.name}</strong> ({ASP_EXPLAIN[aspMatch.name] || aspMatch.name}) to your birth {p}.
-                      {tm.slow ? " This is a slow-moving transit — its influence unfolds over weeks or months and marks a significant chapter." : " This is a fast-moving transit — its influence is felt today and passes within days."}
+                    </p>
+                    <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.5, color: M3.onSurface, margin: "6px 0 0" }}>
+                      <strong>What this means:</strong> {tm.slow ? "This signals a major chapter unfolding over months. " : "This is a brief activation. "}
+                      The energy of {tm.flavor?.split(",")[0] || p} is {aspMatch.name === "Conjunction" ? "fusing with" : aspMatch.name === "Trine" ? "flowing easily with" : aspMatch.name === "Square" ? "creating creative friction with" : aspMatch.name === "Opposition" ? "challenging you to balance" : "connecting to"} your fundamental nature in this area. You are being asked to integrate these new systemic inputs.
                     </p>
                   </div>
                 )}

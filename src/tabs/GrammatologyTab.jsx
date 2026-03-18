@@ -59,8 +59,8 @@ export default function GrammatologyTab({ ctx }) {
     Armenian: "armenian",
     Georgian: "georgian",
     Brahmi: "brahmi",
-    Han: "hiero",
-    Egyptian_Hieroglyphs: "hiero",
+    Han: "tarotChinese",
+    Egyptian_Hieroglyphs: "hieroEgyp",
     Imperial_Aramaic: "aramaic",
     Samaritan: "samaritan",
     Syriac: "syriac",
@@ -134,7 +134,7 @@ export default function GrammatologyTab({ ctx }) {
               <div style={{ overflowX:"auto" }}>
                 <table style={{ width:"100%", borderCollapse:"collapse" }}>
                   <thead><tr>
-                    {["Letter","Hebrew","Name","Hiero","Phoenician","Greek","Runic","Gematria","Pictograph","Element","Planet/Sign","Tarot"].map(h => (
+                    {["Letter","Hebrew","Name","Hiero","Egypt","Phoenician","Aramaic","Greek","Runic","Arabic","Cyrillic","Devana.","Gematria","Element","Planet/Sign","Tarot"].map(h => (
                       <th key={h} style={{ padding:"5px 8px", textAlign:"left", color:M3.secondary, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.56rem", letterSpacing:"0.06em", borderBottom:`1px solid ${M3.outlineVariant}`, whiteSpace:"nowrap" }}>{h}</th>
                     ))}
                   </tr></thead>
@@ -145,11 +145,15 @@ export default function GrammatologyTab({ ctx }) {
                         <td style={{ padding:"5px 8px", fontSize:"1.1rem", color:l.found ? M3.onSurface : M3.outlineVariant }}>{l.found ? l.hebrew : "—"}</td>
                         <td style={{ padding:"5px 8px", fontSize:"0.64rem", color:M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace" }}>{l.found ? l.hebrewName : ""}</td>
                         <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.hiero : ""}</td>
+                        <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.hieroEgyp : ""}</td>
                         <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.phoenician : ""}</td>
+                        <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.aramaic : ""}</td>
                         <td style={{ padding:"5px 8px", fontSize:"0.76rem", color:M3.onSurface }}>{l.found ? l.greek : ""}</td>
                         <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.runic : ""}</td>
+                        <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.arabic : ""}</td>
+                        <td style={{ padding:"5px 8px", fontSize:"0.76rem", color:M3.onSurface }}>{l.found ? l.cyrillic : ""}</td>
+                        <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.devanagari : ""}</td>
                         <td style={{ padding:"5px 8px", fontSize:"0.68rem", color:M3.tertiary, fontFamily:"'Share Tech Mono',monospace" }}>{l.found ? l.gematria : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"0.64rem", color:M3.onSurfaceVariant, fontFamily:"'EB Garamond',Georgia,serif", fontStyle:"italic" }}>{l.found ? l.pictographic : ""}</td>
                         <td style={{ padding:"5px 8px", fontSize:"0.64rem", color: l.yetzirah?.element === "Fire" ? "#f66" : l.yetzirah?.element === "Water" ? "#6af" : l.yetzirah?.element === "Air" ? "#af6" : M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace" }}>{l.found ? (l.yetzirah?.element || l.yetzirah?.planet || l.yetzirah?.sign || "—") : ""}</td>
                         <td style={{ padding:"5px 8px", fontSize:"0.64rem", color:M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace" }}>{l.found ? (l.yetzirah?.planet || l.yetzirah?.sign || "") : ""}</td>
                         <td style={{ padding:"5px 8px", fontSize:"0.64rem", color:M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace" }}>{l.found && l.tarotName ? `${l.tarot} ${l.tarotName}` : ""}</td>

@@ -1,6 +1,9 @@
 import { SIGNS, SIGN_INFO } from '../data/astrology/signs.js';
 import { HOUSE_INFO } from '../data/astrology/houses.js';
 import { ASPECT_MEANINGS } from '../data/astrology/aspects.js';
+import { SOLAR_DEEP, LUNAR_DEEP } from '../data/deepAnalysis/solarLunar.js';
+import { RISING_SHADOW, VENUS_SHADOW, MARS_SHADOW, MERCURY_SHADOW } from '../data/deepAnalysis/shadows.js';
+import { JUPITER_DEEP, SATURN_DEEP } from '../data/deepAnalysis/outerPlanets.js';
 import { norm } from '../utils/helpers.js';
 import { calcAspects } from './astronomy.js';
 
@@ -38,19 +41,23 @@ function generateProfile(trop, houses) {
   const sections = [
     {
       icon:"☀️", title:"Core Identity — Sun in "+sunSign,
-      text: `At your core, you are ${SI[sunSign].plain} Your Sun lives in the ${sunHouse}${['st','nd','rd'][sunHouse-1]||'th'} house, which means this core self-expression plays out especially in the realm of ${HOUSE_INFO[sunHouse-1]?.name.split("—")[1]?.trim().toLowerCase() || "life"}.`,
+      text: SOLAR_DEEP[sunSign] || `At your core, you are ${SI[sunSign].plain} Your Sun lives in the ${sunHouse}${['st','nd','rd'][sunHouse-1]||'th'} house.`,
     },
     {
       icon:"🌙", title:"Inner World — Moon in "+moonSign,
-      text: `Emotionally, you operate through ${moonSign} energy. ${SI[moonSign].plain} Your Moon is in the ${moonHouse}${['st','nd','rd'][moonHouse-1]||'th'} house — the arena of ${HOUSE_INFO[moonHouse-1]?.name.split("—")[1]?.trim().toLowerCase()||"experience"} is where your deepest feelings surface and where you seek nourishment.`,
+      text: LUNAR_DEEP[moonSign] || `Emotionally, you operate through ${moonSign} energy. ${SI[moonSign].plain}`,
     },
     {
       icon:"🌅", title:"How Others See You — "+ascSign+" Rising",
-      text: `When people meet you, they encounter ${ascSign} energy first. ${SI[ascSign].plain} This is your social mask and your body's energy. Your true depth often only emerges once people know you better.`,
+      text: `When people meet you, they encounter ${ascSign} energy first. ${SI[ascSign].plain} \n\nShadow: ${RISING_SHADOW[ascSign]?.shadow || ""}\nGrowth: ${RISING_SHADOW[ascSign]?.growth || ""}`,
+    },
+    {
+      icon:"🧠", title:"Mind & Communication — Mercury in "+zodSign(trop.Mercury),
+      text: `Your mind operates with ${zodSign(trop.Mercury)} energy. \n\n${MERCURY_SHADOW[zodSign(trop.Mercury)] ? `Trap: ${MERCURY_SHADOW[zodSign(trop.Mercury)].shadow}\nGrowth: ${MERCURY_SHADOW[zodSign(trop.Mercury)].growth}` : ""}`,
     },
     {
       icon:"💖", title:"Love & Desire — Venus in "+venSign+", Mars in "+marSign,
-      text: `In love, you are drawn to ${venSign} qualities — ${SI[venSign].plain.split(".")[0].toLowerCase()}. In pursuit and desire, you act with ${marSign} energy: ${SI[marSign].plain.split(".")[0].toLowerCase()}.${venMars ? ` Your Venus and Mars form a ${venMars.name} to each other — ${venMars.name==="Conjunction"?"your romantic and sexual natures are fused into one powerful force":venMars.name==="Opposition"?"you feel a push-pull between what you love and how you pursue it":venMars.name==="Trine"?"your love nature and desire nature flow together with natural ease":venMars.name==="Square"?"there's creative tension between tenderness and passion that drives you to grow":" creating a dynamic interplay between your heart and your drive"}.` : ""}`,
+      text: `In love, you are drawn to ${venSign} qualities. ${VENUS_SHADOW[venSign] ? `\nVenus Shadow: ${VENUS_SHADOW[venSign].shadow}` : ""} \n\nIn pursuit and desire, you act with ${marSign} energy. ${MARS_SHADOW[marSign] ? `\nMars Shadow: ${MARS_SHADOW[marSign].shadow}` : ""} \n\n${venMars ? `Your Venus and Mars form a ${venMars.name}.` : ""}`,
     },
     {
       icon:"🏔️", title:"Life Purpose & Career — MC in "+mcSign,
@@ -58,11 +65,11 @@ function generateProfile(trop, houses) {
     },
     {
       icon:"⏳", title:"Your Greatest Teacher — Saturn in "+satSign,
-      text: `Saturn in ${satSign} is where life presents your hardest lessons. ${SI[satSign].plain} This area asks for discipline and patience. The reward — once you've done the work — is becoming genuinely masterful in ways that ${satSign.toLowerCase()} energy can uniquely achieve.`,
+      text: SATURN_DEEP[satSign] || `Saturn in ${satSign} is where life presents your hardest lessons.`,
     },
     {
       icon:"🌟", title:"Where Luck Flows — Jupiter in "+jupSign,
-      text: `Jupiter in ${jupSign} shows where life tends to be generous and expansive for you. ${SI[jupSign].plain} Following this energy tends to attract growth, abundance, and opportunity almost effortlessly.`,
+      text: JUPITER_DEEP[jupSign] || `Jupiter in ${jupSign} shows where life tends to be generous and expansive for you.`,
     },
   ];
 

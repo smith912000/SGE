@@ -109,7 +109,7 @@ export default function AspectsTab({ ctx }) {
           This wheel highlights the <strong>connections between your planets</strong>. Thicker, brighter lines mean stronger aspects. Aspect symbols appear on the strongest links. Hover any line for details.
         </p>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <WheelWithTooltip positions={res.trop} houses={res.houses} size={Math.min(520, window.innerWidth - 64)} id="aspw" mode="aspects" />
+          <WheelWithTooltip positions={res.trop} houses={res.houses} size={Math.min(520, window.innerWidth - 64)} id="aspw" mode="aspects" theme="western" />
         </div>
       </Card>
 

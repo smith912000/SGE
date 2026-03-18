@@ -145,7 +145,7 @@ function CalendarTooltip({ info, x, y, visible }) {
   );
 }
 
-export default function CalendarWheelWithTooltip({ model, size = 500, showOverlay = true }) {
+export default function CalendarWheelWithTooltip({ model, size = 500, showOverlay = true, theme = "western" }) {
   const [tip, setTip] = useState({ visible: false, info: null, x: 0, y: 0 });
   const wrapRef = useRef(null);
   const handleTip = useCallback((t) => {
@@ -162,7 +162,7 @@ export default function CalendarWheelWithTooltip({ model, size = 500, showOverla
           minWidth: Math.max(320, Math.min(640, size)),
         }}
       >
-        <CalendarWheel model={model} size={size} showOverlay={showOverlay} onTooltip={handleTip} />
+        <CalendarWheel model={model} size={size} showOverlay={showOverlay} onTooltip={handleTip} theme={theme} />
         <CalendarTooltip info={tip.info} x={tip.x} y={tip.y} visible={tip.visible} />
         <div
           style={{
