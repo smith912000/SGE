@@ -1,3 +1,4 @@
+import { useState, useRef, useCallback } from 'react';
 import WheelChart, { exportWheelAsSvg } from './WheelChart.jsx';
 import { M3 } from '../../theme/m3.js';
 import Tooltip from '../ui/Tooltip.jsx';
