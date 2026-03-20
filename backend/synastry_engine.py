@@ -1,4 +1,5 @@
 from aspect_engine import AspectEngine
+from math_utils import midpoint
 
 COMPATIBILITY_WEIGHTS = {
     ("Sun", "Moon"): 3.0,
@@ -45,10 +46,44 @@ class SynastryEngine:
         ]
 
         score = self.compatibility_score(cross_aspects)
+        
+        composite = self.calculate_composite(chart_a, chart_b)
 
         return {
             "aspects": cross_aspects,
             "score": score,
+            "composite": composite,
+        }
+
+    def calculate_composite(self, chart_a: dict, chart_b: dict) -> dict:
+        pos_a = chart_a.get("tropical", {})
+        pos_b = chart_b.get("tropical", {})
+        
+        composite_pos = {}
+        for p in pos_a:
+            if p in pos_b:
+                mid = midpoint(pos_a[p]["longitude"], pos_b[p]["longitude"])
+                composite_pos[p] = {
+                    "longitude": round(mid, 4),
+                    "sign": int(mid // 30),
+                    "degree": round(mid % 30, 4)
+                }
+        
+        # Houses (mean midpoints)
+        houses_a = chart_a.get("houses", [])
+        houses_b = chart_b.get("houses", [])
+        composite_houses = []
+        if houses_a and houses_b:
+            for h1, h2 in zip(houses_a, houses_b):
+                composite_houses.append(round(midpoint(h1, h2), 4))
+        
+        # Internal aspects of the composite chart
+        composite_aspects = AspectEngine().compute(composite_pos)
+        
+        return {
+            "positions": composite_pos,
+            "houses": composite_houses,
+            "aspects": composite_aspects
         }
 
     def compatibility_score(self, aspects: list[dict]) -> dict:

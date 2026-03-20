@@ -210,7 +210,14 @@ export default function App() {
     setLoading(true);
     try {
       const birthPayload = toUtcBirthPayload(A);
-      const req = { birth: birthPayload, age, harmonic_n: n, phi_cycle_length: 30 };
+      const comparisonBirth = syn ? toUtcBirthPayload(B) : null;
+      const req = { 
+        birth: birthPayload, 
+        age, 
+        harmonic_n: n, 
+        phi_cycle_length: 30,
+        comparison_birth: comparisonBirth
+      };
       const r = await fetch(`${BACKEND_URL}/full-analysis`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -239,38 +246,33 @@ export default function App() {
       const trAsp = calcAspects({ ...trop, ...Object.fromEntries(Object.entries(trPos).map(([k, v]) => [`T_${k}`, v])) });
 
       let synR = null;
-      if (syn) {
-        try {
-          const birthBPayload = toUtcBirthPayload(B);
-          const rb = await fetch(`${BACKEND_URL}/natal`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ birth: birthBPayload }),
-          });
-          if (rb.ok) {
-            const dB = await rb.json();
-            const tB = flattenPlanetMap(dB.tropical);
-            const hB = mapBackendHouses(dB.houses);
-            synR = {
-              positions: tB,
-              houses: hB,
-              aspects: calcAspects({ ...trop, ...Object.fromEntries(Object.entries(tB).map(([k, v]) => [`B_${k}`, v])) }),
-            };
-          }
-        } catch (_e) {
-          // fall through to local synastry fallback below
-        }
-        if (!synR) {
-          const hourB24 = to24Hour(B.hour, B.meridiem);
-          const jd2 = julianDay(B.year, B.month, B.day, hourB24 - B.tz + B.min / 60);
-          const tB = allPlanets(jd2);
-          const hB = calcHouses(jd2, B.lat, B.lon);
-          synR = {
-            positions: tB,
-            houses: hB,
-            aspects: calcAspects({ ...trop, ...Object.fromEntries(Object.entries(tB).map(([k, v]) => [`B_${k}`, v])) }),
-          };
-        }
+      if (syn && data.synastry) {
+        const synData = data.synastry;
+        const tB = flattenPlanetMap(synData.composite?.positions ? {} : (data.input?.comparison_birth ? {} : {})); // Placeholder check
+        // Actually, the backend synastry result in data.synastry contains:
+        // aspects (cross-chart), score, composite {positions, houses, aspects}
+        synR = {
+          aspects: (synData.aspects || []).map(backendAspectToUi),
+          score: synData.score || { harmony: 0, tension: 0 },
+          composite: synData.composite ? {
+            positions: flattenPlanetMap(synData.composite.positions),
+            houses: mapBackendHouses(synData.composite.houses),
+            aspects: (synData.composite.aspects || []).map(backendAspectToUi)
+          } : null
+        };
+      }
+      
+      // Local fallback for Synastry if B is needed but backend failed or didn't return it
+      if (syn && !synR) {
+        const hourB24 = to24Hour(B.hour, B.meridiem);
+        const jd2 = julianDay(B.year, B.month, B.day, hourB24 - B.tz + B.min / 60);
+        const tB = allPlanets(jd2);
+        const hB = calcHouses(jd2, B.lat, B.lon);
+        synR = {
+          positions: tB,
+          houses: hB,
+          aspects: calcAspects({ ...trop, ...Object.fromEntries(Object.entries(tB).map(([k, v]) => [`B_${k}`, v])) }),
+        };
       }
 
       setRes({ jd, trop, sid, houses, sidHouses, aspects, prog, srJD, srPos, harm, cn, phi, el, mod, trPos, trAsp, synR });
@@ -370,49 +372,51 @@ export default function App() {
               <TabContent id={tab}>
 
                 {tab === "wheel" && (
-                  <WheelTab ctx={{ M3, A, res, Card, wheelMode, setWheelMode, WheelWithTooltip, ChineseWheelWithTooltip, ayanamsa, zodSign, P_COL, P_SYM, SIGN_COL, ANIMAL_INFO }} />
+                  <ErrorBoundary><WheelTab ctx={{ M3, A, res, Card, wheelMode, setWheelMode, WheelWithTooltip, ChineseWheelWithTooltip, ayanamsa, zodSign, P_COL, P_SYM, SIGN_COL, ANIMAL_INFO }} /></ErrorBoundary>
                 )}
                 {tab === "aspects" && (
-                  <AspectsTab ctx={{ M3, RAD, SIGNS, SIGN_COL, SIGN_SYM, ASPECTS, ASP_EXPLAIN, P_COL, P_SYM, res, Card, WheelWithTooltip, AspectTable }} />
+                  <ErrorBoundary><AspectsTab ctx={{ M3, RAD, SIGNS, SIGN_COL, SIGN_SYM, ASPECTS, ASP_EXPLAIN, P_COL, P_SYM, res, Card, WheelWithTooltip, AspectTable }} /></ErrorBoundary>
                 )}
                 {tab === "progressions" && (
-                  <ProgressionsTab ctx={{ M3, age, res, zodSign, SIGN_COL, SIGN_INFO, P_COL, P_SYM, grid2, calcAspects, Card, PlanetTable, WheelWithTooltip, AspectTable }} />
+                  <ErrorBoundary><ProgressionsTab ctx={{ M3, age, res, zodSign, SIGN_COL, SIGN_INFO, P_COL, P_SYM, grid2, calcAspects, Card, PlanetTable, WheelWithTooltip, AspectTable }} /></ErrorBoundary>
                 )}
                 {tab === "solar" && (
-                  <SolarTab ctx={{ M3, RAD, grid2, res, SIGN_INFO, SIGN_COL, P_COL, zodSign, Card, PlanetTable, WheelWithTooltip }} />
+                  <ErrorBoundary><SolarTab ctx={{ M3, RAD, grid2, res, SIGN_INFO, SIGN_COL, P_COL, zodSign, Card, PlanetTable, WheelWithTooltip }} /></ErrorBoundary>
                 )}
                 {tab === "today" && (
-                  <TodayTab ctx={{ M3, res, norm, ASPECTS, ASP_EXPLAIN, P_COL, P_SYM, zodSign, zodDeg, Card }} />
+                  <ErrorBoundary><TodayTab ctx={{ M3, res, norm, ASPECTS, ASP_EXPLAIN, P_COL, P_SYM, zodSign, zodDeg, Card }} /></ErrorBoundary>
                 )}
                 {tab === "transits" && (
-                  <TransitsTab ctx={{ M3, res, norm, ASPECTS, ASP_EXPLAIN, P_COL, P_SYM, zodSign, zodDeg, Card, AspectTable, WheelWithTooltip }} />
+                  <ErrorBoundary><TransitsTab ctx={{ M3, res, norm, ASPECTS, ASP_EXPLAIN, P_COL, P_SYM, zodSign, zodDeg, Card, AspectTable, WheelWithTooltip }} /></ErrorBoundary>
                 )}
                 {tab === "synastry" && (
-                  <SynastryTab ctx={{ M3, res, grid2, P_COL, P_SYM, P_ROLE, Card, WheelWithTooltip, AspectTable }} />
+                  <ErrorBoundary><SynastryTab ctx={{ M3, res, grid2, P_COL, P_SYM, P_ROLE, Card, WheelWithTooltip, AspectTable }} /></ErrorBoundary>
                 )}
                 {tab === "chinese" && (
-                  <ChineseTab
-                    ctx={{
-                      M3, A, res, grid2, ANIMAL_INFO, CN_EL_INFO, POLARITY_INFO, chineseCycle, Card, ChineseWheelWithTooltip,
-                      CHINESE_ASTRO_INTRO, WUXING_PROFILES, WUXING_GENERATING, WUXING_CONTROLLING,
-                      YEAR_END_STEM_POLARITY, CHINESE_ZODIAC_EXTENDED, CHINESE_TRANSLATION_NOTES,
-                      ZODIAC_TRINES, ZI_WEI_INFO, ZI_WEI_PALACES_SEQUENCES,
-                      ZI_WEI_MAJOR_STARS, TWELVE_HEAVENLY_GENERALS,
-                    }}
-                  />
+                  <ErrorBoundary>
+                    <ChineseTab
+                      ctx={{
+                        M3, A, res, grid2, ANIMAL_INFO, CN_EL_INFO, POLARITY_INFO, chineseCycle, Card, ChineseWheelWithTooltip,
+                        CHINESE_ASTRO_INTRO, WUXING_PROFILES, WUXING_GENERATING, WUXING_CONTROLLING,
+                        YEAR_END_STEM_POLARITY, CHINESE_ZODIAC_EXTENDED, CHINESE_TRANSLATION_NOTES,
+                        ZODIAC_TRINES, ZI_WEI_INFO, ZI_WEI_PALACES_SEQUENCES,
+                        ZI_WEI_MAJOR_STARS, TWELVE_HEAVENLY_GENERALS,
+                      }}
+                    />
+                  </ErrorBoundary>
                 )}
                 {tab === "phi" && (
-                  <PhiTab ctx={{ M3, res, EL_COL, MOD_COL, Card, DistBar }} />
+                  <ErrorBoundary><PhiTab ctx={{ M3, res, EL_COL, MOD_COL, Card, DistBar }} /></ErrorBoundary>
                 )}
 
                 {tab === "natal" && (
-                  <NatalTab ctx={{ M3, res, grid2, zodSign, SIGN_COL, SIGN_SYM, HOUSE_AREA, HOUSE_INFO, P_COL, P_SYM, Card, PlanetTable, WheelWithTooltip, ProfilePanel, moonPhase }} />
+                  <ErrorBoundary><NatalTab ctx={{ M3, res, grid2, zodSign, SIGN_COL, SIGN_SYM, HOUSE_AREA, HOUSE_INFO, P_COL, P_SYM, Card, PlanetTable, WheelWithTooltip, ProfilePanel, moonPhase }} /></ErrorBoundary>
                 )}
                 {tab === "horoscope" && (
-                  <HoroscopeTab ctx={{ M3, res, zodSign, SIGN_COL, P_COL, P_SYM }} />
+                  <ErrorBoundary><TodayTab ctx={{ M3, res, norm, ASPECTS, ASP_EXPLAIN, P_COL, P_SYM, zodSign, zodDeg, Card }} /></ErrorBoundary>
                 )}
                 {tab === "tarot" && (
-                  <TarotTab ctx={{ M3, res, zodSign }} />
+                  <ErrorBoundary><TarotTab ctx={{ M3, res, zodSign }} /></ErrorBoundary>
                 )}
 
                 {false && tab === "natal-old" && (
@@ -2844,10 +2848,22 @@ export default function App() {
                 })()}
 
                 {tab === "calendar" && (
-                  <CalendarTab ctx={{ M3, calDate, setCalDate, calHolFilter, setCalHolFilter, calShowMonth, setCalShowMonth, Card }} />
+                  <ErrorBoundary><CalendarTab ctx={{ M3, calDate, setCalDate, calHolFilter, setCalHolFilter, calShowMonth, setCalShowMonth, Card }} /></ErrorBoundary>
+                )}
+                {tab === "numerology" && (
+                  <ErrorBoundary><NumerologyTab ctx={{ M3, birthParts: A, res, Card }} /></ErrorBoundary>
                 )}
                 {tab === "education" && (
-                  <EducationTab ctx={{ M3, EL_COL, MOD_COL, Card }} />
+                  <ErrorBoundary><EducationTab ctx={{ M3, EL_COL, MOD_COL, Card }} /></ErrorBoundary>
+                )}
+                {tab === "deep" && (
+                  <ErrorBoundary><DeepTab ctx={{
+                    M3, res, zodSign, SIGN_INFO, SIGN_COL, P_COL, P_SYM, P_ROLE, Card, grid2,
+                    calcAspects, harmonic, SOLAR_DEEP, LUNAR_DEEP, RISING_SHADOW, VENUS_SHADOW,
+                    MARS_SHADOW, MERCURY_SHADOW, JUPITER_DEEP, SATURN_DEEP, PAIR_INSIGHT,
+                    URANUS_DEEP, NEPTUNE_DEEP, PLUTO_DEEP, moonPhase,
+                    EL_COL, MOD_COL, ANIMAL_INFO, CN_EL_INFO, POLARITY_INFO, HOUSE_AREA
+                  }} /></ErrorBoundary>
                 )}
 
               </TabContent>

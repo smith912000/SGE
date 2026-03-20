@@ -5,8 +5,7 @@ const GROUPS = [
   { label: 'Chart', ids: ['today', 'natal', 'deep', 'struggles', 'wheel', 'aspects'] },
   { label: 'Time', ids: ['progressions', 'solar', 'harmonics', 'transits'] },
   { label: 'People', ids: ['synastry', 'chinese', 'phi'] },
-  { label: 'Daily', ids: ['horoscope', 'tarot'] },
-  { label: 'Symbolic', ids: ['numerology', 'grammatology', 'calendar', 'education'] },
+  { label: 'Symbolic', ids: ['tarot', 'numerology', 'grammatology', 'calendar', 'education'] },
 ];
 
 export default function TabBar({ tabs, active, onChange }) {

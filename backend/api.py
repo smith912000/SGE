@@ -57,6 +57,9 @@ class FullAnalysisRequest(BaseModel):
     transit_timezone: str = Field("UTC", example="UTC")
     harmonic_n: int = Field(5, ge=1, le=360)
     phi_cycle_length: int = Field(30, ge=1)
+    # Comparison for Synastry/Composite
+    comparison_birth: BirthData | None = None
+    comparison_age: float | None = None
 
 
 class TransitRequest(BaseModel):
@@ -130,6 +133,11 @@ def full_analysis(req: FullAnalysisRequest):
                 req.transit_minute or 0,
             )
 
+        comp_dt = req.comparison_birth.to_datetime() if req.comparison_birth else None
+        comp_tz = req.comparison_birth.timezone if req.comparison_birth else None
+        comp_lat = req.comparison_birth.latitude if req.comparison_birth else None
+        comp_lon = req.comparison_birth.longitude if req.comparison_birth else None
+
         result = engine.full_analysis(
             birth_dt=req.birth.to_datetime(),
             tz=req.birth.timezone,
@@ -139,6 +147,10 @@ def full_analysis(req: FullAnalysisRequest):
             transit_dt=transit_dt,
             harmonic_n=req.harmonic_n,
             phi_cycle_length=req.phi_cycle_length,
+            comparison_birth_dt=comp_dt,
+            comparison_tz=comp_tz,
+            comparison_lat=comp_lat,
+            comparison_lon=comp_lon,
         )
         return result
     except Exception as e:

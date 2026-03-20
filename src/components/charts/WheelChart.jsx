@@ -55,35 +55,42 @@ const WHEEL_THEMES = {
     center0: "#0a0620", center1: "#bb86fc",
     axisAccent: "#bb86fc",
     decorRings: false,
+    showSpokes: false,
   },
   solar: {
-    bg0: "#120800", bg1: "#03010a",
-    ci0: "#1a0d00", ci1: "#05020a",
+    bg0: "#1a0f00", bg1: "#050300",
+    ci0: "#2d1b00", ci1: "#080400",
     ring: "#FFB347",
-    glow: "rgba(255,179,71,0.18)",
-    center0: "#110900", center1: "#FFB347",
+    glow: "rgba(255,179,71,0.22)",
+    center0: "#1a0f00", center1: "#FFD700",
     axisAccent: "#FFD700",
     decorRings: true,
-    decorCol: "#FFD70044",
+    decorCol: "#FFD70033",
+    showSpokes: true,
+    spokeCol: "#FFB34722",
   },
   lunar: {
-    bg0: "#020c18", bg1: "#010610",
-    ci0: "#04111e", ci1: "#01060e",
+    bg0: "#000814", bg1: "#000205",
+    ci0: "#001b3a", ci1: "#00050a",
     ring: "#90caf9",
-    glow: "rgba(144,202,249,0.14)",
-    center0: "#020c18", center1: "#90caf9",
+    glow: "rgba(144,202,249,0.18)",
+    center0: "#000814", center1: "#90caf9",
     axisAccent: "#B0C4DE",
-    decorRings: false,
+    decorRings: true,
+    decorCol: "#90caf922",
+    showSpokes: false,
+    shimmer: true,
   },
   vedic: {
-    bg0: "#0e0428", bg1: "#050116",
-    ci0: "#150633", ci1: "#06021a",
+    bg0: "#0d0221", bg1: "#05010a",
+    ci0: "#1a064d", ci1: "#070214",
     ring: "#9c6bff",
-    glow: "rgba(156,107,255,0.2)",
-    center0: "#0e0428", center1: "#9c6bff",
+    glow: "rgba(156,107,255,0.25)",
+    center0: "#0d0221", center1: "#9c6bff",
     axisAccent: "#cc99ff",
     decorRings: true,
-    decorCol: "#9c6bff33",
+    decorCol: "#9c6bff44",
+    mandala: true,
   },
   transit: {
     bg0: "#001a14", bg1: "#000d0a",
@@ -92,17 +99,35 @@ const WHEEL_THEMES = {
     glow: "rgba(77,208,164,0.14)",
     center0: "#001a14", center1: "#4dd0a4",
     axisAccent: "#7fffd4",
-    decorRings: false,
   },
   chinese: {
-    bg0: "#1a0000", bg1: "#0a0000",
-    ci0: "#220000", ci1: "#0c0000",
-    ring: "#ff6b6b",
-    glow: "rgba(255,107,107,0.16)",
-    center0: "#1a0000", center1: "#ff6b6b",
-    axisAccent: "#ff4444",
-    decorRings: false,
+    bg0: "#1a0000", bg1: "#080000",
+    ci0: "#2d0000", ci1: "#0a0000",
+    ring: "#ff5252",
+    glow: "rgba(255,82,82,0.18)",
+    center0: "#1a0000", center1: "#ff5252",
+    axisAccent: "#ff1744",
   },
+};
+
+export const exportWheelAsSvg = (id) => {
+  const svg = document.getElementById(id);
+  if (!svg) return;
+  const serializer = new XMLSerializer();
+  let source = serializer.serializeToString(svg);
+  if (!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
+    source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+  }
+  if (!source.match(/^<svg[^>]+xmlns\:xlink="http\:\/\/www\.w3\.org\/1999\/xlink"/)) {
+    source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+  }
+  const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `sge_chart_${id}_${new Date().getTime()}.svg`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 };
 
 export default function WheelChart({ positions, houses, size = 480, id = "w", onTooltip, mode = "default", theme = "western" }) {
@@ -268,7 +293,7 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
   );
 
   return (
-    <svg ref={svgRef} width={S} height={S} viewBox={`0 0 ${S} ${S}`}
+    <svg ref={svgRef} id={id} width={S} height={S} viewBox={`0 0 ${S} ${S}`}
       style={{ display:"block", maxWidth:"100%",
         filter:`drop-shadow(0 0 24px ${TH.glow})` }}>
       <defs>

@@ -19,6 +19,8 @@ export default function TodayTab({ ctx }) {
   } = ctx;
 
   const [focus, setFocus] = useState(() => getPreferenceFocus());
+  const [horizon, setHorizon] = useState("today"); // today, week, month
+
   const saveFocus = (f) => {
     setFocus(f);
     setPreferenceFocus(f);
@@ -40,11 +42,20 @@ export default function TodayTab({ ctx }) {
     return (
       PAIR_INSIGHT[`${r0}+${r1}`] ||
       PAIR_INSIGHT[`${r1}+${r0}`] ||
-      "these two parts of you are in dialogue — today’s sky is asking them to work together more consciously."
+      "these two parts of you are in dialogue — the current sky is asking them to work together more consciously."
     );
   };
 
   const SLOW_PLANETS = ["Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"];
+  const VERY_SLOW = ["Uranus", "Neptune", "Pluto"];
+  
+  const horizonAspects = aspects.filter(a => {
+    if (horizon === "today") return true;
+    if (horizon === "week") return SLOW_PLANETS.includes(a.p1c) || SLOW_PLANETS.includes(a.p2c) || ["Mars", "Venus", "Sun"].includes(a.p1c);
+    if (horizon === "month") return SLOW_PLANETS.includes(a.p1c) || SLOW_PLANETS.includes(a.p2c);
+    return true;
+  });
+
   const slowHits = aspects.filter(
     (a) => SLOW_PLANETS.includes(a.p1c) || SLOW_PLANETS.includes(a.p2c)
   );
@@ -57,25 +68,41 @@ export default function TodayTab({ ctx }) {
     {
       id: "love",
       label: "Love & Relationships",
-      desc: "How your heart and connections are being activated today.",
+      desc: {
+        today: "How your heart and connections are being activated today.",
+        week: "The emotional pulse and relationship themes of your week.",
+        month: "Major shifts in your connection style and heart-centered growth."
+      },
       planets: ["Venus", "Mars", "Moon"],
     },
     {
       id: "work",
       label: "Work, Career & Money",
-      desc: "Momentum around goals, career, and resources.",
+      desc: {
+        today: "Momentum around goals, career, and resources today.",
+        week: "Strategic opportunities and practical focus for the coming days.",
+        month: "Long-term professional expansion and financial planning."
+      },
       planets: ["Sun", "Saturn", "Jupiter"],
     },
     {
       id: "growth",
       label: "Inner Growth & Destiny",
-      desc: "Deeper shifts in purpose and long-term evolution.",
+      desc: {
+        today: "Individual shifts in purpose sparking today.",
+        week: "The deeper narrative arc unfolding in your life right now.",
+        month: "The karmic and evolutionary background of your month."
+      },
       planets: ["Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"],
     },
     {
       id: "body",
       label: "Body, Mood & Energy",
-      desc: "How your nervous system and vitality may feel today.",
+      desc: {
+        today: "How your nervous system and vitality may feel today.",
+        week: "Rest and activity cycles for the next seven days.",
+        month: "The overall energetic baseline for your physical well-being."
+      },
       planets: ["Sun", "Moon", "Mars"],
     },
   ];
@@ -94,41 +121,58 @@ export default function TodayTab({ ctx }) {
   );
 
   const pickTopAspect = (planets) => {
-    const hits = aspects.filter(
+    const hits = horizonAspects.filter(
       (a) => planets.includes(a.p1c) || planets.includes(a.p2c)
     );
     if (!hits.length) return null;
     return [...hits].sort((x, y) => (y.strength || 0) - (x.strength || 0))[0];
   };
 
-  const todayStr = new Date().toDateString();
+  const todayStr = horizon === "today" ? new Date().toDateString() : (horizon === "week" ? "Week of " + new Date().toLocaleDateString() : new Date().toLocaleString('default', { month: 'long', year: 'numeric' }));
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      {/* ── Focus Preference Picker ── */}
-      <div style={{ padding: "12px 16px", borderRadius: 12, background: M3.surfaceContainer, border: `1px solid ${M3.outlineVariant}` }}>
-        <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.secondary, letterSpacing: "0.12em", marginBottom: 8 }}>
-          YOUR FOCUS — PERSONALISE THIS VIEW
+      {/* ── Horizon & Focus Preference ── */}
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(280px, 1fr))", gap:12 }}>
+        <div style={{ padding: "12px 16px", borderRadius: 12, background: M3.surfaceContainer, border: `1px solid ${M3.outlineVariant}` }}>
+          <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.secondary, letterSpacing: "0.12em", marginBottom: 8 }}>
+            TIME HORIZON
+          </div>
+          <div style={{ display: "flex", gap: 6 }}>
+            {["today", "week", "month"].map(h => (
+              <button key={h} onClick={() => setHorizon(h)}
+                style={{
+                  flex: 1, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", cursor: "pointer",
+                  padding: "5px 4px", borderRadius: 6, border: `1px solid ${horizon === h ? M3.primary : M3.outlineVariant}`,
+                  background: horizon === h ? M3.primary + "22" : "transparent",
+                  color: horizon === h ? M3.primary : M3.onSurfaceVariant,
+                  transition: "all 0.2s", textTransform: "capitalize"
+                }}>
+                {h}
+              </button>
+            ))}
+          </div>
         </div>
-        <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-          {FOCUS_OPTIONS.map(opt => (
-            <button key={opt.id} onClick={() => saveFocus(opt.id)}
-              style={{
-                fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", cursor: "pointer",
-                padding: "5px 12px", borderRadius: 20, border: `1px solid ${focus === opt.id ? M3.primary : M3.outlineVariant}`,
-                background: focus === opt.id ? M3.primary + "22" : "transparent",
-                color: focus === opt.id ? M3.primary : M3.onSurfaceVariant,
-                transition: "all 0.2s"
-              }}>
-              {opt.label}
-            </button>
-          ))}
+
+        <div style={{ padding: "12px 16px", borderRadius: 12, background: M3.surfaceContainer, border: `1px solid ${M3.outlineVariant}` }}>
+          <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.secondary, letterSpacing: "0.12em", marginBottom: 8 }}>
+            YOUR FOCUS
+          </div>
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+            {FOCUS_OPTIONS.map(opt => (
+              <button key={opt.id} onClick={() => saveFocus(opt.id)}
+                style={{
+                  fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", cursor: "pointer",
+                  padding: "4px 10px", borderRadius: 20, border: `1px solid ${focus === opt.id ? M3.primary : M3.outlineVariant}`,
+                  background: focus === opt.id ? M3.primary + "22" : "transparent",
+                  color: focus === opt.id ? M3.primary : M3.onSurfaceVariant,
+                  transition: "all 0.2s"
+                }}>
+                {opt.label}
+              </button>
+            ))}
+          </div>
         </div>
-        {focus !== "all" && (
-          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.7rem", color: M3.onSurfaceVariant, margin: "8px 0 0", fontStyle: "italic" }}>
-            {FOCUS_OPTIONS.find(o => o.id === focus)?.desc} — your priority theme is shown first below.
-          </p>
-        )}
       </div>
       <Card
         style={{
@@ -323,7 +367,7 @@ export default function TodayTab({ ctx }) {
                   margin: "0 0 6px",
                 }}
               >
-                {cat.desc}
+                {cat.desc[horizon]}
               </p>
               <p
                 style={{

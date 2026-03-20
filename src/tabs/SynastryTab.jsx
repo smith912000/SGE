@@ -190,15 +190,69 @@ export default function SynastryTab({ ctx }) {
         </Card>
       </div>
 
-      <Card title="★ Composite Chart (Midpoint Map)">
-        <div style={{ display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", height:200, background:M3.surfaceDim, borderRadius: 12, border:`1px dashed ${M3.outlineVariant}` }}>
-          <span style={{ fontSize: "2rem", marginBottom: 8, opacity: 0.5 }}>⚮</span>
-          <p style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.72rem", color:M3.secondary, letterSpacing:"0.1em" }}>COMPOSITE CHART MODULE IN DEVELOPMENT</p>
-          <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.74rem", color:M3.onSurfaceVariant, marginTop: 6 }}>
-            Soon, this section will generate a single chart derived from the midpoint of your two natal charts, revealing the energetic 'entity' that is your relationship.
-          </p>
-        </div>
-      </Card>
+      {res.synR?.composite && (
+        <>
+          <Card title="★ The Composite Chart — Your Relationship as a Single Entity">
+            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 16px" }}>
+              Unlike Synastry (comparison), the Composite Chart <strong>averages</strong> your two charts to find the 'midpoint' for every planet. This represents the relationship itself — the third entity that exists between you.
+            </p>
+            <div style={grid2}>
+              <div style={{ display:"flex", justifyContent:"center", alignItems:"center" }}>
+                <WheelWithTooltip 
+                  positions={res.synR.composite.positions} 
+                  houses={res.synR.composite.houses} 
+                  size={320} 
+                  id="composite" 
+                  theme="solar"
+                />
+              </div>
+              <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+                <div style={{ padding:"14px 16px", borderRadius:12, background:M3.primaryContainer+"22", border:`1px solid ${M3.primary}22` }}>
+                  <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem", color:M3.primary, marginBottom:6 }}>COMPOSITE VITALITY</div>
+                  <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>
+                    The Composite Sun is in <strong>{ctx.zodSign(res.synR.composite.positions.Sun.longitude)}</strong>. This is the heart of the relationship — its core purpose and where you most easily 'shine' as a couple.
+                  </p>
+                </div>
+                <div style={{ padding:"14px 16px", borderRadius:12, background:M3.tertiaryContainer+"22", border:`1px solid ${M3.tertiary}22` }}>
+                  <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem", color:M3.tertiary, marginBottom:6 }}>EMOTIONAL NAVIGATION</div>
+                  <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>
+                    The Composite Moon is in <strong>{ctx.zodSign(res.synR.composite.positions.Moon.longitude)}</strong>. This shows how you process emotions together and what you need to feel secure as a unit.
+                  </p>
+                </div>
+                {res.synR.composite.aspects?.length > 0 && (
+                  <div style={{ padding:"14px 16px", borderRadius:12, background:M3.surfaceContainer, border:`1px solid ${M3.outlineVariant}` }}>
+                    <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.65rem", color:M3.secondary, marginBottom:6 }}>KEY INTERNAL THEMES</div>
+                    {res.synR.composite.aspects.slice(0, 3).map((a, i) => (
+                      <div key={i} style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", color:M3.onSurfaceVariant, marginBottom:4 }}>
+                        {a.sym} {a.p1} {a.name} {a.p2} — {a.strength > 0.7 ? "Strong theme" : "Subtle undertone"}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </Card>
+
+          <Card title="★ All Composite Connections">
+            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.74rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
+              These aspects exist within the relationship entity itself, showing its internal geometry and dynamics.
+            </p>
+            <AspectTable aspects={res.synR.composite.aspects}/>
+          </Card>
+        </>
+      )}
+
+      {!res.synR?.composite && (
+        <Card title="★ Composite Chart (Midpoint Map)">
+          <div style={{ display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", height:200, background:M3.surfaceDim, borderRadius: 12, border:`1px dashed ${M3.outlineVariant}` }}>
+            <span style={{ fontSize: "2rem", marginBottom: 8, opacity: 0.5 }}>⚮</span>
+            <p style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.72rem", color:M3.secondary, letterSpacing:"0.1em" }}>GENERATING COMPOSITE DATA...</p>
+            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.74rem", color:M3.onSurfaceVariant, marginTop: 6 }}>
+              The midpoint map reveals the energetic 'entity' that is your relationship.
+            </p>
+          </div>
+        </Card>
+      )}
 
       <Card title={`♡ All Cross-Chart Connections (${res.synR.aspects.length} links)`}>
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.74rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>

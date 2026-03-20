@@ -1,17 +1,21 @@
-import { useState, useRef, useCallback } from 'react';
-import WheelChart from './WheelChart.jsx';
+import WheelChart, { exportWheelAsSvg } from './WheelChart.jsx';
 import { M3 } from '../../theme/m3.js';
 import Tooltip from '../ui/Tooltip.jsx';
 
 export default function WheelWithTooltip(props) {
   const [tip, setTip] = useState({ visible:false, info:null, x:0, y:0 });
+  const [aspMode, setAspMode] = useState(props.mode || "default");
   const wrapRef = useRef(null);
   const wheelSize = props?.size ?? 480;
+  
   const handleTip = useCallback(t => {
     if (!t.visible) { setTip(t); return; }
     setTip(t);
   },[]);
+
   const theme = props.theme || "western";
+  const wheelId = props.id || "chart-main";
+
   return (
     <div ref={wrapRef} style={{ position:"relative", width:"100%", overflowX:"auto" }}>
       <div style={{
@@ -25,9 +29,32 @@ export default function WheelWithTooltip(props) {
           <Tooltip {...tip} pinLeft/>
         </div>
         <div style={{ display:"flex", flexDirection:"column", alignItems:"center", minWidth:320 }}>
-          <WheelChart {...props} onTooltip={handleTip} theme={theme}/>
-          <div style={{ textAlign:"center", marginTop:8, fontFamily:"'Share Tech Mono', monospace",
-            fontSize:"0.6rem", color:M3.outlineVariant, letterSpacing:"0.1em" }}>
+          <WheelChart {...props} mode={aspMode} id={wheelId} onTooltip={handleTip} theme={theme}/>
+          
+          <div style={{ display:"flex", gap:20, marginTop:12, alignItems:"center" }}>
+            <button 
+              onClick={() => exportWheelAsSvg(wheelId)}
+              style={{
+                background:"transparent", border:`1px solid ${M3.primary}44`, borderRadius:6, padding:"4px 12px",
+                color:M3.primary, fontFamily:"'Share Tech Mono', monospace", fontSize:"0.65rem", cursor:"pointer",
+                transition:"all 0.2s", letterSpacing:"0.05em"
+              }}>
+              ⎙ SAVE CHART (.SVG)
+            </button>
+
+            <button 
+              onClick={() => setAspMode(aspMode === "default" ? "aspects" : "default")}
+              style={{
+                background:"transparent", border:`1px solid ${M3.secondary}44`, borderRadius:6, padding:"4px 12px",
+                color:M3.secondary, fontFamily:"'Share Tech Mono', monospace", fontSize:"0.65rem", cursor:"pointer",
+                transition:"all 0.2s", letterSpacing:"0.05em"
+              }}>
+              ⌥ {aspMode === "default" ? "VIEW ALL ASPECTS" : "SIMPLIFIED VIEW"}
+            </button>
+          </div>
+
+          <div style={{ textAlign:"center", marginTop:10, fontFamily:"'Share Tech Mono', monospace",
+            fontSize:"0.6rem", color:M3.outlineVariant, letterSpacing:"0.1em", opacity: 0.6 }}>
             HOVER PLANETS · SIGNS · HOUSES · ASPECTS FOR INFO
           </div>
         </div>

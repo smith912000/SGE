@@ -62,3 +62,12 @@ def vortex_mathematics_369(n: float | int) -> dict:
         "is_polarity_36": root in [3, 6],
         "label": "Source" if root == 9 else ("Polarity" if root in [3, 6] else "Material")
     }
+
+def midpoint(l1: float, l2: float) -> float:
+    """Calculate the 'near' midpoint between two longitudes in degrees."""
+    diff = l2 - l1
+    while diff > 180:
+        diff -= 360
+    while diff < -180:
+        diff += 360
+    return (l1 + diff / 2) % 360
