@@ -111,6 +111,8 @@ import CalendarTab from './tabs/CalendarTab.jsx';
 import HoroscopeTab from './tabs/HoroscopeTab.jsx';
 import TarotTab from './tabs/TarotTab.jsx';
 
+import ErrorBoundary from './components/ui/ErrorBoundary.jsx';
+
 // Utility constants and functions
 const RAD = Math.PI / 180;
 const zodSign = lon => SIGNS[Math.floor(((lon % 360 + 360) % 360) / 30)];
