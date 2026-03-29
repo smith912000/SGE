@@ -1,0 +1,1371 @@
+[
+  {
+    "ipa_symbol": "ʃ",
+    "manner": "Fricative",
+    "place": "Postalveolar",
+    "voicing": false,
+    "unicode_hex": "U+0283",
+    "crosswalks": [
+      {
+        "language": "English",
+        "iso": "en",
+        "family": "Indo-European",
+        "grapheme": "sh",
+        "example": "ship"
+      },
+      {
+        "language": "French",
+        "iso": "fr",
+        "family": "Indo-European",
+        "grapheme": "ch",
+        "example": "chat"
+      },
+      {
+        "language": "German",
+        "iso": "de",
+        "family": "Indo-European",
+        "grapheme": "sch",
+        "example": "schule"
+      },
+      {
+        "language": "Italian",
+        "iso": "it",
+        "family": "Indo-European",
+        "grapheme": "sc",
+        "example": "sci"
+      },
+      {
+        "language": "Portuguese",
+        "iso": "pt",
+        "family": "Indo-European",
+        "grapheme": "ch",
+        "example": "chave"
+      }
+    ]
+  },
+  {
+    "ipa_symbol": "ɲ",
+    "manner": "Nasal",
+    "place": "Palatal",
+    "voicing": true,
+    "unicode_hex": "U+0272",
+    "crosswalks": [
+      {
+        "language": "Spanish",
+        "iso": "es",
+        "family": "Indo-European",
+        "grapheme": "ñ",
+        "example": "niño"
+      },
+      {
+        "language": "French",
+        "iso": "fr",
+        "family": "Indo-European",
+        "grapheme": "gn",
+        "example": "montagne"
+      },
+      {
+        "language": "Italian",
+        "iso": "it",
+        "family": "Indo-European",
+        "grapheme": "gn",
+        "example": "gnocchi"
+      },
+      {
+        "language": "Portuguese",
+        "iso": "pt",
+        "family": "Indo-European",
+        "grapheme": "nh",
+        "example": "ninho"
+      },
+      {
+        "language": "Polish",
+        "iso": "pl",
+        "family": "Indo-European",
+        "grapheme": "ń",
+        "example": "koń"
+      }
+    ]
+  },
+  {
+    "ipa_symbol": "m",
+    "manner": "Nasal",
+    "place": "Bilabial",
+    "voicing": true,
+    "unicode_hex": "U+006D",
+    "crosswalks": [
+      {
+        "language": "English",
+        "iso": "en",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "mother"
+      },
+      {
+        "language": "Hindi",
+        "iso": "hi",
+        "family": "Indo-European",
+        "grapheme": "म",
+        "example": "माँ"
+      },
+      {
+        "language": "Arabic",
+        "iso": "ar",
+        "family": "Afroasiatic",
+        "grapheme": "م",
+        "example": "أم"
+      },
+      {
+        "language": "Mandarin",
+        "iso": "zh",
+        "family": "Sino-Tibetan",
+        "grapheme": "m",
+        "example": "妈"
+      },
+      {
+        "language": "Language (ak)",
+        "iso": "ak",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Russian",
+        "iso": "ru",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (za)",
+        "iso": "za",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Hebrew",
+        "iso": "he",
+        "family": "Afroasiatic",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ba)",
+        "iso": "ba",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ky)",
+        "iso": "ky",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (br)",
+        "iso": "br",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (sa)",
+        "iso": "sa",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (sd)",
+        "iso": "sd",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Punjabi",
+        "iso": "pa",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (kr)",
+        "iso": "kr",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (tn)",
+        "iso": "tn",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Zulu",
+        "iso": "zu",
+        "family": "Niger-Congo",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (se)",
+        "iso": "se",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (mt)",
+        "iso": "mt",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (co)",
+        "iso": "co",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Vietnamese",
+        "iso": "vi",
+        "family": "Austroasiatic",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Danish",
+        "iso": "da",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ps)",
+        "iso": "ps",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Telugu",
+        "iso": "te",
+        "family": "Dravidian",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Cantonese",
+        "iso": "yue",
+        "family": "Sino-Tibetan",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (kg)",
+        "iso": "kg",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (nr)",
+        "iso": "nr",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (si)",
+        "iso": "si",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (aa)",
+        "iso": "aa",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (th)",
+        "iso": "th",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (oc)",
+        "iso": "oc",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (os)",
+        "iso": "os",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (jv)",
+        "iso": "jv",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (to)",
+        "iso": "to",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (kv)",
+        "iso": "kv",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Estonian",
+        "iso": "et",
+        "family": "Uralic",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (mh)",
+        "iso": "mh",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (an)",
+        "iso": "an",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ch)",
+        "iso": "ch",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Hawaiian",
+        "iso": "haw",
+        "family": "Austronesian",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Ukrainian",
+        "iso": "uk",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (lt)",
+        "iso": "lt",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ss)",
+        "iso": "ss",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Oromo",
+        "iso": "om",
+        "family": "Afroasiatic",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Igbo",
+        "iso": "ig",
+        "family": "Niger-Congo",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (pi)",
+        "iso": "pi",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ug)",
+        "iso": "ug",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Italian",
+        "iso": "it",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Hungarian",
+        "iso": "hu",
+        "family": "Uralic",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ki)",
+        "iso": "ki",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Albanian",
+        "iso": "sq",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (mi)",
+        "iso": "mi",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Amharic",
+        "iso": "am",
+        "family": "Afroasiatic",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Norwegian",
+        "iso": "no",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (bm)",
+        "iso": "bm",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (sc)",
+        "iso": "sc",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (hz)",
+        "iso": "hz",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Irish",
+        "iso": "ga",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (io)",
+        "iso": "io",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Hausa",
+        "iso": "ha",
+        "family": "Afroasiatic",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (av)",
+        "iso": "av",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (gn)",
+        "iso": "gn",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Yoruba",
+        "iso": "yo",
+        "family": "Niger-Congo",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Basque",
+        "iso": "eu",
+        "family": "Isolate",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ce)",
+        "iso": "ce",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Czech",
+        "iso": "cs",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Dutch",
+        "iso": "nl",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (kw)",
+        "iso": "kw",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (or)",
+        "iso": "or",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Urdu",
+        "iso": "ur",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ii)",
+        "iso": "ii",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ng)",
+        "iso": "ng",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (nv)",
+        "iso": "nv",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (tt)",
+        "iso": "tt",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (eo)",
+        "iso": "eo",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (sl)",
+        "iso": "sl",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Tigrinya",
+        "iso": "ti",
+        "family": "Afroasiatic",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Korean",
+        "iso": "ko",
+        "family": "Koreanic",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (la)",
+        "iso": "la",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Marathi",
+        "iso": "mr",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (kj)",
+        "iso": "kj",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Armenian",
+        "iso": "hy",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (oj)",
+        "iso": "oj",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (tg)",
+        "iso": "tg",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Greek",
+        "iso": "el",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Tibetan",
+        "iso": "bo",
+        "family": "Sino-Tibetan",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (mn)",
+        "iso": "mn",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (fo)",
+        "iso": "fo",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ab)",
+        "iso": "ab",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "French",
+        "iso": "fr",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ff)",
+        "iso": "ff",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (rm)",
+        "iso": "rm",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Khmer",
+        "iso": "km",
+        "family": "Austroasiatic",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Turkish",
+        "iso": "tr",
+        "family": "Turkic",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Welsh",
+        "iso": "cy",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Somali",
+        "iso": "so",
+        "family": "Afroasiatic",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Japanese",
+        "iso": "ja",
+        "family": "Japonic",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (sm)",
+        "iso": "sm",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (nd)",
+        "iso": "nd",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (tk)",
+        "iso": "tk",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (wo)",
+        "iso": "wo",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Portuguese",
+        "iso": "pt",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Slovak",
+        "iso": "sk",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (lo)",
+        "iso": "lo",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ht)",
+        "iso": "ht",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ee)",
+        "iso": "ee",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (nb)",
+        "iso": "nb",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (nn)",
+        "iso": "nn",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Serbian",
+        "iso": "sr",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (gv)",
+        "iso": "gv",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (bs)",
+        "iso": "bs",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (li)",
+        "iso": "li",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (sg)",
+        "iso": "sg",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Catalan",
+        "iso": "ca",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ve)",
+        "iso": "ve",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Gujarati",
+        "iso": "gu",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (cr)",
+        "iso": "cr",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (fa)",
+        "iso": "fa",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (yi)",
+        "iso": "yi",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "German",
+        "iso": "de",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Finnish",
+        "iso": "fi",
+        "family": "Uralic",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ks)",
+        "iso": "ks",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Icelandic",
+        "iso": "is",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ku)",
+        "iso": "ku",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Swedish",
+        "iso": "sv",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Romanian",
+        "iso": "ro",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (dv)",
+        "iso": "dv",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ts)",
+        "iso": "ts",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (lb)",
+        "iso": "lb",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (as)",
+        "iso": "as",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (kn)",
+        "iso": "kn",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ae)",
+        "iso": "ae",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (na)",
+        "iso": "na",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (dz)",
+        "iso": "dz",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (tw)",
+        "iso": "tw",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (lv)",
+        "iso": "lv",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ie)",
+        "iso": "ie",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (wa)",
+        "iso": "wa",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (mg)",
+        "iso": "mg",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (st)",
+        "iso": "st",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (rn)",
+        "iso": "rn",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (vo)",
+        "iso": "vo",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (gl)",
+        "iso": "gl",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (sn)",
+        "iso": "sn",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Spanish",
+        "iso": "es",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (lg)",
+        "iso": "lg",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (mk)",
+        "iso": "mk",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Polish",
+        "iso": "pl",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Bulgarian",
+        "iso": "bg",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ia)",
+        "iso": "ia",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (fj)",
+        "iso": "fj",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (iu)",
+        "iso": "iu",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Croatian",
+        "iso": "hr",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Malay",
+        "iso": "ms",
+        "family": "Austronesian",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ty)",
+        "iso": "ty",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Tagalog",
+        "iso": "tl",
+        "family": "Austronesian",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Tamil",
+        "iso": "ta",
+        "family": "Dravidian",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (cv)",
+        "iso": "cv",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (af)",
+        "iso": "af",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Indonesian",
+        "iso": "id",
+        "family": "Austronesian",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (bi)",
+        "iso": "bi",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (fy)",
+        "iso": "fy",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Bengali",
+        "iso": "bn",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (su)",
+        "iso": "su",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Swahili",
+        "iso": "sw",
+        "family": "Niger-Congo",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ml)",
+        "iso": "ml",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Scottish Gaelic",
+        "iso": "gd",
+        "family": "Indo-European",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ne)",
+        "iso": "ne",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Burmese",
+        "iso": "my",
+        "family": "Sino-Tibetan",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (cu)",
+        "iso": "cu",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (lu)",
+        "iso": "lu",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Language (ho)",
+        "iso": "ho",
+        "family": "Other",
+        "grapheme": "m",
+        "example": "Template"
+      },
+      {
+        "language": "Azerbaijani",
+        "iso": "az",
+        "family": "Turkic",
+        "grapheme": "m",
+        "example": "Template"
+      }
+    ]
+  },
+  {
+    "ipa_symbol": "s",
+    "manner": "Fricative",
+    "place": "Alveolar",
+    "voicing": false,
+    "unicode_hex": "U+0073",
+    "crosswalks": [
+      {
+        "language": "English",
+        "iso": "en",
+        "family": "Indo-European",
+        "grapheme": "s",
+        "example": "sun"
+      },
+      {
+        "language": "Greek",
+        "iso": "el",
+        "family": "Indo-European",
+        "grapheme": "σ/ς",
+        "example": "ήλιος"
+      },
+      {
+        "language": "Russian",
+        "iso": "ru",
+        "family": "Indo-European",
+        "grapheme": "с",
+        "example": "солнце"
+      }
+    ]
+  },
+  {
+    "ipa_symbol": "k",
+    "manner": "Plosive",
+    "place": "Velar",
+    "voicing": false,
+    "unicode_hex": "U+006B",
+    "crosswalks": []
+  },
+  {
+    "ipa_symbol": "r",
+    "manner": "Trill",
+    "place": "Alveolar",
+    "voicing": true,
+    "unicode_hex": "U+0072",
+    "crosswalks": [
+      {
+        "language": "Spanish",
+        "iso": "es",
+        "family": "Indo-European",
+        "grapheme": "rr",
+        "example": "perro"
+      },
+      {
+        "language": "Italian",
+        "iso": "it",
+        "family": "Indo-European",
+        "grapheme": "r",
+        "example": "roma"
+      }
+    ]
+  }
+]

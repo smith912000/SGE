@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import ScriptSelector from "../components/ui/ScriptSelector";
+import PhoneticCrosswalk from "../components/grammatology/PhoneticCrosswalk";
 
 export default function GrammatologyTab({ ctx }) {
   const {
@@ -97,185 +98,14 @@ export default function GrammatologyTab({ ctx }) {
           </div>
         )}
         <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
-          {[{id:"crosswalk",label:"✦ Word Crosswalk"},{id:"table",label:"Cross-Script Table"},{id:"atlas",label:`🌍 Script Atlas (${(SCRIPT_ATLAS||[]).reduce((n,f)=>n+f.scripts.length,0)})`},{id:"systems",label:"Writing Systems"},{id:"egyptian",label:"Egyptian Signs"},{id:"ogham",label:"Ogham Trees"},{id:"tarot",label:"Tarot · Chinese"},{id:"kangxi",label:"康熙 Kangxi Radicals"},{id:"digraphs",label:"Digraphs"},{id:"ipa",label:"IPA Reference"},{id:"yetzirah",label:"Sefer Yetzirah"}].map(t=>(
+          {[{id:"phonetics",label:"🔊 Phonetic Crosswalk"},{id:"table",label:"Cross-Script Table"},{id:"atlas",label:`🌍 Script Atlas (${(SCRIPT_ATLAS||[]).reduce((n,f)=>n+f.scripts.length,0)})`},{id:"systems",label:"Writing Systems"},{id:"egyptian",label:"Egyptian Signs"},{id:"ogham",label:"Ogham Trees"},{id:"tarot",label:"Tarot · Chinese"},{id:"kangxi",label:"康熙 Kangxi Radicals"},{id:"digraphs",label:"Digraphs"},{id:"ipa",label:"IPA Reference"},{id:"yetzirah",label:"Sefer Yetzirah"}].map(t=>(
             <button key={t.id} onClick={()=>setGramTab(t.id)} style={{ padding:"5px 12px", borderRadius:14, border:`1px solid ${gramTab===t.id?M3.primary:M3.outlineVariant}`, background:gramTab===t.id?M3.primaryContainer:M3.surfaceContainer, color:gramTab===t.id?M3.onPrimaryContainer:M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", cursor:"pointer", transition:"all 0.2s" }}>{t.label}</button>
           ))}
         </div>
       </Card>
 
-      {gramTab==="crosswalk" && (
-        <Card title="✦ Word Crosswalk & Symbology">
-          <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 12px" }}>
-            Enter any word or phrase to decode its hidden symbolic architecture — tracing each letter back to its pictographic origin, mapping gematria, numerology, elemental balance, planetary resonance, and zodiac threads.
-          </p>
-          <div style={{ display:"flex", gap:8, marginBottom:16 }}>
-            <input
-              value={cwInput}
-              onChange={e => setCwInput(e.target.value)}
-              onKeyDown={e => { if (e.key === "Enter" && cwInput.trim()) setCwResult(analyzeWord(cwInput)); }}
-              placeholder="Type a word or phrase…"
-              style={{ flex:1, padding:"10px 14px", borderRadius:M3.radius.md, border:`1px solid ${M3.outline}`, background:M3.surfaceContainer, color:M3.onSurface, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.78rem", outline:"none" }}
-            />
-            <button
-              onClick={() => { if (cwInput.trim()) setCwResult(analyzeWord(cwInput)); }}
-              style={{ padding:"10px 20px", borderRadius:M3.radius.md, border:"none", background:M3.primary, color:M3.onPrimary, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.72rem", fontWeight:700, cursor:"pointer", letterSpacing:"0.06em" }}
-            >DECODE</button>
-          </div>
-
-          {cwResult && (
-            <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
-
-              <div style={{ padding:"14px 16px", borderRadius:M3.radius.md, background:`linear-gradient(135deg,${M3.primaryContainer}44,${M3.surfaceContainer})`, border:`1px solid ${M3.outline}33` }}>
-                <div style={{ fontFamily:"Cinzel,serif", fontSize:"0.88rem", color:M3.primary, marginBottom:6 }}>"{cwResult.input.toUpperCase()}"</div>
-                <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.7, color:M3.onSurface, margin:0 }}>{cwResult.synthesis.narrative}</p>
-              </div>
-
-              <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.64rem", color:M3.secondary, letterSpacing:"0.08em", marginTop:4 }}>LETTER-BY-LETTER BREAKDOWN</div>
-              <div style={{ overflowX:"auto" }}>
-                <table style={{ width:"100%", borderCollapse:"collapse" }}>
-                  <thead><tr>
-                    {["Letter","Hebrew","Name","Hiero","Egypt","Phoenician","Aramaic","Samar.","Greek","Coptic","Runic","Arabic","Syriac","Cyrillic","Armen.","Georg.","Devana.","Ge'ez","Gem.","Element","Planet/Sign","Tarot"].map(h => (
-                      <th key={h} style={{ padding:"5px 8px", textAlign:"left", color:M3.secondary, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.56rem", letterSpacing:"0.06em", borderBottom:`1px solid ${M3.outlineVariant}`, whiteSpace:"nowrap" }}>{h}</th>
-                    ))}
-                  </tr></thead>
-                  <tbody>
-                    {cwResult.letters.map((l, i) => (
-                      <tr key={i} style={{ borderBottom:`1px solid ${M3.outlineVariant}22` }}>
-                        <td style={{ padding:"5px 8px", fontSize:"0.82rem", color:M3.primary, fontWeight:700 }}>{l.latin}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"1.1rem", color:l.found ? M3.onSurface : M3.outlineVariant }}>{l.found ? l.hebrew : "—"}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"0.64rem", color:M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace" }}>{l.found ? l.hebrewName : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.hiero : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.hieroEgyp : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.phoenician : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.aramaic : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.samaritan : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"0.76rem", color:M3.onSurface }}>{l.found ? l.greek : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.coptic : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.runic : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.arabic : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.syriac : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"0.76rem", color:M3.onSurface }}>{l.found ? l.cyrillic : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.armenian : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.georgian : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.devanagari : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"1.1rem" }}>{l.found ? l.geez : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"0.68rem", color:M3.tertiary, fontFamily:"'Share Tech Mono',monospace" }}>{l.found ? l.gematria : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"0.64rem", color: l.yetzirah?.element === "Fire" ? "#f66" : l.yetzirah?.element === "Water" ? "#6af" : l.yetzirah?.element === "Air" ? "#af6" : M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace" }}>{l.found ? (l.yetzirah?.element || l.yetzirah?.planet || l.yetzirah?.sign || "—") : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"0.64rem", color:M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace" }}>{l.found ? (l.yetzirah?.planet || l.yetzirah?.sign || "") : ""}</td>
-                        <td style={{ padding:"5px 8px", fontSize:"0.64rem", color:M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace" }}>{l.found && l.tarotName ? `${l.tarot} ${l.tarotName}` : ""}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              <div style={grid2}>
-                <div style={{ padding:"12px 14px", borderRadius:M3.radius.md, background:M3.surfaceContainer, border:`1px solid ${M3.outlineVariant}22` }}>
-                  <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color:M3.secondary, letterSpacing:"0.08em", marginBottom:8 }}>GEMATRIA</div>
-                  <div style={{ display:"flex", gap:16, flexWrap:"wrap" }}>
-                    {cwResult.gematria.letters && cwResult.gematria.letters.map((g, i) => (
-                      <span key={i} style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.7rem", color:M3.onSurface }}>
-                        <span style={{ color:M3.primary }}>{g.hebrew}</span> = <span style={{ color:M3.tertiary }}>{g.value}</span>
-                      </span>
-                    ))}
-                  </div>
-                  <div style={{ marginTop:8, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.72rem" }}>
-                    <span style={{ color:M3.onSurfaceVariant }}>Total: </span>
-                    <span style={{ color:M3.tertiary, fontWeight:700 }}>{cwResult.gematria.total}</span>
-                    <span style={{ color:M3.outlineVariant }}> → </span>
-                    <span style={{ color:M3.primary, fontWeight:700 }}>{cwResult.gematria.reduced}</span>
-                    {cwResult.gematria.planetRes && <span style={{ color:M3.secondary, marginLeft:8 }}>({cwResult.gematria.planetRes})</span>}
-                  </div>
-                </div>
-
-                <div style={{ padding:"12px 14px", borderRadius:M3.radius.md, background:M3.surfaceContainer, border:`1px solid ${M3.outlineVariant}22` }}>
-                  <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color:M3.secondary, letterSpacing:"0.08em", marginBottom:8 }}>NUMEROLOGY</div>
-                  <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
-                    <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.7rem", color:M3.onSurface }}>
-                      Pythagorean: <span style={{ color:M3.tertiary }}>{cwResult.numerology.pythagorean}</span>
-                      <span style={{ color:M3.outlineVariant }}> → </span>
-                      <span style={{ color:M3.primary, fontWeight:700 }}>{cwResult.numerology.pythReduced}</span>
-                    </div>
-                    <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.7rem", color:M3.onSurface }}>
-                      Chaldean: <span style={{ color:M3.tertiary }}>{cwResult.numerology.chaldean}</span>
-                      <span style={{ color:M3.outlineVariant }}> → </span>
-                      <span style={{ color:M3.primary, fontWeight:700 }}>{cwResult.numerology.chaldReduced}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div style={grid2}>
-                <div style={{ padding:"12px 14px", borderRadius:M3.radius.md, background:M3.surfaceContainer, border:`1px solid ${M3.outlineVariant}22` }}>
-                  <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color:M3.secondary, letterSpacing:"0.08em", marginBottom:8 }}>ELEMENTAL BALANCE</div>
-                  {Object.entries(cwResult.elements).map(([el, count]) => (
-                    <div key={el} style={{ display:"flex", alignItems:"center", gap:8, marginBottom:4 }}>
-                      <span style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem", color: el==="Fire"?"#f66":el==="Water"?"#6af":"#af6", width:40 }}>{el}</span>
-                      <div style={{ flex:1, height:6, borderRadius:3, background:M3.surfaceVariant, overflow:"hidden" }}>
-                        <div style={{ width:`${cwResult.letters.filter(l=>l.found).length > 0 ? (count / cwResult.letters.filter(l=>l.found).length * 100) : 0}%`, height:"100%", borderRadius:3, background: el==="Fire"?"#f66":el==="Water"?"#6af":"#af6", transition:"width 0.3s" }} />
-                      </div>
-                      <span style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", color:M3.onSurfaceVariant, width:16, textAlign:"right" }}>{count}</span>
-                    </div>
-                  ))}
-                  <div style={{ marginTop:6, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color:M3.onSurfaceVariant }}>
-                    Yetzirah: {cwResult.yetzirahTypes.mother}m · {cwResult.yetzirahTypes.double}d · {cwResult.yetzirahTypes.simple}s
-                  </div>
-                </div>
-
-                <div style={{ padding:"12px 14px", borderRadius:M3.radius.md, background:M3.surfaceContainer, border:`1px solid ${M3.outlineVariant}22` }}>
-                  <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color:M3.secondary, letterSpacing:"0.08em", marginBottom:8 }}>RESONANCES</div>
-                  {cwResult.planets.length > 0 && (
-                    <div style={{ marginBottom:6 }}>
-                      <span style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.58rem", color:M3.outlineVariant }}>PLANETS: </span>
-                      {cwResult.planets.map(p => (
-                        <span key={p} style={{ display:"inline-block", padding:"2px 8px", borderRadius:10, background:(P_COL[p]||M3.primary)+"22", border:`1px solid ${(P_COL[p]||M3.primary)}44`, color:P_COL[p]||M3.primary, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", marginRight:4, marginBottom:3 }}>{P_SYM[p]||""} {p}</span>
-                      ))}
-                    </div>
-                  )}
-                  {cwResult.signs.length > 0 && (
-                    <div style={{ marginBottom:6 }}>
-                      <span style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.58rem", color:M3.outlineVariant }}>ZODIAC: </span>
-                      {cwResult.signs.map(s => (
-                        <span key={s} style={{ display:"inline-block", padding:"2px 8px", borderRadius:10, background:(SIGN_COL[s]||M3.primary)+"22", border:`1px solid ${(SIGN_COL[s]||M3.primary)}44`, color:SIGN_COL[s]||M3.primary, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", marginRight:4, marginBottom:3 }}>{SIGN_SYM[s]||""} {s}</span>
-                      ))}
-                    </div>
-                  )}
-                  {cwResult.tarot.length > 0 && (
-                    <div>
-                      <span style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.58rem", color:M3.outlineVariant }}>TAROT: </span>
-                      {cwResult.tarot.map((t, i) => (
-                        <span key={i} style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", color:M3.onSurfaceVariant, marginRight:8 }}>{t.number !== null ? `${t.number}.` : ""} {t.name} <span style={{ color:M3.outlineVariant }}>({t.letter})</span></span>
-                      ))}
-                    </div>
-                  )}
-                  {cwResult.ogham.length > 0 && (
-                    <div style={{ marginTop:6 }}>
-                      <span style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.58rem", color:M3.outlineVariant }}>OGHAM: </span>
-                      {cwResult.ogham.map((o, i) => (
-                        <span key={i} style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", color:M3.onSurfaceVariant, marginRight:8 }}>{o.name} <span style={{ color:"#6a4" }}>({o.tree})</span></span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {cwResult.synthesis.pictoChain.length > 0 && (
-                <div style={{ padding:"12px 16px", borderRadius:M3.radius.md, background:`linear-gradient(135deg,${M3.tertiaryContainer||M3.secondaryContainer}44,${M3.surfaceContainer})`, border:`1px solid ${M3.tertiary}22` }}>
-                  <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color:M3.tertiary, letterSpacing:"0.08em", marginBottom:6 }}>PICTOGRAPHIC JOURNEY</div>
-                  <div style={{ display:"flex", alignItems:"center", gap:6, flexWrap:"wrap" }}>
-                    {cwResult.synthesis.pictoChain.map((p, i) => (
-                      <span key={i} style={{ display:"flex", alignItems:"center", gap:6 }}>
-                        <span style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.74rem", fontStyle:"italic", color:M3.onSurface }}>{p}</span>
-                        {i < cwResult.synthesis.pictoChain.length - 1 && <span style={{ color:M3.outlineVariant, fontSize:"0.6rem" }}>→</span>}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-            </div>
-          )}
-        </Card>
+      {gramTab==="phonetics" && (
+        <PhoneticCrosswalk />
       )}
 
       {gramTab==="table" && (

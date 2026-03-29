@@ -184,7 +184,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [gemaName, setGemaName] = useState("");
   const [expandedLetter, setExpandedLetter] = useState(null);
-  const [gramTab, setGramTab] = useState("crosswalk");
+  const [gramTab, setGramTab] = useState("phonetics");
   const [gramScriptFilter, setGramScriptFilter] = useState("core");
   const [wheelMode, setWheelMode] = useState("western");
   const [calDate, setCalDate] = useState({ y: new Date().getFullYear(), m: new Date().getMonth() + 1, d: new Date().getDate() });

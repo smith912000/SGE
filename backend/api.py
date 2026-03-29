@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from sge import SGE
+from phonetic_router import router as phonetic_router
 
 app = FastAPI(
     title="SGE v5.0 -- Astro-Temporal Engine",
@@ -22,6 +23,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(phonetic_router)
 
 
 # ── Request Models ──────────────────────────────────────────────────
