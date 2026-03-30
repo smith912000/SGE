@@ -1,3 +1,6 @@
+import React, { useState, useMemo } from 'react';
+import ScriptSelector from "../components/ui/ScriptSelector.jsx";
+import PhoneticCrosswalk from "../components/grammatology/PhoneticCrosswalk.jsx";
 import staticPhoneticsData from "../data/grammatology/phonetics_data.json";
 
 export default function GrammatologyTab({ ctx }) {
@@ -26,7 +29,7 @@ export default function GrammatologyTab({ ctx }) {
   const getPhonetic = (ipa) => {
     if (!ipa) return null;
     const cleanIpa = ipa.split('/')[0].trim();
-    return staticPhoneticsData.find(p => p.ipa_symbol === cleanIpa);
+    return (staticPhoneticsData || []).find(p => p.ipa_symbol === cleanIpa);
   };
 
   const filteredKangxi = useMemo(() => {

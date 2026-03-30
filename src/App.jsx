@@ -2614,19 +2614,21 @@ export default function App() {
                   <NumerologyTab ctx={{ M3, birthParts: A, res, Card }} />
                 )}
                 {tab === "grammatology" && (
-                  <GrammatologyTab
-                    ctx={{
-                      M3, gramTab, setGramTab, LETTER_DB, WRITING_SYSTEM_TYPES, EGYPTIAN_UNILITERALS,
-                      OGHAM_FULL, IPA_QUICK, DIGRAPH_MAP, ACROPHONY_SHIFTS, ZODIAC_CHINESE_MAP,
-                      CHINESE_ZODIAC_HEBREW, MUSICAL_SCALE_OCCULT, planetToLetter,
-                      grid2, cwInput, setCwInput, cwResult, setCwResult, analyzeWord,
-                      res, P_COL, P_SYM, SIGN_COL, SIGN_SYM, SIGN_INFO, EL_COL,
-                      gramScriptFilter, setGramScriptFilter, expandedLetter, setExpandedLetter,
-                      KANGXI_INFO, KANGXI_RADICALS, KANGXI_TOP_10_BY_FREQUENCY, KANGXI_MOST_USED, KANGXI_STANDALONE,
-                      SCRIPT_ATLAS, TWENTY_TWO_NOTE,
-                      Card,
-                    }}
-                  />
+                  <ErrorBoundary>
+                    <GrammatologyTab
+                      ctx={{
+                        M3, gramTab, setGramTab, LETTER_DB, WRITING_SYSTEM_TYPES, EGYPTIAN_UNILITERALS,
+                        OGHAM_FULL, IPA_QUICK, DIGRAPH_MAP, ACROPHONY_SHIFTS, ZODIAC_CHINESE_MAP,
+                        CHINESE_ZODIAC_HEBREW, MUSICAL_SCALE_OCCULT, planetToLetter,
+                        grid2, cwInput, setCwInput, cwResult, setCwResult, analyzeWord,
+                        res, P_COL, P_SYM, SIGN_COL, SIGN_SYM, SIGN_INFO, EL_COL,
+                        gramScriptFilter, setGramScriptFilter, expandedLetter, setExpandedLetter,
+                        KANGXI_INFO, KANGXI_RADICALS, KANGXI_TOP_10_BY_FREQUENCY, KANGXI_MOST_USED, KANGXI_STANDALONE,
+                        SCRIPT_ATLAS, TWENTY_TWO_NOTE,
+                        Card,
+                      }}
+                    />
+                  </ErrorBoundary>
                 )}
 
                 {false && tab === "numerology-old" && (() => {

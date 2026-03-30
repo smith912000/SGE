@@ -61,7 +61,7 @@ const PhoneticCrosswalk = () => {
     const places = [...new Set(phonemes.map(p => p.place))];
 
     const getGroupedCrosswalks = (cws) => {
-        const filtered = cws.filter(cw => 
+        const filtered = (cws || []).filter(cw => 
             cw.language.toLowerCase().includes(searchFilter.toLowerCase()) ||
             cw.iso.toLowerCase().includes(searchFilter.toLowerCase()) ||
             cw.family.toLowerCase().includes(searchFilter.toLowerCase())
@@ -191,7 +191,7 @@ const PhoneticCrosswalk = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {Object.entries(getGroupedCrosswalks(selectedIpa.crosswalks)).map(([family, cws]) => (
+                                    {Object.entries(getGroupedCrosswalks(selectedIpa.crosswalks || [])).map(([family, cws]) => (
                                         <React.Fragment key={family}>
                                             <tr style={{ background: M3.surfaceContainerLow }}>
                                                 <td colSpan="3" style={{ padding: '6px 12px', fontSize: '0.65rem', fontWeight: 'bold', color: M3.primary, textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: `1px solid ${M3.outlineVariant}44` }}>
