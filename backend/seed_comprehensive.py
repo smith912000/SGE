@@ -3,17 +3,8 @@ from phonetic_db import engine, SessionLocal, Base, PhonemeMetadata, Language, P
 import os
 
 def seed():
-    # Recreate database to apply schema changes comfortably
-    db_path = "phonetics.db"
-    if os.path.exists(db_path):
-        try:
-            os.remove(db_path)
-            print("Deleted existing database.")
-        except Exception as e:
-            print(f"Could not delete database: {e}")
-            
+    Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
-
     db: Session = SessionLocal()
 
     # 1. Define Categories/Families
@@ -118,14 +109,33 @@ def seed():
     for iso, name, fam, sub in language_configs:
         db.add(Language(iso_code=iso, language_name=name, family=fam, sub_family=sub))
     
-    # 2. Define Phonemes
+    # 2. Define Phonemes (Mapping the 22 Root IPA symbols)
     phonemes = [
-        PhonemeMetadata(ipa_symbol='ʃ', manner='Fricative', place='Postalveolar', voicing=False, unicode_hex='U+0283'),
-        PhonemeMetadata(ipa_symbol='ɲ', manner='Nasal', place='Palatal', voicing=True, unicode_hex='U+0272'),
-        PhonemeMetadata(ipa_symbol='m', manner='Nasal', place='Bilabial', voicing=True, unicode_hex='U+006D'),
-        PhonemeMetadata(ipa_symbol='s', manner='Fricative', place='Alveolar', voicing=False, unicode_hex='U+0073'),
+        PhonemeMetadata(ipa_symbol='ʔ', manner='Plosive', place='Glottal', voicing=False, unicode_hex='U+0294'),
+        PhonemeMetadata(ipa_symbol='b', manner='Plosive', place='Bilabial', voicing=True, unicode_hex='U+0062'),
+        PhonemeMetadata(ipa_symbol='g', manner='Plosive', place='Velar', voicing=True, unicode_hex='U+0067'),
+        PhonemeMetadata(ipa_symbol='d', manner='Plosive', place='Alveolar', voicing=True, unicode_hex='U+0064'),
+        PhonemeMetadata(ipa_symbol='h', manner='Fricative', place='Glottal', voicing=False, unicode_hex='U+0068'),
+        PhonemeMetadata(ipa_symbol='w', manner='Approximant', place='Labio-velar', voicing=True, unicode_hex='U+0077'),
+        PhonemeMetadata(ipa_symbol='z', manner='Fricative', place='Alveolar', voicing=True, unicode_hex='U+007A'),
+        PhonemeMetadata(ipa_symbol='ħ', manner='Fricative', place='Pharyngeal', voicing=False, unicode_hex='U+0127'),
+        PhonemeMetadata(ipa_symbol='tˀ', manner='Plosive', place='Alveolar', voicing=False, unicode_hex='U+0074+U+02C0'),
+        PhonemeMetadata(ipa_symbol='j', manner='Approximant', place='Palatal', voicing=True, unicode_hex='U+006A'),
         PhonemeMetadata(ipa_symbol='k', manner='Plosive', place='Velar', voicing=False, unicode_hex='U+006B'),
+        PhonemeMetadata(ipa_symbol='l', manner='Approximant', place='Alveolar', voicing=True, unicode_hex='U+006C'),
+        PhonemeMetadata(ipa_symbol='m', manner='Nasal', place='Bilabial', voicing=True, unicode_hex='U+006D'),
+        PhonemeMetadata(ipa_symbol='n', manner='Nasal', place='Alveolar', voicing=True, unicode_hex='U+006E'),
+        PhonemeMetadata(ipa_symbol='s', manner='Fricative', place='Alveolar', voicing=False, unicode_hex='U+0073'),
+        PhonemeMetadata(ipa_symbol='ʕ', manner='Fricative', place='Pharyngeal', voicing=True, unicode_hex='U+0295'),
+        PhonemeMetadata(ipa_symbol='p', manner='Plosive', place='Bilabial', voicing=False, unicode_hex='U+0070'),
+        PhonemeMetadata(ipa_symbol='sˀ', manner='Fricative', place='Alveolar', voicing=False, unicode_hex='U+0073+U+02C0'),
+        PhonemeMetadata(ipa_symbol='q', manner='Plosive', place='Uvular', voicing=False, unicode_hex='U+0071'),
         PhonemeMetadata(ipa_symbol='r', manner='Trill', place='Alveolar', voicing=True, unicode_hex='U+0072'),
+        PhonemeMetadata(ipa_symbol='ʃ', manner='Fricative', place='Postalveolar', voicing=False, unicode_hex='U+0283'),
+        PhonemeMetadata(ipa_symbol='t', manner='Plosive', place='Alveolar', voicing=False, unicode_hex='U+0074'),
+        # Vowel variants for vau/yod
+        PhonemeMetadata(ipa_symbol='u', manner='Vowel', place='Close back rounded', voicing=True, unicode_hex='U+0075'),
+        PhonemeMetadata(ipa_symbol='i', manner='Vowel', place='Close front unrounded', voicing=True, unicode_hex='U+0069'),
     ]
     for p in phonemes:
         db.add(p)

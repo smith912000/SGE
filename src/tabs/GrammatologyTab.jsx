@@ -1,6 +1,4 @@
-import { useMemo, useState } from "react";
-import ScriptSelector from "../components/ui/ScriptSelector";
-import PhoneticCrosswalk from "../components/grammatology/PhoneticCrosswalk";
+import staticPhoneticsData from "../data/grammatology/phonetics_data.json";
 
 export default function GrammatologyTab({ ctx }) {
   const {
@@ -24,6 +22,13 @@ export default function GrammatologyTab({ ctx }) {
   const [kangxiStroke, setKangxiStroke] = useState("all");
   const [kangxiRange, setKangxiRange] = useState("all");
   const [kangxiTopOnly, setKangxiTopOnly] = useState(false);
+
+  const getPhonetic = (ipa) => {
+    if (!ipa) return null;
+    const cleanIpa = ipa.split('/')[0].trim();
+    return staticPhoneticsData.find(p => p.ipa_symbol === cleanIpa);
+  };
+
   const filteredKangxi = useMemo(() => {
     const q = kangxiQuery.trim().toLowerCase();
     const topNums = new Set((KANGXI_TOP_10_BY_FREQUENCY || []).map(r => r.n));
@@ -98,7 +103,7 @@ export default function GrammatologyTab({ ctx }) {
           </div>
         )}
         <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
-          {[{id:"phonetics",label:"🔊 Phonetic Crosswalk"},{id:"table",label:"Cross-Script Table"},{id:"atlas",label:`🌍 Script Atlas (${(SCRIPT_ATLAS||[]).reduce((n,f)=>n+f.scripts.length,0)})`},{id:"systems",label:"Writing Systems"},{id:"egyptian",label:"Egyptian Signs"},{id:"ogham",label:"Ogham Trees"},{id:"tarot",label:"Tarot · Chinese"},{id:"kangxi",label:"康熙 Kangxi Radicals"},{id:"digraphs",label:"Digraphs"},{id:"ipa",label:"IPA Reference"},{id:"yetzirah",label:"Sefer Yetzirah"}].map(t=>(
+          {[{id:"phonetics",label:"🔊 Phonetic Matrix"},{id:"word",label:"🔠 Word Analysis"},{id:"table",label:"📊 Cross-Script Table"},{id:"atlas",label:`🌍 Script Atlas (${(SCRIPT_ATLAS||[]).reduce((n,f)=>n+f.scripts.length,0)})`},{id:"systems",label:"Writing Systems"},{id:"egyptian",label:"Egyptian Signs"},{id:"ogham",label:"Ogham Trees"},{id:"tarot",label:"Tarot · Chinese"},{id:"kangxi",label:"康熙 Kangxi Radicals"},{id:"digraphs",label:"Digraphs"},{id:"ipa",label:"IPA Reference"},{id:"yetzirah",label:"Sefer Yetzirah"}].map(t=>(
             <button key={t.id} onClick={()=>setGramTab(t.id)} style={{ padding:"5px 12px", borderRadius:14, border:`1px solid ${gramTab===t.id?M3.primary:M3.outlineVariant}`, background:gramTab===t.id?M3.primaryContainer:M3.surfaceContainer, color:gramTab===t.id?M3.onPrimaryContainer:M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", cursor:"pointer", transition:"all 0.2s" }}>{t.label}</button>
           ))}
         </div>
@@ -106,6 +111,39 @@ export default function GrammatologyTab({ ctx }) {
 
       {gramTab==="phonetics" && (
         <PhoneticCrosswalk />
+      )}
+
+      {gramTab==="word" && (
+        <Card title="𐤀 Symbolic Word Analysis — Crosswalking Language & Spirit">
+          <div style={{ display:"flex", gap:10, marginBottom:16 }}>
+            <input 
+              value={cwInput} 
+              onChange={e=>setCwInput(e.target.value)} 
+              onKeyDown={e=>e.key==="Enter" && setCwResult(analyzeWord(cwInput))}
+              placeholder="Enter a word to analyze its symbolic thread..." 
+              style={{ flex:1, padding:"10px 14px", borderRadius:10, border:`1px solid ${M3.outline}`, background:M3.surfaceContainer, color:M3.onSurface, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.8rem", outline:"none" }} 
+            />
+            <button onClick={()=>setCwResult(analyzeWord(cwInput))} style={{ padding:"0 20px", borderRadius:10, background:M3.primary, color:M3.onPrimary, border:"none", fontFamily:"'Share Tech Mono',monospace", fontSize:"0.75rem", cursor:"pointer" }}>ANALYZE</button>
+          </div>
+
+          {cwResult && (
+            <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
+              <div style={{ padding:14, borderRadius:12, background:M3.primaryContainer+"11", border:`1px solid ${M3.primary}22`, fontFamily:"'EB Garamond',serif", fontSize:"0.95rem", lineHeight:1.6, color:M3.onSurface }}>
+                {cwResult.synthesis.narrative}
+              </div>
+              <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(140px,1fr))", gap:10 }}>
+                {cwResult.letters.map((l,i)=>(
+                  <div key={i} style={{ padding:10, borderRadius:10, background:M3.surfaceContainerLow, border:`1px solid ${M3.outlineVariant}44`, textAlign:"center" }}>
+                    <div style={{ fontSize:"0.7rem", color:M3.secondary, marginBottom:4 }}>{l.latin}</div>
+                    <div style={{ fontSize:"1.5rem", color:M3.primary, marginBottom:4 }}>{l.hebrew || "?"}</div>
+                    <div style={{ fontSize:"0.6rem", color:M3.onSurfaceVariant }}>{l.hebrewName}</div>
+                    <div style={{ fontSize:"0.55rem", color:M3.tertiary, marginTop:4 }}>{l.yetzirah.element || l.yetzirah.planet || l.yetzirah.sign || ""}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </Card>
       )}
 
       {gramTab==="table" && (
@@ -143,7 +181,12 @@ export default function GrammatologyTab({ ctx }) {
               { key:"tarot",   label:"🃏 Tarot",   get: l => l.tarotName ? `${l.tarot} ${l.tarotName}` : "", fs:"0.6rem", highlight:true, colFn: () => M3.tertiary },
               { key:"gem",     label:"Gem.",       get: l => l.gematria,   fs:"0.68rem", colFn: () => M3.tertiary },
               { key:"elem",    label:"Element",    get: l => l.yetzirah?.element || l.yetzirah?.planet || l.yetzirah?.sign || "—", fs:"0.62rem", colFn: l => l.yetzirah?.element==="Fire"?"#f66":l.yetzirah?.element==="Water"?"#6af":l.yetzirah?.element==="Air"?"#af6":M3.onSurfaceVariant },
-              { key:"ipa",     label:"IPA",        get: l => l.ipa,        fs:"0.62rem", colFn: () => M3.onSurfaceVariant },
+              
+              /* ── Phonetic features ── */
+              { key:"ipa",     label:"IPA",        get: l => l.ipa,        fs:"0.7rem", colFn: () => M3.primary },
+              { key:"manner",  label:"Manner",     get: l => getPhonetic(l.ipa)?.manner || "—", fs:"0.56rem", colFn: () => M3.secondary },
+              { key:"place",   label:"Place",      get: l => getPhonetic(l.ipa)?.place || "—", fs:"0.56rem", colFn: () => M3.secondary },
+
               { key:"latin",   label:"Latin",      get: l => l.latin,      fs:"0.68rem" },
 
               /* ── always-visible ancestral scripts ── */

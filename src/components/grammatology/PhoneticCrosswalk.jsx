@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { M3 } from '../../theme/m3.js';
 import Card from '../ui/Card.jsx';
+import { LETTER_DB } from '../../data/grammatology/letterDb.js';
 import staticPhoneticsData from '../../data/grammatology/phonetics_data.json';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000";
@@ -22,7 +23,6 @@ const PhoneticCrosswalk = () => {
     const fetchPhonemes = async () => {
         setLoading(true);
         try {
-            // Try backend first
             const res = await fetch(`${BACKEND_URL}/phonetics/all`);
             if (res.ok) {
                 const data = await res.json();
@@ -33,7 +33,6 @@ const PhoneticCrosswalk = () => {
             }
         } catch (err) {
             console.warn("Backend unavailable, falling back to static data.");
-            // Fallback to static JSON
             setPhonemes(staticPhoneticsData);
             if (staticPhoneticsData.length > 0 && !selectedIpa) {
                 setSelectedIpa(staticPhoneticsData[0]);
@@ -41,6 +40,14 @@ const PhoneticCrosswalk = () => {
         } finally {
             setLoading(false);
         }
+    };
+
+    const getLetterMapping = (ipaSym) => {
+        if (!ipaSym) return null;
+        return LETTER_DB.find(l => {
+            const parts = l.ipa.split(',').map(p => p.trim().replace(/\//g, ''));
+            return parts.includes(ipaSym.replace(/\//g, ''));
+        });
     };
 
     const [searchFilter, setSearchFilter] = useState('');
@@ -65,6 +72,8 @@ const PhoneticCrosswalk = () => {
             return acc;
         }, {});
     };
+
+    const rootMapping = getLetterMapping(selectedIpa?.ipa_symbol);
 
     if (loading) return <div style={{ color: M3.onSurfaceVariant, padding: 20, fontFamily: "'Share Tech Mono', monospace" }}>Loading phonetic matrix...</div>;
     if (error) return <div style={{ color: '#ff5252', padding: 20 }}>Error: {error}</div>;
@@ -124,16 +133,41 @@ const PhoneticCrosswalk = () => {
             </Card>
 
             {selectedIpa && (
-                <div style={{ display: 'grid', gridTemplateColumns: 'minmax(200px, 1fr) 3fr', gap: 16 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'minmax(250px, 1fr) 3fr', gap: 16 }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                        <Card title="Features">
+                        <Card title="Phonetic Features">
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                                <FeatureItem label="Symbol" value={selectedIpa.ipa_symbol} highlight />
+                                <FeatureItem label="IPA Symbol" value={selectedIpa.ipa_symbol} highlight />
                                 <FeatureItem label="Manner" value={selectedIpa.manner} />
                                 <FeatureItem label="Place" value={selectedIpa.place} />
                                 <FeatureItem label="Voicing" value={selectedIpa.voicing ? "Voiced" : "Voiceless"} />
                                 <FeatureItem label="Unicode" value={selectedIpa.unicode_hex} mono />
                             </div>
+                        </Card>
+
+                        <Card title="Symbolic Resonance">
+                            {rootMapping ? (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                                    <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:4 }}>
+                                        <div style={{ fontSize:'2.5rem', color:M3.primary }}>{rootMapping.hebrew}</div>
+                                        <div>
+                                            <div style={{ fontSize:'1rem', fontWeight:'bold', color:M3.onSurface }}>{rootMapping.hebrewName}</div>
+                                            <div style={{ fontSize:'0.65rem', color:M3.onSurfaceVariant }}>Root Letter Correspondence</div>
+                                        </div>
+                                    </div>
+                                    <FeatureItem label="Symbolism" value={rootMapping.yetzirah.element || rootMapping.yetzirah.planet || rootMapping.yetzirah.sign || "—"} />
+                                    <FeatureItem label="Gematria" value={rootMapping.gematria} />
+                                    <FeatureItem label="Pictogram" value={rootMapping.acrophony?.split('/')[0] || "—"} />
+                                    <div style={{ marginTop:8, padding:10, borderRadius:8, background:M3.surfaceContainerHigh, fontSize:'0.75rem', color:M3.onSurface, border:`1px solid ${M3.outlineVariant}`, textAlign:'center' }}>
+                                        <div style={{ fontSize:'0.6rem', color:M3.secondary, marginBottom:4 }}>PHOENICIAN ORIGIN</div>
+                                        <div style={{ fontSize:'1.8rem', color:M3.primary }}>{rootMapping.phoenician}</div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div style={{ fontSize:'0.75rem', color:M3.onSurfaceVariant, fontStyle:'italic', textAlign:'center', padding:'20px 0' }}>
+                                    This phoneme does not have a direct correspondence in the 22 Root Letter alphabet.
+                                </div>
+                            )}
                         </Card>
                     </div>
 
@@ -147,7 +181,7 @@ const PhoneticCrosswalk = () => {
                                 style={{ width: '100%', padding: '8px 12px', background: M3.surfaceContainer, border: `1px solid ${M3.outlineVariant}`, borderRadius: 8, color: M3.onSurface, fontSize: '0.8rem', outline: 'none' }}
                             />
                         </div>
-                        <div style={{ maxHeight: '500px', overflowY: 'auto', border: `1px solid ${M3.outlineVariant}`, borderRadius: 8 }}>
+                        <div style={{ maxHeight: '600px', overflowY: 'auto', border: `1px solid ${M3.outlineVariant}`, borderRadius: 8 }}>
                             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                                 <thead style={{ position: 'sticky', top: 0, background: M3.surfaceContainerHigh, zIndex: 1 }}>
                                     <tr style={{ textAlign: 'left' }}>
@@ -170,7 +204,7 @@ const PhoneticCrosswalk = () => {
                                                         <div style={{ color: M3.onSurface }}>{cw.language}</div>
                                                         <div style={{ fontSize: '0.65rem', color: M3.onSurfaceVariant }}>{cw.iso.toUpperCase()}</div>
                                                     </td>
-                                                    <td style={{ padding: '8px 12px', fontSize: '1rem', fontWeight: 'bold', color: M3.primary }}>{cw.grapheme}</td>
+                                                    <td style={{ padding: '8px 12px', fontSize: '1.1rem', fontWeight: 'bold', color: M3.primary }}>{cw.grapheme}</td>
                                                     <td style={{ padding: '8px 12px', fontSize: '0.75rem', fontStyle: 'italic', color: M3.onSurfaceVariant }}>{cw.example}</td>
                                                 </tr>
                                             ))}
