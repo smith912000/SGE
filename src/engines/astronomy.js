@@ -219,13 +219,55 @@ function calcMC(jd, lon) {
   return norm(Math.atan2(Math.sin(RAMC*RAD)*Math.cos(eps*RAD), Math.cos(RAMC*RAD)) * DEG);
 }
 
+// Porphyry house system — trisects each ecliptic quadrant between the four
+// angles. Guarantees house 1 = ASC, 4 = IC, 7 = DSC, 10 = MC, which is what
+// the wheel renderer assumes. Previous Equal-House version produced cusps that
+// did NOT align with the true MC at most latitudes, making houses 10/11/12
+// appear "on the opposite side of the wheel" relative to the MC pointer.
 function calcHouses(jd, lat, lon) {
   const asc = calcAsc(jd, lat, lon);
   const mc  = calcMC(jd, lon);
-  const h   = {};
-  for (let i=1;i<=12;i++) h[i] = norm(asc+(i-1)*30);
-  h.ASC=asc; h.MC=mc; h.IC=norm(mc+180); h.DSC=norm(asc+180);
+  const ic  = norm(mc  + 180);
+  const dsc = norm(asc + 180);
+
+  // Four ecliptic-arc lengths (always positive, summing to 360°).
+  const arc1 = norm(ic  - asc);   // ASC → IC  (covers houses 1→4, going through 2 and 3)
+  const arc2 = norm(dsc - ic);    // IC  → DSC (houses 4→7, through 5 and 6)
+  const arc3 = norm(mc  - dsc);   // DSC → MC  (houses 7→10, through 8 and 9)
+  const arc4 = norm(asc - mc);    // MC  → ASC (houses 10→1, through 11 and 12)
+
+  const h = {};
+  h[1]  = asc;
+  h[2]  = norm(asc + arc1 / 3);
+  h[3]  = norm(asc + 2 * arc1 / 3);
+  h[4]  = ic;
+  h[5]  = norm(ic  + arc2 / 3);
+  h[6]  = norm(ic  + 2 * arc2 / 3);
+  h[7]  = dsc;
+  h[8]  = norm(dsc + arc3 / 3);
+  h[9]  = norm(dsc + 2 * arc3 / 3);
+  h[10] = mc;
+  h[11] = norm(mc  + arc4 / 3);
+  h[12] = norm(mc  + 2 * arc4 / 3);
+
+  h.ASC = asc; h.MC = mc; h.IC = ic; h.DSC = dsc;
   return h;
+}
+
+// Find which house (1-12) a given ecliptic longitude falls into, given a
+// houses object from calcHouses(). Wrap-aware: handles the case where a
+// house spans 0°/360°.
+function houseOf(lon, houses) {
+  const L = norm(lon);
+  for (let i = 1; i <= 12; i++) {
+    const cusp = houses[i];
+    const next = houses[(i % 12) + 1];
+    const inside = next > cusp
+      ? (L >= cusp && L < next)
+      : (L >= cusp || L < next);   // wraps past 360
+    if (inside) return i;
+  }
+  return null;
 }
 
 function calcAspects(pos) {
@@ -324,4 +366,4 @@ function moonPhase(sunLon, moonLonVal) {
   return { name: ph.name, emoji: ph.emoji, angle: Math.round(angle), illumination: illum };
 }
 
-export { julianDay, sunLon, moonLon, nodeLon, lilithLon, planetLon, chironLon, allPlanets, calcAsc, calcMC, calcHouses, calcAspects, ayanamsa, harmonic, progChart, findSolarReturn, findLunarReturn, elemMod, phiEngine, planetSpeeds, moonPhase };
+export { julianDay, sunLon, moonLon, nodeLon, lilithLon, planetLon, chironLon, allPlanets, calcAsc, calcMC, calcHouses, houseOf, calcAspects, ayanamsa, harmonic, progChart, findSolarReturn, findLunarReturn, elemMod, phiEngine, planetSpeeds, moonPhase };
