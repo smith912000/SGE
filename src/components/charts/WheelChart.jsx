@@ -293,8 +293,8 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
   );
 
   return (
-    <svg ref={svgRef} id={id} width={S} height={S} viewBox={`0 0 ${S} ${S}`}
-      style={{ display:"block", maxWidth:"100%",
+    <svg ref={svgRef} id={id} viewBox={`0 0 ${S} ${S}`}
+      style={{ display:"block", width:"100%", maxWidth: S, height: "auto", aspectRatio: "1 / 1",
         filter:`drop-shadow(0 0 24px ${TH.glow})` }}>
       <defs>
         <radialGradient id={`bg${id}`} cx="50%" cy="50%" r="50%">

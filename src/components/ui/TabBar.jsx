@@ -2,9 +2,9 @@ import { useRef, useEffect, useState } from 'react';
 import { M3 } from '../../theme/m3.js';
 
 const GROUPS = [
-  { label: 'Chart', ids: ['today', 'natal', 'deep', 'struggles', 'wheel', 'aspects'] },
-  { label: 'Time', ids: ['progressions', 'solar', 'harmonics', 'transits'] },
-  { label: 'People', ids: ['synastry', 'chinese', 'phi'] },
+  { label: 'Chart', ids: ['today', 'natal', 'deep', 'wheel', 'aspects'] },
+  { label: 'Time', ids: ['progressions', 'harmonics'] },
+  { label: 'People', ids: ['synastry', 'chinese'] },
   { label: 'Symbolic', ids: ['tarot', 'numerology', 'grammatology', 'calendar', 'education'] },
 ];
 
@@ -60,6 +60,9 @@ export default function TabBar({ tabs, active, onChange }) {
         border: `1px solid ${M3.glassBorder}`,
         backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
         scrollbarWidth: 'none', msOverflowStyle: 'none',
+        // Touch-friendly: snap-to + momentum scroll on mobile
+        WebkitOverflowScrolling: 'touch',
+        scrollSnapType: 'x proximity',
       }}>
         {GROUPS.map((g, gi) => (
           <div key={g.label} style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -73,15 +76,18 @@ export default function TabBar({ tabs, active, onChange }) {
               const isActive = active === id;
               return (
                 <button key={id} data-id={id} onClick={() => onChange(id)} style={{
-                  padding: '7px 12px', border: 'none', cursor: 'pointer',
+                  // Larger touch target on mobile (44px tall is the iOS recommendation)
+                  padding: '10px 14px', minHeight: 40, border: 'none', cursor: 'pointer',
                   background: isActive ? M3.primaryContainer : 'transparent',
                   borderRadius: M3.radius.sm,
                   color: isActive ? M3.onPrimaryContainer : M3.onSurfaceVariant,
-                  fontFamily: M3.fontMono, fontSize: '0.68rem',
+                  fontFamily: M3.fontMono, fontSize: '0.72rem',
                   fontWeight: isActive ? '700' : '400',
                   whiteSpace: 'nowrap',
                   transition: 'background 0.2s, color 0.2s',
                   flexShrink: 0,
+                  scrollSnapAlign: 'center',
+                  WebkitTapHighlightColor: 'transparent',
                 }}>{t.label}</button>
               );
             })}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, lazy, Suspense } from "react";
 
 // Hooks
 import { useAnime } from './hooks/useAnime.js';
@@ -91,25 +91,20 @@ import PlanetTable from './components/tables/PlanetTable.jsx';
 import AspectTable from './components/tables/AspectTable.jsx';
 
 // Components - Tabs
-import WheelTab from './tabs/WheelTab.jsx';
-import AspectsTab from './tabs/AspectsTab.jsx';
-import TodayTab from './tabs/TodayTab.jsx';
-import ProgressionsTab from './tabs/ProgressionsTab.jsx';
-import SolarTab from './tabs/SolarTab.jsx';
-import TransitsTab from './tabs/TransitsTab.jsx';
-import SynastryTab from './tabs/SynastryTab.jsx';
-import ChineseTab from './tabs/ChineseTab.jsx';
-import PhiTab from './tabs/PhiTab.jsx';
-import NatalTab from './tabs/NatalTab.jsx';
-import EducationTab from './tabs/EducationTab.jsx';
-import HarmonicsTab from './tabs/HarmonicsTab.jsx';
-import StrugglesTab from './tabs/StrugglesTab.jsx';
-import NumerologyTab from './tabs/NumerologyTab.jsx';
-import GrammatologyTab from './tabs/GrammatologyTab.jsx';
-import DeepTab from './tabs/DeepTab.jsx';
-import CalendarTab from './tabs/CalendarTab.jsx';
-import HoroscopeTab from './tabs/HoroscopeTab.jsx';
-import TarotTab from './tabs/TarotTab.jsx';
+const WheelTab = lazy(() => import('./tabs/WheelTab.jsx'));
+const AspectsTab = lazy(() => import('./tabs/AspectsTab.jsx'));
+const TodayTab = lazy(() => import('./tabs/TodayTab.jsx'));
+const ProgressionsTab = lazy(() => import('./tabs/ProgressionsTab.jsx'));
+const SynastryTab = lazy(() => import('./tabs/SynastryTab.jsx'));
+const ChineseTab = lazy(() => import('./tabs/ChineseTab.jsx'));
+const NatalTab = lazy(() => import('./tabs/NatalTab.jsx'));
+const EducationTab = lazy(() => import('./tabs/EducationTab.jsx'));
+const HarmonicsTab = lazy(() => import('./tabs/HarmonicsTab.jsx'));
+const NumerologyTab = lazy(() => import('./tabs/NumerologyTab.jsx'));
+const GrammatologyTab = lazy(() => import('./tabs/GrammatologyTab.jsx'));
+const DeepTab = lazy(() => import('./tabs/DeepTab.jsx'));
+const CalendarTab = lazy(() => import('./tabs/CalendarTab.jsx'));
+const TarotTab = lazy(() => import('./tabs/TarotTab.jsx'));
 
 import ErrorBoundary from './components/ui/ErrorBoundary.jsx';
 
@@ -319,25 +314,25 @@ export default function App() {
     { id: "natal", label: "☉ Summary" },
     { id: "today", label: "☀ Today" },
     { id: "deep", label: "✦ Deep Analysis" },
-    { id: "struggles", label: "⚡ Struggles" },
     { id: "wheel", label: "⊙ Wheel" },
     { id: "aspects", label: "⚹ Connections" },
-    { id: "progressions", label: "→ Growth" },
-    { id: "solar", label: "↩ Year Ahead" },
+    { id: "progressions", label: "→ Timing" },
     { id: "harmonics", label: "∞ Hidden Patterns" },
-    { id: "transits", label: "⟳ Right Now" },
     { id: "synastry", label: "♡ Compatibility" },
     { id: "chinese", label: "☯ Chinese Year" },
-    { id: "phi", label: "φ Elements" },
     { id: "numerology", label: "🔢 Numerology" },
     { id: "grammatology", label: "𐤀 Grammatology" },
-    { id: "horoscope", label: "✨ Daily Insights" },
     { id: "tarot", label: "🎴 Tarot Pull" },
     { id: "calendar", label: "📅 Sacred Calendar" },
     { id: "education", label: "📖 How It Works" },
   ];
 
-  const grid2 = { display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: 16 };
+  // Two-column grid for desktop; auto-stacks to one column under 720px viewport.
+  const grid2 = {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))",
+    gap: 16,
+  };
 
   const [cwInput, setCwInput] = useState("");
   const [cwResult, setCwResult] = useState(null);
@@ -372,6 +367,7 @@ export default function App() {
               <TabBar tabs={TABS} active={tab} onChange={setTab} />
 
               <TabContent id={tab}>
+                <Suspense fallback={<div style={{padding:"40px",textAlign:"center",color:M3.onSurfaceVariant,opacity:.7}}>Loading…</div>}>
 
                 {tab === "wheel" && (
                   <ErrorBoundary><WheelTab ctx={{ M3, A, res, Card, wheelMode, setWheelMode, WheelWithTooltip, ChineseWheelWithTooltip, ayanamsa, zodSign, P_COL, P_SYM, SIGN_COL, ANIMAL_INFO }} /></ErrorBoundary>
@@ -382,14 +378,8 @@ export default function App() {
                 {tab === "progressions" && (
                   <ErrorBoundary><ProgressionsTab ctx={{ M3, age, res, zodSign, SIGN_COL, SIGN_INFO, P_COL, P_SYM, grid2, calcAspects, Card, PlanetTable, WheelWithTooltip, AspectTable }} /></ErrorBoundary>
                 )}
-                {tab === "solar" && (
-                  <ErrorBoundary><SolarTab ctx={{ M3, RAD, grid2, res, SIGN_INFO, SIGN_COL, P_COL, zodSign, Card, PlanetTable, WheelWithTooltip }} /></ErrorBoundary>
-                )}
                 {tab === "today" && (
                   <ErrorBoundary><TodayTab ctx={{ M3, res, norm, ASPECTS, ASP_EXPLAIN, P_COL, P_SYM, zodSign, zodDeg, Card }} /></ErrorBoundary>
-                )}
-                {tab === "transits" && (
-                  <ErrorBoundary><TransitsTab ctx={{ M3, res, norm, ASPECTS, ASP_EXPLAIN, P_COL, P_SYM, zodSign, zodDeg, Card, AspectTable, WheelWithTooltip }} /></ErrorBoundary>
                 )}
                 {tab === "synastry" && (
                   <ErrorBoundary><SynastryTab ctx={{ M3, res, grid2, P_COL, P_SYM, P_ROLE, Card, WheelWithTooltip, AspectTable }} /></ErrorBoundary>
@@ -407,15 +397,9 @@ export default function App() {
                     />
                   </ErrorBoundary>
                 )}
-                {tab === "phi" && (
-                  <ErrorBoundary><PhiTab ctx={{ M3, res, EL_COL, MOD_COL, Card, DistBar }} /></ErrorBoundary>
-                )}
 
                 {tab === "natal" && (
                   <ErrorBoundary><NatalTab ctx={{ M3, res, grid2, zodSign, SIGN_COL, SIGN_SYM, HOUSE_AREA, HOUSE_INFO, P_COL, P_SYM, Card, PlanetTable, WheelWithTooltip, ProfilePanel, moonPhase }} /></ErrorBoundary>
-                )}
-                {tab === "horoscope" && (
-                  <ErrorBoundary><TodayTab ctx={{ M3, res, norm, ASPECTS, ASP_EXPLAIN, P_COL, P_SYM, zodSign, zodDeg, Card }} /></ErrorBoundary>
                 )}
                 {tab === "tarot" && (
                   <ErrorBoundary><TarotTab ctx={{ M3, res, zodSign }} /></ErrorBoundary>
@@ -1100,15 +1084,6 @@ export default function App() {
                     </div>
                   );
                 })()}
-
-                {tab === "struggles" && (
-                  <StrugglesTab ctx={{
-                    M3, res, SIGN_INFO, SIGN_COL, P_COL, P_SYM, zodSign, Card,
-                    calcAspects, SATURN_DEEP, HOUSE_AREA, P_ROLE, PAIR_INSIGHT,
-                    RISING_SHADOW, VENUS_SHADOW, MARS_SHADOW, MERCURY_SHADOW,
-                    EL_COL, ANIMAL_INFO
-                  }} />
-                )}
 
                 {false && tab === "struggles-old" && (() => {
                   const sunSign = zodSign(res.trop.Sun);
@@ -2870,6 +2845,7 @@ export default function App() {
                   }} /></ErrorBoundary>
                 )}
 
+                </Suspense>
               </TabContent>
             </>
           )}
