@@ -49,9 +49,15 @@ function nodeLon(jd) {
   return norm(125.0445479 - 1934.1362891*T + 0.0020754*T*T + 0.00000215*T*T*T);
 }
 
+// Black Moon Lilith = mean lunar APOGEE (the empty focus, far point of the Moon's
+// orbit). The Meeus formula below gives the mean lunar PERIGEE; Lilith is the
+// point 180° opposite. Prior code returned the perigee directly — every Lilith
+// position was 180° wrong (e.g. for 9 Jan 2000 it gave Gemini 24° instead of
+// Sagittarius 24°).
 function lilithLon(jd) {
   const T = (jd - 2451545) / 36525;
-  return norm(83.3532465 + 4069.0137287*T - 0.01032*T*T);
+  const perigee = 83.3532465 + 4069.0137287*T - 0.01032*T*T;
+  return norm(perigee + 180);
 }
 
 /* ── Keplerian orbital elements at J2000.0 and rates per century ──
