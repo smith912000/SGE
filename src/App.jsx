@@ -313,7 +313,6 @@ export default function App() {
 
   const TABS = [
     { id: "natal", label: "☉ Summary" },
-    { id: "vedic", label: "🕉 Vedic" },
     { id: "today", label: "☀ Today" },
     { id: "deep", label: "✦ Deep Analysis" },
     { id: "wheel", label: "⊙ Wheel" },
@@ -322,6 +321,7 @@ export default function App() {
     { id: "harmonics", label: "∞ Hidden Patterns" },
     { id: "synastry", label: "♡ Compatibility" },
     { id: "chinese", label: "☯ Chinese Year" },
+    { id: "vedic", label: "🪔 Vedic" },
     { id: "numerology", label: "🔢 Numerology" },
     { id: "grammatology", label: "𐤀 Grammatology" },
     { id: "tarot", label: "🎴 Tarot Pull" },

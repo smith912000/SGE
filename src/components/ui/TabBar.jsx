@@ -2,9 +2,9 @@ import { useRef, useEffect, useState } from 'react';
 import { M3 } from '../../theme/m3.js';
 
 const GROUPS = [
-  { label: 'Chart', ids: ['today', 'natal', 'vedic', 'deep', 'wheel', 'aspects'] },
+  { label: 'Chart', ids: ['today', 'natal', 'deep', 'wheel', 'aspects'] },
   { label: 'Time', ids: ['progressions', 'harmonics'] },
-  { label: 'People', ids: ['synastry', 'chinese'] },
+  { label: 'Systems', ids: ['synastry', 'chinese', 'vedic'] },
   { label: 'Symbolic', ids: ['tarot', 'numerology', 'grammatology', 'calendar', 'education'] },
 ];
 

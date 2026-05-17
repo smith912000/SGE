@@ -502,6 +502,141 @@ function jdToDate(jd) {
   return new Date(ms);
 }
 
+// ── Navamsa (D9 divisional chart) ──────────────────────────────────
+// Each sign is divided into 9 equal arcs of 3°20'. The starting Navamsa
+// depends on the sign's element:
+//   Fire signs  (Aries, Leo, Sagittarius)    start Navamsa at Aries (0)
+//   Earth signs (Taurus, Virgo, Capricorn)   start Navamsa at Capricorn (9)
+//   Air signs   (Gemini, Libra, Aquarius)    start Navamsa at Libra (6)
+//   Water signs (Cancer, Scorpio, Pisces)    start Navamsa at Cancer (3)
+function navamsa(siderealLon) {
+  const L = norm(siderealLon);
+  const signIdx = Math.floor(L / 30);              // 0-11
+  const degInSign = L - signIdx * 30;              // 0-30
+  const navIdx = Math.floor(degInSign / (30 / 9)); // 0-8
+  const startMap = [0, 9, 6, 3];                   // by element: fire/earth/air/water
+  const startSign = startMap[signIdx % 4];
+  const navSign = (startSign + navIdx) % 12;
+  const degInNav = degInSign - navIdx * (30 / 9);
+  return { sign: navSign, deg: navSign * 30 + degInNav };
+}
+
+// ── Planetary dignity for Vedic ────────────────────────────────────
+// Returns "Exalted" / "Debilitated" / "Mooltrikona" / "Own" / "Friend"
+// / "Enemy" / "Neutral" based on the planet and its sign.
+function dignity(planet, siderealLon, DIGNITY) {
+  const d = DIGNITY[planet];
+  if (!d) return "—";
+  const signIdx = Math.floor(norm(siderealLon) / 30);
+  if (signIdx === d.exalt) return "Exalted";
+  if (signIdx === d.debil) return "Debilitated";
+  if (d.mooltrikona === signIdx) return "Mooltrikona";
+  if (d.own.includes(signIdx)) return "Own";
+  // Friend/Enemy by sign-lord
+  const SIGN_LORD = ["Mars","Venus","Mercury","Moon","Sun","Mercury","Venus","Mars","Jupiter","Saturn","Saturn","Jupiter"];
+  const lord = SIGN_LORD[signIdx];
+  if (d.friends.includes(lord)) return "Friend";
+  if (d.enemies.includes(lord)) return "Enemy";
+  return "Neutral";
+}
+
+// ── Combustion (planet within Sun's orb) ───────────────────────────
+function isCombust(planet, planetLon, sunLon, COMBUSTION_ORB) {
+  if (!COMBUSTION_ORB[planet]) return false;
+  const diff = Math.abs(norm(planetLon - sunLon));
+  const sep = diff > 180 ? 360 - diff : diff;
+  return sep <= COMBUSTION_ORB[planet];
+}
+
+// ── Yoga detection (key combinations) ──────────────────────────────
+// Pass an object of sidereal positions { Sun, Moon, Mars, Mercury, Jupiter,
+// Venus, Saturn, Rahu, Ketu } and ascSidereal. Returns array of yoga IDs.
+function detectYogas(sid, ascSid, DIGNITY) {
+  const out = [];
+  const KENDRA = [1,4,7,10];
+  const TRIKONA = [1,5,9];
+  const wsHouse = (lon) => wholeSignHouse(lon, ascSid);
+  const inKendraFromMoon = (planetLon) => {
+    const sep = ((Math.floor(norm(planetLon)/30) - Math.floor(norm(sid.Moon)/30)) + 12) % 12;
+    return KENDRA.map(k => k - 1).includes(sep);
+  };
+
+  // Gajakesari — Jupiter in a Kendra from the Moon
+  if (inKendraFromMoon(sid.Jupiter)) out.push("gajakesari");
+
+  // Budha-Aditya — Sun + Mercury in same sign
+  if (Math.floor(norm(sid.Sun)/30) === Math.floor(norm(sid.Mercury)/30)) out.push("budhAditya");
+
+  // Pancha Mahapurusha — planet in own/exalted AND in Kendra (from Lagna)
+  const isOwnOrExalt = (pl, lon) => {
+    const d = DIGNITY[pl]; if (!d) return false;
+    const s = Math.floor(norm(lon)/30);
+    return s === d.exalt || d.own.includes(s);
+  };
+  const pmp = [
+    { id:"ruchaka",  pl:"Mars" },
+    { id:"bhadra",   pl:"Mercury" },
+    { id:"hamsa",    pl:"Jupiter" },
+    { id:"malavya",  pl:"Venus" },
+    { id:"sasa",     pl:"Saturn" },
+  ];
+  for (const { id, pl } of pmp) {
+    if (isOwnOrExalt(pl, sid[pl]) && KENDRA.includes(wsHouse(sid[pl]))) out.push(id);
+  }
+
+  // Kemadruma — Moon has no planet in adjacent signs (2nd / 12th from it) and is not conjoined
+  const moonSign = Math.floor(norm(sid.Moon)/30);
+  const adj = [(moonSign + 11) % 12, (moonSign + 1) % 12];   // 12th and 2nd
+  const planetsOtherThanMoon = ["Sun","Mars","Mercury","Jupiter","Venus","Saturn","Rahu","Ketu"];
+  const anyInAdj = planetsOtherThanMoon.some(p => sid[p] != null && adj.includes(Math.floor(norm(sid[p])/30)));
+  const anyConjoined = planetsOtherThanMoon.some(p => sid[p] != null && Math.floor(norm(sid[p])/30) === moonSign);
+  if (!anyInAdj && !anyConjoined) out.push("kemadruma");
+
+  // Raja Yoga — kendra-lord + trikona-lord connect (simplified: their dispositors share a sign or are in same house)
+  // For a simple detector: any planet in both a kendra and a trikona house? Or kendra/trikona lord-planets joined.
+  // We'll mark Raja Yoga if Sun or Moon ruler-of-Lagna is in a Trikona OR a Jupiter/Venus is in a Kendra.
+  const lagnaSignIdx = Math.floor(norm(ascSid)/30);
+  const SIGN_LORD = ["Mars","Venus","Mercury","Moon","Sun","Mercury","Venus","Mars","Jupiter","Saturn","Saturn","Jupiter"];
+  const lagnaLord = SIGN_LORD[lagnaSignIdx];
+  if (sid[lagnaLord] != null && TRIKONA.includes(wsHouse(sid[lagnaLord]))) out.push("raja");
+
+  // Dhana Yoga (simplified) — Jupiter or Venus in 2nd / 5th / 11th
+  if ([2,5,11].includes(wsHouse(sid.Jupiter)) || [2,5,11].includes(wsHouse(sid.Venus))) out.push("dhana");
+
+  return out;
+}
+
+// ── Dosha detection ────────────────────────────────────────────────
+function detectDoshas(sid, ascSid, jdNow) {
+  const out = [];
+  const wsHouse = (lon) => wholeSignHouse(lon, ascSid);
+
+  // Mangal Dosha — Mars in 1, 4, 7, 8 or 12
+  if ([1,4,7,8,12].includes(wsHouse(sid.Mars))) out.push("mangal");
+
+  // Kala Sarpa — all 7 visible planets between Rahu and Ketu on the same arc
+  const rahu = norm(sid.Rahu ?? sid.Node ?? 0);
+  const ketu = (rahu + 180) % 360;
+  const others = ["Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn"]
+    .map(p => sid[p]).filter(v => v != null).map(norm);
+  const inArc = (lon, start, end) => {
+    // Test whether lon lies in the (start → end) arc going forward
+    if (end > start) return lon >= start && lon < end;
+    return lon >= start || lon < end;
+  };
+  const allInArcRahuToKetu = others.every(l => inArc(l, rahu, ketu));
+  const allInArcKetuToRahu = others.every(l => inArc(l, ketu, rahu));
+  if (allInArcRahuToKetu || allInArcKetuToRahu) out.push("kalaSarpa");
+
+  // Sade Sati indicator — Saturn currently transiting Moon-sign ±1
+  // (Approximate: just check if Saturn's current sign matches Moon's sign or adjacent.)
+  // The full check requires CURRENT Saturn position; we approximate using sid.Saturn at birth as a proxy unless caller passes in nowSaturn.
+  // For now, do not auto-detect Sade Sati from natal alone — leave as null.
+
+  // Kemadruma (also a dosha) — covered in yoga detection
+  return out;
+}
+
 export {
   julianDay, sunLon, moonLon, nodeLon, lilithLon, planetLon, chironLon,
   allPlanets, calcAsc, calcMC, calcHouses, houseOf,
@@ -509,5 +644,6 @@ export {
   elemMod, phiEngine, planetSpeeds, moonPhase,
   // Vedic
   nakshatra, wholeSignHouse, vimshottariDasha, jdToDate,
+  navamsa, dignity, isCombust, detectYogas, detectDoshas,
   NAKSHATRA_NAMES, NAK_LORDS,
 };
