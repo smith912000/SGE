@@ -399,4 +399,115 @@ function moonPhase(sunLon, moonLonVal) {
   return { name: ph.name, emoji: ph.emoji, angle: Math.round(angle), illumination: illum };
 }
 
-export { julianDay, sunLon, moonLon, nodeLon, lilithLon, planetLon, chironLon, allPlanets, calcAsc, calcMC, calcHouses, houseOf, calcAspects, ayanamsa, harmonic, progChart, findSolarReturn, findLunarReturn, elemMod, phiEngine, planetSpeeds, moonPhase };
+// ─────────────────────────────────────────────────────────────────────
+//  VEDIC / JYOTISH HELPERS
+// ─────────────────────────────────────────────────────────────────────
+
+// 27 nakshatras (lunar mansions). Each spans 360/27 = 13°20' of sidereal
+// longitude starting from 0° sidereal Aries.
+const NAKSHATRA_NAMES = [
+  "Ashwini","Bharani","Krittika","Rohini","Mrigashira","Ardra","Punarvasu",
+  "Pushya","Ashlesha","Magha","Purva Phalguni","Uttara Phalguni","Hasta",
+  "Chitra","Swati","Vishakha","Anuradha","Jyeshtha","Mula","Purva Ashadha",
+  "Uttara Ashadha","Shravana","Dhanishta","Shatabhisha",
+  "Purva Bhadrapada","Uttara Bhadrapada","Revati",
+];
+
+// Vimshottari nakshatra-lord cycle (repeats every 9 nakshatras).
+const NAK_LORDS = ["Ketu","Venus","Sun","Moon","Mars","Rahu","Jupiter","Saturn","Mercury"];
+
+const NAK_DEG  = 360 / 27;     // 13.3333…° per nakshatra
+const PADA_DEG = NAK_DEG / 4;  // 3.3333…° per pada (1/4 of a nakshatra)
+
+function nakshatra(siderealLon) {
+  const L = norm(siderealLon);
+  const idx = Math.floor(L / NAK_DEG);
+  const within = L - idx * NAK_DEG;
+  const pada = Math.floor(within / PADA_DEG) + 1;
+  return {
+    idx,
+    name: NAKSHATRA_NAMES[idx],
+    lord: NAK_LORDS[idx % 9],
+    pada,
+    degInNak: within,
+    degInPada: within - (pada - 1) * PADA_DEG,
+  };
+}
+
+// Whole Sign houses (Vedic standard): each house = exactly one rashi (sign),
+// numbered from the rashi containing the Ascendant. ASC sign = house 1.
+function wholeSignHouse(siderealLon, ascSidereal) {
+  const ascSignIdx = Math.floor(norm(ascSidereal) / 30);
+  const lonSignIdx = Math.floor(norm(siderealLon) / 30);
+  return ((lonSignIdx - ascSignIdx + 12) % 12) + 1;
+}
+
+// Vimshottari Dasha — 120-year planetary cycle, the primary timing system in
+// Vedic. Triggered by the Moon's nakshatra at birth. Returns the active
+// Mahadasha (major period) and Antardasha (sub-period) for the requested JD.
+const DASHA_SEQUENCE = ["Ketu","Venus","Sun","Moon","Mars","Rahu","Jupiter","Saturn","Mercury"];
+const DASHA_YEARS    = { Ketu:7, Venus:20, Sun:6, Moon:10, Mars:7, Rahu:18, Jupiter:16, Saturn:19, Mercury:17 };
+const DASHA_TOTAL    = 120;
+const YR_DAYS        = 365.25;
+
+function vimshottariDasha(moonSidereal, jdBirth, jdNow = null) {
+  const now = jdNow ?? ((Date.now() / 86400000) + 2440587.5);
+  const nak = nakshatra(moonSidereal);
+  const startLord = nak.lord;
+
+  // Fraction of birth nakshatra already traversed (0 = just entered, 1 = about to leave)
+  const fractionInNak = nak.degInNak / NAK_DEG;
+  const startYears    = DASHA_YEARS[startLord];
+  const remainingAtBirth = (1 - fractionInNak) * startYears;
+
+  // Build all 9 Mahadashas. The birth lord started its period BEFORE birth, so
+  // back up to find its true start.
+  const periods = [];
+  let cursor = jdBirth - (startYears - remainingAtBirth) * YR_DAYS;
+  const startIdx = DASHA_SEQUENCE.indexOf(startLord);
+  for (let i = 0; i < 9; i++) {
+    const lord = DASHA_SEQUENCE[(startIdx + i) % 9];
+    const yrs  = DASHA_YEARS[lord];
+    periods.push({ lord, startJD: cursor, endJD: cursor + yrs * YR_DAYS, years: yrs });
+    cursor += yrs * YR_DAYS;
+  }
+  const current = periods.find(p => now >= p.startJD && now < p.endJD) || periods[0];
+
+  // Antardashas: the current Mahadasha is split into 9 nested periods,
+  // each weighted by its lord's years (sums to current Mahadasha years).
+  const antars = [];
+  const aIdx = DASHA_SEQUENCE.indexOf(current.lord);
+  let aCursor = current.startJD;
+  for (let i = 0; i < 9; i++) {
+    const aLord = DASHA_SEQUENCE[(aIdx + i) % 9];
+    const aYrs  = (current.years * DASHA_YEARS[aLord]) / DASHA_TOTAL;
+    antars.push({ lord: aLord, startJD: aCursor, endJD: aCursor + aYrs * YR_DAYS, years: aYrs });
+    aCursor += aYrs * YR_DAYS;
+  }
+  const currentAntar = antars.find(a => now >= a.startJD && now < a.endJD) || antars[0];
+
+  return {
+    mahadasha: current,
+    antardasha: currentAntar,
+    allMahadashas: periods,
+    allAntardashas: antars,
+    birthNakshatra: nak,
+    nowJD: now,
+  };
+}
+
+// JD → calendar date helper, for displaying Dasha period boundaries.
+function jdToDate(jd) {
+  const ms = (jd - 2440587.5) * 86400000;
+  return new Date(ms);
+}
+
+export {
+  julianDay, sunLon, moonLon, nodeLon, lilithLon, planetLon, chironLon,
+  allPlanets, calcAsc, calcMC, calcHouses, houseOf,
+  calcAspects, ayanamsa, harmonic, progChart, findSolarReturn, findLunarReturn,
+  elemMod, phiEngine, planetSpeeds, moonPhase,
+  // Vedic
+  nakshatra, wholeSignHouse, vimshottariDasha, jdToDate,
+  NAKSHATRA_NAMES, NAK_LORDS,
+};

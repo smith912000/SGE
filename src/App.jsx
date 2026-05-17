@@ -105,6 +105,7 @@ const GrammatologyTab = lazy(() => import('./tabs/GrammatologyTab.jsx'));
 const DeepTab = lazy(() => import('./tabs/DeepTab.jsx'));
 const CalendarTab = lazy(() => import('./tabs/CalendarTab.jsx'));
 const TarotTab = lazy(() => import('./tabs/TarotTab.jsx'));
+const VedicTab = lazy(() => import('./tabs/VedicTab.jsx'));
 
 import ErrorBoundary from './components/ui/ErrorBoundary.jsx';
 
@@ -312,6 +313,7 @@ export default function App() {
 
   const TABS = [
     { id: "natal", label: "☉ Summary" },
+    { id: "vedic", label: "🕉 Vedic" },
     { id: "today", label: "☀ Today" },
     { id: "deep", label: "✦ Deep Analysis" },
     { id: "wheel", label: "⊙ Wheel" },
@@ -400,6 +402,9 @@ export default function App() {
 
                 {tab === "natal" && (
                   <ErrorBoundary><NatalTab ctx={{ M3, res, grid2, zodSign, SIGN_COL, SIGN_SYM, HOUSE_AREA, HOUSE_INFO, P_COL, P_SYM, Card, PlanetTable, WheelWithTooltip, ProfilePanel, moonPhase }} /></ErrorBoundary>
+                )}
+                {tab === "vedic" && (
+                  <ErrorBoundary><VedicTab ctx={{ M3, res, Card }} /></ErrorBoundary>
                 )}
                 {tab === "tarot" && (
                   <ErrorBoundary><TarotTab ctx={{ M3, res, zodSign }} /></ErrorBoundary>
