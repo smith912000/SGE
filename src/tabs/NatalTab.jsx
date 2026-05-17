@@ -1,4 +1,6 @@
 import { getPreferenceFocus } from '../store/userPreferences.js';
+import { PLANET_IN_SIGN } from '../data/astrology/planetInSign.js';
+import { PLANET_IN_HOUSE } from '../data/astrology/planetInHouse.js';
 
 export default function NatalTab({ ctx }) {
   const { M3, res, grid2, zodSign, SIGN_COL, SIGN_SYM, HOUSE_AREA, HOUSE_INFO, P_COL, P_SYM, Card, PlanetTable, WheelWithTooltip, ProfilePanel, moonPhase } = ctx;
@@ -100,21 +102,18 @@ export default function NatalTab({ ctx }) {
     "Solitude, spirituality, hidden strengths, and the unconscious. Planets here deepen your inner life and intuition.",
   ];
 
-  const PLANET_IN_HOUSE = {
-    Sun: "your core identity is strongly expressed here — this area of life feels central to who you are",
-    Moon: "your emotional needs are centred here — you seek comfort and security through this domain",
-    Mercury: "your mind is active here — you think, talk, and learn most through this area",
-    Venus: "you find beauty and pleasure here — relationships and values are drawn to this domain",
-    Mars: "your drive and energy are focused here — you take action and sometimes create friction in this area",
-    Jupiter: "life expands and opportunities flow here — this is where luck tends to find you",
-    Saturn: "you face your hardest lessons here — discipline and patience in this area lead to lasting mastery",
-    Uranus: "you experience disruption and innovation here — expect the unexpected in this domain",
-    Neptune: "imagination and idealism colour this area — it can be both inspiring and confusing",
-    Pluto: "deep transformation happens here — power dynamics and rebirth are recurring themes",
-    Node: "your soul's growth direction points through this area — leaning into it feels unfamiliar but right",
+  // Per-combination readings live in the data layer (one entry per planet × house
+  // pair, written distinctly). Fallback to a planet-only line for planets not
+  // included in PLANET_IN_HOUSE (Node, Lilith, Chiron).
+  const PIH_FALLBACK = {
+    Node:   "your soul's growth direction points through this area — leaning into it feels unfamiliar but right",
     Lilith: "your untamed shadow power sits here — this area exposes what you refuse to suppress or domesticate",
     Chiron: "your deepest wound lives here — healing it becomes your greatest gift to others",
   };
+  const pihText = (planet, houseNum) =>
+    PLANET_IN_HOUSE[planet]?.[houseNum] || PIH_FALLBACK[planet] || "active in this area of your life";
+  const pisText = (planet, sign) =>
+    PLANET_IN_SIGN[planet]?.[sign] || null;
 
   const housePlanets = Array.from({ length: 12 }, () => []);
   const planetList = ["Sun","Moon","Mercury","Venus","Mars","Jupiter","Saturn","Uranus","Neptune","Pluto","Node","Lilith","Chiron"];
@@ -301,11 +300,22 @@ export default function NatalTab({ ctx }) {
                     {pls.length > 0 && <span style={{ marginLeft: "auto", fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.primary }}>{pls.map(p => P_SYM[p] || p).join(" ")}</span>}
                   </div>
                   <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.68rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: 0 }}>{HOUSE_DESC[i]}</p>
-                  {pls.length > 0 && pls.map(p => (
-                    <p key={p} style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.66rem", lineHeight: 1.45, color: M3.onSurface, margin: "4px 0 0", paddingLeft: 8, borderLeft: `2px solid ${P_COL[p] || M3.primary}44` }}>
-                      <strong style={{ color: P_COL[p] || M3.primary }}>{P_SYM[p]} {p}</strong> — {PLANET_IN_HOUSE[p] || "active in this area of your life"}.
-                    </p>
-                  ))}
+                  {pls.length > 0 && pls.map(p => {
+                    const pSign = zodSign(res.trop[p]);
+                    const signRead = pisText(p, pSign);
+                    return (
+                      <div key={p} style={{ margin: "6px 0 0", paddingLeft: 10, borderLeft: `2px solid ${P_COL[p] || M3.primary}44` }}>
+                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.68rem", lineHeight: 1.5, color: M3.onSurface, margin: 0 }}>
+                          <strong style={{ color: P_COL[p] || M3.primary }}>{P_SYM[p]} {p} in {sign}, {hi?.name?.split(' — ')[1] || `H${i+1}`}</strong> — {pihText(p, i+1)}.
+                        </p>
+                        {signRead && (
+                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.66rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "3px 0 0", fontStyle: "italic" }}>
+                            <span style={{ color: SIGN_COL[pSign], fontStyle: "normal", fontWeight: 600 }}>In {pSign}:</span> {signRead}
+                          </p>
+                        )}
+                      </div>
+                    );
+                  })}
                   {pls.length === 0 && <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.64rem", lineHeight: 1.4, color: M3.outlineVariant, margin: "4px 0 0", fontStyle: "italic" }}>No planets here — this area runs on {sign} autopilot, governed by the sign on the cusp rather than a planet's direct attention.</p>}
                 </div>
               );

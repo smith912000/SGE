@@ -1,3 +1,5 @@
+import { PLANET_IN_SIGN } from '../data/astrology/planetInSign.js';
+
 export default function ProgressionsTab({ ctx }) {
   const {
     M3,
@@ -59,7 +61,7 @@ export default function ProgressionsTab({ ctx }) {
               <div style={{ padding: "14px 16px", borderRadius: 12, background: P_COL.Sun + "12", border: `1px solid ${P_COL.Sun}33`, marginBottom: 12 }}>
                 <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: P_COL.Sun, letterSpacing: "0.1em", marginBottom: 6 }}>☉ IDENTITY SHIFT - {nSun} {"->"} {pSun}</div>
                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
-                  You were born with a <strong style={{ color: SIGN_COL[nSun] }}>{nSun}</strong> identity - {SIGN_INFO[nSun].plain.split(".")[0].toLowerCase()}. Over the course of your life, your progressed Sun has moved into <strong style={{ color: SIGN_COL[pSun] }}>{pSun}</strong>. This is a profound chapter change: your core self is now developing through {PROG_SIGN_ARC[pSun]}. This doesn't erase your birth Sun - it layers a new dimension of growth on top of it. You may notice that the concerns and interests that drive you now are different from what drove you as a young person.
+                  You were born with a <strong style={{ color: SIGN_COL[nSun] }}>{nSun}</strong> Sun: {PLANET_IN_SIGN.Sun?.[nSun] || SIGN_INFO[nSun].plain} Over the course of your life, your progressed Sun has moved into <strong style={{ color: SIGN_COL[pSun] }}>{pSun}</strong>. This is a profound chapter change: your core self is now developing through {PROG_SIGN_ARC[pSun]}. This doesn't erase your birth Sun - it layers a new dimension of growth on top of it. You may notice that the concerns and interests that drive you now are different from what drove you as a young person.
                 </p>
               </div>
             ) : (
@@ -73,7 +75,7 @@ export default function ProgressionsTab({ ctx }) {
               <div style={{ padding: "14px 16px", borderRadius: 12, background: P_COL.Moon + "12", border: `1px solid ${P_COL.Moon}33`, marginBottom: 12 }}>
                 <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: P_COL.Moon, letterSpacing: "0.1em", marginBottom: 6 }}>☽ EMOTIONAL SHIFT - {nMoon} {"->"} {pMoon}</div>
                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
-                  Your emotional landscape has shifted. Born with a <strong style={{ color: SIGN_COL[nMoon] }}>{nMoon}</strong> Moon, your instinctive emotional style was {SIGN_INFO[nMoon].plain.split(".")[0].toLowerCase()}. Now, with the progressed Moon in <strong style={{ color: SIGN_COL[pMoon] }}>{pMoon}</strong>, you're processing feelings through a new lens: {PROG_SIGN_ARC[pMoon]}. The progressed Moon changes sign every ~2.5 years, so this is a shorter chapter - but deeply felt. Pay attention to what you crave emotionally right now. It's different from what you craved a few years ago, and that shift is purposeful growth.
+                  Your emotional landscape has shifted. Born with a <strong style={{ color: SIGN_COL[nMoon] }}>{nMoon}</strong> Moon: {PLANET_IN_SIGN.Moon?.[nMoon] || SIGN_INFO[nMoon].plain} Now, with the progressed Moon in <strong style={{ color: SIGN_COL[pMoon] }}>{pMoon}</strong>, you're processing feelings through a new lens: {PROG_SIGN_ARC[pMoon]}. The progressed Moon changes sign every ~2.5 years, so this is a shorter chapter - but deeply felt. Pay attention to what you crave emotionally right now. It's different from what you craved a few years ago, and that shift is purposeful growth.
                 </p>
               </div>
             ) : (

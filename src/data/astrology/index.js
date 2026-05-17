@@ -6,3 +6,5 @@ export * from './axes.js';
 export * from './chinese.js';
 export * from './chineseCorpus.js';
 export * from './taixuanjing.js';
+export * from './planetInSign.js';
+export * from './planetInHouse.js';
