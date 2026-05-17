@@ -157,28 +157,47 @@ function planetLon(jd, name) {
   return helioToGeo(helioLon, 0, helioR, sunLon(jd));
 }
 
+// Chiron (2060 Chiron). Low-precision Keplerian — accurate to a few degrees
+// over 1900-2100. Verified against Swiss Ephemeris reference for J2000:
+// Chiron at ~Sagittarius 13° (geocentric, tropical).
+//
+// Original implementation had FOUR interlocking bugs:
+//   1. Mean motion 7073.469°/century (10× too fast; Chiron's period is
+//      50.6 yr → true mean motion ≈ 707.35°/century).
+//   2. Epoch L₀ = 209.37° was a copy of Ω; correct L₀ ≈ 218.4°.
+//   3. `w` was named "longitude of perihelion" by the M = L - w formula,
+//      but the value 339.55° is actually the argument of perihelion ω.
+//   4. Consequently `omega = w - O` produced a meaningless angle that was
+//      then used as ω in the orbital-plane rotation matrix.
 function chironLon(jd) {
-  const T = (jd - 2451545) / 36525;
-  const a = 13.648;
-  const e = 0.3786 + 0.00001 * T;
-  const I = 6.926;
-  const L = norm(209.37 + 7073.469 * T);
-  const w = 339.55 + 1.42 * T;
-  const O = 209.21 - 0.64 * T;
+  const T = (jd - 2451545) / 36525;             // Julian centuries since J2000
 
-  const omega = w - O;
-  const M = norm(L - w) * RAD;
+  // Orbital elements (J2000.0, from JPL Horizons / IAU MPC)
+  const a = 13.6483;                            // semi-major axis, AU
+  const e = 0.38226 + 0.00001 * T;              // eccentricity
+  const I = 6.9343;                             // inclination, deg
+  const O = 209.395 - 0.64 * T;                 // Ω, longitude of ascending node, deg
+  const w = 339.408 + 1.42 * T;                 // ω, argument of perihelion, deg
+
+  // Mean longitude L = Ω + ω + M. Back-solved from Chiron's known J2000
+  // heliocentric ecliptic longitude (~252°) gives L₀ ≈ 218.4°.
+  const L = norm(218.4 + 707.35 * T);
+
+  // Mean anomaly M = L - (Ω + ω)
+  const M = norm(L - O - w) * RAD;
   const E = solveKepler(M, e);
 
+  // Position in orbital plane: x along perihelion, y perpendicular (in plane)
   const xOr = a * (Math.cos(E) - e);
   const yOr = a * Math.sqrt(1 - e*e) * Math.sin(E);
 
+  // Rotate orbital → ecliptic via standard Px,Py,Qx,Qy matrix (using ω directly)
   const cosO = Math.cos(O * RAD), sinO = Math.sin(O * RAD);
   const cosI = Math.cos(I * RAD), sinI = Math.sin(I * RAD);
-  const cosW = Math.cos(omega * RAD), sinW = Math.sin(omega * RAD);
+  const cosW = Math.cos(w * RAD), sinW = Math.sin(w * RAD);
 
-  const Px = cosO*cosW - sinO*sinW*cosI;
-  const Py = sinO*cosW + cosO*sinW*cosI;
+  const Px =  cosO*cosW - sinO*sinW*cosI;
+  const Py =  sinO*cosW + cosO*sinW*cosI;
   const Qx = -cosO*sinW - sinO*cosW*cosI;
   const Qy = -sinO*sinW + cosO*cosW*cosI;
 
@@ -186,7 +205,7 @@ function chironLon(jd) {
   const yEcl = xOr*Py + yOr*Qy;
 
   const helioLon = norm(Math.atan2(yEcl, xEcl) * DEG);
-  const helioR = Math.sqrt(xEcl*xEcl + yEcl*yEcl);
+  const helioR   = Math.sqrt(xEcl*xEcl + yEcl*yEcl);
 
   return helioToGeo(helioLon, 0, helioR, sunLon(jd));
 }
