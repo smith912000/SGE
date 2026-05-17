@@ -217,13 +217,17 @@ function chironLon(jd) {
 }
 
 function allPlanets(jd) {
+  const rahu = nodeLon(jd);
   return {
     Sun: sunLon(jd), Moon: moonLon(jd),
     Mercury: planetLon(jd, "Mercury"), Venus: planetLon(jd, "Venus"),
     Mars: planetLon(jd, "Mars"), Jupiter: planetLon(jd, "Jupiter"),
     Saturn: planetLon(jd, "Saturn"), Uranus: planetLon(jd, "Uranus"),
     Neptune: planetLon(jd, "Neptune"), Pluto: planetLon(jd, "Pluto"),
-    Chiron: chironLon(jd), Node: nodeLon(jd), Lilith: lilithLon(jd),
+    Chiron: chironLon(jd),
+    Node: rahu,                      // Rahu — North lunar node
+    Ketu: norm(rahu + 180),          // Ketu — South lunar node (180° opposite Rahu)
+    Lilith: lilithLon(jd),
   };
 }
 
@@ -309,7 +313,11 @@ function calcAspects(pos) {
   return out.sort((a,b)=>b.strength-a.strength);
 }
 
-const ayanamsa  = jd => 23.85 + 0.013004*((jd-2451545)/36525)*100;
+// Lahiri (Chitrapaksha) ayanamsa — the standard Vedic sidereal-tropical offset.
+// J2000.0 value 23°51'11" = 23.8531°, precession ~50.29 arcsec/year = 0.01397°/year.
+// Prior formula (23.85 + 0.013004*T*100) used a 7%-slow rate (46.8"/yr) — close
+// enough at J2000 but drifted ~0.1° per century.
+const ayanamsa  = jd => 23.8531 + 0.01397 * ((jd - 2451545) / 365.25);
 const harmonic  = (pos, n) => Object.fromEntries(Object.entries(pos).map(([k,v])=>[k,norm(v*n)]));
 const progChart = (nJD, age) => allPlanets(nJD+age);
 const angSep = (a, b) => {
