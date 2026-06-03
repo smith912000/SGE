@@ -507,16 +507,6 @@ export default function App() {
                   </div>
                 )}
 
-                {tab === "deep" && (
-                  <DeepTab ctx={{
-                    M3, res, zodSign, SIGN_INFO, SIGN_COL, P_COL, P_SYM, P_ROLE, Card, grid2,
-                    calcAspects, harmonic, SOLAR_DEEP, LUNAR_DEEP, RISING_SHADOW, VENUS_SHADOW,
-                    MARS_SHADOW, MERCURY_SHADOW, JUPITER_DEEP, SATURN_DEEP, PAIR_INSIGHT,
-                    URANUS_DEEP, NEPTUNE_DEEP, PLUTO_DEEP, moonPhase,
-                    EL_COL, MOD_COL, ANIMAL_INFO, CN_EL_INFO, POLARITY_INFO, HOUSE_AREA
-                  }} />
-                )}
-
                 {false && tab === "deep-old" && (() => {
                   const sunSign = zodSign(res.trop.Sun);
                   const moonSign = zodSign(res.trop.Moon);
@@ -1880,7 +1870,7 @@ export default function App() {
                 )}
 
                 {tab === "harmonics" && (
-                  <HarmonicsTab ctx={{ M3, res, P_COL, P_SYM, zodSign, zodDeg, Card, WheelWithTooltip }} />
+                  <ErrorBoundary><HarmonicsTab ctx={{ M3, res, P_COL, P_SYM, zodSign, zodDeg, Card, WheelWithTooltip }} /></ErrorBoundary>
                 )}
 
                 {false && tab === "harmonics-old" && (() => {
@@ -2590,9 +2580,6 @@ export default function App() {
                   </div>
                 )}
 
-                {tab === "numerology" && (
-                  <NumerologyTab ctx={{ M3, birthParts: A, res, Card }} />
-                )}
                 {tab === "grammatology" && (
                   <ErrorBoundary>
                     <GrammatologyTab
