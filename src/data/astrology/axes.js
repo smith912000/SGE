@@ -1,6 +1,24 @@
-export const AXIS_INFO = {
-  AC: { title:"Rising Sign (Ascendant)", emoji:"🌅", plain:"Your rising sign — the mask you put on when meeting the world. It shapes how others perceive you and how you instinctively approach new situations. Often more visible than your Sun sign." },
-  DC: { title:"Setting Sign (Descendant)", emoji:"🌇", plain:"The mirror of the Rising Sign. It describes the qualities you seek in close partners and what you unconsciously project onto relationships. Your ideal other." },
-  MC: { title:"Career Point (Midheaven)", emoji:"🏔️", plain:"Your highest ambition and public image. This point shows your career calling, your reputation, and the legacy you want to leave in the world." },
-  IC: { title:"Roots & Foundation (IC)", emoji:"🌱", plain:"Your roots — your private self, family, and psychological foundations. This reveals what nourishes you in private and where you come from at the deepest level." },
+// Chart-frame points, with prose from the symbolic record layer.
+// See docs/VOICE.md.
+
+import { getAxisSymbolism } from '../symbolism/aspectSymbolism.js';
+
+const AXIS_LABEL = {
+  AC: { title: "Ascendant (Rising Degree)", emoji: "🌅" },
+  DC: { title: "Descendant (Setting Degree)", emoji: "🌇" },
+  MC: { title: "Midheaven (Culminating Degree)", emoji: "🏔️" },
+  IC: { title: "Imum Coeli (Lower Meridian)", emoji: "🌱" },
 };
+
+export const AXIS_INFO = Object.fromEntries(
+  Object.entries(AXIS_LABEL).map(([k, meta]) => {
+    const rec = getAxisSymbolism(k);
+    return [k, {
+      ...meta,
+      plain: rec ? rec.plain : "",
+      detail: rec ? rec.reading : "",
+      principle: rec ? rec.principle : "",
+      record: rec || null,
+    }];
+  })
+);

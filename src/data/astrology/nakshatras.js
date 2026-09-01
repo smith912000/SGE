@@ -28,7 +28,7 @@ export const NAKSHATRA_INFO = [
   { name: "Magha",             lord: "Ketu",    deity: "Pitris (ancestors)",   symbol: "Throne / palanquin",  gana: "Rakshasa", varga: "Shudra",    yoni: "Rat",       yoniSex: "Male",   nature: "Ancestral throne. Heritage, dignity, the weight of lineage." },
   { name: "Purva Phalguni",    lord: "Venus",   deity: "Bhaga",                symbol: "Front of a bed",      gana: "Manushya", varga: "Brahmin",   yoni: "Rat",       yoniSex: "Female", nature: "Pleasure earned. Romance, indulgence, the lounge before the work." },
   { name: "Uttara Phalguni",   lord: "Sun",     deity: "Aryaman",              symbol: "Back of a bed",       gana: "Manushya", varga: "Kshatriya", yoni: "Cow",       yoniSex: "Male",   nature: "Generous repose. Patronage, contracts honoured, the trustworthy ally." },
-  { name: "Hasta",             lord: "Moon",    deity: "Savitar",              symbol: "Open hand",           gana: "Deva",     varga: "Vaishya",   yoni: "Buffalo",   yoniSex: "Female", nature: "Skilful hand. Craft, dexterity, what you make with your own fingers." },
+  { name: "Hasta",             lord: "Moon",    deity: "Savitar",              symbol: "Open hand",           gana: "Deva",     varga: "Vaishya",   yoni: "Buffalo",   yoniSex: "Female", nature: "Skilful hand. Craft, dexterity, what is made by the fingers." },
   { name: "Chitra",            lord: "Mars",    deity: "Vishvakarma",          symbol: "Bright jewel",        gana: "Rakshasa", varga: "Vaishya",   yoni: "Tiger",     yoniSex: "Female", nature: "Sparkling architecture. Brilliance, design, the eye-catching form." },
   { name: "Swati",             lord: "Rahu",    deity: "Vayu",                 symbol: "Young shoot / coral", gana: "Deva",     varga: "Butcher",   yoni: "Buffalo",   yoniSex: "Male",   nature: "Independent breeze. Solo, scattered, the one who can't be tied down." },
   { name: "Vishakha",          lord: "Jupiter", deity: "Indra & Agni",         symbol: "Forked branch / arch",gana: "Rakshasa", varga: "Mleccha",   yoni: "Tiger",     yoniSex: "Male",   nature: "Focused goal. Ambition, two paths, the determined climb." },
@@ -76,17 +76,17 @@ export const RASHI_INFO = [
 //  BHAVAS — 12 houses with significations (karakas)
 // ──────────────────────────────────────────────────────────────────────
 export const BHAVA_INFO = [
-  { n: 1,  name: "Tanu",     theme: "Self · Body",          desc: "Body, appearance, vitality, personality. The self projected outward — your physical container.",                      group: "Kendra" },
-  { n: 2,  name: "Dhana",    theme: "Wealth · Speech",      desc: "Money, possessions, family, food, voice. What you accumulate and what comes out of your mouth.",                       group: "—" },
+  { n: 1,  name: "Tanu",     theme: "Self · Body",          desc: "Body, appearance, vitality, personality. The self projected outward — the physical container.",                      group: "Kendra" },
+  { n: 2,  name: "Dhana",    theme: "Wealth · Speech",      desc: "Money, possessions, family, food, voice. What is accumulated, and what issues from the mouth.",                       group: "—" },
   { n: 3,  name: "Sahaja",   theme: "Courage · Siblings",   desc: "Younger siblings, courage, communication, short journeys, hands-on skill. The push to act.",                            group: "Upachaya" },
-  { n: 4,  name: "Sukha",    theme: "Home · Mother",        desc: "Home, mother, comfort, emotional foundation, vehicles, real estate. Where you settle.",                                 group: "Kendra" },
+  { n: 4,  name: "Sukha",    theme: "Home · Mother",        desc: "Home, mother, comfort, emotional foundation, vehicles, real estate. The place of settling.",                                 group: "Kendra" },
   { n: 5,  name: "Putra",    theme: "Children · Creativity",desc: "Children, creativity, romance, intelligence, past-life merit (purvapunya), speculation.",                               group: "Trikona" },
   { n: 6,  name: "Ari",      theme: "Health · Enemies",     desc: "Enemies, debts, daily work, illness, service. The obstacles and the discipline to overcome them.",                     group: "Trika · Upachaya" },
-  { n: 7,  name: "Yuvati",   theme: "Spouse · Partners",    desc: "Marriage, business partners, open enemies, others. The mirror you meet in relationship.",                               group: "Kendra" },
+  { n: 7,  name: "Yuvati",   theme: "Spouse · Partners",    desc: "Marriage, business partners, open enemies, others. The mirror met in relationship.",                               group: "Kendra" },
   { n: 8,  name: "Randhra",  theme: "Mystery · Longevity",  desc: "Transformation, longevity, occult, inheritance, sudden change, hidden things, sexuality.",                              group: "Trika" },
   { n: 9,  name: "Dharma",   theme: "Faith · Father",       desc: "Father, guru, higher learning, religion, long journeys, fortune, life's purpose.",                                     group: "Trikona" },
-  { n: 10, name: "Karma",    theme: "Action · Career",      desc: "Career, public reputation, action in the world, government, status. What you do that others see.",                     group: "Kendra · Upachaya" },
-  { n: 11, name: "Labha",    theme: "Gains · Aspirations",  desc: "Income, elder siblings, friends, gains, hopes, networks. What flows toward you from groups.",                          group: "Upachaya" },
+  { n: 10, name: "Karma",    theme: "Action · Career",      desc: "Career, public reputation, action in the world, government, status. The deed that is seen.",                     group: "Kendra · Upachaya" },
+  { n: 11, name: "Labha",    theme: "Gains · Aspirations",  desc: "Income, elder siblings, friends, gains, hopes, networks. What flows inward from groups.",                          group: "Upachaya" },
   { n: 12, name: "Vyaya",    theme: "Loss · Liberation",    desc: "Loss, expenditure, foreign lands, isolation, the bed, moksha. What dissolves into something larger.",                  group: "Trika" },
 ];
 
@@ -147,6 +147,6 @@ export const YOGA_DEFS = [
 export const DOSHA_DEFS = [
   { id: "mangal", name: "Mangal Dosha", desc: "Mars in 1st, 4th, 7th, 8th or 12th house. Considered difficult for marriage in classical Vedic — though many cancellations exist (Mangal in own/exaltation, partner with same dosha, age over 28)." },
   { id: "kalaSarpa", name: "Kala Sarpa Dosha", desc: "All 7 visible planets sit between Rahu and Ketu on one side of the axis. Karmic pressure; intense life themes around control and surrender." },
-  { id: "sadeSati", name: "Sade Sati", desc: "Saturn's 7.5-year transit through the sign before, of, and after your natal Moon. The classic 'long lesson' — restructures emotional foundations." },
+  { id: "sadeSati", name: "Sade Sati", desc: "Transiting Saturn through the sign before, of, and after the natal Moon, lasting about 7.5 years. Not detected by this build: the check requires transiting Saturn, and only natal Saturn is available." },
   { id: "kemadruma", name: "Kemadruma", desc: "Moon isolated (no planets in adjacent signs and not joined). Emotional self-reliance is mandatory; later in life often resolves." },
 ];

@@ -84,7 +84,7 @@ export const SIGN_INFO = {
     shadow: "Detachment, radicalism, unpredictable behavior."
   },
   Pisces: {
-    emoji: "♓", element: "Water", mode: "Mutable", ruler: "Neptune", hebrew: "ק", hiero: "𓎗", phoenician: "𐤒", runic: "—", letterName: "Qoph", letterMeaning: "Qoph means 'back of the head' — Pisces is the hidden knowledge you feel but cannot see directly",
+    emoji: "♓", element: "Water", mode: "Mutable", ruler: "Neptune", hebrew: "ק", hiero: "𓎗", phoenician: "𐤒", runic: "—", letterName: "Qoph", letterMeaning: "Qoph means 'back of the head' — Pisces is the hidden knowledge felt but not seen directly",
     plain: "Empathic and otherworldly. Pisces dissolves boundaries to feel.",
     power: "Compassion, Imagination, Spirituality",
     compat: "Cancer, Scorpio, Taurus",

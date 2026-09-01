@@ -29,6 +29,6 @@ export const CN_EL_INFO = {
   Water: { color:"#5c6bc0", trait:"Wisdom, adaptability, depth",     desc:"Water energy flows and finds its level. Water people are philosophical, intuitive, and deeply perceptive. They go with the flow but always run deep. When imbalanced, Water becomes fear, indecision, and emotional overwhelm." },
 };
 export const POLARITY_INFO = {
-  Yang: { symbol:"☰", label:"Active (Yang)", desc:"Yang energy is outward-moving, assertive, and expressive. Yang years favor bold action, new ventures, and visible achievement. You are more likely to initiate than react." },
+  Yang: { symbol:"☰", label:"Active (Yang)", desc:"Yang energy is outward-moving, assertive, and expressive. Yang years have been read as favouring bold action, new ventures and visible achievement — initiation rather than reaction." },
   Yin:  { symbol:"☷", label:"Receptive (Yin)", desc:"Yin energy is inward-moving, reflective, and receptive. Yin years favor deepening, listening, consolidating, and inner work. Power comes through patience rather than force." },
 };
