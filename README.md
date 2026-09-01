@@ -55,3 +55,18 @@ API runs at `http://localhost:8000`. (If running from `backend/` directory, use 
 | [docs/ENGINES.md](docs/ENGINES.md) | Computation engines |
 | [docs/TABS.md](docs/TABS.md) | Tab views |
 | [docs/DATA.md](docs/DATA.md) | Data layer |
+
+---
+
+## Licence
+
+SGE is free software, licensed under the **GNU Affero General Public License
+v3.0 only**. The full text is in [LICENSE](LICENSE).
+
+The AGPL's network clause (§13) applies: anyone who interacts with a deployed
+instance over a network must be offered the corresponding source. The running
+app therefore links to its source from the footer, and the repository is
+public at <https://github.com/smith912000/SGE>.
+
+SGE cannot be relicensed as closed source, nor bundled into a closed paid
+product.
