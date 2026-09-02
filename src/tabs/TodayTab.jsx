@@ -1,3 +1,4 @@
+import { ASP_ADJ } from '../data/astrology/aspects.js';
 import { useState } from "react";
 import { ASP_SHORT } from "../data/astrology/aspects.js";
 import { P_SYM, P_ROLE } from "../data/astrology/planets.js";
@@ -339,7 +340,7 @@ export default function TodayTab({ ctx }) {
             const role2 = P_ROLE[n2] || "";
             const short = ASP_SHORT[top.name] || top.name.toLowerCase();
             const expl = ASP_EXPLAIN[top.name] || short;
-            body = `Transiting ${n1} ${top.name.toLowerCase()} natal ${n2} — ${expl}.`;
+            body = `Transiting ${n1} ${ASP_ADJ[top.name] || top.name.toLowerCase()} natal ${n2} — ${expl}.`;
           }
           const isPriority = focus !== "all" && sortedCategories.indexOf(cat) === 0;
           return (

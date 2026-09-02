@@ -29,3 +29,10 @@ export const ASPECT_MEANINGS = {
   Semisquare:     "45° apart, half a square. Attributed to Kepler.",
   Sesquiquadrate: "135° apart, a square and a half. Attributed to Kepler.",
 };
+
+// Adjectival form, for "Transiting Mars conjunct natal Saturn".
+export const ASP_ADJ = {
+  Conjunction: "conjunct", Opposition: "opposite", Trine: "trine", Square: "square",
+  Sextile: "sextile", Quincunx: "quincunx", Semisquare: "semisquare",
+  Sesquiquadrate: "sesquiquadrate",
+};
