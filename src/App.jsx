@@ -695,7 +695,7 @@ export default function App() {
 
                       <Card title="⚖ Soft and Hard Contacts">
                         <div style={{ marginBottom: 16 }}>
-                          <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 10 }}>SOFT CONTACTS ({softAsp.length}) — talents and ease built into your chart</div>
+                          <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 10 }}>SOFT CONTACTS ({softAsp.length})</div>
                           {softAsp.slice(0, 5).map((a, i) => {
                             const r0 = (P_ROLE[a.p1] || a.p1).toLowerCase(), r1 = (P_ROLE[a.p2] || a.p2).toLowerCase();
                             const k1 = `${P_ROLE[a.p1]}+${P_ROLE[a.p2]}`, k2 = `${P_ROLE[a.p2]}+${P_ROLE[a.p1]}`;
@@ -721,7 +721,7 @@ export default function App() {
                           })}
                         </div>
                         <div>
-                          <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 10 }}>HARD CONTACTS ({hardAsp.length}) — where challenge builds your deepest strengths</div>
+                          <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 10 }}>HARD CONTACTS ({hardAsp.length})</div>
                           {hardAsp.slice(0, 5).map((a, i) => {
                             const r0 = (P_ROLE[a.p1] || a.p1).toLowerCase(), r1 = (P_ROLE[a.p2] || a.p2).toLowerCase();
                             const k1 = `${P_ROLE[a.p1]}+${P_ROLE[a.p2]}`, k2 = `${P_ROLE[a.p2]}+${P_ROLE[a.p1]}`;
@@ -867,7 +867,7 @@ export default function App() {
                         return (<>
                           <Card title="📖 Understanding the Building Blocks">
                             <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 16px" }}>
-                              Before reading your full portrait, here is what the key pieces mean in your specific case.
+                              What the tradition attributes to each of the principal placements in this figure.
                             </p>
 
                             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 12, marginBottom: 16 }}>
@@ -878,7 +878,7 @@ export default function App() {
                                   <span style={{ color: SIGN_COL[sunSign], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.82rem", fontWeight: "700" }}>{sunSign}</span>
                                 </div>
                                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
-                                  {sunPlain} This is who you are at your most authentic — the identity you grow into over your lifetime.
+                                  {sunPlain}
                                 </p>
                               </div>
 
@@ -908,14 +908,14 @@ export default function App() {
                             <div style={{ padding: "14px 16px", borderRadius: 12, background: EL_COL[domEl[0]] + "0a", border: `1px solid ${EL_COL[domEl[0]]}22`, marginBottom: 12 }}>
                               <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>YOUR DOMINANT ELEMENT — {domEl[0].toUpperCase()} ({domEl[1]} OF YOUR PLANETS)</div>
                               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
-                                The element that dominates your chart is <strong style={{ color: EL_COL[domEl[0]] }}>{domEl[0]}</strong> — this means {EL_DESC[domEl[0]]}. This colours everything: how you make decisions, what environments energise you, and what kind of people you naturally attract.
+                                The most represented element here is <strong style={{ color: EL_COL[domEl[0]] }}>{domEl[0]}</strong> — {EL_DESC[domEl[0]]}.
                               </p>
                             </div>
 
                             <div style={{ padding: "14px 16px", borderRadius: 12, background: MOD_COL[domMod[0]] + "0a", border: `1px solid ${MOD_COL[domMod[0]]}22`, marginBottom: 12 }}>
                               <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>YOUR DOMINANT ACTION STYLE — {domMod[0].toUpperCase()} ({domMod[1]} PLANETS)</div>
                               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
-                                Your dominant mode is <strong style={{ color: MOD_COL[domMod[0]] }}>{domMod[0]}</strong> — your natural approach to life is {MOD_DESC[domMod[0]]}. This is how you instinctively respond when life presents you with a choice or a challenge.
+                                The most represented mode is <strong style={{ color: MOD_COL[domMod[0]] }}>{domMod[0]}</strong> — {MOD_DESC[domMod[0]]}.
                               </p>
                             </div>
 
@@ -1010,31 +1010,31 @@ export default function App() {
                   const lowEl = domEl.filter(([, v]) => v === 1).map(([e]) => e);
 
                   const MISSING_ELEMENT = {
-                    Fire: "With no Fire in your chart, you may struggle with initiative, self-assertion, and trusting your own instincts. Taking the first step can feel paralysing — not because you lack courage, but because the natural fuel for spontaneous action isn't built into your wiring. You may wait for permission, overthink risks, or let others take the lead when you should be out front. The growth: you can develop Fire consciously — through physical activity, deliberate risk-taking, and practising acting before you feel ready.",
-                    Earth: "With no Earth in your chart, you may struggle with practical follow-through, financial stability, and staying grounded. Ideas come easily, but turning them into real, tangible outcomes feels like pushing through mud. Your body may feel like an afterthought. The growth: you can develop Earth consciously — through routine, physical work, cooking, budgeting, and committing to the boring-but-necessary structures that keep life functioning.",
-                    Air: "With no Air in your chart, you may struggle with objectivity, intellectual detachment, and social communication. You may feel things deeply but have difficulty articulating them clearly, or you might avoid uncomfortable conversations because you can't find the words. The growth: you can develop Air consciously — through journaling, reading widely, engaging in debate, and practising the art of saying difficult things with clarity.",
-                    Water: "With no Water in your chart, you may struggle with emotional awareness, empathy, and vulnerability. You may intellectualise feelings, avoid situations that require emotional depth, or feel disconnected from your own inner life. Others may perceive you as cold when you're actually just unequipped to access what you feel. The growth: you can develop Water consciously — through therapy, creative expression, sitting with uncomfortable feelings without fixing them, and learning to say 'I don't know what I feel' as a starting point rather than an ending.",
+                    Fire: "No body of the counted set falls in a fire sign. The classical scheme reads fire as the hot and dry element of action; its absence here is an absence in the count, and which bodies are counted varies between schools.",
+                    Earth: "No body of the counted set falls in an earth sign. Earth is the cold and dry element of the tangible in the classical scheme.",
+                    Air: "No body of the counted set falls in an air sign. Air is the hot and moist element of relation and abstraction in the classical scheme.",
+                    Water: "No body of the counted set falls in a water sign. Water is the cold and moist element of feeling in the classical scheme.",
                   };
                   const LOW_ELEMENT = {
-                    Fire: "With only 1 planet in Fire, your assertive, spontaneous energy is limited. You can access it, but it doesn't come naturally — you have to reach for it consciously, especially when life demands quick action or visible confidence.",
-                    Earth: "With only 1 planet in Earth, staying grounded and practical takes deliberate effort. You may find that structure, routine, and material concerns don't hold your attention well — but they're exactly what you need more of.",
-                    Air: "With only 1 planet in Air, intellectual detachment and social fluency require extra work. You feel more than you think, and translating deep experiences into clear words is an ongoing challenge worth developing.",
-                    Water: "With only 1 planet in Water, emotional depth and intuition are areas you have to cultivate. You may default to thinking or doing when the situation actually calls for feeling.",
+                    Fire: "One body of the counted set falls in a fire sign. Whether this reads as scarcity depends entirely on the counting rule, which is not standard between schools.",
+                    Earth: "One body of the counted set falls in an earth sign. Whether this reads as scarcity depends entirely on the counting rule.",
+                    Air: "One body of the counted set falls in an air sign. Whether this reads as scarcity depends entirely on the counting rule.",
+                    Water: "One body of the counted set falls in a water sign. Whether this reads as scarcity depends entirely on the counting rule.",
                   };
 
                   const CHIRON_HOUSE_WOUND = {
-                    0: "Your deepest wound lives in the area of identity and self-image. You may feel fundamentally flawed or 'wrong' in some way that others don't seem to struggle with. Early experiences made you question whether you had a right to exist as you are. The healing: learning that your sensitivity about who you are is exactly what makes you able to help others feel accepted.",
-                    1: "Your deepest wound lives in the area of self-worth and money. You may struggle to feel valuable unless you're earning, producing, or providing something tangible. The healing: learning that your worth is inherent, not earned.",
-                    2: "Your deepest wound lives in communication and being understood. You may have been silenced, misunderstood, or told your voice didn't matter early on. The healing: learning to speak your truth even when it shakes — your words carry more weight than you know.",
-                    3: "Your deepest wound lives in family, home, and belonging. You may feel like you never quite had a safe emotional home base, or that the family you came from didn't fully see you. The healing: creating the sense of belonging you didn't receive — first within yourself, then in chosen family.",
-                    4: "Your deepest wound lives in creativity, self-expression, and joy. You may have been shamed for being too much, too visible, or too playful. The healing: learning to create and express without needing approval — joy is not something you need permission for.",
-                    5: "Your deepest wound lives in daily routine, health, and service. You may push your body past its limits, neglect self-care, or feel that rest is laziness. The healing: learning that taking care of yourself is not selfish — it's the foundation everything else rests on.",
-                    6: "Your deepest wound lives in relationships and partnership. You may attract partners who trigger your deepest insecurities, or avoid intimacy to protect yourself from rejection. The healing: learning that vulnerability in relationship is not weakness but the only path to genuine connection.",
-                    7: "Your deepest wound lives in trust, power, and deep intimacy. You may have experienced betrayal, loss, or situations where others had power over you. The healing: learning to be vulnerable without being consumed — to share power rather than surrender or seize it.",
-                    8: "Your deepest wound lives in belief, meaning, and truth. You may struggle with faith — in a higher power, in life's fairness, or in your own ability to find answers. The healing: learning that not-knowing is a valid spiritual stance, and that wisdom comes from questions, not just answers.",
-                    9: "Your deepest wound lives in career and public reputation. You may feel that no achievement is ever enough, or that success brings exposure you're not ready for. The healing: learning to define success by your own standards rather than by what the world validates.",
-                    10: "Your deepest wound lives in community, belonging, and hope for the future. You may feel like an outsider in groups, or that your hopes and visions for the world won't be taken seriously. The healing: learning that your unique perspective is exactly what the group needs — even when it feels alienating.",
-                    11: "Your deepest wound lives in the unconscious, solitude, and spiritual life. You may carry hidden pain, unexplained anxieties, or a sense of being haunted by something you can't name. The healing: learning to face the shadows within — therapy, meditation, creative expression, and the willingness to look at what you'd rather avoid.",
+                    0: "Chiron falls in the 1st house, the ground of the body and the outward-facing angle. Chiron was discovered in 1977 and every attribution made to it is modern; the wound-and-healer reading is a late twentieth-century construction and is contested.",
+                    1: "Chiron falls in the 2nd house, the ground of resources held. Chiron was discovered in 1977 and every attribution made to it is modern; the wound-and-healer reading is a late twentieth-century construction and is contested.",
+                    2: "Chiron falls in the 3rd house, the ground of the near environment and of speech. Chiron was discovered in 1977 and every attribution made to it is modern; the wound-and-healer reading is a late twentieth-century construction and is contested.",
+                    3: "Chiron falls in the 4th house, the ground of origin and the foundations. Chiron was discovered in 1977 and every attribution made to it is modern; the wound-and-healer reading is a late twentieth-century construction and is contested.",
+                    4: "Chiron falls in the 5th house, the ground of offspring and of play. Chiron was discovered in 1977 and every attribution made to it is modern; the wound-and-healer reading is a late twentieth-century construction and is contested.",
+                    5: "Chiron falls in the 6th house, the ground of labour, illness and service. Chiron was discovered in 1977 and every attribution made to it is modern; the wound-and-healer reading is a late twentieth-century construction and is contested.",
+                    6: "Chiron falls in the 7th house, the ground of the one-to-one relation. Chiron was discovered in 1977 and every attribution made to it is modern; the wound-and-healer reading is a late twentieth-century construction and is contested.",
+                    7: "Chiron falls in the 8th house, the ground of what is shared and what is inherited. Chiron was discovered in 1977 and every attribution made to it is modern; the wound-and-healer reading is a late twentieth-century construction and is contested.",
+                    8: "Chiron falls in the 9th house, the ground of the far journey and of doctrine. Chiron was discovered in 1977 and every attribution made to it is modern; the wound-and-healer reading is a late twentieth-century construction and is contested.",
+                    9: "Chiron falls in the 10th house, the ground of office and of public standing. Chiron was discovered in 1977 and every attribution made to it is modern; the wound-and-healer reading is a late twentieth-century construction and is contested.",
+                    10: "Chiron falls in the 11th house, the ground of allies and of what is hoped for. Chiron was discovered in 1977 and every attribution made to it is modern; the wound-and-healer reading is a late twentieth-century construction and is contested.",
+                    11: "Chiron falls in the 12th house, the ground of what is hidden or set apart. Chiron was discovered in 1977 and every attribution made to it is modern; the wound-and-healer reading is a late twentieth-century construction and is contested.",
                   };
 
                   const chironLon = res.trop.Chiron;
@@ -1059,25 +1059,25 @@ export default function App() {
                   });
 
                   const TH_PLANET = {
-                    Sun: "Your core identity operates partly in the shadows — you may feel unseen, as if who you really are is hidden from the world. Self-expression can feel risky, and you may downplay your own needs.",
-                    Moon: "Your emotional life is deeply private and may feel overwhelming when exposed. You absorb others' emotions unconsciously and need significant solitude to stay centred.",
-                    Mercury: "Your thinking happens in the background — you process slowly and deeply, often understanding things intuitively before you can explain them logically. Others may underestimate your intelligence.",
-                    Venus: "Your relationship with love, beauty, and pleasure has a hidden quality. You may love secretly, feel unworthy of affection, or find that your deepest connections happen away from public view.",
-                    Mars: "Your drive and anger operate beneath the surface. You may struggle to assert yourself directly, channelling aggression inward or expressing it only when pushed to extremes.",
-                    Saturn: "Your relationship with authority and discipline is deeply internalised. You carry responsibilities others don't see and may punish yourself with standards no one else would impose.",
-                    Neptune: "Your spiritual and imaginative life is immensely rich but can blur into confusion, escapism, or a sense of being lost in the world. Boundaries between self and other dissolve easily here.",
-                    Pluto: "Your relationship with power is unconscious and intense. Transformative experiences happen in private, and you may carry trauma or intensity that others never witness.",
+                    Sun: "The Sun in the 12th. Traditional texts treat the 12th as a place of concealment and of what works against the native; modern practice reads it as the unconscious. The two readings are not the same claim.",
+                    Moon: "The Moon in the 12th. The lunar significator placed in the house classical texts associate with confinement and things hidden.",
+                    Mercury: "Mercury in the 12th. The messenger placed in the house of what is not brought into the open.",
+                    Venus: "Venus in the 12th. The lesser benefic placed in a house classical practice counted among the difficult ones.",
+                    Mars: "Mars in the 12th. The lesser malefic in the house of concealment; classical sources read the combination as unfavourably placed.",
+                    Saturn: "Saturn in the 12th. The greater malefic in a house the older texts associate with confinement and with hidden adversaries.",
+                    Neptune: "Neptune in the 12th. Neptune is a post-1846 addition with no classical attribution; the association with the 12th is modern and rests on the shared modern rulership of Pisces.",
+                    Pluto: "Pluto in the 12th. Pluto is a post-1930 addition; every attribution made to it is modern.",
                   };
 
                   return (
                     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                       <Card style={{ background: `linear-gradient(135deg,#ff525222,${M3.surfaceContainer})`, borderColor: "#ff525244" }}>
-                        <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: "#ff8a50", marginBottom: 8 }}>Struggles & Growth Edges — Where Life Challenges You</div>
+                        <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: "#ff8a50", marginBottom: 8 }}>Where the Tradition Locates Difficulty — Where Life Challenges You</div>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-                          Every chart contains both gifts and difficulties. This page gathers all the hard parts in one place — not to discourage you, but because <strong>knowing your struggles is the first step to working with them</strong>. The patterns here aren't flaws to fix; they're areas where life has asked more of you than average, and where your deepest growth happens.
+                          This page gathers the placements and contacts to which the tradition has attached difficulty. It is a gathering of attributions, but because <strong>knowing your struggles is the first step to working with them</strong>. The patterns here aren't flaws to fix; they're areas where life has asked more of you than average, and where your deepest growth happens.
                         </p>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
-                          Think of these as the curriculum your life keeps returning to — the lessons you can't skip. The reward for engaging with them is genuine wisdom, resilience, and depth that no amount of natural talent can provide.
+                          Sources differ on how much weight to give any of these, and the classical benefic/malefic scheme that underwrites much of it has largely been abandoned in modern practice.
                         </p>
                       </Card>
 
@@ -1088,7 +1088,7 @@ export default function App() {
                           </div>
                           <div>
                             <div style={{ color: SIGN_COL[satSign], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.76rem", fontWeight: "700" }}>Saturn in {satSign}</div>
-                            <div style={{ color: M3.outlineVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem" }}>The area where life demands the most from you</div>
+                            <div style={{ color: M3.outlineVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem" }}>The place the tradition assigns to life demands the most from you</div>
                           </div>
                         </div>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>
@@ -1104,7 +1104,7 @@ export default function App() {
                             </div>
                             <div>
                               <div style={{ color: "#b388ff", fontFamily: "'Share Tech Mono',monospace", fontSize: "0.76rem", fontWeight: "700" }}>Chiron in House {chironHouse + 1} — {HOUSE_AREA[chironHouse]}</div>
-                              <div style={{ color: M3.outlineVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem" }}>The "wounded healer" — where pain becomes your greatest gift</div>
+                              <div style={{ color: M3.outlineVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem" }}>The place the modern attribution calls the "wounded healer" — where pain becomes your greatest gift</div>
                             </div>
                           </div>
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>
@@ -1115,7 +1115,7 @@ export default function App() {
 
                       <Card title="⚡ The Tightest Hard Contacts">
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-                          These are the strongest squares (□ — 90° angles creating friction) and oppositions (☍ — 180° angles creating polarisation) in your chart. They represent internal contradictions that can't be resolved — only integrated.
+                          The tightest squares (□ — 90°) and oppositions (☍ — 180°) in this figure, listed with their orbs.
                         </p>
                         {hardAsp.length === 0 ? (
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", color: M3.onSurfaceVariant, fontStyle: "italic" }}>No major hard aspects found — your chart has relatively little internal friction, which means growth comes more through external circumstances than internal tension.</p>
@@ -1124,7 +1124,7 @@ export default function App() {
                           const k1 = `${r0}+${r1}`, k2 = `${r1}+${r0}`;
                           const pi = PAIR_INSIGHT[k1] || PAIR_INSIGHT[k2] || "";
                           const struggleNarrative = a.name === "Square"
-                            ? `This square means your ${r0.toLowerCase()} and ${r1.toLowerCase()} are in constant creative tension. Neither will yield to the other. In daily life, this shows up as an internal tug-of-war: you want two things that seem incompatible. The frustration is real, but it's also what drives you to develop more than people without this tension ever need to. Every time you navigate this conflict, you build muscle that others simply don't have.`
+                            ? `The square is 90°; the ${r0.toLowerCase()} and ${r1.toLowerCase()} significators stand in signs sharing a mode but not an element.`
                             : `The opposition is 180°, the greatest possible separation; the two signs share a mode and stand in complementary elements.`;
                           return (
                             <div key={i} style={{ padding: "12px 16px", marginBottom: 10, borderRadius: 12, background: a.col + "0c", borderLeft: `4px solid ${a.col}` }}>
@@ -1145,7 +1145,7 @@ export default function App() {
 
                       <Card title="🎭 Attributions of Difficulty">
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-                          These are the behaviours that emerge when you're stressed, threatened, or operating on autopilot. They're not who you are — they're defence mechanisms. Recognising them is the first step to choosing differently.
+                          These are the attributions the tradition attaches to the placements below. They are readings of the symbol — they're defence mechanisms. Recognising them is the first step to choosing differently.
                         </p>
                         {[
                           { label: `Rising Shadow (${ascSign})`, icon: "🌅", data: RISING_SHADOW[ascSign], area: "social mask & first impressions" },
@@ -1171,7 +1171,7 @@ export default function App() {
                       {(weakEl.length > 0 || lowEl.length > 0) && (
                         <Card title="△ Elements Not Represented">
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-                            When an element is absent or underrepresented in your chart, it doesn't mean you can't access that energy — it means you weren't born with it built in. You have to develop it deliberately, which is harder but ultimately more conscious than running on natural wiring.
+                            An element counted as absent or thinly represented is a property of the counting rule as much as of the figure: which bodies are counted, and whether the angles count, varies between schools.
                           </p>
                           {weakEl.map(el => (
                             <div key={el} style={{ padding: "14px 18px", marginBottom: 10, borderRadius: 12, background: EL_COL[el] + "0a", border: `1px solid ${EL_COL[el]}22` }}>
@@ -1191,7 +1191,7 @@ export default function App() {
                       {in12th.length > 0 && (
                         <Card title="🌙 Bodies in the 12th House">
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-                            The 12th house governs the unconscious, solitude, hidden strengths, and self-undoing. Planets here operate beneath your conscious awareness — they're powerful but hard to access directly. They often manifest as vague anxieties, recurring dreams, or patterns you can't quite explain.
+                            Classical texts place confinement, hidden adversaries and things set apart in the 12th; modern practice reads it as the unconscious. Bodies here are read against whichever of those two frames is in use.
                           </p>
                           {in12th.map(p => (
                             <div key={p} style={{ padding: "12px 16px", marginBottom: 8, borderRadius: 10, background: P_COL[p] + "0c", borderLeft: `3px solid ${P_COL[p]}44` }}>
@@ -1223,7 +1223,7 @@ export default function App() {
                       <Card style={{ background: `linear-gradient(135deg,#69ff8e11,${M3.surfaceContainer})`, borderColor: "#69ff8e33" }}>
                         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: "#69ff8e", marginBottom: 10 }}>A Note on Struggles</div>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.84rem", lineHeight: 1.8, color: M3.onSurface, margin: 0 }}>
-                          The patterns above are not sentences — they're invitations. Every struggle in a chart is also a doorway to the kind of growth that people with easier charts never develop. Saturn's tests build mastery. Chiron's wounds become your greatest gifts to others. Hard aspects forge resilience. Shadow patterns, once seen, become choices rather than compulsions. The people who do the deepest self-development work are almost always the ones with the hardest charts. If this page feels heavy, that's because it's honest — and honesty is where real change begins.
+                          None of the above is a prediction, and none of it is a statement about a person. Each is an attribution a tradition has made to a position.
                         </p>
                       </Card>
                     </div>
@@ -1233,17 +1233,17 @@ export default function App() {
                 {false && tab === "wheel" && (
                   <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                     <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline, padding: "14px 18px" }}>
-                      <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 6 }}>Interactive Wheels — Visual Maps of Your Chart</div>
+                      <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 6 }}>Interactive Wheels — Maps of Your Chart</div>
                       <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>
-                        Each wheel is a circular sky-map. The outer ring shows zodiac signs. Planet symbols sit where they were at your birth — hover or tap any symbol for detailed info. Lines between planets show aspects (angles of connection).
+                        Each wheel is a circular sky-map. The outer ring shows the zodiac signs. Planet symbols sit at the computed positions for this chart — hover or tap any symbol for detailed info. Lines between planets show aspects (angles of connection).
                       </p>
                     </Card>
                     <div style={{ display: "flex", gap: 6, flexWrap: "wrap", justifyContent: "center" }}>
                       {[
-                        { id: "western", label: "☉ Western (Tropical)", col: M3.primary, tip: "Season-based zodiac used in Western astrology. Your main birth chart." },
+                        { id: "western", label: "☉ Western (Tropical)", col: M3.primary, tip: "Season-based zodiac used in Western astrology. The main birth chart." },
                         { id: "sidereal", label: "☽ Lunar (Sidereal)", col: "#ce93d8", tip: "Star-based zodiac used in Vedic/Jyotish astrology. Accounts for Earth's wobble." },
-                        { id: "solar", label: "↩ Solar Return", col: "#ffa726", tip: "Chart for when the Sun returns to its birth position each year — maps your year ahead." },
-                        { id: "chinese", label: "☯ Chinese", col: "#ffd54f", tip: "Your Chinese zodiac wheel — animals, elements, trigrams, and Yin/Yang." },
+                        { id: "solar", label: "↩ Solar Return", col: "#ffa726", tip: "Chart cast for the moment the Sun regains its natal longitude each year — maps your year ahead." },
+                        { id: "chinese", label: "☯ Chinese", col: "#ffd54f", tip: "The Chinese zodiac wheel — animals, elements, trigrams, and Yin/Yang." },
                       ].map(m => (
                         <div key={m.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3 }}>
                           <button onClick={() => setWheelMode(m.id)}
@@ -1265,13 +1265,13 @@ export default function App() {
                     {wheelMode === "western" && (
                       <Card title="☉ Western Birth Chart — Tropical Zodiac">
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-                          The tropical zodiac is anchored to the seasons — 0° Aries begins at the spring equinox. This is the standard system in Western astrology. AC (Ascendant) sits at the <strong>left</strong> — this is your rising sign. MC (Midheaven) is near the <strong>top</strong> — your career/public point. Hover any symbol for details.
+                          The tropical zodiac is anchored to the seasons: 0° Aries begins at the March equinox. It is the standard frame in Western practice, and it separates from the sidereal frame by the precession of the equinoxes.
                         </p>
                         <div style={{ display: "flex", justifyContent: "center" }}>
                           <WheelWithTooltip positions={res.trop} houses={res.houses} size={Math.min(560, window.innerWidth - 64)} id="full" />
                         </div>
                         <div style={{ display: "flex", justifyContent: "center", gap: 16, marginTop: 12, flexWrap: "wrap" }}>
-                          {[{ l: "AC", c: M3.tertiary, d: "Ascendant (left) — your rising sign, first impressions" }, { l: "MC", c: M3.primary, d: "Midheaven (top) — career, public reputation" }, { l: "DC", c: M3.tertiary, d: "Descendant (right) — partnerships, what you attract" }, { l: "IC", c: M3.primary, d: "Imum Coeli (bottom) — home, roots, private self" }].map(a => (
+                          {[{ l: "AC", c: M3.tertiary, d: "Ascendant (left) — the degree rising at the eastern horizon" }, { l: "MC", c: M3.primary, d: "Midheaven (top) — career, public reputation" }, { l: "DC", c: M3.tertiary, d: "Descendant (right) — partnerships, what you attract" }, { l: "IC", c: M3.primary, d: "Imum Coeli (bottom) — home, roots, private self" }].map(a => (
                             <div key={a.l} style={{ display: "flex", alignItems: "center", gap: 6 }}>
                               <span style={{ color: a.c, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "700" }}>{a.l}</span>
                               <span style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.62rem", color: M3.onSurfaceVariant }}>{a.d}</span>
@@ -1284,7 +1284,7 @@ export default function App() {
                     {wheelMode === "sidereal" && (
                       <Card title="☽ Sidereal Birth Chart — Vedic/Lunar Zodiac">
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-                          The sidereal zodiac is anchored to the fixed stars. Used in Vedic (Jyotish) astrology, it accounts for the precession of the equinoxes — currently about <strong>{ayanamsa(res.jd).toFixed(1)}°</strong> offset from the tropical system. Notice how all your planet positions have shifted compared to the Western wheel.
+                          The sidereal zodiac is anchored to the fixed stars and is the frame used in Jyotish. The offset from the tropical frame is the ayanamsa, a chosen value rather than an observed one; SGE uses a linear approximation of Lahiri.
                         </p>
                         <div style={{ display: "flex", justifyContent: "center" }}>
                           <WheelWithTooltip positions={res.sid} houses={res.houses} size={Math.min(560, window.innerWidth - 64)} id="sidwheel" />
@@ -1300,7 +1300,7 @@ export default function App() {
                       res.srPos ? (
                         <Card title="↩ Solar Return Chart">
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-                            The Solar Return chart is cast for the exact moment the Sun returns to its birth position each year. It maps the themes and energies of your coming year. Compare planet positions here to your natal wheel to see what's shifted.
+                            The solar return chart is cast for the moment the Sun regains its natal longitude. That moment is a real astronomical event; reading the resulting chart as governing the year is an interpretive convention.
                           </p>
                           <div style={{ display: "flex", justifyContent: "center" }}>
                             <WheelWithTooltip positions={res.srPos} houses={res.houses} size={Math.min(560, window.innerWidth - 64)} id="srwheel" />
@@ -1331,7 +1331,7 @@ export default function App() {
                     {wheelMode === "chinese" && (
                       <Card title={`☯ Chinese Zodiac Wheel — ${res.cn.element} ${res.cn.animal}`}>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-                          The Chinese zodiac is a 12-year cycle of animals, each paired with one of five elements and a Yin/Yang polarity. Your position is highlighted below.
+                          The Chinese zodiac is a 12-year cycle of animals, each paired with one of five elements and a Yin/Yang polarity. The cycle year begins at the lunar new year. The position is highlighted below.
                         </p>
                         <div style={{ display: "flex", justifyContent: "center" }}>
                           <ChineseWheelWithTooltip cn={res.cn} size={Math.min(500, window.innerWidth - 64)} />
@@ -1442,7 +1442,7 @@ export default function App() {
 
                     <Card title={`⚹ Aspect Web — ${res.aspects.length} connections visualised`}>
                       <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-                        This wheel highlights the <strong>connections between your planets</strong>. Thicker, brighter lines mean stronger aspects. Aspect symbols appear on the strongest links. Hover any line for details.
+                        This wheel draws the <strong>contacts between the bodies</strong>. Thicker, brighter lines mean tighter aspects. Aspect symbols appear on the strongest links. Hover any line for details.
                       </p>
                       <div style={{ display: "flex", justifyContent: "center" }}>
                         <WheelWithTooltip positions={res.trop} houses={res.houses} size={Math.min(520, window.innerWidth - 64)} id="aspw" mode="aspects" />
@@ -1522,7 +1522,7 @@ export default function App() {
                         <div style={{ flex: 1, minWidth: 220 }}>
                           <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.secondary, marginBottom: 8 }}>Secondary Progressions — who you're becoming</div>
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: "0 0 10px" }}>
-                            Imagine your birth chart is a seed. Secondary progressions show how that seed has grown. The method is simple but profound: <strong style={{ color: M3.primary }}>one day after birth = one year of life</strong>. So at age {age}, the planets are read from the sky {age} days after you were born.
+                            Secondary progressions read one day of ephemeris time after birth as standing for one year of life. It is a convention of correspondence, not a claim about where the bodies physically stand.
                           </p>
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
                             The Progressed Moon changes sign every ~2.5 years and is the most felt. The Progressed Sun shifts sign roughly every 30 years — a complete identity rebirth.
@@ -1550,18 +1550,18 @@ export default function App() {
                       const nSun = zodSign(res.trop.Sun), pSun = zodSign(res.prog.Sun), nMoon = zodSign(res.trop.Moon), pMoon = zodSign(res.prog.Moon);
                       const sunChanged = nSun !== pSun, moonChanged = nMoon !== pMoon;
                       const PROG_SIGN_ARC = {
-                        Aries: "assertiveness, independence, and a pioneering spirit — you're learning to put yourself first",
-                        Taurus: "patience, sensory pleasure, and building real value — you're learning what truly lasts",
-                        Gemini: "curiosity, communication, and intellectual exploration — you're learning to ask better questions",
-                        Cancer: "emotional depth, nurturing, and creating home — you're learning what it means to belong",
-                        Leo: "creative self-expression, courage, and visibility — you're learning to let yourself be seen",
-                        Virgo: "precision, service, and practical mastery — you're learning that excellence is a form of love",
-                        Libra: "partnership, balance, and aesthetic refinement — you're learning that you don't have to do it alone",
-                        Scorpio: "depth, transformation, and radical honesty — you're learning to let go of what no longer serves you",
-                        Sagittarius: "expansion, adventure, and philosophical inquiry — you're learning that the truth is bigger than you thought",
-                        Capricorn: "ambition, structure, and earned authority — you're learning that real power comes with real responsibility",
-                        Aquarius: "individuality, innovation, and community vision — you're learning to be yourself in service to something larger",
-                        Pisces: "compassion, imagination, and spiritual surrender — you're learning that letting go is the deepest form of strength",
+                        Aries: "initiation and self-assertion, the cardinal opening of the fire triplicity",
+                        Taurus: "stability and sensory value, the fixed earth of the spring quarter",
+                        Gemini: "exchange and multiplicity, the mutable air that closes spring",
+                        Cancer: "shelter and origin, the cardinal water that opens summer",
+                        Leo: "display and singular authority, the fixed fire of high summer",
+                        Virgo: "discrimination and service, the mutable earth that closes summer",
+                        Libra: "relation and proportion, the cardinal air that opens autumn",
+                        Scorpio: "depth and irreversibility, the fixed water of mid-autumn",
+                        Sagittarius: "extension and doctrine, the mutable fire that closes autumn",
+                        Capricorn: "structure and office, the cardinal earth that opens winter",
+                        Aquarius: "abstraction and the collective, the fixed air of deep winter",
+                        Pisces: "dissolution and the unbounded, the mutable water that closes the year",
                       };
                       return (
                         <Card title="📖 Progressed Positions">
@@ -1704,34 +1704,34 @@ export default function App() {
 
                           const yearCards = [
                             {
-                              icon: "☉", title: "The Overall Tone of Your Year", sign: srSun, col: P_COL.Sun,
-                              body: `Your year is set in a ${srSun} key — ${signShort(srSun)}. This colours everything: your sense of identity this year, what feels important, and the general atmosphere of your daily life. Think of this as the background music that plays all year.`
+                              icon: "☉", title: "Solar Return Sun", sign: srSun, col: P_COL.Sun,
+                              body: `The Sun stands in ${srSun} in the return chart — by definition at the same longitude it held at birth, so its sign is fixed and carries no new information. ${PLANET_IN_SIGN.Sun?.[srSun] || ""}`
                             },
                             {
-                              icon: "☽", title: "Your Emotional Landscape This Year", sign: srMoon, col: P_COL.Moon,
-                              body: `Emotionally, this year runs on ${srMoon} energy — ${signShort(srMoon)}. This is how you'll process your feelings, what kind of comfort you'll seek, and what will make you feel safe or unsettled. ${srMoon === "Aries" ? "Expect quick emotional reactions and a need for independence." : srMoon === "Taurus" ? "Expect a craving for stability and physical comfort." : srMoon === "Gemini" ? "Expect emotional restlessness and a need to talk things through." : srMoon === "Cancer" ? "Expect heightened sensitivity and a pull toward home and family." : srMoon === "Leo" ? "Expect a need to be appreciated and a more dramatic emotional range." : srMoon === "Virgo" ? "Expect a tendency to worry and show love through practical help." : srMoon === "Libra" ? "Expect a deep need for harmony and discomfort with conflict." : srMoon === "Scorpio" ? "Expect intense, all-or-nothing feelings and a desire for emotional truth." : srMoon === "Sagittarius" ? "Expect optimism, restlessness, and a need for emotional space." : srMoon === "Capricorn" ? "Expect emotional self-discipline and a focus on responsibilities." : srMoon === "Aquarius" ? "Expect unconventional emotional needs and a desire for independence." : "Expect heightened empathy, vivid dreams, and a need for solitude to recharge."}`
+                              icon: "☽", title: "Solar Return Moon", sign: srMoon, col: P_COL.Moon,
+                              body: `The Moon stands in ${srMoon} in the return chart. The Moon is the fastest body, so its return position is the most sensitive of all to the accuracy of the return moment. ${PLANET_IN_SIGN.Moon?.[srMoon] || ""}`
                             },
                             {
-                              icon: "♀", title: "Love and Relationships This Year", sign: srVenus, col: P_COL.Venus,
-                              body: `Venus in ${srVenus} shapes how you connect with others this year — ${signShort(srVenus)}. This affects romantic relationships, friendships, your aesthetic tastes, and how you spend money on pleasure. ${srVenus === "Aries" ? "You'll be more direct in love — attracted to boldness and turned off by passivity." : srVenus === "Taurus" ? "You'll crave physical affection, loyalty, and sensual experiences." : srVenus === "Gemini" ? "You'll value witty conversation and variety in your social life." : srVenus === "Cancer" ? "You'll want emotional depth, nurturing, and domestic cosiness." : srVenus === "Leo" ? "You'll want romance, grand gestures, and to feel truly special." : srVenus === "Virgo" ? "You'll show and receive love through acts of service and thoughtful details." : srVenus === "Libra" ? "You'll seek elegance, fairness, and genuine partnership." : srVenus === "Scorpio" ? "You'll want intense, transformative connections — nothing shallow will satisfy." : srVenus === "Sagittarius" ? "You'll be drawn to adventure, honesty, and philosophical connection." : srVenus === "Capricorn" ? "You'll value commitment, reliability, and relationships that build toward something lasting." : srVenus === "Aquarius" ? "You'll value freedom within relationships and be attracted to originality." : "You'll seek soulful, compassionate connections and be moved by beauty and art."}`
+                              icon: "♀", title: "Solar Return Venus", sign: srVenus, col: P_COL.Venus,
+                              body: `Venus stands in ${srVenus} in the return chart. ${PLANET_IN_SIGN.Venus?.[srVenus] || ""}`
                             },
                             {
-                              icon: "♂", title: "How You'll Take Action This Year", sign: srMars, col: P_COL.Mars,
-                              body: `Mars in ${srMars} drives your energy and initiative — ${signShort(srMars)}. This determines how you'll fight for what you want, what motivates you to get up in the morning, and how you handle conflict. ${srMars === "Aries" ? "Your energy is high and your patience is low — you'll charge directly at goals." : srMars === "Taurus" ? "You'll be slow to start but unstoppable once moving — persistence is your weapon." : srMars === "Gemini" ? "You'll pursue multiple things at once and use words as your primary tool of action." : srMars === "Cancer" ? "You'll be motivated by protecting what you love and may be passive-aggressive when crossed." : srMars === "Leo" ? "You'll act with confidence and flair — you want to be seen doing impressive things." : srMars === "Virgo" ? "You'll be methodical and precise — success comes through careful, well-organised effort." : srMars === "Libra" ? "You'll prefer to negotiate rather than fight, but when pushed, you fight for fairness." : srMars === "Scorpio" ? "You'll act with intensity and strategic depth — you play the long game." : srMars === "Sagittarius" ? "You'll be bold, spontaneous, and willing to take big risks for big rewards." : srMars === "Capricorn" ? "You'll be disciplined and strategic — every action serves a long-term plan." : srMars === "Aquarius" ? "You'll act unconventionally and be motivated by causes bigger than yourself." : "You'll act on intuition, sometimes passive, but capable of surprising force when inspired."}`
+                              icon: "♂", title: "Solar Return Mars", sign: srMars, col: P_COL.Mars,
+                              body: `Mars stands in ${srMars} in the return chart. ${PLANET_IN_SIGN.Mars?.[srMars] || ""}`
                             },
                             {
-                              icon: "♃", title: "Where Life Opens Up for You", sign: srJup, col: P_COL.Jupiter,
-                              body: `Jupiter in ${srJup} shows where opportunity, growth, and good fortune flow this year — ${signShort(srJup)}. This is where doors open, where saying "yes" tends to pay off, and where you can expand beyond your current limits. ${srJup === "Aries" ? "Opportunities come through bold action and personal initiative." : srJup === "Taurus" ? "Growth comes through financial stability, investments, and enjoying life's pleasures." : srJup === "Gemini" ? "Opportunities come through learning, writing, networking, and being curious." : srJup === "Cancer" ? "Growth comes through home, family, and deepening your emotional roots." : srJup === "Leo" ? "Opportunities come through creative expression, leadership, and putting yourself centre stage." : srJup === "Virgo" ? "Growth comes through improving your skills, health habits, and being of service." : srJup === "Libra" ? "Opportunities come through partnerships, collaboration, and social connections." : srJup === "Scorpio" ? "Growth comes through deep transformation, shared resources, and facing what you've avoided." : srJup === "Sagittarius" ? "Opportunities come through travel, education, philosophy, and expanding your worldview." : srJup === "Capricorn" ? "Growth comes through career advancement, taking on responsibility, and building lasting structures." : srJup === "Aquarius" ? "Opportunities come through innovation, community involvement, and unconventional paths." : "Growth comes through spiritual practice, creative imagination, and letting go of what no longer serves you."}`
+                              icon: "♃", title: "Solar Return Jupiter", sign: srJup, col: P_COL.Jupiter,
+                              body: `Jupiter stands in ${srJup} in the return chart. Jupiter takes about 11.9 years to circle the zodiac, so this placement changes slowly between returns. ${PLANET_IN_SIGN.Jupiter?.[srJup] || ""}`
                             },
                             {
-                              icon: "♄", title: "Where Life Tests You This Year", sign: srSat, col: P_COL.Saturn,
-                              body: `Saturn in ${srSat} shows where you'll face the hardest lessons — ${signShort(srSat)}. This is not punishment; it's where life asks you to grow up, get serious, and do the work. The rewards here are earned, not given. ${srSat === "Aries" ? "You're being tested on your ability to act with discipline rather than impulse — courage must be paired with patience." : srSat === "Taurus" ? "You're being tested on your relationship with money, security, and material attachment — real stability comes from within." : srSat === "Gemini" ? "You're being tested on your ability to focus and commit to one idea rather than scattering your attention." : srSat === "Cancer" ? "You're being tested on emotional maturity — learning to nurture without smothering and to be vulnerable without collapsing." : srSat === "Leo" ? "You're being tested on ego and self-expression — learning to lead with humility and create for meaning, not applause." : srSat === "Virgo" ? "You're being tested on perfectionism and self-criticism — learning that 'good enough' is sometimes the wisest path." : srSat === "Libra" ? "You're being tested on relationships and fairness — learning to set boundaries even when it feels unharmonious." : srSat === "Scorpio" ? "You're being tested on control and trust — learning to let go of what you cannot change and trust the process." : srSat === "Sagittarius" ? "You're being tested on beliefs and overcommitment — learning that freedom requires structure and that truth requires nuance." : srSat === "Capricorn" ? "You're being tested on ambition and work-life balance — learning that achievement without rest is hollow." : srSat === "Aquarius" ? "You're being tested on individuality and belonging — learning to be yourself within community, not apart from it." : "You're being tested on boundaries and escapism — learning to stay present with discomfort rather than retreating into fantasy."}`
+                              icon: "♄", title: "Solar Return Saturn", sign: srSat, col: P_COL.Saturn,
+                              body: `Saturn stands in ${srSat} in the return chart. Saturn takes about 29.4 years to circle the zodiac. ${PLANET_IN_SIGN.Saturn?.[srSat] || ""}`
                             },
                           ];
                           return (<>
                             <Card title="↩ Solar Return — Positions">
                               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 16px" }}>
-                                Each section below describes a different area of your life over the coming year. This is based on where the planets were at the exact moment the Sun returned to its birth position — your annual "reset point."
+                                The return chart is cast for the moment the Sun regains its natal longitude. That moment is a real astronomical event; the practice of reading the resulting chart as governing the following year is an interpretive convention with no astronomical warrant. The houses depend on where the chart is cast, and practitioners differ between birthplace and current location.
                               </p>
                               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                                 {yearCards.map(yc => (
@@ -1750,7 +1750,7 @@ export default function App() {
                             <Card title="↩ Year Ahead — Summary">
                               <div style={{ padding: "14px 16px", background: M3.surfaceVariant, borderRadius: 12, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.84rem", color: M3.onSurface, lineHeight: 1.8 }}>
                                 <p style={{ margin: 0 }}>
-                                  This year's overall atmosphere is {signShort(srSun)}. Your emotional life will feel {signShort(srMoon)} — {signFeel(srMoon).toLowerCase()}. In relationships, you'll be drawn to {signShort(srVenus).split(",")[0].toLowerCase()} dynamics. Your drive and energy will be {signShort(srMars).split(",")[0].toLowerCase()}.
+                                  The return positions are listed above. Nothing in the astronomy makes them govern the year; that is a convention of the technique.
                                 </p>
                                 <p style={{ margin: "10px 0 0" }}>
                                   The biggest opportunities this year come through {signShort(srJup).split(",").slice(0, 2).join(" and").toLowerCase()} — lean into these areas when doors open. The hardest lessons involve {signShort(srSat).split(",").slice(0, 2).join(" and").toLowerCase()} — these areas will ask for patience, discipline, and maturity, but the growth you earn here will last.
@@ -1791,7 +1791,7 @@ export default function App() {
                   const HARM_DEFS = {
                     2: { col: "#ff8a50", label: "Inner Duality (Opposition)", desc: "The 2nd harmonic reveals your internal oppositions — the parts of yourself that pull in different directions. When planets cluster together here, those areas of life are in a tug-of-war. This is the source of your deepest inner tensions but also your capacity for balance. Integration of these poles is a lifetime's work.", lookFor: "Conjunctions in this chart correspond to oppositions in your birth chart. Clusters show where your inner contradictions are strongest." },
                     3: { col: "#a5d6a7", label: "Natural Gifts (Trine)", desc: "The 3rd harmonic highlights your effortless talents — things that come so naturally you may not even recognize them as gifts. This is the chart of flow, ease, and innate ability. Where planets group together here, life hands you opportunities without you needing to force them.", lookFor: "Conjunctions here correspond to trines in your birth chart. The more planets clustered, the more natural talent is concentrated in that area." },
-                    4: { col: "#ff5252", label: "Friction & Drive (Square)", desc: "The 4th harmonic reveals your internal friction points — where tension, pressure, and challenge build up. These aren't punishments; they're catalysts. This chart shows where life pushes you hardest, and therefore where you develop the most strength, ambition, and achievement.", lookFor: "Conjunctions here correspond to squares in your birth chart. Tight clusters indicate powerful drive and where you'll face your biggest growth edges." },
+                    4: { col: "#ff5252", label: "Friction & Drive (Square)", desc: "The 4th harmonic, the square and opposition family, 90°.", lookFor: "Conjunctions here correspond to squares in your birth chart. Tight clusters indicate powerful drive and where you'll face your biggest growth edges." },
                     5: { col: "#64b5f6", label: "Creativity & Art", desc: "The 5th harmonic is your creative DNA — how you play, invent, and express originality. It reveals talents for art, music, performance, design, and any form of creative self-expression. This is the chart astrologers look at to understand someone's unique artistic voice.", lookFor: "Clusters show where your creative power is concentrated. Planets in conjunction here work together to produce original, inventive expression in those life areas." },
                     6: { col: "#81c784", label: "Service & Duty", desc: "The 6th harmonic combines the themes of opposition (2) and trine (3) — it reveals where duty, responsibility, and productive service intersect with natural ability. This is the chart of craftsmanship, health, and meaningful work.", lookFor: "Conjunctions here indicate where you can turn natural skill into practical contribution. Strong patterns suggest a calling toward healing, teaching, or skilled trades." },
                     7: { col: "#ce93d8", label: "Intuition & Spiritual Gifts", desc: "The 7th harmonic is the most mystical — it reveals spiritual sensitivity, intuitive perception, and connection to the numinous. This number is sacred across traditions (7 days, 7 chakras, 7 planets of antiquity). Patterns here suggest where you access inspiration that feels channeled or prophetic.", lookFor: "Clusters show where your intuitive antenna is strongest. Tight conjunctions indicate psychic sensitivity, spiritual gifts, or artistic inspiration that transcends the rational." },
