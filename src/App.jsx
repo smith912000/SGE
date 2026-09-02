@@ -1,3 +1,6 @@
+import SymbolPanel from './components/ui/SymbolPanel.jsx';
+import { getPlanetInSign } from './data/symbolism/planetInSign.js';
+import { getSignSymbolism } from './data/symbolism/signSymbolism.js';
 import { useState, useEffect, useRef, useCallback, lazy, Suspense } from "react";
 
 // Hooks
@@ -319,7 +322,7 @@ export default function App() {
     { id: "aspects", label: "⚹ Connections" },
     { id: "progressions", label: "→ Timing" },
     { id: "harmonics", label: "∞ Hidden Patterns" },
-    { id: "synastry", label: "♡ Compatibility" },
+    { id: "synastry", label: "◈ Contacts" },
     { id: "chinese", label: "☯ Chinese Year" },
     { id: "vedic", label: "🪔 Vedic" },
     { id: "numerology", label: "🔢 Numerology" },
@@ -591,8 +594,8 @@ export default function App() {
                       </Card>
 
                       {(() => {
-                        const loveStyle = { Fire: "display and enthusiasm", Earth: "provision and reliability", Air: "speech, ideas and exchange", Water: "depth of feeling and tacit care" };
-                        const angerStyle = { Fire: "open confrontation — quick to ignite, quick to release", Earth: "slow-burning persistence — rarely sudden, seldom forgetting", Air: "sharp speech and strategic detachment — the quarrel is argued", Water: "sustained intensity — feeling carries the action" };
+                        const loveStyle = {Fire:"bold gestures and enthusiasm",Earth:"practical devotion and reliability",Air:"words, ideas and intellectual connection",Water:"emotional depth and intuitive care"};
+                        const angerStyle = {Fire:"direct confrontation, quick to ignite and quick to subside",Earth:"slow-burning persistence rather than sudden discharge",Air:"argument and strategic detachment",Water:"indirect expression, withdrawal and long memory"};
                         return (
                           <div style={grid2}>
                             <Card title="💖 Venus — The Attractive Principle">
@@ -642,8 +645,8 @@ export default function App() {
                       })()}
 
                       {(() => {
-                        const learnStyle = { Fire: "doing and testing — hands-on, rapid, moving by leap", Earth: "application — step by step, methodical, tied to evidence", Air: "reading, discussion and dispute — the abstract handled directly", Water: "absorption — the sense taken before the argument" };
-                        const commStyle = { Cardinal: "direct and initiating — the point made first", Fixed: "thorough and persistent — the idea developed before it is released", Mutable: "adaptable and wide-ranging — the register shifted to the hearer" };
+                        const learnStyle = {Fire:"doing and experimenting, by intuitive leaps",Earth:"practical application, step by step and evidence-led",Air:"discussion and abstraction, by pattern and analogy",Water:"immersion and association, by feel rather than sequence"};
+                        const commStyle = {Cardinal:"initiating, coming directly to the point",Fixed:"thorough and persistent, developing an idea fully before releasing it",Mutable:"adaptive, revising in the act of speaking"};
                         return (
                           <Card title="🧠 Mercury — The Messenger">
                             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
@@ -670,7 +673,7 @@ export default function App() {
                       })()}
 
                       <div style={grid2}>
-                        <Card title="♃ Where Life Expands — Jupiter in Your Chart">
+                        <Card title="♃ Jupiter — The Greater Benefic">
                           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
                             <span style={{ color: P_COL.Jupiter, fontSize: "1.4rem" }}>♃</span>
                             <span style={{ color: SIGN_COL[jupSign], fontFamily: "'Share Tech Mono',monospace", fontWeight: "700" }}>Jupiter in {jupSign}</span>
@@ -679,7 +682,7 @@ export default function App() {
                             {JUPITER_DEEP[jupSign]?.plain}
                           </p>
                         </Card>
-                        <Card title="♄ Where Life Tests You — Saturn in Your Chart">
+                        <Card title="♄ Saturn — The Greater Malefic">
                           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
                             <span style={{ color: P_COL.Saturn, fontSize: "1.4rem" }}>♄</span>
                             <span style={{ color: SIGN_COL[satSign], fontFamily: "'Share Tech Mono',monospace", fontWeight: "700" }}>Saturn in {satSign}</span>
@@ -690,16 +693,16 @@ export default function App() {
                         </Card>
                       </div>
 
-                      <Card title="⚖ Your Inner Tensions & Gifts — Key Connections">
+                      <Card title="⚖ Soft and Hard Contacts">
                         <div style={{ marginBottom: 16 }}>
-                          <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 10 }}>NATURAL GIFTS ({softAsp.length}) — talents and ease built into your chart</div>
+                          <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 10 }}>SOFT CONTACTS ({softAsp.length}) — talents and ease built into your chart</div>
                           {softAsp.slice(0, 5).map((a, i) => {
                             const r0 = (P_ROLE[a.p1] || a.p1).toLowerCase(), r1 = (P_ROLE[a.p2] || a.p2).toLowerCase();
                             const k1 = `${P_ROLE[a.p1]}+${P_ROLE[a.p2]}`, k2 = `${P_ROLE[a.p2]}+${P_ROLE[a.p1]}`;
                             const pi = PAIR_INSIGHT[k1] || PAIR_INSIGHT[k2] || "";
                             const giftAdvice = a.name === "Conjunction" ? `Because these two forces are fused, they amplify each other powerfully. The self-development opportunity: consciously direct this combined energy rather than letting it run on autopilot.`
-                              : a.name === "Trine" ? `This is a natural talent — it comes so easily you may not recognise it as a gift. The self-development opportunity: deliberately invest in this area, because ease here means you can reach mastery faster than most.`
-                                : `This is a gentle opportunity that activates when you consciously choose to use it. The self-development opportunity: look for situations that let these two parts of you collaborate — that's where you'll find effortless progress.`;
+                              : a.name === "Trine" ? `The trine is 120°, a third of the circle, and both signs share an element.`
+                                : `The sextile is 60°, a sixth of the circle, and carries the narrowest orb of the soft aspects here.`;
                             return (
                               <div key={i} style={{ padding: "10px 14px", marginBottom: 8, borderRadius: 10, background: a.col + "0e", borderLeft: `3px solid ${a.col}` }}>
                                 <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", color: M3.onSurface }}>
@@ -708,7 +711,7 @@ export default function App() {
                                   <span style={{ color: P_COL[a.p2] }}>{P_SYM[a.p2]} {a.p2}</span>
                                 </div>
                                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: "6px 0 0" }}>
-                                  {pi ? `Your ${r0} and ${r1}: ${pi}.` : `Your ${r0} and ${r1} work together naturally.`}
+                                  {pi ? `${r0} and ${r1}: ${pi}` : `A soft contact between the ${r0.toLowerCase()} and ${r1.toLowerCase()} significators.`}
                                 </p>
                                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.55, color: "#69ff8e", margin: "6px 0 0", fontStyle: "italic" }}>
                                   {giftAdvice}
@@ -718,16 +721,16 @@ export default function App() {
                           })}
                         </div>
                         <div>
-                          <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 10 }}>GROWTH EDGES ({hardAsp.length}) — where challenge builds your deepest strengths</div>
+                          <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 10 }}>HARD CONTACTS ({hardAsp.length}) — where challenge builds your deepest strengths</div>
                           {hardAsp.slice(0, 5).map((a, i) => {
                             const r0 = (P_ROLE[a.p1] || a.p1).toLowerCase(), r1 = (P_ROLE[a.p2] || a.p2).toLowerCase();
                             const k1 = `${P_ROLE[a.p1]}+${P_ROLE[a.p2]}`, k2 = `${P_ROLE[a.p2]}+${P_ROLE[a.p1]}`;
                             const pi = PAIR_INSIGHT[k1] || PAIR_INSIGHT[k2] || "";
                             const growthAdvice = a.name === "Square"
-                              ? `This square creates internal friction that never fully resolves — and that's the point. It's a lifelong engine of growth. The self-development work: instead of trying to eliminate the tension between your ${r0} and ${r1}, learn to use it as fuel. The moments when these two parts of you clash are exactly the moments that forge your character.`
+                              ? `The square is 90°; the two signs share a mode but not an element. The classical reading is friction.`
                               : a.name === "Opposition"
-                                ? `This opposition means your ${r0} and ${r1} pull in opposite directions — you may feel like you have to choose one over the other. The self-development work: you don't. Integration means holding both, learning to swing between the poles consciously rather than being yanked by whichever one is louder. The people who master their oppositions become remarkably balanced.`
-                                : `This creates a persistent challenge that pushes you to develop where you're weakest. The self-development work: notice when your ${r0} and ${r1} feel at odds, and instead of suppressing one, ask what each is trying to tell you.`;
+                                ? `The opposition is 180°, the greatest possible separation; the two signs share a mode and stand in complementary elements.`
+                                : `A minor hard aspect. Its orb is narrow, so whether it registers depends on the orb policy in use.`;
                             return (
                               <div key={i} style={{ padding: "10px 14px", marginBottom: 8, borderRadius: 10, background: a.col + "0e", borderLeft: `3px solid ${a.col}` }}>
                                 <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", color: M3.onSurface }}>
@@ -736,7 +739,7 @@ export default function App() {
                                   <span style={{ color: P_COL[a.p2] }}>{P_SYM[a.p2]} {a.p2}</span>
                                 </div>
                                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: "6px 0 0" }}>
-                                  {pi ? `Your ${r0} and ${r1}: ${pi}.` : `Your ${r0} and ${r1} are in tension.`}
+                                  {pi ? `${r0} and ${r1}: ${pi}` : `A hard contact between the ${r0.toLowerCase()} and ${r1.toLowerCase()} significators.`}
                                 </p>
                                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.55, color: "#ff8a50", margin: "6px 0 0", fontStyle: "italic" }}>
                                   {growthAdvice}
@@ -747,7 +750,7 @@ export default function App() {
                         </div>
                       </Card>
 
-                      <Card title="△ Elemental Makeup — Your Energetic DNA">
+                      <Card title="△ Elemental and Modal Distribution">
                         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>
                           {Object.entries(res.el).sort(([, a], [, b]) => b - a).map(([el, v]) => (
                             <div key={el} style={{ flex: 1, minWidth: 120, padding: "12px 14px", borderRadius: 12, background: EL_COL[el] + "11", border: `1px solid ${EL_COL[el]}33`, textAlign: "center" }}>
@@ -757,21 +760,21 @@ export default function App() {
                           ))}
                         </div>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
-                          Your dominant element is <strong style={{ color: EL_COL[domEl[0]] }}>{domEl[0]} ({domEl[1]} planets)</strong>. {domEl[0] === "Fire" ? "Fire-dominant people are energetic, inspiring, and action-oriented. You lead with passion and instinct. Your challenge is patience and listening." : domEl[0] === "Earth" ? "Earth-dominant people are practical, reliable, and grounded. You build real things in the real world. Your challenge is flexibility and letting go of control." : domEl[0] === "Air" ? "Air-dominant people are intellectual, social, and communicative. You live in the world of ideas and connection. Your challenge is grounding your thoughts in action and emotion." : "Water-dominant people are intuitive, emotional, and deeply perceptive. You feel the undercurrents others miss. Your challenge is boundaries and not absorbing everyone else's pain."}
+                        The most represented element in this figure is <strong style={{color:EL_COL[domEl[0]]}}>{domEl[0]} ({domEl[1]} bodies)</strong>. Which bodies are counted, and whether the angles count, varies between schools, so a dominance figure is partly an artefact of the counting rule.
                         </p>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, marginTop: 10 }}>
-                          Your dominant action style is <strong style={{ color: MOD_COL[domMod[0]] }}>{domMod[0]} ({domMod[1]} planets)</strong>: {modLabel[domMod[0]] || domMod[0]}. {domMod[0] === "Cardinal" ? "Cardinal-dominant charts produce leaders and initiators — people who start things, launch projects, and set direction. The risk is starting too many things without finishing." : domMod[0] === "Fixed" ? "Fixed-dominant charts produce people of incredible persistence and focus. Once committed, you don't waver. The risk is stubbornness and resistance to necessary change." : "Mutable-dominant charts produce versatile, adaptable people who thrive in changing environments. You can shape-shift to meet any challenge. The risk is losing your center and becoming scattered."}
+                        The most represented mode is <strong style={{color:MOD_COL[domMod[0]]}}>{domMod[0]} ({domMod[1]} bodies)</strong>. The three modes divide the twelve signs by position within each season.
                         </p>
                       </Card>
 
-                      <Card title="∞ Your Harmonic Layers — Hidden Patterns Explained">
+                      <Card title="∞ Harmonic Layers">
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-                          Harmonics are like musical overtones in your chart. Your birth chart is the fundamental note; each harmonic reveals a subtler frequency of who you are. They are calculated by multiplying every planet's position by a number and wrapping it around the circle. Here are the key layers in your chart:
+                        The nth harmonic multiplies every longitude by n and reduces modulo 360, so bodies separated by 360/n degrees land together. The transform multiplies positional error along with position.
                         </p>
                         {[
-                          { n: 5, title: "Creativity & Art (5th Harmonic)", col: "#64b5f6", desc: "This pattern reveals your creative DNA — how you play, what you make, and where your originality lives. Clusters here show concentrated artistic or inventive talent." },
-                          { n: 7, title: "Intuition & Spiritual Gifts (7th Harmonic)", col: "#ce93d8", desc: "This pattern reveals mystical leanings — where you sense things beyond the rational. Strong patterns here indicate spiritual sensitivity, prophetic dreams, or artistic inspiration that feels channeled." },
-                          { n: 9, title: "Purpose & Soul Bonds (9th Harmonic)", col: "#f48fb1", desc: "Called the Navamsa in Vedic astrology, this is considered the chart of your soul's deeper purpose and your most meaningful partnerships. It shows what you are truly here to do." },
+                          { n: 5, title: "Creativity & Art (5th Harmonic)", col: "#64b5f6", desc: "The quintile family, 72°. Kepler argued for these divisions on harmonic grounds; they are not part of the Ptolemaic set." },
+                          { n: 7, title: "Intuition & Spiritual Gifts (7th Harmonic)", col: "#ce93d8", desc: "The septile family, 51.4°. The division does not resolve into whole degrees." },
+                          { n: 9, title: "Purpose & Soul Bonds (9th Harmonic)", col: "#f48fb1", desc: "The novile family, 40°, corresponding to the navamsa of Vedic practice." },
                         ].map(h => {
                           const hPos = harmonic(res.trop, h.n);
                           const hAsp = calcAspects(hPos);
@@ -782,7 +785,7 @@ export default function App() {
                               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: "0 0 8px" }}>{h.desc}</p>
                               {tight.length > 0 && (
                                 <div style={{ borderTop: `1px solid ${h.col}22`, paddingTop: 8 }}>
-                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.secondary, marginBottom: 4 }}>STRONGEST PATTERNS IN YOUR CHART:</div>
+                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.secondary, marginBottom: 4 }}>TIGHTEST GROUPINGS IN THIS CHART:</div>
                                   {tight.map((a, i) => (
                                     <div key={i} style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", color: M3.onSurfaceVariant, padding: "2px 0" }}>
                                       {P_SYM[a.p1]} {a.p1} ({P_ROLE[a.p1] || ""}) {a.sym} {P_SYM[a.p2]} {a.p2} ({P_ROLE[a.p2] || ""}) — <span style={{ color: h.col }}>{a.name}</span> at {(a.strength * 100).toFixed(0)}% strength
@@ -802,39 +805,39 @@ export default function App() {
                         const ascPlain = SI[ascSign].plain.split(". ").slice(0, 2).join(". ") + ".";
 
                         const EL_DESC = {
-                          Fire: "a drive toward action, passion, and self-expression — you lead with enthusiasm and instinct",
-                          Earth: "a pull toward the practical, the tangible, and the real — you trust what you can see and build",
-                          Air: "a need to think, communicate, and connect — you process life through ideas and conversation",
-                          Water: "a depth of feeling, intuition, and empathy — you process life through emotion and imagination",
+                          Fire: "the element of action and self-expression in the classical scheme, hot and dry",
+                          Earth: "the element of the tangible and enduring, cold and dry",
+                          Air: "the element of relation and abstraction, hot and moist",
+                          Water: "the element of feeling and dissolution, cold and moist",
                         };
                         const MOD_DESC = {
-                          Cardinal: "starting things — you naturally initiate, set direction, and take the first step even when no one else will",
-                          Fixed: "sustaining things — you naturally persist, commit, and hold steady when others give up",
-                          Mutable: "adapting to things — you naturally adjust, improvise, and find a way through changing circumstances",
+                          Cardinal: "the mode that opens each season, associated with initiation",
+                          Fixed: "the mode at the height of each season, associated with persistence",
+                          Mutable: "the mode that closes each season, associated with transition",
                         };
 
                         const moonAsEmotional =
-                          moonEl === "Fire" ? "Your emotional world runs hot and quick — you feel in bursts of intensity, need excitement to feel alive, and process feelings by acting on them. You recover fast from emotional blows but can be impatient with slower emotional processes." :
-                            moonEl === "Earth" ? "Your emotional world is steady and grounded — you feel deeply but process slowly, need physical comfort and routine to feel safe, and express care through practical acts rather than grand declarations. Change unsettles you, and you need time to adjust." :
-                              moonEl === "Air" ? "Your emotional world runs through your mind — you process feelings by talking about them, analyzing them, and finding words for them. You need intellectual connection to feel emotionally close to someone. You can seem detached but you feel more than you show." :
-                                "Your emotional world is vast and permeable — you absorb the moods of people and places around you. You feel everything deeply, sometimes overwhelmingly. You need creative or spiritual outlets to process the sheer volume of what you take in. Solitude recharges you.";
+                          moonEl === "Fire" ? "The Moon in a fire sign: quick to register and quick to discharge in the tradition." :
+                            moonEl === "Earth" ? "The Moon in an earth sign: slow to register and slow to release in the tradition." :
+                              moonEl === "Air" ? "The Moon in an air sign: mediated through language and relation in the tradition." :
+                                "The Moon in a water sign: the most permeable of the four placements in the tradition.";
 
                         const ascAsFilter =
-                          ascEl === "Fire" ? "People first see you as confident, warm, and energetic. You come across as someone who takes charge and lights up a room — even if internally you feel very different." :
-                            ascEl === "Earth" ? "People first see you as calm, reliable, and put-together. You come across as someone grounded and competent — even if internally there is much more going on." :
-                              ascEl === "Air" ? "People first see you as approachable, articulate, and socially graceful. You come across as someone who can talk to anyone and make them feel at ease — even if your inner world is far more complex." :
-                                "People first see you as sensitive, gentle, and somewhat mysterious. You come across as someone with hidden depths — which, in your case, is true.";
+                          ascEl === "Fire" ? "A fire sign on the ascendant; its ruler becomes ruler of the whole figure." :
+                            ascEl === "Earth" ? "An earth sign on the ascendant; its ruler becomes ruler of the whole figure." :
+                              ascEl === "Air" ? "An air sign on the ascendant; its ruler becomes ruler of the whole figure." :
+                                "A water sign on the ascendant; its ruler becomes ruler of the whole figure.";
 
                         const softCount = softAsp.length, hardCount = hardAsp.length;
                         const totalAsp = softCount + hardCount;
-                        const flowDesc = `${softCount} of the ${totalAsp} connections between your planets are harmonious — these are areas where life cooperates with you. Things come naturally here: talents you didn't have to work for, relationships that click, situations that resolve themselves. They represent your built-in advantages.`;
-                        const growthDesc = `${hardCount} of the ${totalAsp} connections carry tension — these are areas where life pushes back. They create friction, challenges, and the feeling that you have to earn every inch. But this friction is what develops strength, depth, and resilience. People with many of these grow the most over a lifetime.`;
+                        const flowDesc = `${softCount} of the ${totalAsp} contacts are soft. The count is a function of the orb policy in use.`;
+                        const growthDesc = `${hardCount} of the ${totalAsp} contacts are hard. Widening the orbs would add more; narrowing them would remove some.`;
 
                         const balanceParagraph = softCount > hardCount
-                          ? `With more ease than friction in your chart, life has given you many natural gifts. The challenge for you is not hardship — it's making sure you don't coast. Your talents are real, but they reach their full potential only when you voluntarily seek challenge. Comfort is your trap; growth happens when you leave it.`
+                          ? `Soft contacts outnumber hard ones at the orbs in use. The split rests on the classical benefic/malefic scheme, largely abandoned in modern practice.`
                           : hardCount > softCount
-                            ? `With more friction than ease in your chart, life has pushed you harder than most. You've likely felt that nothing comes easily — and that is accurate. But this pattern builds something rare: resilience, depth, and wisdom that come only from earned experience. People with charts like yours often accomplish things that surprise those who had an easier start.`
-                            : `Your chart is evenly balanced between ease and friction. You have genuine natural talent and enough challenge to develop it. This is the pattern of someone who can both receive gifts gracefully and fight for what matters. The key is knowing which situations call for which response.`;
+                            ? `Hard contacts outnumber soft ones at the orbs in use. The split rests on the classical benefic/malefic scheme, largely abandoned in modern practice.`
+                            : `Soft and hard contacts are evenly matched at the orbs in use.`;
 
                         const cnAnimal = res.cn ? (ANIMAL_INFO[res.cn.animal] || {}) : {};
                         const cnEl = res.cn ? (CN_EL_INFO[res.cn.element] || {}) : {};
@@ -849,15 +852,15 @@ export default function App() {
                           const animalShadow = (cnAnimal.shadow || "").toLowerCase();
                           const polLabel = res.cn.polarity === "Yang" ? "outward-moving and assertive" : "inward-moving and reflective";
 
-                          let bridgeText = `In the Chinese system, you were born in a ${chineseEl} ${res.cn.animal} year with ${res.cn.polarity} polarity — meaning your Chinese energy is ${polLabel}. `;
+                          let bridgeText = `In the Chinese system this date falls in a ${chineseEl} ${res.cn.animal} year of ${res.cn.polarity} polarity. The cycle year begins at the lunar new year, not on 1 January. `;
                           bridgeText += `The ${res.cn.animal} is known for being ${animalTrait}. ${animalDesc.split(". ").slice(0, 2).join(". ")}. `;
-                          bridgeText += `${chineseEl} energy (${(cnEl.trait || "").toLowerCase()}) shapes how your ${res.cn.animal} nature expresses — ${cnEl.desc?.split(". ").slice(0, 2).join(". ") || ""}. `;
+                          bridgeText += `The ${chineseEl} phase is paired with the ${res.cn.animal}; the tradition attributes ${(cnEl.trait || "").toLowerCase()} to that phase. `;
                           if (sameEl) {
-                            bridgeText += `Both your Western and Chinese charts emphasise the same element (${westernEl}/${chineseEl}), reinforcing these qualities as a central theme of who you are. This is a strong, consistent signature.`;
+                            bridgeText += `The Western and Chinese schemes name the same element here. They divide the sky differently, so the agreement is a coincidence of labels. `;
                           } else {
-                            bridgeText += `Your Western chart is rooted in ${westernEl} (${EL_DESC[westernEl]?.split("—")[0]?.trim() || westernEl.toLowerCase()}) while your Chinese chart is rooted in ${chineseEl} (${(cnEl.trait || "").toLowerCase()}). This means you carry two distinct energetic registers — one more ${westernEl === "Fire" || westernEl === "Air" ? "outward and expressive" : "inward and reflective"}, the other more ${chineseEl === "Fire" || chineseEl === "Air" ? "outward and expressive" : "inward and reflective"}. People who know you in different contexts may see genuinely different sides of you — and both are real.`;
+                            bridgeText += `The Western scheme gives ${westernEl} and the Chinese gives ${chineseEl}. The two use different elemental sets, four against five. `;
                           }
-                          if (cnAnimal.shadow) bridgeText += ` The ${res.cn.animal}'s shadow side (${animalShadow}) is something to be aware of — it often surfaces under stress, and understanding it helps you catch it early.`;
+                          if (cnAnimal.shadow) bridgeText += ` The tradition also attributes ${animalShadow} to the ${res.cn.animal}.`;
                           return bridgeText;
                         })() : "";
 
@@ -869,7 +872,7 @@ export default function App() {
 
                             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 12, marginBottom: 16 }}>
                               <div style={{ padding: "14px 16px", borderRadius: 12, background: SIGN_COL[sunSign] + "0a", border: `1px solid ${SIGN_COL[sunSign]}22` }}>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>YOUR SUN SIGN — YOUR CORE SELF</div>
+                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>SUN SIGN — THE SOLAR SIGNIFICATOR</div>
                                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
                                   <span style={{ fontSize: "1.3rem" }}>{SI[sunSign].emoji}</span>
                                   <span style={{ color: SIGN_COL[sunSign], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.82rem", fontWeight: "700" }}>{sunSign}</span>
@@ -880,7 +883,7 @@ export default function App() {
                               </div>
 
                               <div style={{ padding: "14px 16px", borderRadius: 12, background: SIGN_COL[moonSign] + "0a", border: `1px solid ${SIGN_COL[moonSign]}22` }}>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>YOUR MOON SIGN — YOUR EMOTIONAL INNER WORLD</div>
+                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>MOON SIGN — THE LUNAR SIGNIFICATOR</div>
                                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
                                   <span style={{ fontSize: "1.3rem" }}>{SI[moonSign].emoji}</span>
                                   <span style={{ color: SIGN_COL[moonSign], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.82rem", fontWeight: "700" }}>{moonSign}</span>
@@ -891,7 +894,7 @@ export default function App() {
                               </div>
 
                               <div style={{ padding: "14px 16px", borderRadius: 12, background: SIGN_COL[ascSign] + "0a", border: `1px solid ${SIGN_COL[ascSign]}22` }}>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>YOUR RISING SIGN — HOW OTHERS SEE YOU</div>
+                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>RISING SIGN — THE ASCENDING DEGREE</div>
                                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
                                   <span style={{ fontSize: "1.3rem" }}>{SI[ascSign].emoji}</span>
                                   <span style={{ color: SIGN_COL[ascSign], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.82rem", fontWeight: "700" }}>{ascSign}</span>
@@ -922,7 +925,7 @@ export default function App() {
                                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{flowDesc}</p>
                               </div>
                               <div style={{ padding: "14px 16px", borderRadius: 12, background: "#ff8a500a", border: "1px solid #ff8a5022" }}>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 6 }}>GROWTH EDGES — {hardCount}</div>
+                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 6 }}>HARD CONTACTS — {hardCount}</div>
                                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{growthDesc}</p>
                               </div>
                             </div>
@@ -934,145 +937,56 @@ export default function App() {
                           </Card>
 
                           {res.cn && (
-                            <Card title={`${cnAnimal.emoji || "☯"} The ${res.cn.animal} in Your Story — East Meets West`}>
+                            <Card title={`${cnAnimal.emoji || "☯"} The ${res.cn.animal} — Two Systems Side by Side`}>
                               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.84rem", lineHeight: 1.8, color: M3.onSurface, margin: 0 }}>{cnBridge}</p>
                             </Card>
                           )}
 
-                          <Card title="🔮 Your Portrait — In Plain Language">
-                            <div style={{ padding: "16px 18px", borderRadius: 12, background: M3.surfaceDim, border: `1px solid ${M3.outlineVariant}` }}>
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.88rem", lineHeight: 1.85, color: M3.onSurface, margin: 0 }}>
-                                {(() => {
-                                  const sunDesc = sunSign === "Aries" ? "someone who leads with instinct and courage" : sunSign === "Taurus" ? "someone who builds steadily and values what's real and lasting" : sunSign === "Gemini" ? "someone who connects, communicates, and adapts" : sunSign === "Cancer" ? "someone who nurtures, protects, and feels deeply" : sunSign === "Leo" ? "someone who radiates warmth and creative self-expression" : sunSign === "Virgo" ? "someone who refines, improves, and serves with precision" : sunSign === "Libra" ? "someone who seeks harmony, beauty, and genuine partnership" : sunSign === "Scorpio" ? "someone who transforms, probes, and operates with intensity" : sunSign === "Sagittarius" ? "someone who explores, questions, and reaches for meaning" : sunSign === "Capricorn" ? "someone who builds, endures, and earns lasting achievement" : sunSign === "Aquarius" ? "someone who innovates, reforms, and thinks ahead of the crowd" : "someone who feels everything, imagines deeply, and dissolves ordinary boundaries";
-                                  const moonDesc = moonSign === "Aries" ? "quick, fiery emotions — you feel in bursts and recover fast" : moonSign === "Taurus" ? "steady, grounded emotions — you take your time to process but once you feel something, it lasts" : moonSign === "Gemini" ? "restless, curious emotions — you talk through your feelings and need mental stimulation to feel secure" : moonSign === "Cancer" ? "deep, protective emotions — you feel everything around you and need a safe emotional home base" : moonSign === "Leo" ? "warm, generous emotions — you need to feel appreciated and express your feelings with drama and heart" : moonSign === "Virgo" ? "careful, analytical emotions — you worry as a form of caring and show love through practical help" : moonSign === "Libra" ? "measured, diplomatic emotions — you seek equilibrium in relationships and are unsettled by conflict" : moonSign === "Scorpio" ? "intense, all-or-nothing emotions — you feel the full depth of everything and never forget" : moonSign === "Sagittarius" ? "optimistic, freedom-loving emotions — you need space to breathe and humour to cope" : moonSign === "Capricorn" ? "reserved, disciplined emotions — you feel more than you show and take emotional responsibility seriously" : moonSign === "Aquarius" ? "independent, unconventional emotions — you process feelings intellectually and need space to be yourself" : "oceanic, boundless emotions — you absorb everything around you and need solitude to find your own centre";
-                                  const ascDesc = ascSign === "Aries" ? "bold and direct — people see you as confident and action-oriented" : ascSign === "Taurus" ? "calm and grounded — people see you as stable and reassuring" : ascSign === "Gemini" ? "witty and versatile — people see you as clever and easy to talk to" : ascSign === "Cancer" ? "gentle and approachable — people see you as caring and emotionally present" : ascSign === "Leo" ? "charismatic and warm — people see you as someone who commands attention naturally" : ascSign === "Virgo" ? "composed and detail-oriented — people see you as competent and put-together" : ascSign === "Libra" ? "graceful and diplomatic — people see you as charming and socially skilled" : ascSign === "Scorpio" ? "intense and magnetic — people see you as powerful and a little mysterious" : ascSign === "Sagittarius" ? "open and enthusiastic — people see you as adventurous and optimistic" : ascSign === "Capricorn" ? "serious and capable — people see you as mature and authoritative" : ascSign === "Aquarius" ? "unique and forward-thinking — people see you as original and independent" : "dreamy and gentle — people see you as sensitive and slightly otherworldly";
-                                  const domElDesc = domEl[0] === "Fire" ? "action-oriented, passionate, and instinct-driven" : domEl[0] === "Earth" ? "practical, grounded, and focused on tangible results" : domEl[0] === "Air" ? "idea-driven, communicative, and socially attuned" : "emotionally deep, intuitive, and relationship-focused";
-                                  const domModDesc = domMod[0] === "Cardinal" ? "initiate, set direction, and take the first step" : domMod[0] === "Fixed" ? "commit deeply, persevere, and see things through" : "adapt, improvise, and find creative solutions to whatever comes";
-                                  const balDesc = softCount > hardCount ? "Life has given you more natural ease than friction — your talents come naturally, and your path often opens without force. The invitation is to push yourself beyond comfort, because that's where your real potential lives." : hardCount > softCount ? "Life has asked more of you than most — you've earned your strengths through difficulty rather than luck. This builds a kind of depth and resilience that cannot be taught, only lived." : "You carry a balanced mix of natural ease and earned strength — some things come naturally, others you've had to fight for. This combination makes you both gifted and tested.";
-                                  let portrait = `At your core, you are ${sunDesc}. `;
-                                  portrait += `Beneath the surface, your inner emotional life is shaped by ${moonDesc}. `;
-                                  portrait += `When people first meet you, the impression you give off is ${ascDesc}. `;
-                                  portrait += `The overall texture of your personality is ${domElDesc}, and your instinct when facing decisions is to ${domModDesc}. `;
-                                  portrait += balDesc;
-                                  return portrait;
-                                })()}
-                              </p>
-                              {res.cn && (
-                                <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.88rem", lineHeight: 1.85, color: M3.onSurface, marginTop: 14 }}>
-                                  {(() => {
-                                    const anTrait = (cnAnimal.trait || "").toLowerCase();
-                                    const cnElTrait = (cnEl.trait || "").toLowerCase();
-                                    const pol = res.cn.polarity === "Yang" ? "outward-facing and assertive" : "inward-facing and reflective";
-                                    const sameEl = SI[sunSign].element === res.cn.element;
-                                    let p = `The Chinese tradition sees you as a ${res.cn.element} ${res.cn.animal} — ${anTrait}, coloured by ${cnElTrait}, and ${pol} in nature. `;
-                                    p += sameEl
-                                      ? `This echoes and reinforces your Western chart — both traditions point to the same core qualities, making them a defining signature of who you are.`
-                                      : `This adds a dimension your Western chart doesn't emphasise. Where your Western side is more ${SI[sunSign].element === "Fire" || SI[sunSign].element === "Air" ? "outwardly expressive" : "inwardly processing"}, your Chinese side brings ${res.cn.element === "Fire" || res.cn.element === "Air" ? "outward energy and spontaneity" : "depth and grounding"}. People who know you in different settings often see genuinely different versions of you — and both are authentic.`;
-                                    return p;
-                                  })()}
+                          <Card title="🔮 Portrait — The Principal Placements">
+                          {(()=>{
+                            const rows = [
+                              { heading: `Sun in ${sunSign}`, glyph: P_SYM.Sun, rec: getPlanetInSign("Sun", sunSign) || getSignSymbolism(sunSign) },
+                              { heading: `Moon in ${moonSign}`, glyph: P_SYM.Moon, rec: getPlanetInSign("Moon", moonSign) || getSignSymbolism(moonSign) },
+                              { heading: `${ascSign} rising`, glyph: "↑", rec: getSignSymbolism(ascSign) },
+                              { heading: `Mercury in ${merSign}`, glyph: P_SYM.Mercury, rec: getPlanetInSign("Mercury", merSign) },
+                              { heading: `Venus in ${venSign}`, glyph: P_SYM.Venus, rec: getPlanetInSign("Venus", venSign) },
+                              { heading: `Mars in ${marSign}`, glyph: P_SYM.Mars, rec: getPlanetInSign("Mars", marSign) },
+                            ].filter(r => r.rec);
+                            return (
+                              <div>
+                                <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.79rem", lineHeight: 1.68, color: M3.onSurfaceVariant, margin: "0 0 16px" }}>
+                                  Each placement below is named with what the tradition has attributed to it.
                                 </p>
-                              )}
-                            </div>
-                          </Card>
-
-                          <Card title="🧭 Your Self-Development Summary — An Actionable Guide">
-                            {(() => {
-                              const solarPower = SOLAR_DEEP[sunSign]?.match(/Your.*superpower[^.]*\./)?.at(0) || SOLAR_DEEP[sunSign]?.split(". ").slice(-2).join(". ") || `${sunSign} core strength`;
-                              const lunarPower = LUNAR_DEEP[moonSign]?.match(/Your emotional superpower[^.]*\./)?.at(0) || `${moonSign} emotional resilience`;
-                              const elPower = domEl[0] === "Fire" ? "inspiring others through your energy and courage — you ignite action wherever you go"
-                                : domEl[0] === "Earth" ? "building real, lasting things in the real world — your reliability is rare and deeply valued"
-                                  : domEl[0] === "Air" ? "connecting ideas and people — your mind sees patterns others miss and translates complexity into clarity"
-                                    : "feeling the invisible currents that others walk past — your emotional intelligence is a genuine superpower";
-
-                              const satGrowth = SATURN_DEEP[satSign]?.split(". ").slice(0, 2).join(". ") || `Saturn in ${satSign} tests your discipline`;
-                              const hardTop = hardAsp[0] ? `Your strongest internal friction: ${(P_ROLE[hardAsp[0].p1] || hardAsp[0].p1)} ${hardAsp[0].name} ${(P_ROLE[hardAsp[0].p2] || hardAsp[0].p2)} — this is where life keeps asking you to grow, and where your deepest breakthroughs live.` : "";
-                              const cnShadow = (ANIMAL_INFO[res.cn?.animal] || {}).shadow || "";
-
-                              const pSun = zodSign(res.prog.Sun), pMoon = zodSign(res.prog.Moon);
-                              const sunShift = pSun !== sunSign ? `Your progressed Sun has moved into ${pSun} — you're evolving from ${sunSign} themes toward ${pSun}: ${SI[pSun]?.plain?.split(".")[0]?.toLowerCase()}.` : `Your progressed Sun is still in ${sunSign} — you're deepening your core identity rather than shifting it.`;
-                              const moonShift = pMoon !== zodSign(res.trop.Moon) ? `Your progressed Moon is in ${pMoon}, meaning your emotional needs are currently shaped by ${pMoon} energy.` : `Your progressed Moon remains in ${pMoon}, consolidating your emotional foundation.`;
-
-                              const srSatSign = res.sr?.Saturn ? zodSign(res.sr.Saturn) : null;
-                              const srChapter = srSatSign ? `This year, Saturn in your Solar Return is in ${srSatSign} — ${SATURN_DEEP[srSatSign]?.split(". ")[0]?.toLowerCase() || "challenging you to grow through discipline"}.` : "";
-
-                              const prompt1 = RISING_SHADOW[ascSign]?.shadow ? `"When I'm stressed, I notice myself ${RISING_SHADOW[ascSign].shadow.split("—")[1]?.trim()?.split(".")[0]?.toLowerCase() || "falling into old patterns"}. What is this behaviour protecting me from?"` : `"What mask do I put on when I feel unsafe, and what would happen if I let it drop?"`;
-                              const prompt2 = SATURN_DEEP[satSign] ? `"The area of life where I feel the most pressure or inadequacy is ${HOUSE_AREA ? satSign : satSign} — what would it look like to meet that challenge with compassion instead of just grit?"` : `"Where do I feel life is hardest on me, and what would it look like to meet that challenge with compassion?"`;
-                              const prompt3 = hardAsp[0] ? `"My ${(P_ROLE[hardAsp[0].p1] || hardAsp[0].p1).toLowerCase()} and ${(P_ROLE[hardAsp[0].p2] || hardAsp[0].p2).toLowerCase()} seem to pull in different directions. Instead of choosing one, how might I honour both?"` : `"What two parts of myself seem to be in conflict, and what would it look like to integrate them?"`;
-
-                              return (
-                                <div>
-                                  <div style={{ padding: "16px 18px", borderRadius: 12, background: "#7c4dff08", border: `1px solid #7c4dff22`, marginBottom: 16 }}>
-                                    <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: "#b388ff", letterSpacing: "0.12em", marginBottom: 10 }}>YOUR 3 SUPERPOWERS</div>
-                                    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                                      <div style={{ padding: "8px 14px", borderRadius: 8, background: "#69ff8e08", borderLeft: "3px solid #69ff8e" }}>
-                                        <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: "#69ff8e", letterSpacing: "0.08em", marginBottom: 2 }}>FROM YOUR SUN ({sunSign})</div>
-                                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{solarPower}</p>
-                                      </div>
-                                      <div style={{ padding: "8px 14px", borderRadius: 8, background: "#69ff8e08", borderLeft: "3px solid #69ff8e" }}>
-                                        <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: "#69ff8e", letterSpacing: "0.08em", marginBottom: 2 }}>FROM YOUR MOON ({moonSign})</div>
-                                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{lunarPower}</p>
-                                      </div>
-                                      <div style={{ padding: "8px 14px", borderRadius: 8, background: "#69ff8e08", borderLeft: "3px solid #69ff8e" }}>
-                                        <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: "#69ff8e", letterSpacing: "0.08em", marginBottom: 2 }}>FROM YOUR DOMINANT ELEMENT ({domEl[0]})</div>
-                                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{elPower}</p>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div style={{ padding: "16px 18px", borderRadius: 12, background: "#ff525208", border: "1px solid #ff525218", marginBottom: 16 }}>
-                                    <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: "#ff8a50", letterSpacing: "0.12em", marginBottom: 10 }}>YOUR 3 GROWTH EDGES</div>
-                                    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                                      <div style={{ padding: "8px 14px", borderRadius: 8, background: "#ff8a5008", borderLeft: "3px solid #ff8a50" }}>
-                                        <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: "#ff8a50", letterSpacing: "0.08em", marginBottom: 2 }}>FROM SATURN IN {satSign.toUpperCase()}</div>
-                                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{satGrowth}</p>
-                                      </div>
-                                      {hardTop && (
-                                        <div style={{ padding: "8px 14px", borderRadius: 8, background: "#ff8a5008", borderLeft: "3px solid #ff8a50" }}>
-                                          <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: "#ff8a50", letterSpacing: "0.08em", marginBottom: 2 }}>FROM YOUR HARDEST ASPECT</div>
-                                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{hardTop}</p>
-                                        </div>
-                                      )}
-                                      {cnShadow && (
-                                        <div style={{ padding: "8px 14px", borderRadius: 8, background: "#ff8a5008", borderLeft: "3px solid #ff8a50" }}>
-                                          <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: "#ff8a50", letterSpacing: "0.08em", marginBottom: 2 }}>FROM YOUR CHINESE SHADOW ({res.cn?.animal})</div>
-                                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{cnShadow}</p>
-                                        </div>
-                                      )}
-                                    </div>
-                                  </div>
-
-                                  <div style={{ padding: "16px 18px", borderRadius: 12, background: M3.primaryContainer + "44", border: `1px solid ${M3.outline}33`, marginBottom: 16 }}>
-                                    <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: M3.primary, letterSpacing: "0.12em", marginBottom: 10 }}>YOUR CURRENT CHAPTER</div>
-                                    <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: "0 0 8px" }}>{sunShift}</p>
-                                    <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: "0 0 8px" }}>{moonShift}</p>
-                                    {srChapter && <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>{srChapter}</p>}
-                                  </div>
-
-                                  <div style={{ padding: "16px 18px", borderRadius: 12, background: "#ffab4008", border: "1px solid #ffab4022", marginBottom: 16 }}>
-                                    <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: "#ffab40", letterSpacing: "0.12em", marginBottom: 10 }}>3 JOURNAL PROMPTS — FOR DEEPER SELF-INQUIRY</div>
-                                    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                                      <div style={{ padding: "10px 14px", borderRadius: 8, background: M3.surfaceDim }}>
-                                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0, fontStyle: "italic" }}>1. {prompt1}</p>
-                                      </div>
-                                      <div style={{ padding: "10px 14px", borderRadius: 8, background: M3.surfaceDim }}>
-                                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0, fontStyle: "italic" }}>2. {prompt2}</p>
-                                      </div>
-                                      <div style={{ padding: "10px 14px", borderRadius: 8, background: M3.surfaceDim }}>
-                                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0, fontStyle: "italic" }}>3. {prompt3}</p>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div style={{ padding: "16px 18px", borderRadius: 12, background: `linear-gradient(135deg,${M3.primaryContainer}66,${M3.secondaryContainer}66)`, border: `1px solid ${M3.outline}44` }}>
-                                    <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: M3.tertiary, letterSpacing: "0.12em", marginBottom: 10 }}>WHAT INTEGRATION LOOKS LIKE FOR YOU</div>
-                                    <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.84rem", lineHeight: 1.8, color: M3.onSurface, margin: 0 }}>
-                                      Integration means bringing all parts of your chart — even the parts that seem to contradict each other — into conscious awareness. For you, that means honouring your {sunSign} need to {sunSign === "Aries" ? "lead and initiate" : sunSign === "Taurus" ? "build and stabilise" : sunSign === "Gemini" ? "explore and communicate" : sunSign === "Cancer" ? "nurture and protect" : sunSign === "Leo" ? "create and shine" : sunSign === "Virgo" ? "refine and serve" : sunSign === "Libra" ? "harmonise and connect" : sunSign === "Scorpio" ? "transform and probe" : sunSign === "Sagittarius" ? "explore and philosophise" : sunSign === "Capricorn" ? "build and achieve" : sunSign === "Aquarius" ? "innovate and liberate" : "imagine and feel"} while giving your {moonSign} Moon the {SI[moonSign]?.element === "Fire" ? "excitement and freedom" : SI[moonSign]?.element === "Earth" ? "stability and comfort" : SI[moonSign]?.element === "Air" ? "mental stimulation and social connection" : "emotional depth and creative space"} it craves — and presenting all of this through your {ascSign} Rising's natural style of {SI[ascSign]?.plain?.split(".")[0]?.toLowerCase() || ascSign.toLowerCase() + " energy"}. You don't have to choose between these parts. The goal is to let each one take the lead when it's needed, and step back when it's not. That's wholeness.
-                                    </p>
-                                  </div>
+                                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 18 }}>
+                                  {rows.map((r, i) => (<SymbolPanel key={i} record={r.rec} depth={0} heading={r.heading} glyph={r.glyph} />))}
                                 </div>
-                              );
-                            })()}
-                          </Card>
+                              </div>
+                            );
+                          })()}
+                        </Card>
+
+                          <Card title="🧭 Summary — The Principal Placements">
+                          {(()=>{
+                            const rows = [
+                              { heading: `Sun in ${sunSign}`, glyph: P_SYM.Sun, rec: getPlanetInSign("Sun", sunSign) || getSignSymbolism(sunSign) },
+                              { heading: `Moon in ${moonSign}`, glyph: P_SYM.Moon, rec: getPlanetInSign("Moon", moonSign) || getSignSymbolism(moonSign) },
+                              { heading: `${ascSign} rising`, glyph: "↑", rec: getSignSymbolism(ascSign) },
+                              { heading: `Mercury in ${merSign}`, glyph: P_SYM.Mercury, rec: getPlanetInSign("Mercury", merSign) },
+                              { heading: `Venus in ${venSign}`, glyph: P_SYM.Venus, rec: getPlanetInSign("Venus", venSign) },
+                              { heading: `Mars in ${marSign}`, glyph: P_SYM.Mars, rec: getPlanetInSign("Mars", marSign) },
+                            ].filter(r => r.rec);
+                            return (
+                              <div>
+                                <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.79rem", lineHeight: 1.68, color: M3.onSurfaceVariant, margin: "0 0 16px" }}>
+                                  The placements the tradition weights most heavily in a natal figure, gathered in one place.
+                                </p>
+                                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 18 }}>
+                                  {rows.map((r, i) => (<SymbolPanel key={i} record={r.rec} depth={0} heading={r.heading} glyph={r.glyph} />))}
+                                </div>
+                              </div>
+                            );
+                          })()}
+                        </Card>
 
                         </>);
                       })()}
@@ -1167,7 +1081,7 @@ export default function App() {
                         </p>
                       </Card>
 
-                      <Card title="♄ Saturn's Test — Your Hardest Life Lesson">
+                      <Card title="♄ Saturn — Where the Tradition Locates Limit">
                         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
                           <div style={{ width: 48, height: 48, borderRadius: "50%", background: P_COL.Saturn + "22", border: `2px solid ${P_COL.Saturn}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
                             <span style={{ fontSize: "1.5rem", color: P_COL.Saturn }}>♄</span>
@@ -1183,7 +1097,7 @@ export default function App() {
                       </Card>
 
                       {chironHouse != null && (
-                        <Card title="🩹 Chiron's Wound — Your Deepest Vulnerability">
+                        <Card title="🩹 Chiron — A Modern and Contested Attribution">
                           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
                             <div style={{ width: 48, height: 48, borderRadius: "50%", background: "#b388ff22", border: "2px solid #b388ff", display: "flex", alignItems: "center", justifyContent: "center" }}>
                               <span style={{ fontSize: "1.2rem", color: "#b388ff" }}>⚷</span>
@@ -1199,7 +1113,7 @@ export default function App() {
                         </Card>
                       )}
 
-                      <Card title="⚡ Internal Friction — Your Hardest Aspects">
+                      <Card title="⚡ The Tightest Hard Contacts">
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
                           These are the strongest squares (□ — 90° angles creating friction) and oppositions (☍ — 180° angles creating polarisation) in your chart. They represent internal contradictions that can't be resolved — only integrated.
                         </p>
@@ -1211,7 +1125,7 @@ export default function App() {
                           const pi = PAIR_INSIGHT[k1] || PAIR_INSIGHT[k2] || "";
                           const struggleNarrative = a.name === "Square"
                             ? `This square means your ${r0.toLowerCase()} and ${r1.toLowerCase()} are in constant creative tension. Neither will yield to the other. In daily life, this shows up as an internal tug-of-war: you want two things that seem incompatible. The frustration is real, but it's also what drives you to develop more than people without this tension ever need to. Every time you navigate this conflict, you build muscle that others simply don't have.`
-                            : `This opposition means your ${r0.toLowerCase()} and ${r1.toLowerCase()} sit on opposite ends of your psyche, like two people pulling a rope in opposite directions. You may swing between them — fully identified with one, then overcorrecting to the other. The work is learning to stand in the middle and hold both. People who master their oppositions develop a rare kind of wholeness — the ability to see from multiple perspectives simultaneously.`;
+                            : `The opposition is 180°, the greatest possible separation; the two signs share a mode and stand in complementary elements.`;
                           return (
                             <div key={i} style={{ padding: "12px 16px", marginBottom: 10, borderRadius: 12, background: a.col + "0c", borderLeft: `4px solid ${a.col}` }}>
                               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
@@ -1229,7 +1143,7 @@ export default function App() {
                         })}
                       </Card>
 
-                      <Card title="🎭 Shadow Patterns — Your Unconscious Defaults Under Stress">
+                      <Card title="🎭 Attributions of Difficulty">
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
                           These are the behaviours that emerge when you're stressed, threatened, or operating on autopilot. They're not who you are — they're defence mechanisms. Recognising them is the first step to choosing differently.
                         </p>
@@ -1255,7 +1169,7 @@ export default function App() {
                       </Card>
 
                       {(weakEl.length > 0 || lowEl.length > 0) && (
-                        <Card title="△ Elemental Gaps — What's Missing From Your Chart">
+                        <Card title="△ Elements Not Represented">
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
                             When an element is absent or underrepresented in your chart, it doesn't mean you can't access that energy — it means you weren't born with it built in. You have to develop it deliberately, which is harder but ultimately more conscious than running on natural wiring.
                           </p>
@@ -1275,7 +1189,7 @@ export default function App() {
                       )}
 
                       {in12th.length > 0 && (
-                        <Card title="🌙 12th House Planets — Your Hidden Struggles">
+                        <Card title="🌙 Bodies in the 12th House">
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
                             The 12th house governs the unconscious, solitude, hidden strengths, and self-undoing. Planets here operate beneath your conscious awareness — they're powerful but hard to access directly. They often manifest as vague anxieties, recurring dreams, or patterns you can't quite explain.
                           </p>
@@ -1384,7 +1298,7 @@ export default function App() {
 
                     {wheelMode === "solar" && (
                       res.srPos ? (
-                        <Card title="↩ Solar Return Chart — Your Year Ahead">
+                        <Card title="↩ Solar Return Chart">
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
                             The Solar Return chart is cast for the exact moment the Sun returns to its birth position each year. It maps the themes and energies of your coming year. Compare planet positions here to your natal wheel to see what's shifted.
                           </p>
@@ -1526,7 +1440,7 @@ export default function App() {
                       })()}
                     </Card>
 
-                    <Card title={`⚹ Your Aspect Web — ${res.aspects.length} connections visualised`}>
+                    <Card title={`⚹ Aspect Web — ${res.aspects.length} connections visualised`}>
                       <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
                         This wheel highlights the <strong>connections between your planets</strong>. Thicker, brighter lines mean stronger aspects. Aspect symbols appear on the strongest links. Hover any line for details.
                       </p>
@@ -1650,7 +1564,7 @@ export default function App() {
                         Pisces: "compassion, imagination, and spiritual surrender — you're learning that letting go is the deepest form of strength",
                       };
                       return (
-                        <Card title="📖 Your Growth Arc — Where Life Has Taken You">
+                        <Card title="📖 Progressed Positions">
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.7, color: M3.onSurface, margin: "0 0 14px" }}>
                             Your progressions tell the story of your inner evolution — not events that happened to you, but the way your character has deepened and shifted over time.
                           </p>
@@ -1692,7 +1606,7 @@ export default function App() {
                       );
                     })()}
 
-                    <Card title={`→ How You've Evolved by Age ${age}`}>
+                    <Card title={`→ Progressed Positions at Age ${age}`}>
                       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(200px,1fr))", gap: 10 }}>
                         {["Sun", "Moon", "Mercury", "Venus", "Mars"].map(planet => {
                           const natalSign = zodSign(res.trop[planet]);
@@ -1815,7 +1729,7 @@ export default function App() {
                             },
                           ];
                           return (<>
-                            <Card title="↩ Your Year Ahead — What Each Planet Brings">
+                            <Card title="↩ Solar Return — Positions">
                               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 16px" }}>
                                 Each section below describes a different area of your life over the coming year. This is based on where the planets were at the exact moment the Sun returned to its birth position — your annual "reset point."
                               </p>
@@ -1962,7 +1876,7 @@ export default function App() {
                       </Card>
 
                       {(clusters.length > 0 || tight.length > 0) && (
-                        <Card title={`✦ Your Pattern #${n} — Personal Reading`}>
+                        <Card title={`✦ Harmonic #${n} — Groupings`}>
                           {clusters.length > 0 && (
                             <div style={{ marginBottom: 14 }}>
                               <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.65rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 8 }}>SIGN CLUSTERS — WHERE ENERGY CONCENTRATES</div>
@@ -2112,7 +2026,7 @@ export default function App() {
                         </p>
                       </Card>
 
-                      <Card title="⟳ Today's Sky vs Your Birth — What's Active Now">
+                      <Card title="⟳ Transiting Positions Against the Natal Figure">
                         <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.65rem", color: M3.secondary, marginBottom: 10, letterSpacing: "0.1em" }}>
                           {new Date().toDateString().toUpperCase()} — {hits.length} of {activeTransits.length} planets are actively aspecting your chart
                         </div>
@@ -2191,11 +2105,11 @@ export default function App() {
                           </p>
                         </Card>
 
-                        <Card title="♡ Compatibility Summary">
+                        <Card title="◈ Contact Summary">
                           <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 14 }}>
                             <div style={{ flex: 1, minWidth: 140, textAlign: "center", padding: "14px 12px", borderRadius: 12, background: "#69ff8e0c", border: "1px solid #69ff8e22" }}>
                               <div style={{ fontFamily: "Cinzel,serif", fontSize: "1.5rem", color: "#69ff8e" }}>{ratio}%</div>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, marginTop: 4 }}>HARMONY RATIO</div>
+                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, marginTop: 4 }}>SOFT / TOTAL</div>
                             </div>
                             {[
                               { n: "Conjunctions", c: conj.length, col: "#FFD700", tip: "Fused energy — amplifies shared themes" },
@@ -2243,7 +2157,7 @@ export default function App() {
                             return SYN_GROWTH[`${p1}+${p2}`] || SYN_GROWTH[`${p2}+${p1}`] || `Your ${(P_ROLE[p1] || p1).toLowerCase()} and their ${(P_ROLE[p2] || p2).toLowerCase()} create friction. The growth: learning to meet difference with curiosity rather than defence.`;
                           };
                           return (
-                            <Card title="💪 Relationship Growth Areas — Where Friction Builds Depth">
+                            <Card title="◈ Hard Contacts Between the Two Charts">
                               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
                                 These are the most intense friction points between your charts. They represent the areas where this relationship will be most challenging — and most transformative if both people are willing to grow.
                               </p>
@@ -2346,7 +2260,7 @@ export default function App() {
                         </div>
                       </Card>
 
-                      <Card title="☯ Your Position on the Wheel">
+                      <Card title="☯ Position on the Wheel">
                         <div style={{ display: "flex", justifyContent: "center" }}>
                           <ChineseWheelWithTooltip cn={res.cn} size={Math.min(420, window.innerWidth - 80)} />
                         </div>
@@ -2368,7 +2282,7 @@ export default function App() {
                       </Card>
 
                       <div style={grid2}>
-                        <Card title={`☯ Your Element: ${res.cn.element}`}>
+                        <Card title={`☯ Element: ${res.cn.element}`}>
                           <div style={{ textAlign: "center", marginBottom: 10 }}>
                             <div style={{ width: 56, height: 56, borderRadius: "50%", background: ei.color + "22", border: `2px solid ${ei.color}`, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
                               <span style={{ color: ei.color, fontFamily: "'Share Tech Mono',monospace", fontSize: "1.4rem", fontWeight: "700" }}>{res.cn.element[0]}</span>
@@ -2427,7 +2341,7 @@ export default function App() {
                         </Card>
                       </div>
 
-                      <Card title="♡ Compatibility">
+                      <Card title="◈ Contacts">
                         <div style={grid2}>
                           <div>
                             <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 8 }}>BEST ALLIES</div>
