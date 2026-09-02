@@ -1,41 +1,38 @@
 name: Deploy to GitHub Pages
 
+# Pages for this repository serves the gh-pages BRANCH, not an Actions
+# artifact. This workflow therefore builds and pushes the built site to
+# gh-pages. Deploying an artifact instead would publish a build whose asset
+# hashes do not match the index.html being served, and every lazily loaded
+# tab chunk would 404.
+
 on:
   push:
     branches: [master, main]
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
       - run: rm -f package-lock.json
       - run: npm install
       - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
+      - run: touch dist/.nojekyll
+      - name: Publish to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
