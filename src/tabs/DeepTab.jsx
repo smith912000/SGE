@@ -1,3 +1,8 @@
+import SymbolPanel from '../components/ui/SymbolPanel.jsx';
+import DepthControl from '../components/ui/DepthControl.jsx';
+import { useDepth } from '../store/depthStore.js';
+import { getPlanetInSign } from '../data/symbolism/planetInSign.js';
+import { getSignSymbolism } from '../data/symbolism/signSymbolism.js';
 export default function DeepTab({ ctx }) {
   const {
     M3,
@@ -37,6 +42,7 @@ export default function DeepTab({ ctx }) {
   const merSign  = zodSign(res.trop.Mercury);
   const jupSign  = zodSign(res.trop.Jupiter);
   const satSign  = zodSign(res.trop.Saturn);
+  const [deepDepth, setDeepDepth] = useDepth();
   const SI = SIGN_INFO;
 
   const domEl = Object.entries(res.el).sort(([,a],[,b])=>b-a)[0];
@@ -203,7 +209,7 @@ export default function DeepTab({ ctx }) {
           <span style={{ color:SIGN_COL[jupSign], fontFamily:"'Share Tech Mono',monospace", fontWeight:"700" }}>Jupiter in {jupSign}</span>
         </div>
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
-          {JUPITER_DEEP[jupSign]}
+          {JUPITER_DEEP[jupSign]?.plain}
         </p>
       </Card>
       <Card title="♄ Where Life Tests You — Saturn in Your Chart">
@@ -212,7 +218,7 @@ export default function DeepTab({ ctx }) {
           <span style={{ color:SIGN_COL[satSign], fontFamily:"'Share Tech Mono',monospace", fontWeight:"700" }}>Saturn in {satSign}</span>
         </div>
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
-          {SATURN_DEEP[satSign]}
+          {SATURN_DEEP[satSign]?.plain}
         </p>
       </Card>
     </div>
@@ -502,101 +508,34 @@ export default function DeepTab({ ctx }) {
         </div>
       </Card>
 
-      <Card title="🧭 Your Self-Development Summary — An Actionable Guide">
+      <Card title="🧭 Summary — The Principal Placements">
         {(()=>{
-          const solarPower = SOLAR_DEEP[sunSign]?.match(/Your.*superpower[^.]*\./)?.at(0) || SOLAR_DEEP[sunSign]?.split(". ").slice(-2).join(". ") || `${sunSign} core strength`;
-          const lunarPower = LUNAR_DEEP[moonSign]?.match(/Your emotional superpower[^.]*\./)?.at(0) || `${moonSign} emotional resilience`;
-          const elPower = domEl[0]==="Fire"?"inspiring others through your energy and courage — you ignite action wherever you go"
-            :domEl[0]==="Earth"?"building real, lasting things in the real world — your reliability is rare and deeply valued"
-            :domEl[0]==="Air"?"connecting ideas and people — your mind sees patterns others miss and translates complexity into clarity"
-            :"feeling the invisible currents that others walk past — your emotional intelligence is a genuine superpower";
-
-          const satGrowth = SATURN_DEEP[satSign]?.split(". ").slice(0,2).join(". ") || `Saturn in ${satSign} tests your discipline`;
-          const hardTop = hardAsp[0] ? `Your strongest internal friction: ${(P_ROLE[hardAsp[0].p1]||hardAsp[0].p1)} ${hardAsp[0].name} ${(P_ROLE[hardAsp[0].p2]||hardAsp[0].p2)} — this is where life keeps asking you to grow, and where your deepest breakthroughs live.` : "";
-          const cnShadow = (ANIMAL_INFO[res.cn?.animal]||{}).shadow || "";
-
-          const pSun=zodSign(res.prog.Sun), pMoon=zodSign(res.prog.Moon);
-          const sunShift = pSun!==sunSign ? `Your progressed Sun has moved into ${pSun} — you're evolving from ${sunSign} themes toward ${pSun}: ${SI[pSun]?.plain?.split(".")[0]?.toLowerCase()}.` : `Your progressed Sun is still in ${sunSign} — you're deepening your core identity rather than shifting it.`;
-          const moonShift = pMoon!==zodSign(res.trop.Moon) ? `Your progressed Moon is in ${pMoon}, meaning your emotional needs are currently shaped by ${pMoon} energy.` : `Your progressed Moon remains in ${pMoon}, consolidating your emotional foundation.`;
-
-          const srSatSign = res.sr?.Saturn ? zodSign(res.sr.Saturn) : null;
-          const srChapter = srSatSign ? `This year, Saturn in your Solar Return is in ${srSatSign} — ${SATURN_DEEP[srSatSign]?.split(". ")[0]?.toLowerCase() || "challenging you to grow through discipline"}.` : "";
-
-          const prompt1 = RISING_SHADOW[ascSign]?.shadow ? `"When I'm stressed, I notice myself ${RISING_SHADOW[ascSign].shadow.split("—")[1]?.trim()?.split(".")[0]?.toLowerCase() || "falling into old patterns"}. What is this behaviour protecting me from?"` : `"What mask do I put on when I feel unsafe, and what would happen if I let it drop?"`;
-          const prompt2 = SATURN_DEEP[satSign] ? `"The area of life where I feel the most pressure or inadequacy is ${HOUSE_AREA ? satSign : satSign} — what would it look like to meet that challenge with compassion instead of just grit?"` : `"Where do I feel life is hardest on me, and what would it look like to meet that challenge with compassion?"`;
-          const prompt3 = hardAsp[0] ? `"My ${(P_ROLE[hardAsp[0].p1]||hardAsp[0].p1).toLowerCase()} and ${(P_ROLE[hardAsp[0].p2]||hardAsp[0].p2).toLowerCase()} seem to pull in different directions. Instead of choosing one, how might I honour both?"` : `"What two parts of myself seem to be in conflict, and what would it look like to integrate them?"`;
-
+          const rows = [
+            { heading: `Sun in ${sunSign}`,  glyph: P_SYM.Sun,  rec: getPlanetInSign("Sun", sunSign)   || getSignSymbolism(sunSign) },
+            { heading: `Moon in ${moonSign}`, glyph: P_SYM.Moon, rec: getPlanetInSign("Moon", moonSign) || getSignSymbolism(moonSign) },
+            { heading: `${ascSign} rising`,   glyph: "↑",      rec: getSignSymbolism(ascSign) },
+            { heading: `Saturn in ${satSign}`, glyph: P_SYM.Saturn, rec: getPlanetInSign("Saturn", satSign) || getSignSymbolism(satSign) },
+          ].filter(r => r.rec);
+          const hard = hardAsp[0];
           return (
-          <div>
-            <div style={{ padding:"16px 18px", borderRadius:12, background:"#7c4dff08", border:`1px solid #7c4dff22`, marginBottom:16 }}>
-              <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem", color:"#b388ff", letterSpacing:"0.12em", marginBottom:10 }}>YOUR 3 SUPERPOWERS</div>
-              <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
-                <div style={{ padding:"8px 14px", borderRadius:8, background:"#69ff8e08", borderLeft:"3px solid #69ff8e" }}>
-                  <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.58rem", color:"#69ff8e", letterSpacing:"0.08em", marginBottom:2 }}>FROM YOUR SUN ({sunSign})</div>
-                  <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{solarPower}</p>
-                </div>
-                <div style={{ padding:"8px 14px", borderRadius:8, background:"#69ff8e08", borderLeft:"3px solid #69ff8e" }}>
-                  <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.58rem", color:"#69ff8e", letterSpacing:"0.08em", marginBottom:2 }}>FROM YOUR MOON ({moonSign})</div>
-                  <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{lunarPower}</p>
-                </div>
-                <div style={{ padding:"8px 14px", borderRadius:8, background:"#69ff8e08", borderLeft:"3px solid #69ff8e" }}>
-                  <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.58rem", color:"#69ff8e", letterSpacing:"0.08em", marginBottom:2 }}>FROM YOUR DOMINANT ELEMENT ({domEl[0]})</div>
-                  <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{elPower}</p>
-                </div>
+            <div>
+              <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.79rem", lineHeight:1.68, color:M3.onSurfaceVariant, margin:"0 0 16px" }}>
+                The placements the tradition weights most heavily in a natal figure, gathered in one place. Each is stated with what has been attributed to it; none of it is a statement about a person.
+              </p>
+              <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))", gap:18 }}>
+                {rows.map((r,i)=>(
+                  <SymbolPanel key={i} record={r.rec} depth={deepDepth} heading={r.heading} glyph={r.glyph} />
+                ))}
               </div>
-            </div>
-
-            <div style={{ padding:"16px 18px", borderRadius:12, background:"#ff525208", border:"1px solid #ff525218", marginBottom:16 }}>
-              <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem", color:"#ff8a50", letterSpacing:"0.12em", marginBottom:10 }}>YOUR 3 GROWTH EDGES</div>
-              <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
-                <div style={{ padding:"8px 14px", borderRadius:8, background:"#ff8a5008", borderLeft:"3px solid #ff8a50" }}>
-                  <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.58rem", color:"#ff8a50", letterSpacing:"0.08em", marginBottom:2 }}>FROM SATURN IN {satSign.toUpperCase()}</div>
-                  <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{satGrowth}</p>
-                </div>
-                {hardTop && (
-                  <div style={{ padding:"8px 14px", borderRadius:8, background:"#ff8a5008", borderLeft:"3px solid #ff8a50" }}>
-                    <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.58rem", color:"#ff8a50", letterSpacing:"0.08em", marginBottom:2 }}>FROM YOUR HARDEST ASPECT</div>
-                    <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{hardTop}</p>
-                  </div>
-                )}
-                {cnShadow && (
-                  <div style={{ padding:"8px 14px", borderRadius:8, background:"#ff8a5008", borderLeft:"3px solid #ff8a50" }}>
-                    <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.58rem", color:"#ff8a50", letterSpacing:"0.08em", marginBottom:2 }}>FROM YOUR CHINESE SHADOW ({res.cn?.animal})</div>
-                    <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{cnShadow}</p>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div style={{ padding:"16px 18px", borderRadius:12, background:M3.primaryContainer+"44", border:`1px solid ${M3.outline}33`, marginBottom:16 }}>
-              <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem", color:M3.primary, letterSpacing:"0.12em", marginBottom:10 }}>YOUR CURRENT CHAPTER</div>
-              <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.8rem", lineHeight:1.7, color:M3.onSurface, margin:"0 0 8px" }}>{sunShift}</p>
-              <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.8rem", lineHeight:1.7, color:M3.onSurface, margin:"0 0 8px" }}>{moonShift}</p>
-              {srChapter && <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.8rem", lineHeight:1.7, color:M3.onSurface, margin:0 }}>{srChapter}</p>}
-            </div>
-
-            <div style={{ padding:"16px 18px", borderRadius:12, background:"#ffab4008", border:"1px solid #ffab4022", marginBottom:16 }}>
-              <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem", color:"#ffab40", letterSpacing:"0.12em", marginBottom:10 }}>3 JOURNAL PROMPTS — FOR DEEPER SELF-INQUIRY</div>
-              <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
-                <div style={{ padding:"10px 14px", borderRadius:8, background:M3.surfaceDim }}>
-                  <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurface, margin:0, fontStyle:"italic" }}>1. {prompt1}</p>
-                </div>
-                <div style={{ padding:"10px 14px", borderRadius:8, background:M3.surfaceDim }}>
-                  <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurface, margin:0, fontStyle:"italic" }}>2. {prompt2}</p>
-                </div>
-                <div style={{ padding:"10px 14px", borderRadius:8, background:M3.surfaceDim }}>
-                  <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurface, margin:0, fontStyle:"italic" }}>3. {prompt3}</p>
-                </div>
-              </div>
-            </div>
-
-            <div style={{ padding:"16px 18px", borderRadius:12, background:`linear-gradient(135deg,${M3.primaryContainer}66,${M3.secondaryContainer}66)`, border:`1px solid ${M3.outline}44` }}>
-              <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem", color:M3.tertiary, letterSpacing:"0.12em", marginBottom:10 }}>WHAT INTEGRATION LOOKS LIKE FOR YOU</div>
-              <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.84rem", lineHeight:1.8, color:M3.onSurface, margin:0 }}>
-                Integration means bringing all parts of your chart — even the parts that seem to contradict each other — into conscious awareness. For you, that means honouring your {sunSign} need to {sunSign==="Aries"?"lead and initiate":sunSign==="Taurus"?"build and stabilise":sunSign==="Gemini"?"explore and communicate":sunSign==="Cancer"?"nurture and protect":sunSign==="Leo"?"create and shine":sunSign==="Virgo"?"refine and serve":sunSign==="Libra"?"harmonise and connect":sunSign==="Scorpio"?"transform and probe":sunSign==="Sagittarius"?"explore and philosophise":sunSign==="Capricorn"?"build and achieve":sunSign==="Aquarius"?"innovate and liberate":"imagine and feel"} while giving your {moonSign} Moon the {SI[moonSign]?.element==="Fire"?"excitement and freedom":SI[moonSign]?.element==="Earth"?"stability and comfort":SI[moonSign]?.element==="Air"?"mental stimulation and social connection":"emotional depth and creative space"} it craves — and presenting all of this through your {ascSign} Rising's natural style of {SI[ascSign]?.plain?.split(".")[0]?.toLowerCase() || ascSign.toLowerCase() + " energy"}. You don't have to choose between these parts. The goal is to let each one take the lead when it's needed, and step back when it's not. That's wholeness.
+              {hard && (
+                <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.79rem", lineHeight:1.68, color:M3.onSurface, margin:"18px 0 0" }}>
+                  The tightest hard contact in this chart is {(P_ROLE[hard.p1]||hard.p1)} {hard.name.toLowerCase()} {(P_ROLE[hard.p2]||hard.p2)}, at an orb of {typeof hard.orb === "number" ? hard.orb.toFixed(2) : hard.orb}&deg;. Whether it appears at all depends on the orb policy in use.
+                </p>
+              )}
+              <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.62, color:M3.onSurfaceVariant, fontStyle:"italic", margin:"14px 0 0" }}>
+                Where else in this figure do these four placements meet — by rulership, by aspect, or by house?
               </p>
             </div>
-          </div>
           );
         })()}
       </Card>

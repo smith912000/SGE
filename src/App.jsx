@@ -547,7 +547,7 @@ export default function App() {
                             {SI[sunSign].hebrew && <div style={{ color: M3.outlineVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", marginTop: 2 }}>{SI[sunSign].emoji} ← {SI[sunSign].letterName} ({SI[sunSign].hebrew}) ← {SI[sunSign].phoenician} ← {SI[sunSign].hiero} — {SI[sunSign].letterMeaning.split("—")[1]?.trim() || ""}</div>}
                           </div>
                         </div>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>{SOLAR_DEEP[sunSign]}</p>
+                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>{SOLAR_DEEP[sunSign]?.plain}</p>
                       </Card>
 
                       <Card title="🌙 The Lunar Placement — The Receptive Body and Its Sign">
@@ -561,7 +561,7 @@ export default function App() {
                             {SI[moonSign].hebrew && <div style={{ color: M3.outlineVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", marginTop: 2 }}>{SI[moonSign].emoji} ← {SI[moonSign].letterName} ({SI[moonSign].hebrew}) ← {SI[moonSign].phoenician} ← {SI[moonSign].hiero} — {SI[moonSign].letterMeaning.split("—")[1]?.trim() || ""}</div>}
                           </div>
                         </div>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>{LUNAR_DEEP[moonSign]}</p>
+                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>{LUNAR_DEEP[moonSign]?.plain}</p>
                       </Card>
 
                       <Card title="🌅 The Ascendant — The Degree on the Eastern Horizon">
@@ -676,7 +676,7 @@ export default function App() {
                             <span style={{ color: SIGN_COL[jupSign], fontFamily: "'Share Tech Mono',monospace", fontWeight: "700" }}>Jupiter in {jupSign}</span>
                           </div>
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-                            {JUPITER_DEEP[jupSign]}
+                            {JUPITER_DEEP[jupSign]?.plain}
                           </p>
                         </Card>
                         <Card title="♄ Where Life Tests You — Saturn in Your Chart">
@@ -685,7 +685,7 @@ export default function App() {
                             <span style={{ color: SIGN_COL[satSign], fontFamily: "'Share Tech Mono',monospace", fontWeight: "700" }}>Saturn in {satSign}</span>
                           </div>
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-                            {SATURN_DEEP[satSign]}
+                            {SATURN_DEEP[satSign]?.plain}
                           </p>
                         </Card>
                       </div>
@@ -1178,7 +1178,7 @@ export default function App() {
                           </div>
                         </div>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>
-                          {SATURN_DEEP[satSign]}
+                          {SATURN_DEEP[satSign]?.plain}
                         </p>
                       </Card>
 

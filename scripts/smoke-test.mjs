@@ -93,7 +93,7 @@ const ay = app.ayanamsa(jd);
 const sid = Object.fromEntries(Object.entries(trop).map(([k, v]) => [k, norm(v - ay)]));
 const asc = app.calcAsc(jd, BIRTH.lat, BIRTH.lon);
 const mc = app.calcMC(jd, BIRTH.lon);
-const houses = app.calcHouses(asc, mc);
+const houses = app.calcHouses(jd, BIRTH.lat, BIRTH.lon);
 const sidHouses = Object.fromEntries(Object.entries(houses).map(([k, v]) => [k, norm(v - ay)]));
 const age = 36;
 const trPos = app.allPlanets(nowJd);
@@ -195,6 +195,7 @@ for (const name of TABS) {
     html = renderToStaticMarkup(React.createElement(Tab, { ctx }));
   } catch (e) {
     console.error(`✗ ${name}: threw while rendering — ${e.message}`);
+    if (process.env.SMOKE_STACK) console.error(String(e.stack).split(String.fromCharCode(10)).slice(0, 7).join(String.fromCharCode(10)));
     failures++;
     continue;
   }

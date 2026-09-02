@@ -51,10 +51,13 @@ export function computeEgyptianSolarDate(year, month, day) {
     }
 }
 
-export const E_SEASON_RE = E_SEASON_RE_VAL; // placeholder if needed
-export const E_MONTH_RE = E_MONTH_RE_VAL;
-export const E_EPAG_RE = E_EPAG_RE_VAL;
-
 const E_SEASON_RE_VAL = "The Ancient Egyptian year was divided into three seasons: Akhet (Inundation), Peret (Emergence), and Shemu (Harvest).";
 const E_MONTH_RE_VAL = "Each season consisted of four 30-day months.";
 const E_EPAG_RE_VAL = "The five epagomenal days are the birthdays of the gods Osiris, Horus, Set, Isis, and Nephthys.";
+
+// These re-exports must follow the const declarations above: referencing a
+// `const` before its initialiser runs is a temporal-dead-zone error, and under
+// plain ESM evaluation it threw on import.
+export const E_SEASON_RE = E_SEASON_RE_VAL;
+export const E_MONTH_RE = E_MONTH_RE_VAL;
+export const E_EPAG_RE = E_EPAG_RE_VAL;
