@@ -906,14 +906,14 @@ export default function App() {
                             </div>
 
                             <div style={{ padding: "14px 16px", borderRadius: 12, background: EL_COL[domEl[0]] + "0a", border: `1px solid ${EL_COL[domEl[0]]}22`, marginBottom: 12 }}>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>YOUR DOMINANT ELEMENT — {domEl[0].toUpperCase()} ({domEl[1]} OF YOUR PLANETS)</div>
+                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>MOST REPRESENTED ELEMENT — {domEl[0].toUpperCase()} ({domEl[1]} BODIES)</div>
                               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
                                 The most represented element here is <strong style={{ color: EL_COL[domEl[0]] }}>{domEl[0]}</strong> — {EL_DESC[domEl[0]]}.
                               </p>
                             </div>
 
                             <div style={{ padding: "14px 16px", borderRadius: 12, background: MOD_COL[domMod[0]] + "0a", border: `1px solid ${MOD_COL[domMod[0]]}22`, marginBottom: 12 }}>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>YOUR DOMINANT ACTION STYLE — {domMod[0].toUpperCase()} ({domMod[1]} PLANETS)</div>
+                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>MOST REPRESENTED MODE — {domMod[0].toUpperCase()} ({domMod[1]} PLANETS)</div>
                               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
                                 The most represented mode is <strong style={{ color: MOD_COL[domMod[0]] }}>{domMod[0]}</strong> — {MOD_DESC[domMod[0]]}.
                               </p>
@@ -1072,10 +1072,9 @@ export default function App() {
                   return (
                     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                       <Card style={{ background: `linear-gradient(135deg,#ff525222,${M3.surfaceContainer})`, borderColor: "#ff525244" }}>
-                        <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: "#ff8a50", marginBottom: 8 }}>Where the Tradition Locates Difficulty — Where Life Challenges You</div>
+                        <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: "#ff8a50", marginBottom: 8 }}>Where the Tradition Locates Difficulty</div>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-                          This page gathers the placements and contacts to which the tradition has attached difficulty. It is a gathering of attributions, but because <strong>knowing your struggles is the first step to working with them</strong>. The patterns here aren't flaws to fix; they're areas where life has asked more of you than average, and where your deepest growth happens.
-                        </p>
+                          This page gathers the placements and contacts to which the tradition has attached difficulty. It is a gathering of attributions, but because <strong>the tradition records them as plainly as it records the favourable placements</strong>. The patterns here aren't flaws to fix.</p>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
                           Sources differ on how much weight to give any of these, and the classical benefic/malefic scheme that underwrites much of it has largely been abandoned in modern practice.
                         </p>
@@ -1088,7 +1087,7 @@ export default function App() {
                           </div>
                           <div>
                             <div style={{ color: SIGN_COL[satSign], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.76rem", fontWeight: "700" }}>Saturn in {satSign}</div>
-                            <div style={{ color: M3.outlineVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem" }}>The place the tradition assigns to life demands the most from you</div>
+                            <div style={{ color: M3.outlineVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem" }}>The place the tradition assigns to limit and constraint</div>
                           </div>
                         </div>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>
@@ -1104,7 +1103,7 @@ export default function App() {
                             </div>
                             <div>
                               <div style={{ color: "#b388ff", fontFamily: "'Share Tech Mono',monospace", fontSize: "0.76rem", fontWeight: "700" }}>Chiron in House {chironHouse + 1} — {HOUSE_AREA[chironHouse]}</div>
-                              <div style={{ color: M3.outlineVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem" }}>The place the modern attribution calls the "wounded healer" — where pain becomes your greatest gift</div>
+                              <div style={{ color: M3.outlineVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem" }}>The place the modern attribution calls the "wounded healer" — a late twentieth-century reading, and contested</div>
                             </div>
                           </div>
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>
@@ -1118,7 +1117,7 @@ export default function App() {
                           The tightest squares (□ — 90°) and oppositions (☍ — 180°) in this figure, listed with their orbs.
                         </p>
                         {hardAsp.length === 0 ? (
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", color: M3.onSurfaceVariant, fontStyle: "italic" }}>No major hard aspects found — your chart has relatively little internal friction, which means growth comes more through external circumstances than internal tension.</p>
+                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", color: M3.onSurfaceVariant, fontStyle: "italic" }}>No hard contacts fall within the orbs in use.</p>
                         ) : hardAsp.slice(0, 6).map((a, i) => {
                           const r0 = (P_ROLE[a.p1] || a.p1), r1 = (P_ROLE[a.p2] || a.p2);
                           const k1 = `${r0}+${r1}`, k2 = `${r1}+${r0}`;
@@ -1199,7 +1198,7 @@ export default function App() {
                                 <span style={{ color: P_COL[p], fontSize: "1.1rem" }}>{P_SYM[p]}</span>
                                 <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "700", color: P_COL[p] }}>{p} in the 12th House</span>
                               </div>
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>{TH_PLANET[p] || `Your ${(P_ROLE[p] || p).toLowerCase()} operates in the hidden 12th house — this part of your life is deeply internalised and may require deliberate effort to bring into awareness.`}</p>
+                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>{TH_PLANET[p] || `The ${(P_ROLE[p] || p).toLowerCase()} significator placed in the 12th house.`}</p>
                             </div>
                           ))}
                         </Card>
@@ -1242,7 +1241,7 @@ export default function App() {
                       {[
                         { id: "western", label: "☉ Western (Tropical)", col: M3.primary, tip: "Season-based zodiac used in Western astrology. The main birth chart." },
                         { id: "sidereal", label: "☽ Lunar (Sidereal)", col: "#ce93d8", tip: "Star-based zodiac used in Vedic/Jyotish astrology. Accounts for Earth's wobble." },
-                        { id: "solar", label: "↩ Solar Return", col: "#ffa726", tip: "Chart cast for the moment the Sun regains its natal longitude each year — maps your year ahead." },
+                        { id: "solar", label: "↩ Solar Return", col: "#ffa726", tip: "Chart cast for the moment the Sun regains its natal longitude each year." },
                         { id: "chinese", label: "☯ Chinese", col: "#ffd54f", tip: "The Chinese zodiac wheel — animals, elements, trigrams, and Yin/Yang." },
                       ].map(m => (
                         <div key={m.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3 }}>
@@ -1271,7 +1270,7 @@ export default function App() {
                           <WheelWithTooltip positions={res.trop} houses={res.houses} size={Math.min(560, window.innerWidth - 64)} id="full" />
                         </div>
                         <div style={{ display: "flex", justifyContent: "center", gap: 16, marginTop: 12, flexWrap: "wrap" }}>
-                          {[{ l: "AC", c: M3.tertiary, d: "Ascendant (left) — the degree rising at the eastern horizon" }, { l: "MC", c: M3.primary, d: "Midheaven (top) — career, public reputation" }, { l: "DC", c: M3.tertiary, d: "Descendant (right) — partnerships, what you attract" }, { l: "IC", c: M3.primary, d: "Imum Coeli (bottom) — home, roots, private self" }].map(a => (
+                          {[{ l: "AC", c: M3.tertiary, d: "Ascendant (left) — the degree rising at the eastern horizon" }, { l: "MC", c: M3.primary, d: "Midheaven (top) — career, public reputation" }, { l: "DC", c: M3.tertiary, d: "Descendant (right) — the degree setting at the western horizon" }, { l: "IC", c: M3.primary, d: "Imum Coeli (bottom) — home, roots, private self" }].map(a => (
                             <div key={a.l} style={{ display: "flex", alignItems: "center", gap: 6 }}>
                               <span style={{ color: a.c, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "700" }}>{a.l}</span>
                               <span style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.62rem", color: M3.onSurfaceVariant }}>{a.d}</span>
@@ -1476,7 +1475,7 @@ export default function App() {
                                   <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.onSurfaceVariant, marginLeft: "auto" }}>{a.p1}–{a.p2}</span>
                                   <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: def?.col }}>{(a.strength * 100).toFixed(0)}%</span>
                                 </div>
-                              )) : <div style={{ color: M3.outlineVariant, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.7rem", fontStyle: "italic" }}>None in your chart</div>}
+                              )) : <div style={{ color: M3.outlineVariant, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.7rem", fontStyle: "italic" }}>None within the orbs in use</div>}
                             </div>
                           );
                         })}
@@ -1520,7 +1519,7 @@ export default function App() {
                     <Card style={{ background: `linear-gradient(135deg,${M3.secondaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                       <div style={{ display: "flex", gap: 20, flexWrap: "wrap", alignItems: "flex-start" }}>
                         <div style={{ flex: 1, minWidth: 220 }}>
-                          <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.secondary, marginBottom: 8 }}>Secondary Progressions — who you're becoming</div>
+                          <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.secondary, marginBottom: 8 }}>Secondary Progressions — the day-for-a-year convention</div>
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: "0 0 10px" }}>
                             Secondary progressions read one day of ephemeris time after birth as standing for one year of life. It is a convention of correspondence, not a claim about where the bodies physically stand.
                           </p>
@@ -2009,7 +2008,7 @@ export default function App() {
                   return (
                     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
-                        <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Transits — Where the Planets Are Right Now vs Your Birth</div>
+                        <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Transits — Current Positions Against the Natal Figure</div>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
                           Transits are the current computed positions set against the natal positions. A contact is reported when the angular separation falls within the orb in use.
                         </p>
@@ -2046,7 +2045,7 @@ export default function App() {
                                 {aspMatch && (
                                   <div style={{ marginTop: 5, marginLeft: 26 }}>
                                     <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: 0 }}>
-                                      Transiting {p} ({tm.flavor || ""}) is forming a <strong style={{ color: aspMatch.col }}>{aspMatch.name}</strong> ({ASP_EXPLAIN[aspMatch.name] || aspMatch.name}) to your birth {p}.
+                                      Transiting {p} ({tm.flavor || ""}) is forming a <strong style={{ color: aspMatch.col }}>{aspMatch.name}</strong> ({ASP_EXPLAIN[aspMatch.name] || aspMatch.name}) to natal {p}.
                                       {tm.slow ? " This is a slow-moving transit — its influence unfolds over weeks or months and marks a significant chapter." : " This is a fast-moving transit — its influence is felt today and passes within days."}
                                     </p>
                                   </div>
@@ -2213,8 +2212,7 @@ export default function App() {
                       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Chinese Astrology — The Sexagenary Cycle</div>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-                          Chinese astrology is based on a 60-year cycle (sexagenary cycle) combining 12 animals, 5 elements (Wood, Fire, Earth, Metal, Water), and Yin/Yang polarity. Unlike Western astrology which maps the sky at birth, the Chinese system uses the lunar calendar year, making your animal and element fixed by the year you were born (adjusted for the Chinese New Year date). Each combination creates a unique character archetype that repeats every 60 years.
-                        </p>
+                          Chinese astrology is based on a 60-year cycle (sexagenary cycle) combining 12 animals, 5 elements (Wood, Fire, Earth, Metal, Water), and Yin/Yang polarity. Unlike Western astrology which maps the sky at birth, the Chinese system uses the lunar calendar year, so the animal and element are fixed by the cycle year, which begins at the lunar new year</p>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
                           <strong>How to read it:</strong> the <strong>animal</strong> names the earthly branch of the year, and the <strong>element</strong> names the phase paired with it. The cycle year begins at the lunar new year, not on 1 January.
                         </p>
@@ -2282,11 +2280,11 @@ export default function App() {
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>{ei.desc}</p>
                           {(() => {
                             const elBal = {
-                              Wood: { balanced: "Wood is the phase of growth and expansion in the five-phase scheme, associated with spring and with the liver in Chinese medicine.", imbalanced: "When Wood is out of balance, you may become rigid, controlling, or chronically frustrated. Stagnant Wood energy shows as resentment, indecision, or an inability to start things.", cultivate: "Spend time in nature. Begin new creative projects. Practice forgiveness. Physical movement — especially stretching, yoga, or martial arts — unblocks Wood energy." },
-                              Fire: { balanced: "Fire is the phase of maximum yang, associated with summer and with the heart.", imbalanced: "When Fire is out of balance, you may become anxious, scattered, or burn out from overcommitting. Excess Fire shows as mania, restlessness, or attention-seeking; depleted Fire shows as depression, apathy, or inability to feel joy.", cultivate: "Practice presence and mindfulness. Laugh freely. Nurture close relationships. When depleted, seek community and creative expression. When excessive, practice stillness and listening." },
-                              Earth: { balanced: "Earth is the pivot phase, associated with late summer and with the spleen.", imbalanced: "When Earth is out of balance, you may become a chronic worrier, overly self-sacrificing, or stuck in cycles of overthinking. You might nurture everyone else while neglecting yourself, or become possessive and clingy.", cultivate: "Eat mindfully. Spend time cooking, gardening, or working with your hands. Practice receiving as much as giving. Set boundaries around caretaking." },
-                              Metal: { balanced: "Metal is the phase of contraction and separation, associated with autumn and with the lungs.", imbalanced: "When Metal is out of balance, you may become perfectionistic, grief-stricken, or emotionally cold. You might hold onto things — possessions, grudges, the past — long after they've served their purpose.", cultivate: "Practice decluttering — physical spaces and emotional baggage. Breathe deeply. Engage with art, music, or ritual. Allow yourself to grieve fully and then release." },
-                              Water: { balanced: "Water is the phase of maximum yin, associated with winter and with the kidneys.", imbalanced: "When Water is out of balance, you may become paralysed by fear, isolated, or emotionally frozen. You might hide your true self, hoard resources, or lose your willpower entirely.", cultivate: "Rest more — Water needs stillness to replenish. Meditate near water. Journal your fears honestly. Build trust slowly through consistent small actions. Listen to your body's need for quiet." },
+                              Wood: { balanced: "Wood is the phase of growth and expansion in the five-phase scheme, associated with spring and with the liver in Chinese medicine.", imbalanced: "Excess or deficiency of the wood phase is described in the tradition through rigidity or frustration.", cultivate: "The generating and overcoming cycles set each phase against its neighbours." },
+                              Fire: { balanced: "Fire is the phase of maximum yang, associated with summer and with the heart.", imbalanced: "Excess or deficiency of the fire phase is described through agitation or exhaustion.", cultivate: "The generating and overcoming cycles set each phase against its neighbours." },
+                              Earth: { balanced: "Earth is the pivot phase, associated with late summer and with the spleen.", imbalanced: "Excess or deficiency of the earth phase is described through worry or stagnation.", cultivate: "The generating and overcoming cycles set each phase against its neighbours." },
+                              Metal: { balanced: "Metal is the phase of contraction and separation, associated with autumn and with the lungs.", imbalanced: "Excess or deficiency of the metal phase is described through rigidity or grief.", cultivate: "The generating and overcoming cycles set each phase against its neighbours." },
+                              Water: { balanced: "Water is the phase of maximum yin, associated with winter and with the kidneys.", imbalanced: "Excess or deficiency of the water phase is described through fear or withdrawal.", cultivate: "The generating and overcoming cycles set each phase against its neighbours." },
                             };
                             const eb = elBal[res.cn.element];
                             return eb ? (
@@ -2313,18 +2311,17 @@ export default function App() {
                           <div style={{ marginTop: 14, padding: "10px 14px", borderRadius: 10, background: M3.surfaceDim }}>
                             <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, marginBottom: 4 }}>COMBINED READING</div>
                             <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
-                              As a <strong style={{ color: ei.color }}>{res.cn.element}</strong> <strong style={{ color: M3.primary }}>{res.cn.animal}</strong> in a <strong>{res.cn.polarity}</strong> year, your {res.cn.element.toLowerCase()} nature expresses through the {res.cn.animal.toLowerCase()}'s {(ai.trait || "").split(", ")[0]?.toLowerCase()} quality with {res.cn.polarity === "Yang" ? "an outward, assertive energy — you act on your instincts and lead with confidence" : "an inward, reflective energy — you build power through patience and observation"}.
-                            </p>
+                              As a <strong style={{ color: ei.color }}>{res.cn.element}</strong> <strong style={{ color: M3.primary }}>{res.cn.animal}</strong> in a <strong>{res.cn.polarity}</strong> year, the {res.cn.element.toLowerCase()} phase is paired with the {res.cn.animal.toLowerCase()}, to which the tradition attributes a {(ai.trait || "").split(", ")[0]?.toLowerCase()} quality.</p>
                           </div>
                           <div style={{ marginTop: 14, padding: "12px 16px", borderRadius: 12, background: M3.primaryContainer + "44", border: `1px solid ${M3.outline}33` }}>
                             <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.64rem", color: M3.primary, letterSpacing: "0.1em", marginBottom: 6 }}>YIN/YANG INTEGRATION — WHAT TO CULTIVATE</div>
                             {res.cn.polarity === "Yang" ? (
                               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
-                                Yang polarity is read in the tradition as outward-moving and assertive.<strong>Your growth edge is cultivating Yin qualities</strong>: patience, receptivity, listening, and stillness. The strongest Yang people are those who can also be deeply still — who act from calm center rather than restless impulse. Practice: before making decisions, pause. Before speaking, listen. Before doing, feel. Your Yang power becomes unstoppable when it's rooted in Yin wisdom.
+                                Yang polarity is read in the tradition as outward-moving and assertive. Its complement is Yin, to which the tradition attributes receptivity and reflection; the pair is a relation, not a ranking.
                               </p>
                             ) : (
                               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
-                                Yin polarity is read in the tradition as inward-moving and receptive.<strong>Your growth edge is cultivating Yang qualities</strong>: decisive action, visible self-expression, and the willingness to be seen. The strongest Yin people are those who can also act boldly — who move from deep knowing into clear action. Practice: share your insights before they're perfect. Take the first step before you feel ready. Let your depth be visible. Your Yin wisdom becomes transformative when it's paired with Yang courage.
+                                Yin polarity is read in the tradition as inward-moving and receptive. Its complement is Yang, to which the tradition attributes assertion and outward movement; the pair is a relation, not a ranking.
                               </p>
                             )}
                           </div>
@@ -2423,8 +2420,7 @@ export default function App() {
                     <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                       <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Elements, Modality & Phi Rhythm</div>
                       <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-                        The bodies of this figure are distributed across four <strong>elements</strong> (Fire = passion, Earth = practicality, Air = intellect, Water = emotion) and three <strong>modalities</strong> (Cardinal = initiator, Fixed = sustainer, Mutable = adapter). The balance between these shapes your temperament. The <strong>Phi rhythm</strong> (φ = 1.618, the golden ratio) maps your birth day to a natural energy cycle — showing whether you're in a rest, building, or peak phase.
-                      </p>
+                        The bodies of this figure are distributed across four <strong>elements</strong> (Fire, Earth, Air and Water in the classical scheme) and three <strong>modalities</strong> (Cardinal = initiator, Fixed = sustainer, Mutable = adapter). The proportion between them is what the scheme records. The <strong>Phi rhythm</strong> (φ = 1.618, the golden ratio) maps the birth day-of-year onto a cycle derived from that ratio. The mapping is an arithmetic construction of this application, not a claim from any tradition.</p>
                     </Card>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(240px,1fr))", gap: 16 }}>
                       <Card title="φ Golden Ratio Rhythm — Position in the Cycle">
@@ -2511,7 +2507,7 @@ export default function App() {
                       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1.1rem", color: M3.primary, marginBottom: 8 }}>Numerology — The Mathematics of Identity</div>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
-                          Numerology is the ancient study of numbers as carriers of meaning. Every date, every name, every letter has a numerical vibration. This section calculates your core numerological profile from your birth date and name, maps your name through Hebrew gematria, and identifies which mathematical sequences resonate with your birth day. Two systems are shown: <strong>Pythagorean</strong> (the Western standard, 1-9 cycle) and <strong>Chaldean</strong> (the older Babylonian system with irregular mappings considered more mystically accurate by some traditions).
+                          Numerology assigns numbers to dates and to letters and reads the totals. The two principal systems, Pythagorean and Chaldean, assign letters different values and cannot be derived from one another.
                         </p>
                       </Card>
 
@@ -2525,10 +2521,10 @@ export default function App() {
                             { label: "Life Path", val: nuData.lifePath, color: M3.primary, tip: "Derived from the full birth date by reduction.", needsName: false },
                             { label: "Birthday", val: nuData.birthday, color: "#ffa726", tip: "The day of the month, reduced.", needsName: false },
                             { label: "Personal Year", val: nuData.personalYear, color: "#69ff8e", tip: "The annual cycle number for the current year.", needsName: false },
-                            { label: "Expression", val: nuData.expression, color: M3.tertiary, tip: "Derived from all letters of your full name. How you naturally express yourself and what talents you carry.", needsName: true },
-                            { label: "Soul Urge", val: nuData.soulUrge, color: "#ce93d8", tip: "Derived from the vowels in your name. Your deepest inner desire — what your heart truly wants.", needsName: true },
-                            { label: "Personality", val: nuData.personality, color: "#4fc3f7", tip: "Derived from the consonants in your name. How the outside world perceives you — your social mask.", needsName: true },
-                            { label: "Maturity", val: nuData.maturity, color: M3.secondary, tip: "Life Path + Expression. The person you are becoming in the second half of life.", needsName: true },
+                            { label: "Expression", val: nuData.expression, color: M3.tertiary, tip: "Derived from all letters of the full name at birth.", needsName: true },
+                            { label: "Soul Urge", val: nuData.soulUrge, color: "#ce93d8", tip: "Derived from the vowels of the name.", needsName: true },
+                            { label: "Personality", val: nuData.personality, color: "#4fc3f7", tip: "Derived from the consonants of the name.", needsName: true },
+                            { label: "Maturity", val: nuData.maturity, color: M3.secondary, tip: "Life Path plus Expression, reduced.", needsName: true },
                             { label: "Chaldean Expr.", val: nuData.chaldeanExpr, color: "#ff5252", tip: "Babylonian system — older and considered by some to be more vibrationally accurate.", needsName: true },
                           ].map(c => (
                             <div key={c.label} style={{ padding: "14px", borderRadius: 12, background: c.color + "11", border: `1px solid ${c.color}33`, textAlign: "center", opacity: c.needsName && !hasName ? 0.4 : 1 }}>
@@ -2546,9 +2542,9 @@ export default function App() {
                       </Card>
 
                       {/* ── Life Path Deep Dive ── */}
-                      <Card title={`Life Path ${nuData.lifePath} — ${lp.title || "Your Path"}`}>
+                      <Card title={`Life Path ${nuData.lifePath} — ${lp.title || "Unnamed"}`}>
                         {lp.archetype && <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: M3.tertiary, letterSpacing: "0.08em", marginBottom: 8 }}>{lp.archetype}</div>}
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.7, color: M3.onSurface, margin: "0 0 12px" }}>{lp.desc || "Your life path carries a unique vibration and purpose."}</p>
+                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.7, color: M3.onSurface, margin: "0 0 12px" }}>{lp.desc || "No record is held for this number."}</p>
                         {lp.shadow && (
                           <div style={{ padding: "10px 14px", borderRadius: 10, background: "#ff525211", border: "1px solid #ff525222", marginBottom: 10 }}>
                             <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: "#ff5252", letterSpacing: "0.08em", marginBottom: 4 }}>SHADOW SIDE</div>
@@ -2564,7 +2560,7 @@ export default function App() {
                       </Card>
 
                       {/* ── Core Number Meanings ── */}
-                      <Card title="What Each Number Means for You">
+                      <Card title="What Each Number Has Been Taken to Mean">
                         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                           {[
                             ...(hasName ? [
@@ -2579,7 +2575,7 @@ export default function App() {
                                 <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.secondary, letterSpacing: "0.08em" }}>{r.label.toUpperCase()}</span>
                                 <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "1rem", color: M3.tertiary, fontWeight: "700" }}>{r.num}</span>
                               </div>
-                              <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", color: M3.onSurface, lineHeight: 1.55 }}>You are a {r.meaning}</div>
+                              <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", color: M3.onSurface, lineHeight: 1.55 }}>{r.meaning}</div>
                             </div>
                           ))}
                         </div>
@@ -2589,7 +2585,7 @@ export default function App() {
                       {hasName && (
                         <Card title="Name Letter Breakdown — Pythagorean & Chaldean Values">
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
-                            Each letter of your name carries a number. Vowels (highlighted) drive your Soul Urge; consonants shape your Personality. Together they form your Expression number.
+                            Each letter is assigned a number. The vowels total to the Soul Urge, the consonants to the Personality, and the whole name to the Expression. Pythagorean and Chaldean disagree on the letter values, so the method must be named. This table uses the Pythagorean assignment.
                           </p>
                           <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 12 }}>
                             {nuData.letterBreakdown.map((l, i) => (
@@ -2616,9 +2612,9 @@ export default function App() {
 
                       {/* ── Missing Numbers ── */}
                       {hasName && nuData.missingNums.length > 0 && (
-                        <Card title="Karmic Lessons — Missing Numbers in Your Name">
+                        <Card title="Karmic Lessons — Numbers Absent From the Name">
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
-                            Numbers absent from your name's letter values indicate lessons your soul chose to learn through experience rather than innate talent. These aren't weaknesses — they're growth edges.
+                            Numbers that do not appear among the letter values of the name. The tradition marks these as absent rather than deficient.
                           </p>
                           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                             {nuData.missingNums.map(n => (
@@ -2632,9 +2628,9 @@ export default function App() {
                       )}
 
                       {/* ── Pinnacles & Challenges ── */}
-                      <Card title="Life Pinnacles & Challenges — Your Four Seasons">
+                      <Card title="Life Pinnacles & Challenges — The Four Periods">
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
-                          Your life unfolds in four major phases, each with a <strong>pinnacle</strong> (opportunity/theme) and a <strong>challenge</strong> (lesson/obstacle). Together they map the arc of your growth across decades.
+                          The scheme divides a life into four periods, each carrying a pinnacle number and a challenge number derived arithmetically from the birth date. Where the boundaries fall varies between sources.
                         </p>
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                           {["First (youth)", "Second (early adult)", "Third (maturity)", "Fourth (wisdom)"].map((phase, i) => (
@@ -2658,7 +2654,7 @@ export default function App() {
                       {/* ── Hebrew Gematria Calculator ── */}
                       <Card title="Hebrew Gematria Calculator — The Number in a Name">
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-                          Each Hebrew letter carries a numerical value. Type any name or word in English and it will be phonetically transliterated to Hebrew — digraphs like SH, CH, TH are handled as single Hebrew letters. You can also type Hebrew directly. Medial vowels are dimmed since Hebrew is primarily consonantal.
+                          Each Hebrew letter carries a numerical value. Any name or word typed in English is phonetically transliterated to Hebrew — digraphs like SH, CH, TH are handled as single Hebrew letters. Hebrew may also be typed directly. Medial vowels are dimmed since Hebrew is primarily consonantal.
                         </p>
                         <input type="text" value={gemaName} onChange={e => setGemaName(e.target.value)}
                           placeholder="English name, Hebrew (אברהם), or phrase..."

@@ -51,29 +51,36 @@ now; it is its own piece of work.
 
 ---
 
-## Open — not yet established
+## Ephemeris accuracy — provenance of the published figures
 
-**Ephemeris accuracy has not been measured.** The deployed app does not use a
-Swiss Ephemeris backend; GitHub Pages cannot run one, so the live site runs on
-the hand-rolled series in `src/engines/astronomy.js`.
+The deployed app does not use a Swiss Ephemeris backend; GitHub Pages cannot run
+one, so the live site computes from the hand-rolled series in
+`src/engines/astronomy.js`.
 
-No error figures for that series exist in this repository. `docs/RESEARCH_BRIEF.md`
-is referenced by prior planning but is not present in the repo, and no such
-file appears anywhere in the git history. Any published accuracy claim — per
-body, per epoch — must come from an actual measurement against a reference
-ephemeris before it is written down or shown to users.
+The Education tab publishes these figures for that series: Sun and Moon
+effectively exact, Mercury reliable, Venus oscillating to 0.8°, and the outer
+planets drifting with epoch to about 1.18° on Saturn by 2060.
 
-This matters more than it would elsewhere, because several techniques in SGE
-are sensitive at or below the degree:
+**These figures were supplied by the project owner, not measured in this
+repository.** They are attributed to `docs/RESEARCH_BRIEF.md`, which is not
+present here and appears in no commit in this repository's history. Before
+they are relied on — or restated anywhere else — they should be reproduced by
+measuring `astronomy.js` against a reference ephemeris. That measurement is
+outstanding work.
 
-- navamsa divisions are 3°20′
-- nakshatra boundaries are 13°20′
-- several dignities are degree-exact
-- combustion orbs span only a few degrees
+The following are verified against the source and are not in doubt:
 
-Related items needing verification before they are described to users:
+- The Lahiri ayanamsa is a linear approximation:
+  `ayanamsa = 23.8531 + 0.01397 * ((jd - 2451545) / 365.25)`.
+- Sade Sati is not detected at all. The technique needs transiting Saturn;
+  only natal Saturn is available, and `astronomy.js` carries a comment
+  recording the decision not to infer it from natal data.
+- Vedic yoga and dosha detection is described in the source as simplified.
+- `MANSION_CROSSWALK` in `src/data/calendar/lunarMansions.js` pairs the Arabic
+  manazil, the nakshatra scheme and the Chinese xiu by ordinal index. The three
+  do not divide the sky the same way.
+- The house system computed is Porphyry.
 
-- the Lahiri ayanamsa as implemented is a linear approximation
-- Vedic yoga and dosha detection is self-documented as simplified
-- `MANSION_CROSSWALK` in `src/data/calendar/lunarMansions.js` pairs three
-  28-fold systems by index, though they do not divide the sky identically
+Why sub-degree error matters here: navamsa divisions are 3°20′, nakshatra
+boundaries 13°20′, several dignities are degree-exact, and combustion orbs span
+only a few degrees.
