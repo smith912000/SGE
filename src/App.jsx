@@ -2128,24 +2128,26 @@ export default function App() {
                             "Sun+Moon": "The two lights across charts. Classical texts weight this contact heavily.",
                             "Sun+Mercury": "The light and the messenger. Mercury never departs far from the Sun, so this contact recurs frequently.",
                             "Sun+Venus": "The light and the lesser benefic. Venus stays within a bounded elongation of the Sun.",
-                            "Sun+Mars": "One person's sense of self triggers the other's aggression or drive. The growth: channelling competition into mutual motivation rather than power struggles.",
-                            "Sun+Saturn": "Identity meets restriction — one person feels limited by the other. The growth: real commitment means accepting the weight of responsibility along with the warmth of love.",
-                            "Sun+Jupiter": "Overexpansion meets identity — one person's optimism overwhelms the other. The growth: calibrating enthusiasm so it inspires rather than overshadows.",
+                            "Sun+Mars": "The light and the lesser malefic.",
+                            "Sun+Saturn": "The light and the greater malefic. Classical sources read Saturn on the Sun as weight placed on the solar significator.",
+                            "Sun+Jupiter": "The light and the greater benefic.",
                             "Moon+Moon": "The two lunar significators. The Moon is the fastest body, so these contacts are the most sensitive to birth-time accuracy.",
-                            "Moon+Mercury": "Feelings meet logic, and they don't speak the same language. The growth: building a bridge between emotional truth and rational understanding.",
+                            "Moon+Mercury": "The lunar significator and the messenger, the two fastest bodies.",
                             "Moon+Venus": "The Moon and the lesser benefic, both nocturnal in the classical scheme.",
-                            "Moon+Mars": "Emotional vulnerability meets aggression. The growth: learning to be tender and direct at the same time — anger doesn't have to mean rejection.",
+                            "Moon+Mars": "The Moon and the lesser malefic.",
                             "Moon+Saturn": "The Moon and the greater malefic. The classical reading is restriction on the lunar significator; the modern psychological reading softens this to structure, and the two are not the same claim.",
-                            "Venus+Mars": "Attraction meets friction — desire and affection pull in different directions. The growth: learning that passion and tenderness are not opposites but partners.",
-                            "Venus+Saturn": "Love meets restriction — one person's affection feels blocked by the other's walls. The growth: love that survives Saturn contact becomes unbreakable.",
-                            "Mars+Saturn": "Drive meets discipline — one person's energy feels controlled by the other. The growth: learning to focus ambition rather than fight it. This aspect builds incredible joint productivity once the power struggle resolves.",
-                            "Mars+Mars": "Two sets of drives competing. The growth: channelling mutual intensity into shared goals rather than opposing battles.",
-                            "Mercury+Mercury": "Two different thinking styles colliding. The growth: intellectual diversity strengthens decisions when both people learn to listen.",
+                            "Venus+Mars": "The lesser benefic and the lesser malefic, paired in the classical scheme as the two bodies of appetite.",
+                            "Venus+Saturn": "The lesser benefic and the greater malefic.",
+                            "Mars+Saturn": "The two malefics of the classical scheme, the lesser and the greater.",
+                            "Mars+Mars": "The same body in both charts, the lesser malefic to itself.",
+                            "Mercury+Mercury": "The same body in both charts, the messenger to itself.",
                             "Jupiter+Saturn": "The two social bodies and the slowest of the classical seven; their mutual cycle of about twenty years is the great conjunction of mundane astrology.",
                           };
                           const getKey = (a) => {
                             const p1 = a.p1.replace(/^[AB]_/, ""), p2 = a.p2.replace(/^[AB]_/, "");
-                            return SYN_CONTACT[`${p1}+${p2}`] || SYN_CONTACT[`${p2}+${p1}`] || `A contact between the ${(P_ROLE[p1] || p1).toLowerCase()} significator of one chart and the ${(P_ROLE[p2] || p2).toLowerCase()} significator of the other.`;
+                            return SYN_CONTACT[`${p1}+${p2}`] || SYN_CONTACT[`${p2}+${p1}`] || (p1 === p2
+      ? `${p1} in one chart to ${p2} in the other.`
+      : `${p1} in one chart to ${p2} in the other — the ${(P_ROLE[p1]||p1).toLowerCase()} body to the ${(P_ROLE[p2]||p2).toLowerCase()} body.`);
                           };
                           return (
                             <Card title="◈ Hard Contacts Between the Two Charts">

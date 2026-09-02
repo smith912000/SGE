@@ -259,7 +259,7 @@ export default function TodayTab({ ctx }) {
                     margin: 0,
                   }}
                 >
-                  A slow-moving planet is setting the tone for several days:{" "}
+                  The slowest contact currently in orb:{" "}
                   <strong>
                     {n1 === n2 ? n1 : `${n1} and ${n2}`} {weekAnchor.sym}{" "}
                     {weekAnchor.name}
@@ -331,7 +331,7 @@ export default function TodayTab({ ctx }) {
           let body;
           if (!top) {
             body =
-              "No strong planet-to-planet activations here today — this area is steady. Focus on integrating longer-term themes rather than forcing change.";
+              "No contact between these bodies falls within the orbs in use.";
           } else {
             const n1 = cleanName(top.p1);
             const n2 = cleanName(top.p2);
@@ -339,10 +339,7 @@ export default function TodayTab({ ctx }) {
             const role2 = P_ROLE[n2] || "";
             const short = ASP_SHORT[top.name] || top.name.toLowerCase();
             const expl = ASP_EXPLAIN[top.name] || short;
-            const flavor1 = role1 ? `${role1}` : n1;
-            const flavor2 = role2 ? `${role2}` : n2;
-            body = `Transiting ${n1 === n2 ? n1 : `${n1} and ${n2}`} contacts the ${flavor1} significator${role2 ? ` and the ${flavor2} significator` : ""
-              } by ${top.name} — ${expl}.`;
+            body = `Transiting ${n1} ${top.name.toLowerCase()} natal ${n2} — ${expl}.`;
           }
           const isPriority = focus !== "all" && sortedCategories.indexOf(cat) === 0;
           return (

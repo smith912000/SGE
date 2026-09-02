@@ -38,7 +38,9 @@ export default function SynastryTab({ ctx }) {
 
   const getKey = (a) => {
     const p1 = a.p1.replace(/^[AB]_/,""), p2 = a.p2.replace(/^[AB]_/,"");
-    return SYN_CONTACT[`${p1}+${p2}`]||SYN_CONTACT[`${p2}+${p1}`]||`A contact between the ${(P_ROLE[p1]||p1).toLowerCase()} significator of one chart and the ${(P_ROLE[p2]||p2).toLowerCase()} significator of the other.`;
+    return SYN_CONTACT[`${p1}+${p2}`]||SYN_CONTACT[`${p2}+${p1}`]|| (p1 === p2
+      ? `${p1} in one chart to ${p2} in the other.`
+      : `${p1} in one chart to ${p2} in the other — the ${(P_ROLE[p1]||p1).toLowerCase()} body to the ${(P_ROLE[p2]||p2).toLowerCase()} body.`);
   };
 
   const frictionAsp = [...squares, ...opps].sort((a,b)=>b.strength-a.strength).slice(0,3);

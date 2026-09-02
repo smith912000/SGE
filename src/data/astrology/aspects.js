@@ -9,23 +9,23 @@ export const ASPECTS = [
   { name:"Sesquiquadrate", angle:135, orb:2, sym:"⚼", col:"#ffcc80" },
 ];
 export const ASP_EXPLAIN = {
-  Conjunction:"same place — energies fuse together", Opposition:"directly across — a push-pull dynamic",
-  Trine:"120° apart — natural ease and flow", Square:"90° — creative friction that drives growth",
-  Sextile:"60° — gentle opportunity", Quincunx:"150° — requires constant adjustment",
-  Semisquare:"45° — minor irritant", Sesquiquadrate:"135° — inner restlessness",
+  Conjunction:"0°, the same degree", Opposition:"180°, the axis",
+  Trine:"120°, signs of the same element", Square:"90°, same mode and different element",
+  Sextile:"60°, compatible elements", Quincunx:"150°, no element or mode in common",
+  Semisquare:"45°, half a square", Sesquiquadrate:"135°, a square and a half",
 };
 export const ASP_SHORT = {
-  Conjunction:"energies merge",Opposition:"push-pull tension",Trine:"natural flow",
-  Square:"friction that drives growth",Sextile:"gentle opportunity",Quincunx:"constant adjustment",
-  Semisquare:"minor irritation",Sesquiquadrate:"inner restlessness",
+  Conjunction:"same degree",Opposition:"the axis",Trine:"same element",
+  Square:"same mode",Sextile:"compatible elements",Quincunx:"nothing in common",
+  Semisquare:"half a square",Sesquiquadrate:"a square and a half",
 };
 export const ASPECT_MEANINGS = {
-  Conjunction:    "Two planets merge their energies in the same spot. Very powerful — they amplify each other, for better or worse.",
-  Opposition:     "Two planets face off across the chart. Creates tension and awareness — like two forces pulling in opposite directions that must learn to cooperate.",
-  Trine:          "Two planets in harmony, flowing easily together. Natural talent and ease — though sometimes so comfortable that the energy isn't fully used.",
-  Square:         "Two planets in friction, forcing action. Challenging, but produces results through effort. The source of much drive and achievement.",
-  Sextile:        "Two planets at a friendly 60° angle, offering opportunities. Less automatic than a trine — the energy needs a little activation.",
-  Quincunx:       "An awkward angle requiring constant adjustment. Two energies that don't naturally understand each other but must keep adapting.",
-  Semisquare:     "A minor irritation — small but nagging friction between two planetary energies that requires minor course corrections.",
-  Sesquiquadrate: "A minor tense angle, like a square but more internal. Creates inner restlessness and a drive to resolve conflicting impulses.",
+  Conjunction:    "Two bodies at the same degree. Ptolemaic.",
+  Opposition:     "Two bodies 180° apart, on one axis. Ptolemaic.",
+  Trine:          "120° apart, in signs sharing an element. Ptolemaic.",
+  Square:         "90° apart, sharing a mode but not an element. Ptolemaic.",
+  Sextile:        "60° apart, in compatible elements. Ptolemaic.",
+  Quincunx:       "150° apart, sharing neither element nor mode. A later addition.",
+  Semisquare:     "45° apart, half a square. Attributed to Kepler.",
+  Sesquiquadrate: "135° apart, a square and a half. Attributed to Kepler.",
 };
