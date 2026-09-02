@@ -1785,17 +1785,17 @@ export default function App() {
 
                 {false && tab === "harmonics-old" && (() => {
                   const HARM_DEFS = {
-                    2: { col: "#ff8a50", label: "Inner Duality (Opposition)", desc: "The 2nd harmonic, the opposition family, 180°.", lookFor: "Conjunctions in this chart correspond to oppositions in your birth chart. Clusters show where your inner contradictions are strongest." },
-                    3: { col: "#a5d6a7", label: "Natural Gifts (Trine)", desc: "The 3rd harmonic, the trine family, 120°.", lookFor: "Conjunctions here correspond to trines in your birth chart. The more planets clustered, the more natural talent is concentrated in that area." },
-                    4: { col: "#ff5252", label: "Friction & Drive (Square)", desc: "The 4th harmonic, the square and opposition family, 90°.", lookFor: "Conjunctions here correspond to squares in your birth chart. Tight clusters indicate powerful drive and where you'll face your biggest growth edges." },
-                    5: { col: "#64b5f6", label: "Creativity & Art", desc: "The 5th harmonic, the quintile family, 72°, argued for by Kepler on harmonic grounds.", lookFor: "Clusters show where your creative power is concentrated. Planets in conjunction here work together to produce original, inventive expression in those life areas." },
-                    6: { col: "#81c784", label: "Service & Duty", desc: "The 6th harmonic combines the themes of opposition (2) and trine (3) — it reveals where duty, responsibility, and productive service intersect with natural ability. This is the chart of craftsmanship, health, and meaningful work.", lookFor: "Conjunctions here indicate where you can turn natural skill into practical contribution. Strong patterns suggest a calling toward healing, teaching, or skilled trades." },
-                    7: { col: "#ce93d8", label: "Intuition & Spiritual Gifts", desc: "The 7th harmonic is the most mystical — it reveals spiritual sensitivity, intuitive perception, and connection to the numinous. This number is sacred across traditions (7 days, 7 chakras, 7 planets of antiquity). Patterns here suggest where you access inspiration that feels channeled or prophetic.", lookFor: "Clusters show where your intuitive antenna is strongest. Tight conjunctions indicate psychic sensitivity, spiritual gifts, or artistic inspiration that transcends the rational." },
-                    8: { col: "#ffb74d", label: "Transformation & Power", desc: "The 8th harmonic combines double-squares — it reveals where transformative power, crisis, and rebirth operate in your chart. This is associated with Scorpionic themes: death/renewal cycles, inheritance, shared resources, and deep psychological change.", lookFor: "Conjunctions indicate life areas where you undergo the most profound transformations. Strong patterns suggest power, resilience, and the ability to rebuild from ashes." },
-                    9: { col: "#f48fb1", label: "Purpose & Soul Bonds", desc: "The 9th harmonic is called the Navamsa in Vedic astrology and is considered the chart of your soul's deeper purpose. It reveals what you are truly here to do and who resonates with you at a dharmic level. This is where astrologers look for information about marriage, spiritual calling, and life mission.", lookFor: "Tight conjunctions reveal your soul's strongest themes. Planets grouped here show what draws your deepest commitment and where your most meaningful relationships form." },
-                    10: { col: "#4db6ac", label: "Public Impact & Legacy", desc: "The 10th harmonic combines duality (2) and creativity (5) — it reveals how your internal tensions fuel your public impact. This chart shows what you project into the world, your reputation potential, and the mark you leave.", lookFor: "Clusters indicate where your creative tensions become publicly visible achievements. Strong patterns suggest fame, public recognition, or lasting cultural contribution." },
-                    11: { col: "#9fa8da", label: "Vision & Idealism", desc: "The 11th harmonic reveals your relationship with collective ideals, reform, and visionary thinking. This is the Aquarian harmonic — concerned with humanity's future, social change, and idealistic aspiration.", lookFor: "Conjunctions show where you connect with collective movements and ideals. Strong patterns suggest gifts for innovation, social reform, or humanitarian vision." },
-                    12: { col: "#ffd54f", label: "Hidden Lessons & Karma", desc: "The 12th harmonic combines all the basic patterns (2×6, 3×4) — it reveals the deepest karmic undertones in your chart. This is associated with the 12th house, Pisces, and themes of endings, sacrifice, hidden enemies, and transcendence. Patterns here often indicate where repeated challenges carry hidden spiritual growth.", lookFor: "Clusters reveal karmic concentrations — life areas where you face recurring patterns that are trying to teach you something. Strong patterns suggest past-life themes or deeply embedded behavioral loops." },
+                    2: { col: "#ff8a50", label: "Inner Duality (Opposition)", desc: "The 2nd harmonic, the opposition family, 180°.", lookFor: "Conjunctions here correspond to oppositions in the natal figure." },
+                    3: { col: "#a5d6a7", label: "Natural Gifts (Trine)", desc: "The 3rd harmonic, the trine family, 120°.", lookFor: "Conjunctions here correspond to trines in the natal figure." },
+                    4: { col: "#ff5252", label: "Friction & Drive (Square)", desc: "The 4th harmonic, the square and opposition family, 90°.", lookFor: "Conjunctions here correspond to squares and oppositions in the natal figure." },
+                    5: { col: "#64b5f6", label: "Creativity & Art", desc: "The 5th harmonic, the quintile family, 72°, argued for by Kepler on harmonic grounds.", lookFor: "Conjunctions here correspond to quintiles, the 72° family, in the natal figure." },
+                    6: { col: "#81c784", label: "Service & Duty", desc: "The 6th harmonic, the sextile family, 60°.", lookFor: "Conjunctions here correspond to sextiles in the natal figure." },
+                    7: { col: "#ce93d8", label: "Intuition & Spiritual Gifts", desc: "The 7th harmonic, the septile family, 51.4°, a division that does not resolve into whole degrees.", lookFor: "Conjunctions here correspond to septiles, the 51.4° family, in the natal figure." },
+                    8: { col: "#ffb74d", label: "Transformation & Power", desc: "The 8th harmonic, the semisquare family, 45°.", lookFor: "Conjunctions here correspond to semisquares in the natal figure." },
+                    9: { col: "#f48fb1", label: "Purpose & Soul Bonds", desc: "The 9th harmonic, the novile family, 40°, corresponding to the navamsa of Vedic practice.", lookFor: "Conjunctions here correspond to noviles, the 40° family, in the natal figure." },
+                    10: { col: "#4db6ac", label: "Public Impact & Legacy", desc: "The 10th harmonic, the decile family, 36°.", lookFor: "Conjunctions here correspond to deciles, the 36° family, in the natal figure." },
+                    11: { col: "#9fa8da", label: "Vision & Idealism", desc: "The 11th harmonic, the undecile family, 32.7°, little used in classical practice.", lookFor: "Conjunctions here correspond to undeciles, the 32.7° family, in the natal figure." },
+                    12: { col: "#ffd54f", label: "Hidden Lessons & Karma", desc: "The 12th harmonic, the semisextile family, 30°.", lookFor: "Conjunctions here correspond to semisextiles in the natal figure." },
                   };
                   const hd = HARM_DEFS[n];
                   const hPos = harmonic(res.trop, n);
@@ -1811,7 +1811,7 @@ export default function App() {
                   const clusters = Object.entries(clusterMap).filter(([, ps]) => ps.length >= 2).sort((a, b) => b[1].length - a[1].length);
                   const getPairInsight = (p1, p2) => {
                     const r0 = P_ROLE[p1] || p1, r1 = P_ROLE[p2] || p2;
-                    return PAIR_INSIGHT[`${r0}+${r1}`] || PAIR_INSIGHT[`${r1}+${r0}`] || `these two forces work together at a level your surface chart doesn't show — they reinforce and shape each other in ways you may sense but not consciously recognise`;
+                    return PAIR_INSIGHT[`${r0}+${r1}`] || PAIR_INSIGHT[`${r1}+${r0}`] || `No pair record is held for these two bodies.`;
                   };
 
                   return (
@@ -1819,10 +1819,10 @@ export default function App() {
                       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>What are Hidden Patterns?</div>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-                          Your birth chart is like a musical note. Hidden patterns (harmonics) are the overtones — subtler frequencies that shape the timbre. They work by multiplying every planet's position by a number and wrapping it around the 360° circle. When planets that were far apart suddenly land near each other in a harmonic chart, it means they share a hidden resonance at that frequency.
+                          The nth harmonic multiplies every longitude by n and reduces modulo 360, so bodies separated by 360/n degrees land together. The 4th harmonic turns every square and opposition into a conjunction; the 5th shows the 72-degree family; the 7th the 51.4-degree family. The method comes from the harmonic work of John Addey.
                         </p>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
-                          <strong>How to read this:</strong> Look for clusters — multiple planets grouped in the same sign or conjunct (☌). The more planets clustered, the stronger that pattern operates in your life. The wheel below shows where planets land after the harmonic transformation. The table shows their new positions.
+                          <strong>Reading the result:</strong> clusters are bodies grouped in the same sign after the transform. The transform multiplies positional error along with position, so at high n a conjunction may be an artefact of the arithmetic rather than a feature of the figure.
                         </p>
                       </Card>
 
@@ -1861,7 +1861,7 @@ export default function App() {
                             Pattern #{n} — {hd?.label || `Harmonic ${n}`}
                           </div>
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-                            {hd?.desc || `The ${n}th harmonic divides the circle into ${n} equal parts. Planets that form ${n}-based aspects (${(360 / n).toFixed(1)}° apart) in your birth chart will appear conjunct here. Every harmonic reveals a different layer of hidden connection between your planets.`}
+                            {hd?.desc || `The ${n}th harmonic divides the circle into ${n} equal parts. Bodies ${(360 / n).toFixed(1)}° apart in the natal figure appear conjunct here.`}
                           </p>
                           {(hd?.lookFor || !hd) && (
                             <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.secondary, margin: "8px 0 0", fontStyle: "italic" }}>
@@ -1901,11 +1901,11 @@ export default function App() {
                                       const el = si.element || "";
                                       const signStyle = sign === "Aries" ? "bold, direct action" : sign === "Taurus" ? "steady, grounded persistence" : sign === "Gemini" ? "mental agility and communication" : sign === "Cancer" ? "emotional depth and nurturing" : sign === "Leo" ? "confident self-expression and warmth" : sign === "Virgo" ? "careful refinement and service" : sign === "Libra" ? "balance, fairness, and partnership" : sign === "Scorpio" ? "intensity, transformation, and depth" : sign === "Sagittarius" ? "expansive vision and truth-seeking" : sign === "Capricorn" ? "disciplined structure and ambition" : sign === "Aquarius" ? "unconventional thinking and community" : "intuitive sensitivity and imagination";
                                       if (planets.length >= 3) {
-                                        return `A powerful concentration — ${planets.map(p => P_ROLE[p] || p).join(", ")} all resonate together at this frequency in ${sign} (${signStyle}). This is a dominant theme in this layer of your chart, suggesting ${el} energy strongly shapes your ${hd?.label?.toLowerCase() || "pattern #" + n}. When this many planets cluster, the theme is unmistakable — it's a central part of who you are at this level.`;
+                                        return `${planets.map(p => P_ROLE[p] || p).join(", ")} fall together in ${sign} at this harmonic, a grouping of ${planets.length}. In the natal figure these bodies stand at or near the ${(360 / n).toFixed(1)}° family of separations.`;
                                       }
                                       const r0 = P_ROLE[planets[0]] || planets[0], r1 = P_ROLE[planets[1]] || planets[1];
                                       const insight = getPairInsight(planets[0], planets[1]);
-                                      return `Your ${r0} and ${r1} are linked through ${sign} energy (${signStyle}) at this harmonic level. In practice, this means ${insight}. The ${sign} colouring adds a flavour of ${signStyle.split(" and ")[0]} to how this connection plays out in your life.`;
+                                      return `${r0} and ${r1} fall together in ${sign} at this harmonic. ${insight}`;
                                     })()}
                                   </p>
                                 </div>
@@ -1931,19 +1931,19 @@ export default function App() {
                                       const r0 = P_ROLE[a.p1] || a.p1, r1 = P_ROLE[a.p2] || a.p2;
                                       const insight = getPairInsight(a.p1, a.p2);
                                       const hdContext = hd ? {
-                                        2: `This link is specifically about internal tension — your ${r0} and ${r1} are in a push-pull dynamic that asks you to find balance between them.`,
-                                        3: `This link is about natural ease — your ${r0} and ${r1} cooperate effortlessly here, producing a talent you may take for granted.`,
-                                        4: `This link is about productive friction — pressure between your ${r0} and ${r1} generates drive and accomplishment.`,
-                                        5: `This link is about creative expression — your ${r0} and ${r1} combine here to produce something original and inventive.`,
-                                        6: `This link is about practical service — your ${r0} and ${r1} work together toward craftsmanship and meaningful contribution.`,
-                                        7: `This link is about spiritual sensitivity — your ${r0} and ${r1} connect at an intuitive, almost mystical level here.`,
-                                        8: `This link is about transformation — your ${r0} and ${r1} are bound together through cycles of crisis and renewal.`,
-                                        9: `This link is about deep purpose — your ${r0} and ${r1} are connected at the soul level, shaping your dharma and your most meaningful bonds.`,
-                                        10: `This link is about public impact — the interplay of your ${r0} and ${r1} shapes what you project into the world and your lasting legacy.`,
-                                        11: `This link is about vision — your ${r0} and ${r1} unite around idealistic, forward-looking themes.`,
-                                        12: `This link is about hidden lessons — your ${r0} and ${r1} are bound by a karmic pattern that surfaces as recurring challenges carrying growth.`,
+                                        2: `The 2th harmonic is the opposition family, 180°.`,
+                                        3: `The 3th harmonic is the trine family, 120°.`,
+                                        4: `The 4th harmonic is the square and opposition family, 90°.`,
+                                        5: `The 5th harmonic is the quintile family, 72°.`,
+                                        6: `The 6th harmonic is the sextile family, 60°.`,
+                                        7: `The 7th harmonic is the septile family, 51.4°.`,
+                                        8: `The 8th harmonic is the semisquare family, 45°.`,
+                                        9: `The 9th harmonic is the novile family, 40°, corresponding to the navamsa.`,
+                                        10: `The 10th harmonic is the decile family, 36°.`,
+                                        11: `The 11th harmonic is the undecile family, 32.7°.`,
+                                        12: `The 12th harmonic is the semisextile family, 30°.`,
                                       }[n] || "" : "";
-                                      const strLabel = a.strength > 0.85 ? "This is an exceptionally tight bond — one of the strongest hidden links in your chart." : a.strength > 0.75 ? "This is a strong bond." : "";
+                                      const strLabel = a.strength > 0.85 ? "The separation here is unusually tight for this harmonic." : a.strength > 0.75 ? "This is a strong bond." : "";
                                       return `At this level, ${insight}. ${hdContext} ${strLabel}`;
                                     })()}
                                   </p>
@@ -1953,8 +1953,7 @@ export default function App() {
                           )}
                           {clusters.length === 0 && tight.length === 0 && (
                             <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.6, color: M3.onSurfaceVariant, textAlign: "center", padding: 20 }}>
-                              No strong clusters or tight conjunctions at this harmonic. This pattern layer is more evenly distributed in your chart — the energy is spread rather than concentrated.
-                            </p>
+                              No clusters or tight conjunctions at this harmonic. The transformed positions are evenly distributed rather than grouped.</p>
                           )}
                         </Card>
                       )}
@@ -1968,8 +1967,7 @@ export default function App() {
                         </Card>
                         <Card title={`∞ Pattern #${n} — Wheel`}>
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
-                            The harmonic wheel — planets near each other here are connected at this deeper frequency, even if they're far apart in your birth chart.
-                          </p>
+                            The harmonic wheel. Bodies close together here stand at or near the corresponding family of separations in the natal figure.</p>
                           <div style={{ display: "flex", justifyContent: "center" }}>
                             <WheelWithTooltip positions={hPos} size={300} id={`h${n}`} />
                           </div>
@@ -1979,8 +1977,7 @@ export default function App() {
                       {anyAsp.length > 0 && (
                         <Card title={`∞ Pattern #${n} — All Strong Connections (${anyAsp.length})`}>
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
-                            These are the strongest aspects in your harmonic chart — they show which planet pairs resonate most powerfully at this frequency.
-                          </p>
+                            The tightest separations in the transformed chart, listed with their orbs.</p>
                           <AspectTable aspects={anyAsp} />
                         </Card>
                       )}
@@ -2014,7 +2011,7 @@ export default function App() {
                       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Transits — Where the Planets Are Right Now vs Your Birth</div>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-                          Transits are the current positions of the planets compared to where they were when you were born. When a planet in the sky today forms an angle (aspect) to one of your birth planets, its energy "activates" that part of your chart. This is the foundation of astrological timing — it shows what themes are live for you <em>right now</em>.
+                          Transits are the current computed positions set against the natal positions. A contact is reported when the angular separation falls within the orb in use.
                         </p>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
                           <strong>Fast planets</strong> (Sun, Moon, Mercury, Venus, Mars) move quickly and create brief, passing influences — moods, events, conversations.
@@ -2024,8 +2021,7 @@ export default function App() {
 
                       <Card title="⟳ Transiting Positions Against the Natal Figure">
                         <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.65rem", color: M3.secondary, marginBottom: 10, letterSpacing: "0.1em" }}>
-                          {new Date().toDateString().toUpperCase()} — {hits.length} of {activeTransits.length} planets are actively aspecting your chart
-                        </div>
+                          {new Date().toDateString().toUpperCase()} — {hits.length} of {activeTransits.length} bodies form a contact within the orbs in use</div>
                         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                           {activeTransits.map(({ p, lon, aspMatch }) => {
                             const tm = TRANSIT_MEANING[p] || {};
@@ -2058,7 +2054,7 @@ export default function App() {
                                 {!aspMatch && (
                                   <div style={{ marginTop: 3, marginLeft: 26 }}>
                                     <span style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.68rem", color: M3.outlineVariant, fontStyle: "italic" }}>
-                                      No direct aspect to your birth {p} today — this area is quiet.
+                                      No contact to natal {p} within the orbs in use.
                                     </span>
                                   </div>
                                 )}
@@ -2071,7 +2067,7 @@ export default function App() {
                       {res.trAsp.length > 0 && (
                         <Card title={`⟳ All Cross-Chart Connections (${res.trAsp.length})`}>
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
-                            This table shows every connection between the sky today and your birth chart. Stronger connections (higher %) are felt more powerfully. Look for slow-planet aspects — those shape the major themes of this period.
+                            Every contact between the current positions and the natal figure, at the orbs in use. A count is not a significance.
                           </p>
                           <AspectTable aspects={res.trAsp.slice(0, 30)} />
                         </Card>
@@ -2094,7 +2090,7 @@ export default function App() {
                         <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                           <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Synastry — How Two Charts Interact</div>
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-                            Synastry compares two birth charts to reveal the chemistry between two people. When a planet in one chart forms an aspect (angle) to a planet in the other, those parts of each person's psyche interact. <strong>Trines (△) and sextiles (⚹)</strong> show where you naturally harmonize — things feel easy. <strong>Squares (□) and oppositions (☍)</strong> show friction — where you challenge and push each other to grow. <strong>Conjunctions (☌)</strong> amplify shared energy.
+                            Synastry lays one chart over the other and reports the contacts between them, with their orbs. The counts depend on the orb policy in use and are not a verdict about the two people.
                           </p>
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
                             <strong>How to read it:</strong> Look at which planets connect between the two charts. Sun-Moon links suggest emotional resonance, Venus-Mars links suggest attraction, Mercury connections shape communication, and Saturn contacts indicate where things get serious or tested.
@@ -2121,42 +2117,41 @@ export default function App() {
                             ))}
                           </div>
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: 0, textAlign: "center" }}>
-                            {ratio >= 65 ? "This pairing has strong natural harmony — the ease between you is palpable, though growth edges keep things dynamic." : ratio >= 45 ? "A balanced mix of harmony and friction — this combination keeps both people growing while maintaining connection." : "This pairing has significant friction — it's growth-oriented rather than comfort-oriented. Challenges build depth if both people are willing."}
+                            {`${harmony.toFixed(1)} soft against ${friction} hard contacts, at the orbs in use.`}
                           </p>
                         </Card>
 
                         {(() => {
                           const frictionAsp = [...squares, ...opps].sort((a, b) => b.strength - a.strength).slice(0, 3);
                           if (frictionAsp.length === 0) return null;
-                          const SYN_GROWTH = {
-                            "Sun+Sun": "Your core identities clash — each of you challenges the other's sense of self. The growth: learning that two strong identities can coexist without one diminishing the other.",
-                            "Sun+Moon": "One person's identity presses against the other's emotional needs. The growth: learning to honour what your partner feels even when it differs from who you are.",
-                            "Sun+Mercury": "Identity meets communication friction. The growth: learning that being understood requires patience, not just clarity.",
-                            "Sun+Venus": "Identity conflicts with the other person's love language. The growth: discovering that love can look different from what you expect and still be real.",
+                          const SYN_CONTACT = {
+                            "Sun+Sun": "Two solar significators in contact: the chart-rulers of identity meeting directly.",
+                            "Sun+Moon": "The two lights across charts. Classical texts weight this contact heavily.",
+                            "Sun+Mercury": "The light and the messenger. Mercury never departs far from the Sun, so this contact recurs frequently.",
+                            "Sun+Venus": "The light and the lesser benefic. Venus stays within a bounded elongation of the Sun.",
                             "Sun+Mars": "One person's sense of self triggers the other's aggression or drive. The growth: channelling competition into mutual motivation rather than power struggles.",
                             "Sun+Saturn": "Identity meets restriction — one person feels limited by the other. The growth: real commitment means accepting the weight of responsibility along with the warmth of love.",
                             "Sun+Jupiter": "Overexpansion meets identity — one person's optimism overwhelms the other. The growth: calibrating enthusiasm so it inspires rather than overshadows.",
-                            "Moon+Moon": "Emotional needs clash directly. The growth: learning that your partner's emotional reality is as valid as yours, even when they need the opposite.",
+                            "Moon+Moon": "The two lunar significators. The Moon is the fastest body, so these contacts are the most sensitive to birth-time accuracy.",
                             "Moon+Mercury": "Feelings meet logic, and they don't speak the same language. The growth: building a bridge between emotional truth and rational understanding.",
-                            "Moon+Venus": "Emotional needs conflict with love expressions. The growth: discovering that caring for someone means learning their emotional language, not just speaking your own.",
+                            "Moon+Venus": "The Moon and the lesser benefic, both nocturnal in the classical scheme.",
                             "Moon+Mars": "Emotional vulnerability meets aggression. The growth: learning to be tender and direct at the same time — anger doesn't have to mean rejection.",
-                            "Moon+Saturn": "Emotions meet coldness or control. The growth: this is often the deepest bond once matured — learning to feel safe with someone who won't let you hide from reality.",
+                            "Moon+Saturn": "The Moon and the greater malefic. The classical reading is restriction on the lunar significator; the modern psychological reading softens this to structure, and the two are not the same claim.",
                             "Venus+Mars": "Attraction meets friction — desire and affection pull in different directions. The growth: learning that passion and tenderness are not opposites but partners.",
                             "Venus+Saturn": "Love meets restriction — one person's affection feels blocked by the other's walls. The growth: love that survives Saturn contact becomes unbreakable.",
                             "Mars+Saturn": "Drive meets discipline — one person's energy feels controlled by the other. The growth: learning to focus ambition rather than fight it. This aspect builds incredible joint productivity once the power struggle resolves.",
                             "Mars+Mars": "Two sets of drives competing. The growth: channelling mutual intensity into shared goals rather than opposing battles.",
                             "Mercury+Mercury": "Two different thinking styles colliding. The growth: intellectual diversity strengthens decisions when both people learn to listen.",
-                            "Jupiter+Saturn": "Expansion meets contraction. The growth: one person dreams big, the other builds real — together you become unstoppable when you stop fighting over pace.",
+                            "Jupiter+Saturn": "The two social bodies and the slowest of the classical seven; their mutual cycle of about twenty years is the great conjunction of mundane astrology.",
                           };
                           const getKey = (a) => {
                             const p1 = a.p1.replace(/^[AB]_/, ""), p2 = a.p2.replace(/^[AB]_/, "");
-                            return SYN_GROWTH[`${p1}+${p2}`] || SYN_GROWTH[`${p2}+${p1}`] || `Your ${(P_ROLE[p1] || p1).toLowerCase()} and their ${(P_ROLE[p2] || p2).toLowerCase()} create friction. The growth: learning to meet difference with curiosity rather than defence.`;
+                            return SYN_CONTACT[`${p1}+${p2}`] || SYN_CONTACT[`${p2}+${p1}`] || `A contact between the ${(P_ROLE[p1] || p1).toLowerCase()} significator of one chart and the ${(P_ROLE[p2] || p2).toLowerCase()} significator of the other.`;
                           };
                           return (
                             <Card title="◈ Hard Contacts Between the Two Charts">
                               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
-                                These are the most intense friction points between your charts. They represent the areas where this relationship will be most challenging — and most transformative if both people are willing to grow.
-                              </p>
+                                The tightest hard contacts between the two charts, listed with their orbs.</p>
                               {frictionAsp.map((a, i) => {
                                 const p1 = a.p1.replace(/^[AB]_/, ""), p2 = a.p2.replace(/^[AB]_/, "");
                                 return (
@@ -2200,7 +2195,7 @@ export default function App() {
                     <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                       <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Synastry — Relationship Chart Comparison</div>
                       <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: "0 0 16px" }}>
-                        Synastry compares two people's birth charts to reveal the chemistry, harmony, and friction between them. It shows how your planets interact with another person's — where you connect easily and where you push each other to grow.
+                        Synastry reports the contacts between two charts with their orbs. It offers no verdict about the two people.
                       </p>
                       <div style={{ textAlign: "center", color: M3.secondary, fontFamily: "'Share Tech Mono', monospace", padding: "30px 0", borderTop: `1px solid ${M3.outlineVariant}` }}>
                         To use: check "Synastry" in the birth data form above, enter Person B's birth details, and click Compute.
@@ -2221,7 +2216,7 @@ export default function App() {
                           Chinese astrology is based on a 60-year cycle (sexagenary cycle) combining 12 animals, 5 elements (Wood, Fire, Earth, Metal, Water), and Yin/Yang polarity. Unlike Western astrology which maps the sky at birth, the Chinese system uses the lunar calendar year, making your animal and element fixed by the year you were born (adjusted for the Chinese New Year date). Each combination creates a unique character archetype that repeats every 60 years.
                         </p>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
-                          <strong>How to read it:</strong> Your <strong>animal</strong> defines your core personality style. Your <strong>element</strong> colors how that animal expresses — a Water Dragon is very different from a Fire Dragon. <strong>Yin/Yang</strong> indicates whether your energy is more receptive or assertive. The <strong>trigram</strong> associated with your animal connects you to the I Ching (Book of Changes) and its archetypal wisdom.
+                          <strong>How to read it:</strong> the <strong>animal</strong> names the earthly branch of the year, and the <strong>element</strong> names the phase paired with it. The cycle year begins at the lunar new year, not on 1 January.
                         </p>
                       </Card>
                       <Card title={`☯ Year of the ${res.cn.animal} — ${res.cn.element} ${res.cn.polarity}`}>
@@ -2250,8 +2245,7 @@ export default function App() {
                           </div>
                           {res.cn.effectiveYear && res.cn.effectiveYear !== A.year && (
                             <div style={{ color: M3.tertiary, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.7rem", fontStyle: "italic", marginTop: 6 }}>
-                              Note: You were born on {A.month}/{A.day}/{A.year}, before Chinese New Year began that year, so your Chinese year is {res.cn.effectiveYear} rather than {A.year}.
-                            </div>
+                              Note: this date, {A.month}/{A.day}/{A.year}, falls before the Chinese New Year for that year, so the branch is taken from the preceding cycle year.</div>
                           )}
                         </div>
                       </Card>
@@ -2288,11 +2282,11 @@ export default function App() {
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>{ei.desc}</p>
                           {(() => {
                             const elBal = {
-                              Wood: { balanced: "When Wood is balanced, you grow steadily, set healthy boundaries, and channel anger into constructive change. You're flexible but rooted — bending without breaking.", imbalanced: "When Wood is out of balance, you may become rigid, controlling, or chronically frustrated. Stagnant Wood energy shows as resentment, indecision, or an inability to start things.", cultivate: "Spend time in nature. Begin new creative projects. Practice forgiveness. Physical movement — especially stretching, yoga, or martial arts — unblocks Wood energy." },
-                              Fire: { balanced: "When Fire is balanced, you radiate warmth, joy, and inspiration. You connect easily with others and your enthusiasm is contagious without being overwhelming.", imbalanced: "When Fire is out of balance, you may become anxious, scattered, or burn out from overcommitting. Excess Fire shows as mania, restlessness, or attention-seeking; depleted Fire shows as depression, apathy, or inability to feel joy.", cultivate: "Practice presence and mindfulness. Laugh freely. Nurture close relationships. When depleted, seek community and creative expression. When excessive, practice stillness and listening." },
-                              Earth: { balanced: "When Earth is balanced, you feel grounded, generous, and nourishing — both to yourself and others. You digest experiences well and know what you need.", imbalanced: "When Earth is out of balance, you may become a chronic worrier, overly self-sacrificing, or stuck in cycles of overthinking. You might nurture everyone else while neglecting yourself, or become possessive and clingy.", cultivate: "Eat mindfully. Spend time cooking, gardening, or working with your hands. Practice receiving as much as giving. Set boundaries around caretaking." },
-                              Metal: { balanced: "When Metal is balanced, you have clarity, integrity, and the ability to let go of what no longer serves you. You appreciate beauty and hold high standards without being rigid.", imbalanced: "When Metal is out of balance, you may become perfectionistic, grief-stricken, or emotionally cold. You might hold onto things — possessions, grudges, the past — long after they've served their purpose.", cultivate: "Practice decluttering — physical spaces and emotional baggage. Breathe deeply. Engage with art, music, or ritual. Allow yourself to grieve fully and then release." },
-                              Water: { balanced: "When Water is balanced, you possess deep wisdom, adaptability, and courage that comes from understanding rather than force. You trust your intuition and move through life with flow.", imbalanced: "When Water is out of balance, you may become paralysed by fear, isolated, or emotionally frozen. You might hide your true self, hoard resources, or lose your willpower entirely.", cultivate: "Rest more — Water needs stillness to replenish. Meditate near water. Journal your fears honestly. Build trust slowly through consistent small actions. Listen to your body's need for quiet." },
+                              Wood: { balanced: "Wood is the phase of growth and expansion in the five-phase scheme, associated with spring and with the liver in Chinese medicine.", imbalanced: "When Wood is out of balance, you may become rigid, controlling, or chronically frustrated. Stagnant Wood energy shows as resentment, indecision, or an inability to start things.", cultivate: "Spend time in nature. Begin new creative projects. Practice forgiveness. Physical movement — especially stretching, yoga, or martial arts — unblocks Wood energy." },
+                              Fire: { balanced: "Fire is the phase of maximum yang, associated with summer and with the heart.", imbalanced: "When Fire is out of balance, you may become anxious, scattered, or burn out from overcommitting. Excess Fire shows as mania, restlessness, or attention-seeking; depleted Fire shows as depression, apathy, or inability to feel joy.", cultivate: "Practice presence and mindfulness. Laugh freely. Nurture close relationships. When depleted, seek community and creative expression. When excessive, practice stillness and listening." },
+                              Earth: { balanced: "Earth is the pivot phase, associated with late summer and with the spleen.", imbalanced: "When Earth is out of balance, you may become a chronic worrier, overly self-sacrificing, or stuck in cycles of overthinking. You might nurture everyone else while neglecting yourself, or become possessive and clingy.", cultivate: "Eat mindfully. Spend time cooking, gardening, or working with your hands. Practice receiving as much as giving. Set boundaries around caretaking." },
+                              Metal: { balanced: "Metal is the phase of contraction and separation, associated with autumn and with the lungs.", imbalanced: "When Metal is out of balance, you may become perfectionistic, grief-stricken, or emotionally cold. You might hold onto things — possessions, grudges, the past — long after they've served their purpose.", cultivate: "Practice decluttering — physical spaces and emotional baggage. Breathe deeply. Engage with art, music, or ritual. Allow yourself to grieve fully and then release." },
+                              Water: { balanced: "Water is the phase of maximum yin, associated with winter and with the kidneys.", imbalanced: "When Water is out of balance, you may become paralysed by fear, isolated, or emotionally frozen. You might hide your true self, hoard resources, or lose your willpower entirely.", cultivate: "Rest more — Water needs stillness to replenish. Meditate near water. Journal your fears honestly. Build trust slowly through consistent small actions. Listen to your body's need for quiet." },
                             };
                             const eb = elBal[res.cn.element];
                             return eb ? (
@@ -2326,11 +2320,11 @@ export default function App() {
                             <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.64rem", color: M3.primary, letterSpacing: "0.1em", marginBottom: 6 }}>YIN/YANG INTEGRATION — WHAT TO CULTIVATE</div>
                             {res.cn.polarity === "Yang" ? (
                               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
-                                As a Yang-natured person, your default is action, assertion, and outward expression. You lead with confidence and initiative. <strong>Your growth edge is cultivating Yin qualities</strong>: patience, receptivity, listening, and stillness. The strongest Yang people are those who can also be deeply still — who act from calm center rather than restless impulse. Practice: before making decisions, pause. Before speaking, listen. Before doing, feel. Your Yang power becomes unstoppable when it's rooted in Yin wisdom.
+                                Yang polarity is read in the tradition as outward-moving and assertive.<strong>Your growth edge is cultivating Yin qualities</strong>: patience, receptivity, listening, and stillness. The strongest Yang people are those who can also be deeply still — who act from calm center rather than restless impulse. Practice: before making decisions, pause. Before speaking, listen. Before doing, feel. Your Yang power becomes unstoppable when it's rooted in Yin wisdom.
                               </p>
                             ) : (
                               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
-                                As a Yin-natured person, your default is reflection, receptivity, and inner processing. You build power quietly and perceive what others miss. <strong>Your growth edge is cultivating Yang qualities</strong>: decisive action, visible self-expression, and the willingness to be seen. The strongest Yin people are those who can also act boldly — who move from deep knowing into clear action. Practice: share your insights before they're perfect. Take the first step before you feel ready. Let your depth be visible. Your Yin wisdom becomes transformative when it's paired with Yang courage.
+                                Yin polarity is read in the tradition as inward-moving and receptive.<strong>Your growth edge is cultivating Yang qualities</strong>: decisive action, visible self-expression, and the willingness to be seen. The strongest Yin people are those who can also act boldly — who move from deep knowing into clear action. Practice: share your insights before they're perfect. Take the first step before you feel ready. Let your depth be visible. Your Yin wisdom becomes transformative when it's paired with Yang courage.
                               </p>
                             )}
                           </div>
@@ -2429,11 +2423,11 @@ export default function App() {
                     <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                       <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Elements, Modality & Phi Rhythm</div>
                       <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-                        Your chart's planets are distributed across four <strong>elements</strong> (Fire = passion, Earth = practicality, Air = intellect, Water = emotion) and three <strong>modalities</strong> (Cardinal = initiator, Fixed = sustainer, Mutable = adapter). The balance between these shapes your temperament. The <strong>Phi rhythm</strong> (φ = 1.618, the golden ratio) maps your birth day to a natural energy cycle — showing whether you're in a rest, building, or peak phase.
+                        The bodies of this figure are distributed across four <strong>elements</strong> (Fire = passion, Earth = practicality, Air = intellect, Water = emotion) and three <strong>modalities</strong> (Cardinal = initiator, Fixed = sustainer, Mutable = adapter). The balance between these shapes your temperament. The <strong>Phi rhythm</strong> (φ = 1.618, the golden ratio) maps your birth day to a natural energy cycle — showing whether you're in a rest, building, or peak phase.
                       </p>
                     </Card>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(240px,1fr))", gap: 16 }}>
-                      <Card title="φ Golden Ratio Rhythm — Where You Are in the Cycle">
+                      <Card title="φ Golden Ratio Rhythm — Position in the Cycle">
                         {(() => {
                           const cs = { "φ·Low": "#ff5252", "φ·Mid": M3.tertiary, "φ·High": "#69ff8e" };
                           const stateLabel = { "φ·Low": "Rest & Recharge", "φ·Mid": "Steady Progress", "φ·High": "Peak Energy" };
@@ -2445,7 +2439,7 @@ export default function App() {
                               <div style={{ color: M3.onSurfaceVariant, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.71rem", fontStyle: "italic", marginTop: 4 }}>
                                 {res.phi.phase < 0.38 ? "Energy is low — good for reflection and planning." :
                                   res.phi.phase < 0.62 ? "Momentum is building — act on steady goals." :
-                                    "You're in a high-energy window — ideal for bold moves."}
+                                    "The index stands at its high point in this cycle."}
                               </div>
                               <div style={{ color: M3.onSurfaceVariant, fontFamily: "'Share Tech Mono', monospace", fontSize: "0.68rem", marginTop: 4 }}>cycle position {(res.phi.phase * 100).toFixed(0)}% · multiplier ×{res.phi.mult}</div>
                               <div style={{ marginTop: 12, height: 4, background: M3.outlineVariant, borderRadius: 2, overflow: "hidden" }}>
@@ -2461,7 +2455,7 @@ export default function App() {
                       <Card title="⊞ Action Style — Starter, Sustainer, Adapter">
                         <DistBar data={res.mod} colors={MOD_COL} />
                       </Card>
-                      <Card title="◈ Your Chart at a Glance">
+                      <Card title="◈ The Figure at a Glance">
                         <div style={{
                           display: "flex", flexDirection: "column", gap: 6,
                           fontFamily: "'Share Tech Mono', monospace", fontSize: "0.72rem"
@@ -2522,15 +2516,15 @@ export default function App() {
                       </Card>
 
                       {/* ── Core Numbers ── */}
-                      <Card title="Your Core Numbers — The Numerological Blueprint">
+                      <Card title="Core Numbers">
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-                          Five core numbers form the foundation of your numerological identity. Each is derived differently and reveals a different dimension of who you are.
+                          Five numbers are derived from the birth date and name. Pythagorean and Chaldean assign letters different values, so the same name yields different totals under the two; the method has to be named for any of these to mean anything.
                         </p>
                         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(140px,1fr))", gap: 10 }}>
                           {[
-                            { label: "Life Path", val: nuData.lifePath, color: M3.primary, tip: "Derived from your full birth date. The most important number — your life's purpose and the lessons you're here to learn.", needsName: false },
-                            { label: "Birthday", val: nuData.birthday, color: "#ffa726", tip: "Simply your birth day reduced. A special talent or gift you carry that colours everything else.", needsName: false },
-                            { label: "Personal Year", val: nuData.personalYear, color: "#69ff8e", tip: "Your current annual cycle theme — what this year is asking of you.", needsName: false },
+                            { label: "Life Path", val: nuData.lifePath, color: M3.primary, tip: "Derived from the full birth date by reduction.", needsName: false },
+                            { label: "Birthday", val: nuData.birthday, color: "#ffa726", tip: "The day of the month, reduced.", needsName: false },
+                            { label: "Personal Year", val: nuData.personalYear, color: "#69ff8e", tip: "The annual cycle number for the current year.", needsName: false },
                             { label: "Expression", val: nuData.expression, color: M3.tertiary, tip: "Derived from all letters of your full name. How you naturally express yourself and what talents you carry.", needsName: true },
                             { label: "Soul Urge", val: nuData.soulUrge, color: "#ce93d8", tip: "Derived from the vowels in your name. Your deepest inner desire — what your heart truly wants.", needsName: true },
                             { label: "Personality", val: nuData.personality, color: "#4fc3f7", tip: "Derived from the consonants in your name. How the outside world perceives you — your social mask.", needsName: true },
