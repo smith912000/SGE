@@ -40,43 +40,43 @@ function generateProfile(trop, houses) {
 
   const sections = [
     {
-      icon:"☀️", title:"Core Identity — Sun in "+sunSign,
-      text: SOLAR_DEEP[sunSign] || `At your core, you are ${SI[sunSign].plain} Your Sun lives in the ${sunHouse}${['st','nd','rd'][sunHouse-1]||'th'} house.`,
+      icon:"☀️", title:"The Solar Placement — Sun in "+sunSign,
+      text: `The Sun stands in ${sunSign}, in the ${sunHouse}${['st','nd','rd'][sunHouse-1]||'th'} house. ${SOLAR_DEEP[sunSign]?.shadow || SI[sunSign].plain} Hellenistic practice counts the Sun as one of the two lights and gives it the diurnal sect; modern practice reads the same placement as identity. The degree is the same in both readings; the register is not.`,
     },
     {
-      icon:"🌙", title:"Inner World — Moon in "+moonSign,
-      text: LUNAR_DEEP[moonSign] || `Emotionally, you operate through ${moonSign} energy. ${SI[moonSign].plain}`,
+      icon:"🌙", title:"The Lunar Placement — Moon in "+moonSign,
+      text: `The Moon stands in ${moonSign}, in the ${moonHouse}${['st','nd','rd'][moonHouse-1]||'th'} house. ${LUNAR_DEEP[moonSign]?.shadow || SI[moonSign].plain} The older sources read the Moon for the body, for nourishment and for the course of the month, and assign it the nocturnal sect; the modern recasting names it the affective register instead. The Moon moves about thirteen degrees a day, so this is the placement most sensitive to an imprecise recorded time.`,
     },
     {
-      icon:"🌅", title:"How Others See You — "+ascSign+" Rising",
-      text: `When people meet you, they encounter ${ascSign} energy first. ${SI[ascSign].plain} \n\nShadow: ${RISING_SHADOW[ascSign]?.shadow || ""}\nGrowth: ${RISING_SHADOW[ascSign]?.growth || ""}`,
+      icon:"🌅", title:"The Rising Degree — "+ascSign+" Ascendant",
+      text: `${ascSign} rises. The tradition names this degree the horoskopos, the hour marker, and in most schemes the twelve places are counted from it. ${SI[ascSign].plain} \n\nAttributed: ${RISING_SHADOW[ascSign]?.shadow || ""}\nStructure: ${RISING_SHADOW[ascSign]?.growth || ""}\n\nThis point is a function of the recorded time rather than of planetary position: roughly four minutes of clock error moves it about one degree. How firm is the recorded time behind this chart?`,
     },
     {
-      icon:"🧠", title:"Mind & Communication — Mercury in "+zodSign(trop.Mercury),
-      text: `Your mind operates with ${zodSign(trop.Mercury)} energy. \n\n${MERCURY_SHADOW[zodSign(trop.Mercury)] ? `Trap: ${MERCURY_SHADOW[zodSign(trop.Mercury)].shadow}\nGrowth: ${MERCURY_SHADOW[zodSign(trop.Mercury)].growth}` : ""}`,
+      icon:"🧠", title:"Mercury in "+zodSign(trop.Mercury),
+      text: `Mercury stands in ${zodSign(trop.Mercury)}. Mercury never departs far from the Sun, so this placement falls in the solar sign or in one beside it. \n\n${MERCURY_SHADOW[zodSign(trop.Mercury)] ? `Attributed: ${MERCURY_SHADOW[zodSign(trop.Mercury)].shadow}\nStructure: ${MERCURY_SHADOW[zodSign(trop.Mercury)].growth}` : ""}`,
     },
     {
-      icon:"💖", title:"Love & Desire — Venus in "+venSign+", Mars in "+marSign,
-      text: `In love, you are drawn to ${venSign} qualities. ${VENUS_SHADOW[venSign] ? `\nVenus Shadow: ${VENUS_SHADOW[venSign].shadow}` : ""} \n\nIn pursuit and desire, you act with ${marSign} energy. ${MARS_SHADOW[marSign] ? `\nMars Shadow: ${MARS_SHADOW[marSign].shadow}` : ""} \n\n${venMars ? `Your Venus and Mars form a ${venMars.name}.` : ""}`,
+      icon:"💖", title:"Venus in "+venSign+", Mars in "+marSign,
+      text: `Venus stands in ${venSign}. ${VENUS_SHADOW[venSign] ? `\nAttributed: ${VENUS_SHADOW[venSign].shadow}` : ""} \n\nMars stands in ${marSign}. ${MARS_SHADOW[marSign] ? `\nAttributed: ${MARS_SHADOW[marSign].shadow}` : ""} \n\n${venMars ? `Venus and Mars stand in a ${venMars.name.toLowerCase()}, at an orb of ${venMars.orb}°. The figure is counted because that separation falls inside the orb this instrument applies; a different orb policy counts a different set.` : "Venus and Mars form none of the aspects this instrument counts, within the orbs it applies."}`,
     },
     {
-      icon:"🏔️", title:"Life Purpose & Career — MC in "+mcSign,
-      text: `The world is most likely to know you for ${mcSign} qualities. ${SI[mcSign].plain} This is the energy you are building toward publicly, the archetype your career and reputation tends to embody.`,
+      icon:"🏔️", title:"The Midheaven — MC in "+mcSign,
+      text: `The Midheaven falls in ${mcSign}. ${SI[mcSign].plain} Hellenistic sources name the culminating degree the Mesouranema and read the 10th place for praxis — what is done in the open — for rank, and for the judgement of others; modern practice keeps the subject matter and renames it vocation. Under whole-sign houses the Midheaven can fall in the 9th or the 11th rather than the 10th, and the two conventions then part company on the same chart.`,
     },
     {
-      icon:"⏳", title:"Your Greatest Teacher — Saturn in "+satSign,
-      text: SATURN_DEEP[satSign] || `Saturn in ${satSign} is where life presents your hardest lessons.`,
+      icon:"⏳", title:"Saturn in "+satSign,
+      text: `Saturn stands in ${satSign}. ${SATURN_DEEP[satSign]?.shadow || ""} Saturn is the outermost of the seven visible bodies and completes its circuit in close to twenty-nine and a half years, so it holds one sign for something over two years. The Hellenistic sources class it as the greater malefic — a statement about the nature assigned to the body, not about an outcome; the modern register names the same ground limit, structure and time.`,
     },
     {
-      icon:"🌟", title:"Where Luck Flows — Jupiter in "+jupSign,
-      text: JUPITER_DEEP[jupSign] || `Jupiter in ${jupSign} shows where life tends to be generous and expansive for you.`,
+      icon:"🌟", title:"Jupiter in "+jupSign,
+      text: `Jupiter stands in ${jupSign}. ${JUPITER_DEEP[jupSign]?.shadow || ""} Jupiter completes a circuit of the zodiac in close to twelve years, so it holds one sign for roughly a year, and every chart of a given birth year shares the placement. The older sources class it as the greater benefic, which is a designation of nature and not a forecast.`,
     },
   ];
 
   if (sunMoon) {
     sections.push({
-      icon:"✨", title:`Identity & Emotions — Sun ${sunMoon.sym} Moon (${sunMoon.name})`,
-      text:`Your conscious identity (Sun) and your emotional instincts (Moon) are in a ${sunMoon.name.toLowerCase()} to each other. ${ASPECT_MEANINGS[sunMoon.name]} This shapes how harmoniously — or how dynamically — your outer and inner worlds relate.`,
+      icon:"✨", title:`The Two Lights — Sun ${sunMoon.sym} Moon (${sunMoon.name})`,
+      text:`The Sun and the Moon stand in a ${sunMoon.name.toLowerCase()}, at an orb of ${sunMoon.orb}°. ${ASPECT_MEANINGS[sunMoon.name]} The tradition names these two the lights and reads the figure between them as the relation of the chart's two governing bodies. The figure appears here because the separation falls inside the orb this instrument applies — widening the orb creates figures, narrowing it removes them.`,
     });
   }
 

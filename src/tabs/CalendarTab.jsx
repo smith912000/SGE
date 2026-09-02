@@ -28,7 +28,7 @@ export default function CalendarTab({ ctx }) {
           This is a <strong>multi-layered sacred calendar</strong> that begins on the Winter Solstice (around December 22nd) and counts 365 days (366 in a leap year). Unlike the Gregorian calendar, which is administrative, this calendar is designed to reveal the <em>symbolic meaning of each day</em> by overlaying multiple ancient traditions onto a single timeline.
         </p>
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurfaceVariant, margin: 0 }}>
-          <strong>How to read this page:</strong> Each card below shows a different "layer" of meaning for the selected date. Think of it like a prism — one day, many angles of light. The <em>geometric markers</em> show where the day falls in the year's sacred geometry. The <em>symbolic cycles</em> show which ancient symbols (Chinese, Hebrew, Greek, Norse) are active. The <em>sacred names</em> show which divine names preside today. The <em>cross-cultural zodiacs</em> show your day's Ogham tree, Indigenous American totem, and Chinese solar animal. <em>Master Teacher</em> days (every 11th day) connect to the Qabbalah's 32 Paths of Wisdom. <em>Reflective Festivals</em> mark the end of each month with dedicated days for integration. The <em>number sequences</em> show whether the day number has special mathematical properties. Browse any date using the navigator below.
+          <strong>How to read this page:</strong> Each card below shows a different "layer" of meaning for the selected date. Each is a separate tradition laid over the same date; they are not translations of one another. The <em>geometric markers</em> show where the day falls in the year's sacred geometry. The <em>symbolic cycles</em> show which ancient symbols (Chinese, Hebrew, Greek, Norse) are active. The <em>sacred names</em> show which divine names preside today. The <em>cross-cultural zodiacs</em> show the Ogham tree, Indigenous American totem, and Chinese solar animal assigned to the date. <em>Master Teacher</em> days (every 11th day) connect to the Qabbalah's 32 Paths of Wisdom. <em>Reflective Festivals</em> mark the end of each month with dedicated days for integration. The <em>number sequences</em> show whether the day number has special mathematical properties. Browse any date using the navigator below.
         </p>
       </Card>
 
@@ -72,7 +72,7 @@ export default function CalendarTab({ ctx }) {
             const parts = [];
             parts.push(`Today is ${cd.weekday}, Day ${cd.dayOfYear} of the sacred year — ${cd.monthName} ${cd.dayOfMonth} (${cd.zodiacPrimary?.sign}${cd.isCusp ? ` cusp ${cd.zodiacSecondary?.sign || ""}` : ""}).`);
             if (cd.ogham) parts.push(`This is a ${cd.ogham.tree} day in the Ogham cycle, carrying ${cd.ogham.tree}'s energy of ${cd.ogham.tree === "Birch" ? "new beginnings" : cd.ogham.tree === "Rowan" ? "protection and vision" : cd.ogham.tree === "Ash" ? "connection and rebirth" : cd.ogham.tree === "Alder" ? "courage and strength" : cd.ogham.tree === "Willow" ? "intuition and emotion" : cd.ogham.tree === "Hawthorn" ? "purification and patience" : cd.ogham.tree === "Oak" ? "strength and endurance" : cd.ogham.tree === "Holly" ? "challenge and balance" : cd.ogham.tree === "Hazel" ? "wisdom and creativity" : cd.ogham.tree === "Vine" ? "harvest and prophecy" : cd.ogham.tree === "Ivy" ? "persistence and growth" : cd.ogham.tree === "Reed" ? "direction and purpose" : "transformation and endings"}, guided by the ${cd.ogham.animal}.`);
-            if (cyc.iChing) parts.push(`The I Ching hexagram is #${cyc.iChing.n} "${cyc.iChing.en}" — meditate on how this theme shows up in your day.`);
+            if (cyc.iChing) parts.push(`The I Ching hexagram is #${cyc.iChing.n} "${cyc.iChing.en}" — a theme the tradition attaches to that figure.`);
             if (cyc.runic) parts.push(`The Norse half-month rune ${cyc.runic.rune} ${cyc.runic.name} (${cyc.runic.desc}) guides this period, with ${cyc.runic.shadow} as its shadow balance.`);
             if (cyc.arcana) parts.push(`The Tarot archetype is ${cyc.arcana} — use this as a reflective lens, not a prediction.`);
             if (activeSubKeys.length > 0) parts.push(`This is a geometrically significant day, sitting at a ${activeSubKeys.map(([, v]) => v.name).join(" and ")} division point of the year — a moment of heightened symbolic resonance.`);
@@ -240,7 +240,7 @@ export default function CalendarTab({ ctx }) {
       {/* Geometric Markers Ring */}
       <Card title="Geometric Markers — Sacred Divisions of the Year">
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurfaceVariant, margin: "0 0 6px" }}>
-          Imagine dividing the 365-day year into equal segments using different shapes. Split it in <strong>half</strong> (day 182/183) and you get the Yin-Yang midpoint. Split it in <strong>thirds</strong> and you get the Triangle points. In <strong>quarters</strong> = the four seasons. In <strong>fifths</strong> = the Pentagram. And so on, all the way to <strong>21sts</strong>.
+          Imagine dividing the 365-day year into equal segments using different shapes. Split in <strong>half</strong> (day 182/183), the division marks the Yin-Yang midpoint. Split in <strong>thirds</strong>, it marks the Triangle points. In <strong>quarters</strong> = the four seasons. In <strong>fifths</strong> = the Pentagram. And so on, all the way to <strong>21sts</strong>.
         </p>
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
           When today falls exactly on one of these division points, that marker is "active" — the day sits at a geometrically significant moment in the year's cycle. Most days have no active markers; some rare days activate several at once.
@@ -379,7 +379,7 @@ export default function CalendarTab({ ctx }) {
       {cyc.monthDayTarot && (
         <Card title="Month-Day Tarot Narrative — The Story of Today">
           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
-            When you add the month number and the day-of-month number together, they point to a combined Tarot reading — a narrative formed by blending two cards. This is not a prediction but a symbolic lens for the day.
+            The month number and the day-of-month number sum to a pair of trumps. The pairing names what one card sets against the other. It is a symbolic convention attached to the date, not a prediction.
           </p>
           <div style={{ padding: "12px 16px", borderRadius: 10, background: M3.primaryContainer + "22", border: `1px solid ${M3.primary}22` }}>
             <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", color: M3.onSurface, lineHeight: 1.7 }}>{cyc.monthDayTarot}</div>
@@ -531,7 +531,7 @@ export default function CalendarTab({ ctx }) {
       {/* Cross-Cultural Zodiac Systems */}
       <Card title="Cross-Cultural Zodiacs — Three Traditions, One Day">
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
-          Beyond the familiar Western zodiac, the calendar overlays two additional ancient systems onto the year. Each maps a different set of animal archetypes to the solar cycle, giving you three "animal identities" for any given day. These are <em>solar</em> assignments (based on the day of the year), distinct from the Chinese <em>yearly</em> animal you may already know.
+          Beyond the familiar Western zodiac, the calendar overlays two additional ancient systems onto the year. Each maps a different set of animal archetypes to the solar cycle, giving three parallel animal assignments for any given day. These are <em>solar</em> assignments (based on the day of the year), distinct from the Chinese <em>yearly</em> animal, which is assigned by birth year.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
           {/* Ogham / Celtic */}
@@ -573,7 +573,7 @@ export default function CalendarTab({ ctx }) {
               {cd.chineseSolar?.yin} {cd.chineseSolar?.wuxing}
             </div>
             <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.58rem", color: M3.onSurfaceVariant, marginTop: 6, fontStyle: "italic", lineHeight: 1.4 }}>
-              The familiar 12 Chinese zodiac animals are usually assigned by birth year. Here they are mapped to ~30-day <em>solar</em> periods within the year. This gives a day-level animal energy distinct from your birth-year animal. Today carries the energy of the {cd.chineseSolar?.animal} ({cd.chineseSolar?.yin} {cd.chineseSolar?.wuxing}).
+              The familiar 12 Chinese zodiac animals are usually assigned by birth year. Here they are mapped to ~30-day <em>solar</em> periods within the year. This gives a day-level animal assignment distinct from the birth-year animal. Today carries the energy of the {cd.chineseSolar?.animal} ({cd.chineseSolar?.yin} {cd.chineseSolar?.wuxing}).
             </div>
           </div>
         </div>
@@ -598,7 +598,7 @@ export default function CalendarTab({ ctx }) {
             <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", color: M3.onSurfaceVariant, marginTop: 10, lineHeight: 1.55 }}>
               {cd.masterTeacher.isEl
                 ? "The final day of the year stands as El — a day of pure divine presence. All 32 paths have been walked; the 33rd step is unity itself."
-                : `Today the Tree of Life's "${cd.masterTeacher.pathName}" pathway is highlighted. Its "${cd.masterTeacher.intel}" Intelligence describes the quality of awareness available today — meditate on what this means in your life.`
+                : `Today the Tree of Life's "${cd.masterTeacher.pathName}" pathway is highlighted. Its "${cd.masterTeacher.intel}" Intelligence is the quality the Sepher Yetzirah tradition assigns to that path.`
               }
             </div>
           </div>

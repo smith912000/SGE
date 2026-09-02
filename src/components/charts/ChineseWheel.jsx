@@ -121,7 +121,7 @@ export default function ChineseWheel({ cn, size = 460, onTooltip }) {
           title:`${ai.emoji||ANIMAL_SYMS[i]} ${animal} — ${BRANCHES[i]}`,
           emoji:ai.emoji||ANIMAL_SYMS[i],
           plain:`${ai.archetype ? `"${ai.archetype}" — ` : ""}${ai.desc || ""}\n\nHours: ${ANIMAL_HOURS[i]}\nDirection: ${ANIMAL_DIRECTION[i]}\nSeason: ${ANIMAL_SEASON[i]}\nFixed Element: ${ANIMAL_EL[i]}\nTrigram: ${TRIGRAMS[ANIMAL_TRIGRAM[i]]?.name} ${triName} (${TRIGRAMS[ANIMAL_TRIGRAM[i]]?.meaning})`,
-          tags:[ai.trait||"", ANIMAL_HOURS[i], ANIMAL_DIRECTION[i], ANIMAL_EL[i], `${TRIGRAMS[ANIMAL_TRIGRAM[i]]?.name} ${triName}`, isActive?"★ YOUR SIGN":""],
+          tags:[ai.trait||"", ANIMAL_HOURS[i], ANIMAL_DIRECTION[i], ANIMAL_EL[i], `${TRIGRAMS[ANIMAL_TRIGRAM[i]]?.name} ${triName}`, isActive?"★ THIS CHART'S BRANCH":""],
         };
         return (
           <g key={animal} style={{cursor:"pointer"}}
@@ -165,7 +165,7 @@ export default function ChineseWheel({ cn, size = 460, onTooltip }) {
           title:`${el} Element — 五行 (Wǔ Xíng)`,
           emoji: el==="Wood"?"🌿":el==="Fire"?"🔥":el==="Earth"?"⛰️":el==="Metal"?"⚔️":"💧",
           plain: elInfo.desc || "",
-          tags:[elInfo.trait||"", isActive?"★ YOUR ELEMENT":"", `Creates: ${CN_EL_LIST[(i+1)%5]}`, `Controls: ${CN_EL_LIST[(i+2)%5]}`],
+          tags:[elInfo.trait||"", isActive?"★ THIS CHART'S ELEMENT":"", `Creates: ${CN_EL_LIST[(i+1)%5]}`, `Controls: ${CN_EL_LIST[(i+2)%5]}`],
         };
         return (
           <g key={el} style={{cursor:"pointer"}}
@@ -192,8 +192,8 @@ export default function ChineseWheel({ cn, size = 460, onTooltip }) {
         const tipInfo = {
           title:`${tri.name} ${tri.hanzi} ${tri.label} — ${tri.meaning}`,
           emoji:tri.name,
-          plain:`${tri.nature}\n\nAssociated animals: ${tri.animals}\nAssociations: ${tri.assoc}${isActive ? "\n\n★ This is YOUR trigram based on your animal sign ("+cn.animal+")." : ""}`,
-          tags:[tri.meaning.split("/")[0]?.trim(), tri.label, tri.hanzi, tri.animals, isActive?"★ YOUR TRIGRAM":""],
+          plain:`${tri.nature}\n\nAssociated animals: ${tri.animals}\nAssociations: ${tri.assoc}${isActive ? "\n\n★ The trigram this scheme assigns to the branch animal of this chart ("+cn.animal+")." : ""}`,
+          tags:[tri.meaning.split("/")[0]?.trim(), tri.label, tri.hanzi, tri.animals, isActive?"★ THIS CHART'S TRIGRAM":""],
         };
 
         const a0 = (i * 45 - 90) * DEG;

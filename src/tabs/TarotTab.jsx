@@ -1,28 +1,28 @@
 import { useState, useMemo, useEffect } from 'react';
 
 const DECK = [
-    { id: 0, name: "The Fool", emoji: "🃏", meaning: "Spontaneous beginnings, trust in the universe, an adventure of spirit.", astro: "Air / Uranus", col: "#b2ebf2" },
-    { id: 1, name: "The Magician", emoji: "🪄", meaning: "Manifestation, resourcefulness, tapping into your innate power.", astro: "Mercury", col: "#ff5252" },
-    { id: 2, name: "The High Priestess", emoji: "🌙", meaning: "Intuition, sacred knowledge, the mystery of the subconscious.", astro: "Moon", col: "#5c6bc0" },
-    { id: 3, name: "The Empress", emoji: "🌿", meaning: "Abundance, creativity, nurturing growth in the material world.", astro: "Venus", col: "#8bc34a" },
-    { id: 4, name: "The Emperor", emoji: "👑", meaning: "Authority, structure, strategic leadership and solid foundations.", astro: "Aries", col: "#f44336" },
-    { id: 5, name: "The Hierophant", emoji: "🏛️", meaning: "Tradition, spiritual wisdom, following a proven path or mentor.", astro: "Taurus", col: "#795548" },
-    { id: 6, name: "The Lovers", emoji: "💞", meaning: "Alignment of values, choice, sacred harmony between opposites.", astro: "Gemini", col: "#ff80ab" },
-    { id: 7, name: "The Chariot", emoji: "🏎️", meaning: "Willpower, triumph over obstacles, internal drive and focus.", astro: "Cancer", col: "#29b6f6" },
-    { id: 8, name: "Strength", emoji: "🦁", meaning: "Compassion, influence, the courage to master your inner nature.", astro: "Leo", col: "#ffa726" },
-    { id: 9, name: "The Hermit", emoji: "🏮", meaning: "Introspection, finding your inner light, taking a period of solitude.", astro: "Virgo", col: "#9575cd" },
-    { id: 10, name: "Wheel of Fortune", emoji: "☸️", meaning: "Cycles of change, destiny, a turning point in your journey.", astro: "Jupiter", col: "#fdd835" },
-    { id: 11, name: "Justice", emoji: "⚖️", meaning: "Truth, balance, clarity and the law of cause and effect.", astro: "Libra", col: "#4db6ac" },
-    { id: 12, name: "The Hanged Man", emoji: "🦇", meaning: "Surrender, letting go, seeing from a new perspective.", astro: "Water / Neptune", col: "#64b5f6" },
-    { id: 13, name: "Death", emoji: "💀", meaning: "Transformation, end of a cycle, making room for the new.", astro: "Scorpio", col: "#212121" },
-    { id: 14, name: "Temperance", emoji: "🏺", meaning: "Alchemy, moderation, patience and finding the middle path.", astro: "Sagittarius", col: "#ffcc80" },
-    { id: 15, name: "The Devil", emoji: "🐐", meaning: "Shadow work, healthy boundaries, recognizing self-imposed chains.", astro: "Capricorn", col: "#4e342e" },
-    { id: 16, name: "The Tower", emoji: "⚡", meaning: "Sudden breakthrough, liberation, clearing away what is false.", astro: "Mars", col: "#d32f2f" },
-    { id: 17, name: "The Star", emoji: "⭐", meaning: "Hope, inspiration, spiritual guidance after a storm.", astro: "Aquarius", col: "#40c4ff" },
-    { id: 18, name: "The Moon", emoji: "🌕", meaning: "Illusion, dreams, facing the unknown and trusting your instinct.", astro: "Pisces", col: "#3949ab" },
-    { id: 19, name: "The Sun", emoji: "☀️", meaning: "Vitality, success, radiates joy and conscious awareness.", astro: "Sun", col: "#ffb300" },
-    { id: 20, name: "Judgement", emoji: "🎺", meaning: "Awakening, reckoning, listening to your higher calling.", astro: "Fire / Pluto", col: "#ff6d00" },
-    { id: 21, name: "The World", emoji: "🌐", meaning: "Completion, unity, wholeness and mastering the cycle.", astro: "Saturn", col: "#ab47bc" }
+    { id: 0, name: "The Fool", emoji: "🃏", meaning: "A traveller at an edge, a bundle on a stick. Unnumbered in Marseille, 0 after the Golden Dawn. Aleph, Air.", astro: "Air / Uranus", col: "#b2ebf2" },
+    { id: 1, name: "The Magician", emoji: "🪄", meaning: "A figure at a table bearing cup, sword, wand and coin. Marseille reads dexterity; Golden Dawn, Beth and Mercury.", astro: "Mercury", col: "#ff5252" },
+    { id: 2, name: "The High Priestess", emoji: "🌙", meaning: "La Papesse veiled between two pillars, the book half covered. Golden Dawn: Gimel and the Moon. Besancon prints Juno.", astro: "Moon", col: "#5c6bc0" },
+    { id: 3, name: "The Empress", emoji: "🌿", meaning: "A crowned woman with ripe grain and falling water. Golden Dawn: Daleth and Venus; the Marseille shield is imperial heraldry.", astro: "Venus", col: "#8bc34a" },
+    { id: 4, name: "The Emperor", emoji: "👑", meaning: "A crowned man on a seat with ram heads, orb and sceptre. Golden Dawn: Heh and Aries; Thoth gives Tzaddi.", astro: "Aries", col: "#f44336" },
+    { id: 5, name: "The Hierophant", emoji: "🏛️", meaning: "Le Pape in a triple crown, two attendants below. Golden Dawn: Vau, the joining letter, and Taurus.", astro: "Taurus", col: "#795548" },
+    { id: 6, name: "The Lovers", emoji: "💞", meaning: "Marseille shows three figures under an archer; Rider-Waite-Smith shows two in Eden. Golden Dawn: Zain and Gemini.", astro: "Gemini", col: "#ff80ab" },
+    { id: 7, name: "The Chariot", emoji: "🏎️", meaning: "A canopy on four pillars, two draught creatures, no reins drawn. Golden Dawn: Cheth, the enclosure, and Cancer.", astro: "Cancer", col: "#29b6f6" },
+    { id: 8, name: "Strength", emoji: "🦁", meaning: "Hands at a lion's jaws. Numbered VIII by the Golden Dawn, XI in Marseille. Teth and Leo.", astro: "Leo", col: "#ffa726" },
+    { id: 9, name: "The Hermit", emoji: "🏮", meaning: "A hooded figure with a raised lantern and a staff. Golden Dawn: Yod and Virgo. Earlier trumps show an hourglass.", astro: "Virgo", col: "#9575cd" },
+    { id: 10, name: "Wheel of Fortune", emoji: "☸️", meaning: "The Rota Fortunae, figures carried up and over the rim. Golden Dawn: Kaph and Jupiter; the rim letters settle nothing.", astro: "Jupiter", col: "#fdd835" },
+    { id: 11, name: "Justice", emoji: "⚖️", meaning: "Sword upright, scales level. XI in the Golden Dawn line, VIII in Marseille. Lamed and Libra.", astro: "Libra", col: "#4db6ac" },
+    { id: 12, name: "The Hanged Man", emoji: "🦇", meaning: "Le Pendu hung by one ankle, legs crossed in a four. Golden Dawn: Mem and Water; Neptune is a modern graft.", astro: "Water / Neptune", col: "#64b5f6" },
+    { id: 13, name: "Death", emoji: "💀", meaning: "A reaper at work, numbered XIII and left untitled in Marseille. Golden Dawn: Nun and Scorpio.", astro: "Scorpio", col: "#212121" },
+    { id: 14, name: "Temperance", emoji: "🏺", meaning: "A winged figure pouring between two vessels. Golden Dawn: Samekh and Sagittarius. Thoth retitles it Art.", astro: "Sagittarius", col: "#ffcc80" },
+    { id: 15, name: "The Devil", emoji: "🐐", meaning: "A horned figure above two tethered ones, the chains hanging loose. Golden Dawn: Ayin, the eye, and Capricorn.", astro: "Capricorn", col: "#4e342e" },
+    { id: 16, name: "The Tower", emoji: "⚡", meaning: "La Maison Dieu, its crowned top struck away. Golden Dawn: Peh, the mouth, and Mars. The name is disputed.", astro: "Mars", col: "#d32f2f" },
+    { id: 17, name: "The Star", emoji: "⭐", meaning: "A kneeling figure pouring from two urns under one great star and seven lesser. Golden Dawn: Tzaddi and Aquarius.", astro: "Aquarius", col: "#40c4ff" },
+    { id: 18, name: "The Moon", emoji: "🌕", meaning: "Two towers, a track running between them, a crayfish rising from the pool. Golden Dawn: Qoph and Pisces.", astro: "Pisces", col: "#3949ab" },
+    { id: 19, name: "The Sun", emoji: "☀️", meaning: "A rayed face above a walled enclosure — two children in Marseille, one rider after Smith. Golden Dawn: Resh.", astro: "Sun", col: "#ffb300" },
+    { id: 20, name: "Judgement", emoji: "🎺", meaning: "A trumpet sounded, figures rising from open ground. Golden Dawn: Shin and Fire; Pluto is a modern graft.", astro: "Fire / Pluto", col: "#ff6d00" },
+    { id: 21, name: "The World", emoji: "🌐", meaning: "A figure in a garland with the four creatures at the corners. Golden Dawn: Tau and Saturn.", astro: "Saturn", col: "#ab47bc" }
 ];
 
 export default function TarotTab({ ctx }) {
@@ -44,11 +44,11 @@ export default function TarotTab({ ctx }) {
         const hash = (daySeed + sunIdx + moonIdx + res.jd) % DECK.length;
         const destined = DECK[Math.floor(hash)];
 
-        let r = "Connecting to the currents of time...";
-        if (destined.id === 19) r = "Aligned with your Solar vitality today.";
-        else if (destined.id === 2) r = "The Lunar cycle is activating your intuition.";
-        else if (destined.id === 4) r = "Reflecting the Martian strength in your chart.";
-        else r = `Drawn through the alignment of your ${asc} ascendant and today's planetary positions.`;
+        let r = "Derived from the day index and the julian day of this chart.";
+        if (destined.id === 19) r = "The draw lands on the solar trump, Resh in the Golden Dawn lettering.";
+        else if (destined.id === 2) r = "The draw lands on the lunar trump, Gimel in the Golden Dawn lettering.";
+        else if (destined.id === 4) r = "The draw lands on the trump the Golden Dawn attributes to Aries.";
+        else r = `Derived from the day index, the julian day of this chart and the ${asc} ascendant.`;
 
         return { card: destined, reason: r };
     }, [res, zodSign]);
@@ -80,9 +80,9 @@ export default function TarotTab({ ctx }) {
                 <div style={{ fontSize: "3rem", marginBottom: 20 }}>🌌</div>
                 <h3 style={{ fontFamily: "Cinzel, serif", color: M3.primary }}>Chart Required</h3>
                 <p style={{ fontSize: "0.9rem", maxWidth: 300, margin: "10px auto" }}>
-                    The Tarot Synchronicity Engine needs your birth details to align the cards with your unique astrological blueprint.
+                    The draw is keyed to a computed chart. Without one there is no julian day to derive from, so the deck stays closed.
                 </p>
-                <p style={{ fontSize: "0.8rem", opacity: 0.7 }}>Please go to the <strong>Natal</strong> tab or click "Compute Chart" above.</p>
+                <p style={{ fontSize: "0.8rem", opacity: 0.7 }}>Birth data is entered on the <strong>Natal</strong> tab, or through "Compute Chart" above.</p>
             </div>
         );
     }
@@ -90,9 +90,9 @@ export default function TarotTab({ ctx }) {
     return (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 32, padding: "20px 0" }}>
             <div style={{ textAlign: "center" }}>
-                <h2 style={{ fontFamily: "Cinzel, serif", color: M3.primary, margin: 0, fontSize: "1.8rem" }}>Today's Arcana</h2>
+                <h2 style={{ fontFamily: "Cinzel, serif", color: M3.primary, margin: 0, fontSize: "1.8rem" }}>The Day's Arcanum</h2>
                 <p style={{ color: M3.onSurfaceVariant, fontSize: "0.85rem", marginTop: 8, maxWidth: 400 }}>
-                    A unique card drawn through <strong>Synchronicity</strong> — revealed once every 24 hours based on your astrological alignment.
+                    One trump of the twenty-two, fixed for the day by a <strong>deterministic draw</strong> from this chart and the date. The same card stands until the date changes.
                 </p>
             </div>
 
@@ -169,7 +169,7 @@ export default function TarotTab({ ctx }) {
                     ) : (
                         <div style={{ textAlign: "center", opacity: 0.4, margin: "auto" }}>
                             <div style={{ fontSize: "4rem", marginBottom: 16 }}>🎴</div>
-                            <div style={{ fontSize: "0.7rem", letterSpacing: "0.1em" }}>YOUR DAILY CARD</div>
+                            <div style={{ fontSize: "0.7rem", letterSpacing: "0.1em" }}>THE DAY'S CARD</div>
                         </div>
                     )}
                 </div>
@@ -204,12 +204,12 @@ export default function TarotTab({ ctx }) {
                     e.currentTarget.style.boxShadow = `0 8px 16px ${M3.primary}33`;
                 }}
             >
-                {isPulling ? "CONSULTING THE STARS..." : hasDrawnToday ? "TODAY'S READING IS SET" : "REVEAL TODAY'S CARD"}
+                {isPulling ? "DRAWING" : hasDrawnToday ? "THE DAY'S CARD IS SET" : "TURN THE DAY'S CARD"}
             </button>
 
             {hasDrawnToday && (
                 <p style={{ color: M3.onSurfaceVariant, fontSize: "0.75rem", opacity: 0.7 }}>
-                    Return tomorrow for your next destined alignment.
+                    The draw is fixed until the date rolls over.
                 </p>
             )}
 

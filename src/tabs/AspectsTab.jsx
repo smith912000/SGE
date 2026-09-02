@@ -20,20 +20,20 @@ export default function AspectsTab({ ctx }) {
       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>What are aspects?</div>
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: "0 0 16px" }}>
-          Aspects are the angles between planets measured around the zodiac circle. When two planets are a precise number of degrees apart, they form a geometric relationship - and their energies blend in a specific way. Think of it like music: some intervals sound harmonious, some create tension, all create meaning.
+          Aspects are the angles between planets measured around the zodiac circle. Where two bodies stand a stated number of degrees apart, the tradition treats the pair as related and reads the two significations together. The Tetrabiblos takes the conjunction, sextile, square, trine and opposition as the core set; the minor angles were admitted later. The musical analogy is old - concordant and discordant intervals - and it is an analogy rather than a mechanism.
         </p>
         {(() => {
           const gSz = Math.min(400, window.innerWidth - 80);
           const gCx = gSz / 2, gCy = gSz / 2, gR = gSz * 0.42;
           const aspectDefs = [
-            { angle: 0, col: "#FFD700", sym: "☌", name: "Conjunction", tip: "Same place - energies fuse", count: 12 },
-            { angle: 45, col: "#ce93d8", sym: "∠", name: "Semisquare", tip: "45° - minor irritant", count: 8 },
-            { angle: 60, col: "#64b5f6", sym: "⚹", name: "Sextile", tip: "60° - gentle opportunity", count: 6 },
-            { angle: 90, col: "#ff8a50", sym: "□", name: "Square", tip: "90° - creative friction", count: 4 },
-            { angle: 120, col: "#69ff8e", sym: "△", name: "Trine", tip: "120° - natural flow", count: 3 },
-            { angle: 135, col: "#ef9a9a", sym: "⚼", name: "Sesquiquadrate", tip: "135° - inner restlessness", count: 8 },
-            { angle: 150, col: "#b39ddb", sym: "⚻", name: "Quincunx", tip: "150° - constant adjustment", count: 12 },
-            { angle: 180, col: "#ff5252", sym: "☍", name: "Opposition", tip: "Across the chart - push-pull", count: 2 },
+            { angle: 0, col: "#FFD700", sym: "☌", name: "Conjunction", tip: "0° - the two read as one", count: 12 },
+            { angle: 45, col: "#ce93d8", sym: "∠", name: "Semisquare", tip: "45° - minor hard angle, later addition", count: 8 },
+            { angle: 60, col: "#64b5f6", sym: "⚹", name: "Sextile", tip: "60° - concordant, of the Ptolemaic five", count: 6 },
+            { angle: 90, col: "#ff8a50", sym: "□", name: "Square", tip: "90° - discordant in the Ptolemaic set", count: 4 },
+            { angle: 120, col: "#69ff8e", sym: "△", name: "Trine", tip: "120° - concordant, of the Ptolemaic five", count: 3 },
+            { angle: 135, col: "#ef9a9a", sym: "⚼", name: "Sesquiquadrate", tip: "135° - minor hard angle, later addition", count: 8 },
+            { angle: 150, col: "#b39ddb", sym: "⚻", name: "Quincunx", tip: "150° - outside the Ptolemaic five", count: 12 },
+            { angle: 180, col: "#ff5252", sym: "☍", name: "Opposition", tip: "180° - opposite points of the circle", count: 2 },
           ];
           return (
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
@@ -104,9 +104,9 @@ export default function AspectsTab({ ctx }) {
         })()}
       </Card>
 
-      <Card title={`⚹ Your Aspect Web - ${res.aspects.length} connections visualised`}>
+      <Card title={`⚹ Aspect Web - ${res.aspects.length} connections at the orbs in use`}>
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-          This wheel highlights the <strong>connections between your planets</strong>. Thicker, brighter lines mean stronger aspects. Aspect symbols appear on the strongest links. Hover any line for details.
+          This wheel draws the <strong>angular relations between the bodies in this chart</strong>. Line weight and brightness track closeness to the exact angle. Aspect symbols mark the tightest links. Hover any line for the pair, the angle and the orb.
         </p>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <WheelWithTooltip positions={res.trop} houses={res.houses} size={Math.min(520, window.innerWidth - 64)} id="aspw" mode="aspects" theme="western" />
@@ -140,7 +140,7 @@ export default function AspectsTab({ ctx }) {
                     <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.onSurfaceVariant, marginLeft: "auto" }}>{a.p1}-{a.p2}</span>
                     <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: def?.col }}>{(a.strength * 100).toFixed(0)}%</span>
                   </div>
-                )) : <div style={{ color: M3.outlineVariant, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.7rem", fontStyle: "italic" }}>None in your chart</div>}
+                )) : <div style={{ color: M3.outlineVariant, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.7rem", fontStyle: "italic" }}>None at the orbs in use</div>}
               </div>
             );
           })}
@@ -166,9 +166,9 @@ export default function AspectsTab({ ctx }) {
             if (semi) parts.push(`${semi} semisquare${semi > 1 ? "s" : ""}`);
             if (sesq) parts.push(`${sesq} sesquiquadrate${sesq > 1 ? "s" : ""}`);
             const summary = parts.join(", ");
-            if (soft > hard * 1.5) return `Your chart is heavily harmonious (${summary}). Things tend to flow naturally - your challenge is to not coast on talent but push yourself beyond comfort.${subtle > 2 ? ` The ${quinc} quincunxes add a layer of subtle adjustment that keeps you from becoming complacent.` : ""}`;
-            if (hard > soft * 1.5) return `Your chart is heavily dynamic (${summary}). Life pushes you hard - but this pattern produces people of extraordinary depth and resilience. Your strengths are earned, not given.${subtle > 2 ? ` The ${quinc} quincunxes add a layer of nuance that softens the edges of the friction.` : ""}`;
-            return `Your chart balances ease and challenge (${summary}). You have natural gifts and real growth edges - the combination makes you both capable and continually evolving.${subtle > 2 ? ` With ${quinc} quincunxes, there's also a constant subtle re-calibration happening beneath the surface.` : ""}`;
+            if (soft > hard * 1.5) return `Soft angles outnumber hard ones in this chart (${summary}). The Ptolemaic set ranks the trine and sextile as concordant and the square and opposition as discordant; modern psychological practice keeps the same angles and reads them as ease and friction rather than as fortune and misfortune. The two accounts have not been reconciled.${subtle > 2 ? ` The ${quinc} quincunxes fall outside both groups - 150° is not one of the Ptolemaic five and was admitted to the set later.` : ""} Orb size is a judgement call rather than a measurement, so this count is a property of the orb policy as much as of the chart. Which of these contacts stands closest to exact?`;
+            if (hard > soft * 1.5) return `Hard angles outnumber soft ones in this chart (${summary}). Hellenistic sources rank the square and opposition among the difficult configurations; modern psychological practice keeps the geometry and drops the verdict, naming them the points of internal tension instead. Neither account has displaced the other.${subtle > 2 ? ` The ${quinc} quincunxes add contacts at 150°, an angle outside the Ptolemaic five and later in origin.` : ""} Orb size is a judgement call rather than a measurement, so this count is a property of the orb policy as much as of the chart. Which of these contacts stands closest to exact?`;
+            return `Soft and hard angles stand close to even in this chart (${summary}). No source treats an even distribution as significant in itself; the balance is a description of the geometry rather than a reading of it.${subtle > 2 ? ` The ${quinc} quincunxes fall outside both groups - 150° is not one of the Ptolemaic five.` : ""} Orb size is a judgement call rather than a measurement, so this count is a property of the orb policy as much as of the chart. Which of these contacts stands closest to exact, and where does the same pair recur elsewhere in the chart?`;
           })()}
         </div>
       </Card>

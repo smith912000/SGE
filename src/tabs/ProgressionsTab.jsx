@@ -23,12 +23,12 @@ export default function ProgressionsTab({ ctx }) {
       <Card style={{ background: `linear-gradient(135deg,${M3.secondaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
         <div style={{ display: "flex", gap: 20, flexWrap: "wrap", alignItems: "flex-start" }}>
           <div style={{ flex: 1, minWidth: 220 }}>
-            <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.secondary, marginBottom: 8 }}>Secondary Progressions - who you're becoming</div>
+            <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.secondary, marginBottom: 8 }}>Secondary Progressions - the day-for-a-year convention</div>
             <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: "0 0 10px" }}>
-              Imagine your birth chart is a seed. Secondary progressions show how that seed has grown. The method is simple but profound: <strong style={{ color: M3.primary }}>one day after birth = one year of life</strong>. So at age {age}, the planets are read from the sky {age} days after you were born.
+              A symbolic timing method rather than an observation. One day of ephemeris time after a birth is read as standing for one year of life: <strong style={{ color: M3.primary }}>one day after birth = one year of life</strong>. The positions below are therefore those of the sky {age} days after the birth moment, read for the {age}th year. Nothing in the present sky corresponds to them.
             </p>
             <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-              The Progressed Moon changes sign every ~2.5 years and is the most felt. The Progressed Sun shifts sign roughly every 30 years - a complete identity rebirth.
+              The progressed Moon crosses a sign about every two and a half years and completes the circle in roughly twenty-seven, which supplies most of the movement in the technique. The progressed Sun advances close to a degree a year and crosses a sign roughly every thirty.
             </p>
           </div>
           <svg width="160" height="160" viewBox="0 0 160 160" style={{ flexShrink: 0 }}>
@@ -53,49 +53,49 @@ export default function ProgressionsTab({ ctx }) {
         const nSun = zodSign(res.trop.Sun), pSun = zodSign(res.prog.Sun), nMoon = zodSign(res.trop.Moon), pMoon = zodSign(res.prog.Moon);
         const sunChanged = nSun !== pSun, moonChanged = nMoon !== pMoon;
         return (
-          <Card title="📖 Your Growth Arc - Where Life Has Taken You">
+          <Card title="📖 The Progressed Lights - Sun and Moon Against Their Natal Signs">
             <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.7, color: M3.onSurface, margin: "0 0 14px" }}>
-              Your progressions tell the story of your inner evolution - not events that happened to you, but the way your character has deepened and shifted over time.
+              What follows names where the progressed Sun and Moon stand, whether either has crossed out of its natal sign under the day-for-a-year convention, and what the tradition has attributed to the signs involved.
             </p>
             {sunChanged ? (
               <div style={{ padding: "14px 16px", borderRadius: 12, background: P_COL.Sun + "12", border: `1px solid ${P_COL.Sun}33`, marginBottom: 12 }}>
-                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: P_COL.Sun, letterSpacing: "0.1em", marginBottom: 6 }}>☉ IDENTITY SHIFT - {nSun} {"->"} {pSun}</div>
+                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: P_COL.Sun, letterSpacing: "0.1em", marginBottom: 6 }}>☉ SOLAR SIGN CROSSING - {nSun} {"->"} {pSun}</div>
                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
-                  You were born with a <strong style={{ color: SIGN_COL[nSun] }}>{nSun}</strong> Sun: {PLANET_IN_SIGN.Sun?.[nSun] || SIGN_INFO[nSun].plain} Over the course of your life, your progressed Sun has moved into <strong style={{ color: SIGN_COL[pSun] }}>{pSun}</strong>. This is a profound chapter change: your core self is now developing through {PROG_SIGN_ARC[pSun]}. This doesn't erase your birth Sun - it layers a new dimension of growth on top of it. You may notice that the concerns and interests that drive you now are different from what drove you as a young person.
+                  The natal Sun stands in <strong style={{ color: SIGN_COL[nSun] }}>{nSun}</strong>: {PLANET_IN_SIGN.Sun?.[nSun] || SIGN_INFO[nSun].plain} The progressed Sun has since crossed into <strong style={{ color: SIGN_COL[pSun] }}>{pSun}</strong>. {PLANET_IN_SIGN.Sun?.[pSun] || SIGN_INFO[pSun].plain} The progressed placement does not displace the natal one - both stand in the record, and most schools read the natal sign as the ground and the progressed sign as a second register laid over it. Sources differ on how much weight the progressed sign should carry against the natal, and the disagreement is unresolved. Where else in this chart does {pSun} appear?
                 </p>
               </div>
             ) : (
               <div style={{ padding: "12px 16px", borderRadius: 10, background: M3.surfaceDim, marginBottom: 12 }}>
                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: 0 }}>
-                  Your progressed Sun is still in <strong style={{ color: SIGN_COL[nSun] }}>{nSun}</strong> - you're still deepening the core identity you were born with. This is a period of mastery rather than reinvention.
+                  The progressed Sun remains in <strong style={{ color: SIGN_COL[nSun] }}>{nSun}</strong>, the natal sign. Advancing close to a degree a year, it crosses a sign roughly once in thirty; within a sign the progression registers as degree movement and as changing aspects, not as a change of sign.
                 </p>
               </div>
             )}
             {moonChanged ? (
               <div style={{ padding: "14px 16px", borderRadius: 12, background: P_COL.Moon + "12", border: `1px solid ${P_COL.Moon}33`, marginBottom: 12 }}>
-                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: P_COL.Moon, letterSpacing: "0.1em", marginBottom: 6 }}>☽ EMOTIONAL SHIFT - {nMoon} {"->"} {pMoon}</div>
+                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: P_COL.Moon, letterSpacing: "0.1em", marginBottom: 6 }}>☽ LUNAR SIGN CROSSING - {nMoon} {"->"} {pMoon}</div>
                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
-                  Your emotional landscape has shifted. Born with a <strong style={{ color: SIGN_COL[nMoon] }}>{nMoon}</strong> Moon: {PLANET_IN_SIGN.Moon?.[nMoon] || SIGN_INFO[nMoon].plain} Now, with the progressed Moon in <strong style={{ color: SIGN_COL[pMoon] }}>{pMoon}</strong>, you're processing feelings through a new lens: {PROG_SIGN_ARC[pMoon]}. The progressed Moon changes sign every ~2.5 years, so this is a shorter chapter - but deeply felt. Pay attention to what you crave emotionally right now. It's different from what you craved a few years ago, and that shift is purposeful growth.
+                  The natal Moon stands in <strong style={{ color: SIGN_COL[nMoon] }}>{nMoon}</strong>: {PLANET_IN_SIGN.Moon?.[nMoon] || SIGN_INFO[nMoon].plain} The progressed Moon now stands in <strong style={{ color: SIGN_COL[pMoon] }}>{pMoon}</strong>. {PLANET_IN_SIGN.Moon?.[pMoon] || SIGN_INFO[pMoon].plain} The progressed Moon crosses a sign about every two and a half years, so this placement is the shortest-lived of the progressed factors and the one most often consulted for timing. Which natal degrees does it approach next, and at what orb?
                 </p>
               </div>
             ) : (
               <div style={{ padding: "12px 16px", borderRadius: 10, background: M3.surfaceDim, marginBottom: 12 }}>
                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: 0 }}>
-                  Your progressed Moon is still in <strong style={{ color: SIGN_COL[nMoon] }}>{nMoon}</strong> - your emotional needs are currently being refined within the same sign you were born with, deepening rather than shifting.
+                  The progressed Moon remains in <strong style={{ color: SIGN_COL[nMoon] }}>{nMoon}</strong>, the natal sign, moving by degree within it. A crossing falls due roughly every two and a half years.
                 </p>
               </div>
             )}
             <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: 0, fontStyle: "italic" }}>
-              {sunChanged && moonChanged ? "Both your identity and emotional life are in active transition - this is an intense period of personal evolution. Be gentle with yourself; you're changing at every level."
-                : sunChanged ? "Your identity is shifting while your emotional base holds steady - you have an anchor even as your sense of self evolves."
-                  : moonChanged ? "Your emotional world is in transition while your core identity stays rooted - you're learning new ways to feel without losing who you are."
-                    : "Neither your Sun nor Moon have changed signs yet - you're in a period of deepening and consolidation, building strength in the foundations you were born with."}
+              {sunChanged && moonChanged ? "Both progressed lights have changed sign since birth. The tradition reads a double ingress as the most marked of the progressed configurations, because the two significators it weights most heavily have both moved."
+                : sunChanged ? "The progressed Sun has changed sign; the progressed Moon has not. One light has moved register while the other holds the natal sign."
+                  : moonChanged ? "The progressed Moon has changed sign; the progressed Sun has not. The faster light has moved while the slower holds its natal ground."
+                    : "Neither progressed light has changed sign since birth. The progressed Sun crosses a sign roughly every thirty years and the progressed Moon roughly every two and a half, so an unchanged pair is common in the early decades."}
             </p>
           </Card>
         );
       })()}
 
-      <Card title={`→ How You've Evolved by Age ${age}`}>
+      <Card title={`→ Progressed Positions at Age ${age}`}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(200px,1fr))", gap: 10 }}>
           {["Sun", "Moon", "Mercury", "Venus", "Mars"].map((planet) => {
             const natalSign = zodSign(res.trop[planet]);
@@ -115,11 +115,9 @@ export default function ProgressionsTab({ ctx }) {
                 </div>
                 {changed && (
                   <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.71rem", color: M3.onSurface, lineHeight: 1.5, margin: "6px 0 0" }}>
-                    {planet === "Sun" ? `Your core identity is now expressing through ${progSign} - a different register than birth. You are learning ${PROG_SIGN_ARC[progSign]}.`
-                      : planet === "Moon" ? `Your emotional needs have shifted toward ${progSign} themes. You crave ${PROG_SIGN_ARC[progSign]?.split(" - ")[0]}.`
-                        : planet === "Venus" ? `What you find beautiful and how you love carries ${progSign} flavour now. Love means ${PROG_SIGN_ARC[progSign]?.split(" - ")[0]}.`
-                          : planet === "Mars" ? `Your drive and action style now operates through ${progSign} energy. You pursue goals with ${PROG_SIGN_ARC[progSign]?.split(" - ")[0]}.`
-                            : `Your thinking and communication has evolved to ${progSign} mode. Your mind focuses on ${PROG_SIGN_ARC[progSign]?.split(" - ")[0]}.`}
+                    {`The progressed ${planet} has crossed from ${natalSign} into ${progSign}. `}
+                    {PLANET_IN_SIGN[planet]?.[progSign] || SIGN_INFO[progSign]?.plain || ""}
+                    {" Under the day-for-a-year convention this is a symbolic ingress, not a change in where the body physically stands."}
                   </p>
                 )}
               </div>

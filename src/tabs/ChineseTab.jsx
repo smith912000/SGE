@@ -16,11 +16,11 @@ export default function ChineseTab({ ctx }) {
   const ext = CHINESE_ZODIAC_EXTENDED?.[res.cn.animal] || null;
 
   const elBal = {
-    Wood:  { balanced:"When Wood is balanced, you grow steadily, set healthy boundaries, and channel anger into constructive change.", imbalanced:"When Wood is out of balance, you may become rigid, controlling, or chronically frustrated.", cultivate:"Spend time in nature. Begin new creative projects. Practice forgiveness. Physical movement unblocks Wood energy." },
-    Fire:  { balanced:"When Fire is balanced, you radiate warmth, joy, and inspiration. You connect easily with others.", imbalanced:"When Fire is out of balance, you may become anxious, scattered, or burn out from overcommitting.", cultivate:"Practice presence and mindfulness. Laugh freely. Nurture close relationships." },
-    Earth: { balanced:"When Earth is balanced, you feel grounded, generous, and nourishing — both to yourself and others.", imbalanced:"When Earth is out of balance, you may become a chronic worrier, overly self-sacrificing, or stuck in overthinking.", cultivate:"Eat mindfully. Spend time cooking, gardening, or working with your hands. Practice receiving as much as giving." },
-    Metal: { balanced:"When Metal is balanced, you have clarity, integrity, and the ability to let go of what no longer serves you.", imbalanced:"When Metal is out of balance, you may become perfectionistic, grief-stricken, or emotionally cold.", cultivate:"Practice decluttering. Breathe deeply. Engage with art, music, or ritual. Allow yourself to grieve fully and then release." },
-    Water: { balanced:"When Water is balanced, you possess deep wisdom, adaptability, and courage that comes from understanding.", imbalanced:"When Water is out of balance, you may become paralysed by fear, isolated, or emotionally frozen.", cultivate:"Rest more — Water needs stillness. Meditate near water. Journal your fears honestly." },
+    Wood:  { balanced:"Wood in balance is described as extension that keeps its root: growth against resistance, a boundary that bends without breaking, and anger that moves into work rather than settling.", imbalanced:"Wood in excess or deficit is described as movement blocked rather than absent — rigidity where there was flexibility, control where there was direction, and frustration that does not discharge.", cultivate:"Medical tradition assigns Wood the liver and gall bladder, wind as its climate and anger as its emotion, and places its regulation in movement and in the release of what is held. Water generates Wood; Metal cuts it." },
+    Fire:  { balanced:"Fire in balance is described as warmth that spreads without consuming its fuel — brightness, contact, and the quickening of whatever it reaches.", imbalanced:"Fire in excess or deficit is described in two directions: flaring, scattered and restless when it runs high, and dimmed, joyless and cold when it runs low.", cultivate:"Medical tradition assigns Fire the heart and small intestine, heat as its climate and joy as its emotion. Wood generates Fire; Water overcomes it, so the regulating relation is with what cools rather than with what fans." },
+    Earth: { balanced:"Earth in balance is described as the steady centre — nourishment given and received, and the turning point that holds between the other four phases.", imbalanced:"Earth in excess or deficit is described as circling thought that never settles into action, and as giving that runs further than what is taken in.", cultivate:"Medical tradition assigns Earth the spleen and stomach, damp as its climate and pensiveness as its emotion. Fire generates Earth; Wood parts it. Its regulation is placed in food, in ground, and in what is worked by hand." },
+    Metal: { balanced:"Metal in balance is described as clean division — what is kept set apart from what is released, and grief carried through to its end rather than held.", imbalanced:"Metal in excess or deficit is described as an edge turned inward: exactness hardening into perfectionism, and release hardening into coldness.", cultivate:"Medical tradition assigns Metal the lungs and large intestine, dryness as its climate and grief as its emotion. Earth generates Metal; Fire melts it. Its regulation is placed in breath, in ritual, and in the completed act of mourning." },
+    Water: { balanced:"Water in balance is described as depth that still moves — reserve held in store, adaptation to the shape of the vessel, and a courage that comes from knowing the ground.", imbalanced:"Water in excess or deficit is described as fear that fixes rather than warns: withdrawal, stillness gone frozen, and reserve drawn down past its store.", cultivate:"Medical tradition assigns Water the kidneys and bladder, cold as its climate and fear as its emotion. Metal generates Water; Earth banks it. Its regulation is placed in rest, in stillness, and in the conserving of what has been stored." },
   };
   const eb = elBal[res.cn.element];
 
@@ -104,14 +104,14 @@ export default function ChineseTab({ ctx }) {
             </div>
             {res.cn.effectiveYear && res.cn.effectiveYear !== A.year && (
               <div style={{ color:M3.tertiary, fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.7rem", fontStyle:"italic", marginTop:6 }}>
-                Note: Born before Chinese New Year — your Chinese year is {res.cn.effectiveYear} rather than {A.year}.
+                Note: the sexagenary year turns at the lunar new year — in some reckonings at the solar term Lìchūn, around 4 February — and not on 1 January. This date falls before that boundary, so the sexagenary year read here is {res.cn.effectiveYear} rather than the Gregorian {A.year}.
               </div>
             )}
           </div>
         </Card>
 
         {/* Wheel */}
-        <Card title="☯ Your Position on the Wheel">
+        <Card title="☯ Position on the Wheel">
           <div style={{ display:"flex", justifyContent:"center" }}>
             <ChineseWheelWithTooltip cn={res.cn} size={Math.min(420, window.innerWidth-80)}/>
           </div>
@@ -127,7 +127,7 @@ export default function ChineseTab({ ctx }) {
           <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.7, color:M3.onSurface, margin:0 }}>{ai.desc}</p>
           {ai.shadow && (
             <div style={{ marginTop:12, padding:"10px 14px", borderRadius:10, background:"#ff525211", border:"1px solid #ff525233" }}>
-              <span style={{ color:"#ff8a80", fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", fontWeight:"700" }}>SHADOW SIDE: </span>
+              <span style={{ color:"#ff8a80", fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", fontWeight:"700" }}>ALSO ATTRIBUTED: </span>
               <span style={{ color:M3.onSurfaceVariant, fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem" }}>{ai.shadow}</span>
             </div>
           )}
@@ -173,11 +173,11 @@ export default function ChineseTab({ ctx }) {
                 )}
               </div>
               <div>
-                <div style={{ color:"#69ff8e", fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", letterSpacing:"0.08em", marginBottom:4 }}>EXTENDED COMPATIBILITY</div>
-                <p style={{ margin:"0 0 5px", color:M3.onSurfaceVariant, fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.73rem", lineHeight:1.55 }}><strong style={{color:"#69ff8e"}}>Best:</strong> {(ext.compatible||[]).join(", ")}</p>
-                <p style={{ margin:"0 0 5px", color:M3.onSurfaceVariant, fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.73rem", lineHeight:1.55 }}><strong>Average:</strong> {(ext.average||[]).join(", ")}</p>
-                <p style={{ margin:"0 0 5px", color:M3.onSurfaceVariant, fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.73rem", lineHeight:1.55 }}><strong style={{color:"#ffab40"}}>Conflict:</strong> {(ext.conflict||[]).join(", ")}</p>
-                <p style={{ margin:0, color:M3.onSurfaceVariant, fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.73rem", lineHeight:1.55 }}><strong style={{color:"#ff5252"}}>Avoid:</strong> {(ext.avoid||[]).join(", ")}</p>
+                <div style={{ color:"#69ff8e", fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", letterSpacing:"0.08em", marginBottom:4 }}>ATTRIBUTED BRANCH RELATIONS</div>
+                <p style={{ margin:"0 0 5px", color:M3.onSurfaceVariant, fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.73rem", lineHeight:1.55 }}><strong style={{color:"#69ff8e"}}>Harmonised:</strong> {(ext.compatible||[]).join(", ")}</p>
+                <p style={{ margin:"0 0 5px", color:M3.onSurfaceVariant, fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.73rem", lineHeight:1.55 }}><strong>Neutral:</strong> {(ext.average||[]).join(", ")}</p>
+                <p style={{ margin:"0 0 5px", color:M3.onSurfaceVariant, fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.73rem", lineHeight:1.55 }}><strong style={{color:"#ffab40"}}>In tension:</strong> {(ext.conflict||[]).join(", ")}</p>
+                <p style={{ margin:0, color:M3.onSurfaceVariant, fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.73rem", lineHeight:1.55 }}><strong style={{color:"#ff5252"}}>Opposed:</strong> {(ext.avoid||[]).join(", ")}</p>
               </div>
             </div>
             {ext.generals && (
@@ -196,7 +196,7 @@ export default function ChineseTab({ ctx }) {
 
         {/* Element + Polarity side-by-side */}
         <div style={grid2}>
-          <Card title={`☯ Your Element: ${res.cn.element}`}>
+          <Card title={`☯ Element of the Year Stem: ${res.cn.element}`}>
             <div style={{ textAlign:"center", marginBottom:10 }}>
               <div style={{ width:56, height:56, borderRadius:"50%", background:ei.color+"22", border:`2px solid ${ei.color}`, display:"inline-flex", alignItems:"center", justifyContent:"center" }}>
                 <span style={{ color:ei.color, fontFamily:"'Share Tech Mono',monospace", fontSize:"1.4rem", fontWeight:"700" }}>{res.cn.element[0]}</span>
@@ -227,7 +227,7 @@ export default function ChineseTab({ ctx }) {
             <div style={{ marginTop:14, padding:"10px 14px", borderRadius:10, background:M3.surfaceDim }}>
               <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", color:M3.secondary, marginBottom:4 }}>COMBINED READING</div>
               <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>
-                As a <strong style={{color:ei.color}}>{res.cn.element}</strong> <strong style={{color:M3.primary}}>{res.cn.animal}</strong> in a <strong>{res.cn.polarity}</strong> year, your {res.cn.element.toLowerCase()} nature expresses through the {res.cn.animal.toLowerCase()}&apos;s {(ai.trait||"").split(", ")[0]?.toLowerCase()} quality with {res.cn.polarity==="Yang"?"an outward, assertive energy":"an inward, reflective energy"}.
+                As a <strong style={{color:ei.color}}>{res.cn.element}</strong> <strong style={{color:M3.primary}}>{res.cn.animal}</strong> in a <strong>{res.cn.polarity}</strong> year, the {res.cn.element.toLowerCase()} phase is paired with the {res.cn.animal.toLowerCase()}, to which the tradition attributes a {(ai.trait||"").split(", ")[0]?.toLowerCase()} quality. The {res.cn.polarity} polarity is read as {res.cn.polarity==="Yang"?"outward and assertive":"inward and reflective"}.
               </p>
             </div>
           </Card>
@@ -390,7 +390,7 @@ export default function ChineseTab({ ctx }) {
               <div key={tr.trine} style={{ padding:"12px 14px", borderRadius:10, marginBottom:10, border:`1px solid ${isYours ? M3.primary : M3.outlineVariant+"44"}`, background: isYours ? M3.primaryContainer+"33" : M3.surfaceContainer }}>
                 <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.72rem", color: isYours ? M3.primary : M3.secondary, fontWeight:"700", marginBottom:6 }}>
                   Trine {tr.trine}: {tr.signs.map(s => `${(ANIMAL_INFO[s]||{}).emoji||""} ${s}`).join(" · ")}
-                  {isYours && <span style={{ marginLeft:8, color:M3.tertiary, fontSize:"0.6rem" }}>← YOUR TRINE</span>}
+                  {isYours && <span style={{ marginLeft:8, color:M3.tertiary, fontSize:"0.6rem" }}>← THIS CHART</span>}
                 </div>
                 <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:"0 0 6px" }}>
                   {tr.summary}
@@ -479,7 +479,7 @@ export default function ChineseTab({ ctx }) {
                 <div key={i} style={{ padding:"10px 12px", borderRadius:10, border:`1px solid ${isYours ? M3.primary : M3.outlineVariant+"44"}`, background: isYours ? M3.primaryContainer+"33" : M3.surfaceContainer }}>
                   <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.7rem", color: isYours ? M3.primary : M3.secondary, fontWeight:"700" }}>
                     {g.sanskrit}
-                    {isYours && <span style={{ marginLeft:6, color:M3.tertiary, fontSize:"0.58rem" }}>YOUR GENERAL</span>}
+                    {isYours && <span style={{ marginLeft:6, color:M3.tertiary, fontSize:"0.58rem" }}>THIS CHART</span>}
                   </div>
                   <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.8rem", color:M3.onSurface, marginTop:2 }}>{g.chinese}</div>
                   <div style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.7rem", color:M3.onSurfaceVariant, marginTop:4 }}>

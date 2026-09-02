@@ -31,7 +31,7 @@ class ErrorBoundary extends React.Component {
             Something went wrong in this module.
           </h2>
           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "1rem", color: M3.onSurfaceVariant, maxWidth: 500, margin: "0 auto 24px" }}>
-            The SGE engine encountered a calculation or rendering anomaly. You can try refreshing the page or switching to another tab.
+            The SGE engine encountered a calculation or rendering anomaly. Reloading the page or moving to another tab may clear it.
           </p>
           <button
             onClick={() => this.setState({ hasError: false })}

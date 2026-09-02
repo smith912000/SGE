@@ -41,7 +41,7 @@ export default function DeepTab({ ctx }) {
 
   const domEl = Object.entries(res.el).sort(([,a],[,b])=>b-a)[0];
   const domMod = Object.entries(res.mod).sort(([,a],[,b])=>b-a)[0];
-  const modLabel = {Cardinal:"Starter — you initiate",Fixed:"Sustainer — you persist",Mutable:"Adapter — you flow"};
+  const modLabel = {Cardinal:"Cardinal — the opening term of a season",Fixed:"Fixed — the sustaining term of a season",Mutable:"Mutable — the dissolving term of a season"};
 
   const aspects = res.aspects;
   const hardAsp = aspects.filter(a=>["Square","Opposition"].includes(a.name));
@@ -51,13 +51,13 @@ export default function DeepTab({ ctx }) {
   <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
 
     <Card style={{ background:`linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor:M3.outline }}>
-      <div style={{ fontFamily:"Cinzel,serif", fontSize:"1rem", color:M3.primary, marginBottom:8 }}>Deep Analysis — Your Chart Decoded in Plain English</div>
+      <div style={{ fontFamily:"Cinzel,serif", fontSize:"1rem", color:M3.primary, marginBottom:8 }}>Deep Reading — the chart taken factor by factor</div>
       <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
-        This page breaks down every major piece of your birth chart into detailed, personalized descriptions. It covers your <strong>Solar character</strong> (who you are at your core, based on your Sun sign), <strong>Lunar character</strong> (your emotional inner world, based on your Moon sign), <strong>Rising sign</strong> (how others perceive you), and the influence of every significant planet in your chart. Below that, you'll find your element and modality distribution, harmonic layers, and a full spiritual summary that ties everything together.
+        This page names each major factor in this chart and what the traditions have attributed to it: the <strong>Sun</strong> by sign, the <strong>Moon</strong> by sign, the <strong>sign rising</strong> at the eastern horizon, and each of the personal and social planets in turn. Below those sit the elemental and modal counts, the aspect figures with their orbs, three harmonic layers, and the Chinese year set alongside the Western figure. A count is a count: the orb policy that produced it is a convention of this instrument, and it is stated on the Education page rather than assumed here.
       </p>
     </Card>
 
-    <Card title="☀ Solar Character — Who You Are at Your Core">
+    <Card title="☀ The Sun by Sign">
       <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:14 }}>
         <div style={{ width:52, height:52, borderRadius:"50%", background:SIGN_COL[sunSign]+"22", border:`2px solid ${SIGN_COL[sunSign]}`, display:"flex", alignItems:"center", justifyContent:"center" }}>
           <span style={{ fontSize:"1.6rem" }}>{SI[sunSign].emoji}</span>
@@ -68,10 +68,13 @@ export default function DeepTab({ ctx }) {
           {SI[sunSign].hebrew && <div style={{ color:M3.outlineVariant, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", marginTop:2 }}>{SI[sunSign].emoji} ← {SI[sunSign].letterName} ({SI[sunSign].hebrew}) ← {SI[sunSign].phoenician} ← {SI[sunSign].hiero} — {SI[sunSign].letterMeaning.split("—")[1]?.trim()||""}</div>}
         </div>
       </div>
-      <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.75, color:M3.onSurface, margin:0 }}>{SOLAR_DEEP[sunSign]}</p>
+      <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.75, color:M3.onSurface, margin:0 }}>{SOLAR_DEEP[sunSign].plain}</p>
+      {SOLAR_DEEP[sunSign].shadow && (
+        <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.7, color:M3.onSurfaceVariant, margin:"10px 0 0" }}>{SOLAR_DEEP[sunSign].shadow}</p>
+      )}
     </Card>
 
-    <Card title="🌙 Lunar Character — Your Emotional Landscape">
+    <Card title="🌙 The Moon by Sign">
       <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:14 }}>
         <div style={{ width:52, height:52, borderRadius:"50%", background:SIGN_COL[moonSign]+"22", border:`2px solid ${SIGN_COL[moonSign]}`, display:"flex", alignItems:"center", justifyContent:"center" }}>
           <span style={{ fontSize:"1.6rem" }}>{SI[moonSign].emoji}</span>
@@ -82,17 +85,20 @@ export default function DeepTab({ ctx }) {
           {SI[moonSign].hebrew && <div style={{ color:M3.outlineVariant, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", marginTop:2 }}>{SI[moonSign].emoji} ← {SI[moonSign].letterName} ({SI[moonSign].hebrew}) ← {SI[moonSign].phoenician} ← {SI[moonSign].hiero} — {SI[moonSign].letterMeaning.split("—")[1]?.trim()||""}</div>}
         </div>
       </div>
-      <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.75, color:M3.onSurface, margin:0 }}>{LUNAR_DEEP[moonSign]}</p>
+      <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.75, color:M3.onSurface, margin:0 }}>{LUNAR_DEEP[moonSign].plain}</p>
+      {LUNAR_DEEP[moonSign].shadow && (
+        <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.7, color:M3.onSurfaceVariant, margin:"10px 0 0" }}>{LUNAR_DEEP[moonSign].shadow}</p>
+      )}
     </Card>
 
-    <Card title="🌅 Your Mask — How the World Meets You">
+    <Card title="🌅 The Ascendant — the sign rising at the horizon">
       <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:14 }}>
         <div style={{ width:52, height:52, borderRadius:"50%", background:SIGN_COL[ascSign]+"22", border:`2px solid ${SIGN_COL[ascSign]}`, display:"flex", alignItems:"center", justifyContent:"center" }}>
           <span style={{ fontSize:"1.6rem" }}>{SI[ascSign].emoji}</span>
         </div>
         <div>
           <div style={{ color:SIGN_COL[ascSign], fontFamily:"'Share Tech Mono',monospace", fontSize:"0.82rem", fontWeight:"700" }}>{ascSign} Rising</div>
-          <div style={{ color:M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.65rem" }}>Your ascendant — the sign that was rising on the eastern horizon at your birth</div>
+          <div style={{ color:M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.65rem" }}>The ascendant — the degree of the ecliptic rising at the eastern horizon for this time and place</div>
           {SI[ascSign].hebrew && <div style={{ color:M3.outlineVariant, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", marginTop:2 }}>{SI[ascSign].emoji} ← {SI[ascSign].letterName} ({SI[ascSign].hebrew}) ← {SI[ascSign].phoenician} ← {SI[ascSign].hiero} — {SI[ascSign].letterMeaning.split("—")[1]?.trim()||""}</div>}
         </div>
       </div>

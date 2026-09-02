@@ -1,42 +1,50 @@
 import { useState } from "react";
 import { P_SYM, P_COL, PLANET_INFO } from '../data/astrology/planets.js';
-import { LIFE_PATH_MEANING, EXPRESSION_MEANING, SOUL_URGE_MEANING, PERSONALITY_MEANING, BIRTHDAY_MEANING } from '../data/numerology/meanings.js';
+import { getNumerologySymbolism } from '../data/symbolism/numerologySymbolism.js';
 import { NUM_PLANET, MASTER_NUMBERS } from '../data/numerology/tables.js';
+import { EXPRESSION_MEANING, SOUL_URGE_MEANING, PERSONALITY_MEANING, BIRTHDAY_MEANING } from '../data/numerology/meanings.js';
 import { computeNumerology, reduceToRoot } from '../engines/numerology.js';
 import { calcGematria } from '../engines/gematria.js';
+import SymbolPanel from '../components/ui/SymbolPanel.jsx';
+import DepthControl from '../components/ui/DepthControl.jsx';
+import { useDepth } from '../store/depthStore.js';
 export default function NumerologyTab({ ctx }) {
   const { M3, birthParts, res, Card } = ctx;
   const [gemaName, setGemaName] = useState("");
+  const [depth, setDepth] = useDepth();
 
   const A = birthParts || {};
   const nuData = computeNumerology(A.year, A.month, A.day, A.name || "");
   const hasName = nuData.letterBreakdown.length > 0;
-  const lp = LIFE_PATH_MEANING[nuData.lifePath] || LIFE_PATH_MEANING[reduceToRoot(nuData.lifePath)] || {};
+  const lp = getNumerologySymbolism(nuData.lifePath) || getNumerologySymbolism(reduceToRoot(nuData.lifePath));
 
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
       <Card style={{ background:`linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor:M3.outline }}>
-        <div style={{ fontFamily:"Cinzel,serif", fontSize:"1.1rem", color:M3.primary, marginBottom:8 }}>Numerology — The Mathematics of Identity</div>
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", gap:12, flexWrap:"wrap", marginBottom:8 }}>
+          <div style={{ fontFamily:"Cinzel,serif", fontSize:"1.1rem", color:M3.primary }}>Numerology — Figures and the Maps That Produce Them</div>
+          <DepthControl depth={depth} onChange={setDepth} compact />
+        </div>
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.7, color:M3.onSurface, margin:0 }}>
-          Numerology is the ancient study of numbers as carriers of meaning. Every date, every name, every letter has a numerical vibration. This section calculates your core numerological profile from your birth date and name, maps your name through Hebrew gematria, and identifies which mathematical sequences resonate with your birth day. Two systems are shown: <strong>Pythagorean</strong> (the Western standard, 1-9 cycle) and <strong>Chaldean</strong> (the older Babylonian system with irregular mappings considered more mystically accurate by some traditions).
+          Numerology assigns numbers to a date and to the letters of a name, sums them, and reduces the total to a single figure. Two letter maps are computed here and they do not agree: <strong>Pythagorean</strong> runs A to I onto 1 to 9 and then repeats that run twice, so A, J and S all give 1; <strong>Chaldean</strong>, the older Babylonian-derived map, assigns irregularly and gives no letter the value 9. The same name therefore reduces differently under the two, and neither map was ever reconciled with the other. A figure reported without its method is an unread figure, so the method is named beside each total below. The panels also carry a Hebrew gematria reckoning of a typed name and the arithmetic sequences the birth day-of-year falls on. The depth control sets how much of each record is shown.
         </p>
       </Card>
 
       {/* ── Core Numbers ── */}
-      <Card title="Your Core Numbers — The Numerological Blueprint">
+      <Card title="Core Numbers — Each Figure and Its Derivation">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 14px" }}>
-          Five core numbers form the foundation of your numerological identity. Each is derived differently and reveals a different dimension of who you are.
+          Eight figures stand below. Each is drawn from a different part of the record — the whole date, the day alone, every letter, the vowels alone, the consonants alone — and the derivation is what fixes what the figure is a figure of. An M marks a total held as a master number rather than reduced further.
         </p>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(140px,1fr))", gap:10 }}>
           {[
-            { label:"Life Path", val:nuData.lifePath, color:M3.primary, tip:"Derived from your full birth date. The most important number — your life's purpose and the lessons you're here to learn.", needsName:false },
-            { label:"Birthday", val:nuData.birthday, color:"#ffa726", tip:"Simply your birth day reduced. A special talent or gift you carry that colours everything else.", needsName:false },
-            { label:"Personal Year", val:nuData.personalYear, color:"#69ff8e", tip:"Your current annual cycle theme — what this year is asking of you.", needsName:false },
-            { label:"Expression", val:nuData.expression, color:M3.tertiary, tip:"Derived from all letters of your full name. How you naturally express yourself and what talents you carry.", needsName:true },
-            { label:"Soul Urge", val:nuData.soulUrge, color:"#ce93d8", tip:"Derived from the vowels in your name. Your deepest inner desire — what your heart truly wants.", needsName:true },
-            { label:"Personality", val:nuData.personality, color:"#4fc3f7", tip:"Derived from the consonants in your name. How the outside world perceives you — your social mask.", needsName:true },
-            { label:"Maturity", val:nuData.maturity, color:M3.secondary, tip:"Life Path + Expression. The person you are becoming in the second half of life.", needsName:true },
-            { label:"Chaldean Expr.", val:nuData.chaldeanExpr, color:"#ff5252", tip:"Babylonian system — older and considered by some to be more vibrationally accurate.", needsName:true },
+            { label:"Life Path", val:nuData.lifePath, color:M3.primary, tip:"Month, day and year each reduced, then summed and reduced again. The modern literature treats it as the governing figure of the set.", needsName:false },
+            { label:"Birthday", val:nuData.birthday, color:"#ffa726", tip:"The day of the month, reduced. Held as a subsidiary figure said to colour the life path.", needsName:false },
+            { label:"Personal Year", val:nuData.personalYear, color:"#69ff8e", tip:"Birth month and day summed with the reduced current year. A position in the nine-year count, not a forecast.", needsName:false },
+            { label:"Expression", val:nuData.expression, color:M3.tertiary, tip:"Every letter of the full name under the Pythagorean map. Attributed to outward capacity and manner.", needsName:true },
+            { label:"Soul Urge", val:nuData.soulUrge, color:"#ce93d8", tip:"The vowels alone. Also called the Heart's Desire; attributed to inward motive.", needsName:true },
+            { label:"Personality", val:nuData.personality, color:"#4fc3f7", tip:"The consonants alone. Attributed to the outward impression rather than the inward motive.", needsName:true },
+            { label:"Maturity", val:nuData.maturity, color:M3.secondary, tip:"Life Path plus Expression, reduced. Attributed to the later arc of a life.", needsName:true },
+            { label:"Chaldean Expr.", val:nuData.chaldeanExpr, color:"#ff5252", tip:"The same name under the Chaldean map, which assigns letters differently and gives no letter 9. Held by some traditions to be the older and more exact reckoning.", needsName:true },
           ].map(c=>(
             <div key={c.label} style={{ padding:"14px", borderRadius:12, background:c.color+"11", border:`1px solid ${c.color}33`, textAlign:"center", opacity: c.needsName && !hasName ? 0.4 : 1 }}>
               <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.58rem", color:c.color, letterSpacing:"0.1em", marginBottom:6 }}>{c.label.toUpperCase()}</div>

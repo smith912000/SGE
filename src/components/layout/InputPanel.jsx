@@ -72,7 +72,7 @@ export default function InputPanel({ A, setA, B, setB, syn, setSyn, compute, loa
       setLocResults(rows);
       if (!rows.length) setLocError('No matching locations found.');
     } catch (_err) {
-      setLocError('Location lookup failed. Check your connection and try again.');
+      setLocError('Location lookup failed. The geocoding service could not be reached.');
       setLocResults([]);
     } finally {
       setLocLoading(false);
@@ -102,7 +102,7 @@ export default function InputPanel({ A, setA, B, setB, syn, setSyn, compute, loa
   };
 
   return (
-    <Card title="⬡  Enter Your Birth Details">
+    <Card title="⬡  Birth Data">
       <div style={{ marginBottom: 12, padding: '10px 12px', borderRadius: 10, background: M3.surfaceContainer, border: `1px solid ${M3.outlineVariant}` }}>
         <label style={{ fontFamily: M3.fontMono, fontSize: '0.62rem', color: M3.secondary, letterSpacing: '0.1em' }}>
           BIRTH LOCATION PICKER

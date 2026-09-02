@@ -413,57 +413,57 @@ export default function App() {
                 {false && tab === "natal-old" && (
                   <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                     <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
-                      <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Your Natal Chart — A Snapshot of the Sky at Your Birth</div>
+                      <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>The Natal Figure — The Sky at the Recorded Moment</div>
                       <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-                        At the moment you were born, every planet occupied a specific position in the zodiac. This page shows that snapshot. The <strong>planet table</strong> lists where each planet was, in both Western (Tropical, season-based) and Vedic (Sidereal, star-based) systems. The <strong>wheel</strong> is a visual map — the outer ring shows zodiac signs, inner lines divide 12 life areas called "houses," and planet symbols sit where they actually were.
+                        At the moment entered, every body held a specific longitude in the zodiac. This page states that figure. The <strong>planet table</strong> lists each position in both the tropical frame (measured from the equinox) and the sidereal frame (measured from the fixed stars). The <strong>wheel</strong> plots the same numbers — the outer ring carries the signs, the inner lines cut the twelve houses, and each glyph sits at its computed longitude.
                       </p>
                       <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
-                        <strong>How to read it:</strong> Each planet represents a part of your psyche — ☉ Sun is your core identity, ☽ Moon is your emotions, ☿ Mercury is how you think, ♀ Venus is how you love, ♂ Mars is your drive. The sign a planet is in colors how that part of you expresses. The house it falls in shows which life area it activates.
+                        <strong>What the tradition attributes:</strong> each body carries a domain — ☉ the Sun is the light and the centre, ☽ the Moon the receptive and the changing, ☿ Mercury the exchange of signs, ♀ Venus the attractive principle, ♂ Mars the cutting and initiating force. The sign inflects the mode in which that principle operates; the house names the field in which it is read.
                       </p>
                     </Card>
                     <div style={grid2}>
-                      <Card title="☉ Where Each Planet Was — Western & Vedic">
+                      <Card title="☉ Computed Positions — Tropical & Sidereal">
                         <PlanetTable positions={res.trop} jd={res.jd} siderealPositions={res.sid} />
                       </Card>
                       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                        <Card title="⊙ Your Birth Chart">
+                        <Card title="⊙ The Natal Wheel">
                           <div style={{ display: "flex", justifyContent: "center" }}>
                             <WheelWithTooltip positions={res.trop} houses={res.houses} size={340} id="natal" />
                           </div>
                         </Card>
-                        <Card title="⌂ Life Areas (Houses) — Where Things Happen For You">
+                        <Card title="⌂ The Twelve Houses — Fields of the Figure">
                           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
-                            Houses are life domains — each one governs a specific area. The sign on the house sets the style; planets inside bring activity and focus to that area.
+                            The houses are twelve fields cut from the horizon and meridian. The sign on the cusp inflects the field; bodies falling inside it are read as tenanting that field. These cusps are Porphyry.
                           </p>
                           {(() => {
                             const HOUSE_DESC = [
-                              "Your identity, body, and how you present yourself to the world. Planets here strongly shape your personality.",
-                              "Your money, possessions, and self-worth. Planets here affect how you earn and what you value.",
-                              "Communication, siblings, short trips, and daily learning. Planets here shape how you speak and think.",
-                              "Home, family, roots, and emotional foundation. Planets here influence your private life and sense of belonging.",
-                              "Creativity, romance, children, and pleasure. Planets here amplify your joy and self-expression.",
-                              "Daily routines, health, and service. Planets here affect your work habits and physical wellbeing.",
-                              "Partnerships, marriage, and one-on-one relationships. Planets here shape who you attract and how you relate.",
-                              "Shared resources, deep bonds, transformation, and endings. Planets here bring intensity to intimacy and change.",
-                              "Higher education, philosophy, travel, and beliefs. Planets here expand your worldview and sense of meaning.",
-                              "Career, reputation, authority, and public life. Planets here drive your ambitions and legacy.",
-                              "Friends, groups, hopes, and humanitarian causes. Planets here shape your social life and vision for the future.",
-                              "Solitude, spirituality, hidden strengths, and the unconscious. Planets here deepen your inner life and intuition.",
+                              "The 1st house is the ground of the body and the visible person. Hellenistic sources name it the Helm.",
+                              "The 2nd house is the ground of substance and movable goods. The Hellenistic tradition calls it the Gate of Hades.",
+                              "The 3rd house is the ground of the near journey, the sibling, and the message. The tradition names it the Goddess.",
+                              "The 4th house is the ground of the root, the household, and the end of the matter. Ptolemaic sources treat it as the foundation.",
+                              "The 5th house is the ground of issue, play, and made things. The tradition names it Good Fortune.",
+                              "The 6th house is the ground of labour, illness, and the servant. The tradition names it Bad Fortune.",
+                              "The 7th house is the ground of the one-to-one relation, and of the open adversary.",
+                              "The 8th house is the ground of the shared substance, of death, and of what is inherited.",
+                              "The 9th house is the ground of the far journey, of doctrine, and of the divine. The tradition names it God.",
+                              "The 10th house is the ground of the culminating point, of office, and of the public name.",
+                              "The 11th house is the ground of the company, the alliance, and the benefactor. The tradition names it Good Spirit.",
+                              "The 12th house is the ground of confinement, of the hidden, and of what works unseen. The tradition names it Bad Spirit.",
                             ];
                             const PLANET_IN_HOUSE = {
-                              Sun: "your core identity is strongly expressed here — this area of life feels central to who you are",
-                              Moon: "your emotional needs are centred here — you seek comfort and security through this domain",
-                              Mercury: "your mind is active here — you think, talk, and learn most through this area",
-                              Venus: "you find beauty and pleasure here — relationships and values are drawn to this domain",
-                              Mars: "your drive and energy are focused here — you take action and sometimes create friction in this area",
-                              Jupiter: "life expands and opportunities flow here — this is where luck tends to find you",
-                              Saturn: "you face your hardest lessons here — discipline and patience in this area lead to lasting mastery",
-                              Uranus: "you experience disruption and innovation here — expect the unexpected in this domain",
-                              Neptune: "imagination and idealism colour this area — it can be both inspiring and confusing",
-                              Pluto: "deep transformation happens here — power dynamics and rebirth are recurring themes",
-                              Node: "your soul's growth direction points through this area — leaning into it feels unfamiliar but right",
-                              Lilith: "your untamed shadow power sits here — this area exposes what you refuse to suppress or domesticate",
-                              Chiron: "your deepest wound lives here — healing it becomes your greatest gift to others",
+                              Sun: "the light is placed in this field; the tradition reads the centre of the figure as sitting here",
+                              Moon: "the receptive body is placed in this field; the tradition reads nourishment and change through it",
+                              Mercury: "the messenger is placed in this field; the tradition reads exchange, speech and learning through it",
+                              Venus: "the attractive principle is placed in this field; the tradition reads value and concord through it",
+                              Mars: "the cutting force is placed in this field; the tradition reads action and severance through it",
+                              Jupiter: "the greater benefic is placed in this field; the tradition reads increase and scope through it",
+                              Saturn: "the greater malefic is placed in this field; the tradition reads limit, weight and duration through it",
+                              Uranus: "a modern body is placed in this field; twentieth-century practice reads rupture and sudden reversal through it",
+                              Neptune: "a modern body is placed in this field; twentieth-century practice reads dissolution and image through it",
+                              Pluto: "a modern body is placed in this field; twentieth-century practice reads compulsion and reduction through it",
+                              Node: "the lunar node falls in this field; sources disagree sharply on what a node signifies, and the disagreement is old",
+                              Lilith: "the mean lunar apogee falls in this field; the point is a modern construction with no classical warrant",
+                              Chiron: "Chiron falls in this field; the body was discovered in 1977 and its attributions are recent and contested",
                             };
                             const housePlanets = Array.from({ length: 12 }, () => []);
                             const allPlanets = ["Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto", "Node", "Lilith", "Chiron"];
@@ -490,10 +490,10 @@ export default function App() {
                                   <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.68rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: 0 }}>{HOUSE_DESC[i]}</p>
                                   {pls.length > 0 && pls.map(p => (
                                     <p key={p} style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.66rem", lineHeight: 1.45, color: M3.onSurface, margin: "4px 0 0", paddingLeft: 8, borderLeft: `2px solid ${P_COL[p] || M3.primary}44` }}>
-                                      <strong style={{ color: P_COL[p] || M3.primary }}>{P_SYM[p]} {p}</strong> — {PLANET_IN_HOUSE[p] || "active in this area of your life"}.
+                                      <strong style={{ color: P_COL[p] || M3.primary }}>{P_SYM[p]} {p}</strong> — {PLANET_IN_HOUSE[p] || "tenanting this field"}.
                                     </p>
                                   ))}
-                                  {pls.length === 0 && <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.64rem", lineHeight: 1.4, color: M3.outlineVariant, margin: "4px 0 0", fontStyle: "italic" }}>No planets here — this area runs on {sign} autopilot, governed by the sign on the cusp rather than a planet's direct attention.</p>}
+                                  {pls.length === 0 && <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.64rem", lineHeight: 1.4, color: M3.outlineVariant, margin: "4px 0 0", fontStyle: "italic" }}>No body falls in this field. The tradition then reads it through the sign on the cusp and through the ruler of that sign, wherever it stands.</p>}
                                 </div>
                               );
                             });
@@ -520,7 +520,7 @@ export default function App() {
 
                   const domEl = Object.entries(res.el).sort(([, a], [, b]) => b - a)[0];
                   const domMod = Object.entries(res.mod).sort(([, a], [, b]) => b - a)[0];
-                  const modLabel = { Cardinal: "Starter — you initiate", Fixed: "Sustainer — you persist", Mutable: "Adapter — you flow" };
+                  const modLabel = { Cardinal: "Cardinal — the initiating mode", Fixed: "Fixed — the sustaining mode", Mutable: "Mutable — the adapting mode" };
 
                   const aspects = res.aspects;
                   const hardAsp = aspects.filter(a => ["Square", "Opposition"].includes(a.name));
@@ -530,13 +530,13 @@ export default function App() {
                     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
 
                       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
-                        <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Deep Analysis — Your Chart Decoded in Plain English</div>
+                        <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Deep Reading — What the Traditions Attribute to This Figure</div>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-                          This page breaks down every major piece of your birth chart into detailed, personalized descriptions. It covers your <strong>Solar character</strong> (who you are at your core, based on your Sun sign), <strong>Lunar character</strong> (your emotional inner world, based on your Moon sign), <strong>Rising sign</strong> (how others perceive you), and the influence of every significant planet in your chart. Below that, you'll find your element and modality distribution, harmonic layers, and a full spiritual summary that ties everything together.
+                          This page takes each major factor of the figure and states what has been attributed to it. It covers the <strong>solar placement</strong> (the light and its sign), the <strong>lunar placement</strong> (the receptive body and its sign), the <strong>rising sign</strong> (the degree on the eastern horizon), and each of the remaining bodies. Below that stand the element and modality counts, the harmonic layers, and a summary of the whole figure. Attributions are named, not resolved; where sources disagree, the disagreement is left standing.
                         </p>
                       </Card>
 
-                      <Card title="☀ Solar Character — Who You Are at Your Core">
+                      <Card title="☀ The Solar Placement — The Light and Its Sign">
                         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
                           <div style={{ width: 52, height: 52, borderRadius: "50%", background: SIGN_COL[sunSign] + "22", border: `2px solid ${SIGN_COL[sunSign]}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
                             <span style={{ fontSize: "1.6rem" }}>{SI[sunSign].emoji}</span>
@@ -550,7 +550,7 @@ export default function App() {
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>{SOLAR_DEEP[sunSign]}</p>
                       </Card>
 
-                      <Card title="🌙 Lunar Character — Your Emotional Landscape">
+                      <Card title="🌙 The Lunar Placement — The Receptive Body and Its Sign">
                         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
                           <div style={{ width: 52, height: 52, borderRadius: "50%", background: SIGN_COL[moonSign] + "22", border: `2px solid ${SIGN_COL[moonSign]}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
                             <span style={{ fontSize: "1.6rem" }}>{SI[moonSign].emoji}</span>
@@ -564,26 +564,26 @@ export default function App() {
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>{LUNAR_DEEP[moonSign]}</p>
                       </Card>
 
-                      <Card title="🌅 Your Mask — How the World Meets You">
+                      <Card title="🌅 The Ascendant — The Degree on the Eastern Horizon">
                         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
                           <div style={{ width: 52, height: 52, borderRadius: "50%", background: SIGN_COL[ascSign] + "22", border: `2px solid ${SIGN_COL[ascSign]}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
                             <span style={{ fontSize: "1.6rem" }}>{SI[ascSign].emoji}</span>
                           </div>
                           <div>
                             <div style={{ color: SIGN_COL[ascSign], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.82rem", fontWeight: "700" }}>{ascSign} Rising</div>
-                            <div style={{ color: M3.onSurfaceVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.65rem" }}>Your ascendant — the sign that was rising on the eastern horizon at your birth</div>
+                            <div style={{ color: M3.onSurfaceVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.65rem" }}>The ascendant — the sign rising on the eastern horizon at the recorded moment</div>
                             {SI[ascSign].hebrew && <div style={{ color: M3.outlineVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", marginTop: 2 }}>{SI[ascSign].emoji} ← {SI[ascSign].letterName} ({SI[ascSign].hebrew}) ← {SI[ascSign].phoenician} ← {SI[ascSign].hiero} — {SI[ascSign].letterMeaning.split("—")[1]?.trim() || ""}</div>}
                           </div>
                         </div>
                         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>
-                          Your Rising Sign is your social front — the energy people encounter before they know your Sun or Moon. With <strong style={{ color: SIGN_COL[ascSign] }}>{ascSign}</strong> rising, you come across as {SI[ascSign].plain.split(".")[0].toLowerCase()}. This is the lens through which all your other energies are filtered. People often identify more with their rising sign than their Sun sign in social settings, because it governs first impressions, body language, and instinctive reactions to new environments.
+                          The ascendant is the point of the ecliptic rising at the eastern horizon at the recorded instant. With <strong style={{ color: SIGN_COL[ascSign] }}>{ascSign}</strong> on that point, the tradition reads the figure through {SI[ascSign].plain.split(".")[0].toLowerCase()}. Hellenistic practice makes the ascendant the first house and the ruler of its sign the lord of the whole figure. Note that the ascendant depends on the birth time more sharply than any longitude does: four minutes of clock error moves it about one degree.
                         </p>
                         {RISING_SHADOW[ascSign] && (
                           <div style={{ marginTop: 14, padding: "12px 16px", borderRadius: 10, background: "#ff525208", border: "1px solid #ff525218" }}>
-                            <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.64rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 6 }}>SHADOW SIDE — WHEN THIS MASK GOES WRONG</div>
+                            <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.64rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 6 }}>ATTRIBUTED</div>
                             <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>{RISING_SHADOW[ascSign].shadow}</p>
                             <div style={{ marginTop: 10, padding: "10px 14px", borderRadius: 8, background: "#69ff8e08", border: "1px solid #69ff8e18" }}>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 4 }}>GROWTH SIGNAL</div>
+                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 4 }}>STRUCTURE</div>
                               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>{RISING_SHADOW[ascSign].growth}</p>
                             </div>
                           </div>
@@ -591,48 +591,48 @@ export default function App() {
                       </Card>
 
                       {(() => {
-                        const loveStyle = { Fire: "bold gestures and enthusiasm", Earth: "practical devotion and reliability", Air: "words, ideas, and intellectual connection", Water: "emotional depth and intuitive care" };
-                        const angerStyle = { Fire: "direct, fiery confrontation — quick to ignite and quick to forgive", Earth: "slow-burning determination — you rarely explode but never forget", Air: "sharp words and strategic detachment — you fight with your mind", Water: "emotional intensity — your feelings fuel your actions" };
+                        const loveStyle = { Fire: "display and enthusiasm", Earth: "provision and reliability", Air: "speech, ideas and exchange", Water: "depth of feeling and tacit care" };
+                        const angerStyle = { Fire: "open confrontation — quick to ignite, quick to release", Earth: "slow-burning persistence — rarely sudden, seldom forgetting", Air: "sharp speech and strategic detachment — the quarrel is argued", Water: "sustained intensity — feeling carries the action" };
                         return (
                           <div style={grid2}>
-                            <Card title="💖 How You Love — Venus in Your Chart">
+                            <Card title="💖 Venus — The Attractive Principle">
                               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
                                 <span style={{ color: P_COL.Venus, fontSize: "1.4rem" }}>♀</span>
                                 <span style={{ color: SIGN_COL[venSign], fontFamily: "'Share Tech Mono',monospace", fontWeight: "700" }}>Venus in {venSign}</span>
                               </div>
                               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-                                Venus governs what you find beautiful, how you attract love, and what you value in relationships. In <strong style={{ color: SIGN_COL[venSign] }}>{venSign}</strong>, your romantic style is {SI[venSign].plain.split(".")[0].toLowerCase()}. You are drawn to partners who embody {venSign} qualities — {SI[venSign].element.toLowerCase()} energy, {SI[venSign].mode.toLowerCase()} nature. You show love through {loveStyle[SI[venSign].element]}.
+                                Venus is the lesser benefic and the principle of attraction — beauty, value, concord, and what is held desirable. In <strong style={{ color: SIGN_COL[venSign] }}>{venSign}</strong>, the tradition inflects that principle as {SI[venSign].plain.split(".")[0].toLowerCase()}. The sign is {SI[venSign].element.toLowerCase()} and {SI[venSign].mode.toLowerCase()}, and Venus placed here is read as expressing concord through {loveStyle[SI[venSign].element]}.
                               </p>
                               {VENUS_SHADOW[venSign] && (
                                 <div style={{ marginTop: 10, padding: "10px 14px", borderRadius: 8, background: "#ff525208", border: "1px solid #ff525218" }}>
-                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 4 }}>SHADOW IN LOVE</div>
+                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 4 }}>ATTRIBUTED</div>
                                   <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{VENUS_SHADOW[venSign].shadow}</p>
                                 </div>
                               )}
                               {VENUS_SHADOW[venSign] && (
                                 <div style={{ marginTop: 6, padding: "8px 14px", borderRadius: 8, background: "#69ff8e08", border: "1px solid #69ff8e18" }}>
-                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 4 }}>GROWTH SIGNAL</div>
+                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 4 }}>STRUCTURE</div>
                                   <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurface, margin: 0 }}>{VENUS_SHADOW[venSign].growth}</p>
                                 </div>
                               )}
                             </Card>
-                            <Card title="🔥 How You Act — Mars in Your Chart">
+                            <Card title="🔥 Mars — The Cutting Force">
                               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
                                 <span style={{ color: P_COL.Mars, fontSize: "1.4rem" }}>♂</span>
                                 <span style={{ color: SIGN_COL[marSign], fontFamily: "'Share Tech Mono',monospace", fontWeight: "700" }}>Mars in {marSign}</span>
                               </div>
                               <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-                                Mars is your engine — how you pursue goals, handle conflict, and express desire. In <strong style={{ color: SIGN_COL[marSign] }}>{marSign}</strong>, your drive is {SI[marSign].plain.split(".")[0].toLowerCase()}. When angered, you respond with {angerStyle[SI[marSign].element]}.
+                                Mars is the lesser malefic and the principle of severance — pursuit, conflict, appetite, and the cut. In <strong style={{ color: SIGN_COL[marSign] }}>{marSign}</strong>, the tradition inflects that force as {SI[marSign].plain.split(".")[0].toLowerCase()}. Under provocation, Mars in a {SI[marSign].element.toLowerCase()} sign is read as acting through {angerStyle[SI[marSign].element]}.
                               </p>
                               {MARS_SHADOW[marSign] && (
                                 <div style={{ marginTop: 10, padding: "10px 14px", borderRadius: 8, background: "#ff525208", border: "1px solid #ff525218" }}>
-                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 4 }}>SHADOW IN CONFLICT</div>
+                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 4 }}>ATTRIBUTED</div>
                                   <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{MARS_SHADOW[marSign].shadow}</p>
                                 </div>
                               )}
                               {MARS_SHADOW[marSign] && (
                                 <div style={{ marginTop: 6, padding: "8px 14px", borderRadius: 8, background: "#69ff8e08", border: "1px solid #69ff8e18" }}>
-                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 4 }}>GROWTH SIGNAL</div>
+                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 4 }}>STRUCTURE</div>
                                   <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurface, margin: 0 }}>{MARS_SHADOW[marSign].growth}</p>
                                 </div>
                               )}
@@ -642,26 +642,26 @@ export default function App() {
                       })()}
 
                       {(() => {
-                        const learnStyle = { Fire: "doing and experimenting — hands-on, fast-paced, intuitive leaps", Earth: "practical application — step-by-step, methodical, evidence-based", Air: "reading, discussion, and debate — abstract thinking comes naturally", Water: "feeling and absorption — you understand things emotionally before intellectually" };
-                        const commStyle = { Cardinal: "direct and initiating — you get to the point", Fixed: "thorough and persistent — you develop ideas fully before sharing", Mutable: "adaptable and wide-ranging — you can talk to anyone about anything" };
+                        const learnStyle = { Fire: "doing and testing — hands-on, rapid, moving by leap", Earth: "application — step by step, methodical, tied to evidence", Air: "reading, discussion and dispute — the abstract handled directly", Water: "absorption — the sense taken before the argument" };
+                        const commStyle = { Cardinal: "direct and initiating — the point made first", Fixed: "thorough and persistent — the idea developed before it is released", Mutable: "adaptable and wide-ranging — the register shifted to the hearer" };
                         return (
-                          <Card title="🧠 How You Think — Mercury in Your Chart">
+                          <Card title="🧠 Mercury — The Messenger">
                             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
                               <span style={{ color: P_COL.Mercury, fontSize: "1.3rem" }}>☿</span>
                               <span style={{ color: SIGN_COL[merSign], fontFamily: "'Share Tech Mono',monospace", fontWeight: "700" }}>Mercury in {merSign}</span>
                             </div>
                             <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
-                              Mercury shapes how you process information, communicate, and learn. In <strong style={{ color: SIGN_COL[merSign] }}>{merSign}</strong>, your mind is {SI[merSign].plain.split(".")[0].toLowerCase()}. You learn best through {learnStyle[SI[merSign].element]}. Your communication style is {commStyle[SI[merSign].mode]}.
+                              Mercury is the neutral body and the principle of exchange — sign, speech, reckoning, and the crossing between. In <strong style={{ color: SIGN_COL[merSign] }}>{merSign}</strong>, the tradition inflects that principle as {SI[merSign].plain.split(".")[0].toLowerCase()}. A {SI[merSign].element.toLowerCase()} sign is read as taking knowledge through {learnStyle[SI[merSign].element]}; a {SI[merSign].mode.toLowerCase()} sign as delivering it {commStyle[SI[merSign].mode]}.
                             </p>
                             {MERCURY_SHADOW[merSign] && (
                               <div style={{ marginTop: 12, padding: "10px 14px", borderRadius: 8, background: "#ff525208", border: "1px solid #ff525218" }}>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 4 }}>YOUR MIND'S TRAP</div>
+                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 4 }}>ATTRIBUTED</div>
                                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>{MERCURY_SHADOW[merSign].shadow}</p>
                               </div>
                             )}
                             {MERCURY_SHADOW[merSign] && (
                               <div style={{ marginTop: 6, padding: "8px 14px", borderRadius: 8, background: "#69ff8e08", border: "1px solid #69ff8e18" }}>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 4 }}>GROWTH SIGNAL</div>
+                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 4 }}>STRUCTURE</div>
                                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{MERCURY_SHADOW[merSign].growth}</p>
                               </div>
                             )}

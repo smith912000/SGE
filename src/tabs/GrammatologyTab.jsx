@@ -85,7 +85,7 @@ export default function GrammatologyTab({ ctx }) {
     <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
       <Card title="𐤀 Grammatology — The Semiotic Engine">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.7, color:M3.onSurface, margin:"0 0 10px" }}>
-          Every letter you read descends from a pictograph. The letter A was once the head of an ox (𓃾), rotated and stylised across millennia: from Kemetic hieroglyph to Phoenician 𐤀 to Greek Alpha to Hebrew Aleph (א) to the Latin A on your screen. This engine maps <strong>22 root letters</strong> across <strong>20+ writing systems</strong> — including Aramaic, Samaritan, Coptic, Gothic, Armenian, Georgian, Ge'ez, Ogham, Arabic, Syriac, Devanagari, Tamil, Brahmi, Old South Arabian, and Bopomofo — revealing the hidden thread that connects all human writing.
+          The alphabetic letters descend from pictographs. The letter A was once the head of an ox (𓃾), rotated and stylised across millennia: from Kemetic hieroglyph to Phoenician 𐤀 to Greek Alpha to Hebrew Aleph (א) to the Latin A still in use. This engine maps <strong>22 root letters</strong> across <strong>20+ writing systems</strong> — including Aramaic, Samaritan, Coptic, Gothic, Armenian, Georgian, Ge'ez, Ogham, Arabic, Syriac, Devanagari, Tamil, Brahmi, Old South Arabian, and Bopomofo — setting them side by side so the line of descent, and the places where it breaks, can be read directly. Not every system here is a descendant of the Semitic abjad; several are set alongside it as parallels rather than heirs.
         </p>
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
           Writing systems are classified into four families: <strong>Alphabets</strong> (vowels and consonants are equal — Greek, Latin, Cyrillic, Georgian, Armenian), <strong>Abjads</strong> (consonant-only with optional vowel marks — Phoenician, Hebrew, Arabic, Aramaic), <strong>Abugidas</strong> (consonant-vowel units — Devanagari, Tamil, Brahmi, Ge'ez, Thai, Tibetan), and <strong>Logographic/Syllabary</strong> systems (symbols represent whole words or syllables — Egyptian Hieroglyphs, Chinese, Japanese Kana, Cherokee). Each system reflects a different philosophy of how sound, meaning, and symbol relate.
@@ -97,7 +97,7 @@ export default function GrammatologyTab({ ctx }) {
 
         {res && (
           <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginBottom:8 }}>
-            <span style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", color:M3.secondary, padding:"4px 0" }}>YOUR LETTERS:</span>
+            <span style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", color:M3.secondary, padding:"4px 0" }}>CHART LETTERS:</span>
             {["Sun","Moon","Mercury","Venus","Mars","Jupiter","Saturn"].map(p=>{
               const lt = planetToLetter(p);
               if (!lt) return null;
@@ -641,7 +641,7 @@ export default function GrammatologyTab({ ctx }) {
       {gramTab==="digraphs" && (
       <Card title="TH → Θ — Digraph to Monogram Crosswalk">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 12px" }}>
-          Many sounds that English writes with two letters (digraphs) were originally single letters in older scripts. When you write "TH" you are really writing the ancient Theta (Θ), which was the Phoenician Teth (𐤈), itself from the hieroglyph of a wheel or serpent (𓄤). Understanding these collapses reveals the hidden architecture of the modern alphabet.
+          Many sounds that English writes with two letters (digraphs) were single letters in older scripts. The English "TH" stands where the Greek Theta (Θ) stood, and Theta came from the Phoenician Teth (𐤈), whose pictograph sources read variously as a wheel or a coiled serpent (𓄤). Reading the collapses in reverse exposes the older architecture beneath the modern alphabet.
         </p>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))", gap:8 }}>
           {DIGRAPH_MAP.map((d,i)=>(
@@ -664,7 +664,7 @@ export default function GrammatologyTab({ ctx }) {
       {gramTab==="ipa" && (
       <Card title="[ipa] International Phonetic Alphabet — Quick Reference">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 12px" }}>
-          The IPA is the universal system for representing the sounds of human speech. Many ancient letter values (like Hebrew Chet = [χ], or Ayin = [ʕ]) can only be precisely described using IPA symbols. This reference covers the key symbols you will encounter in this grammatological analysis.
+          The IPA is the universal system for representing the sounds of human speech. Many ancient letter values (like Hebrew Chet = [χ], or Ayin = [ʕ]) can only be precisely described using IPA symbols. This reference covers the key symbols used in the grammatological analysis here.
         </p>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))", gap:8 }}>
           {IPA_QUICK.map((p,i)=>(

@@ -88,30 +88,30 @@ export default function NatalTab({ ctx }) {
     ? moonPhase(res.trop.Sun, res.trop.Moon) : null;
 
   const HOUSE_DESC = [
-    "Your identity, body, and how you present yourself to the world. Planets here strongly shape your personality.",
-    "Your money, possessions, and self-worth. Planets here affect how you earn and what you value.",
-    "Communication, siblings, short trips, and daily learning. Planets here shape how you speak and think.",
-    "Home, family, roots, and emotional foundation. Planets here influence your private life and sense of belonging.",
-    "Creativity, romance, children, and pleasure. Planets here amplify your joy and self-expression.",
-    "Daily routines, health, and service. Planets here affect your work habits and physical wellbeing.",
-    "Partnerships, marriage, and one-on-one relationships. Planets here shape who you attract and how you relate.",
-    "Shared resources, deep bonds, transformation, and endings. Planets here bring intensity to intimacy and change.",
-    "Higher education, philosophy, travel, and beliefs. Planets here expand your worldview and sense of meaning.",
-    "Career, reputation, authority, and public life. Planets here drive your ambitions and legacy.",
-    "Friends, groups, hopes, and humanitarian causes. Planets here shape your social life and vision for the future.",
-    "Solitude, spirituality, hidden strengths, and the unconscious. Planets here deepen your inner life and intuition.",
+    "The ground of the body and of the manner of appearing. Hellenistic sources name it the Horoskopos, the hour-marker, and count the other eleven places from it.",
+    "The field of substance and movable goods. Hellenistic sources name it the Gate of Hades and read it as the means of living rather than the living itself.",
+    "The field of siblings, neighbours, short journeys and ordinary exchange. Hellenistic sources name it Goddess, and the doctrine of joys places the Moon here.",
+    "The angle beneath the earth: ancestry, land, the household, and the end of the matter. Hellenistic sources name it the Hypogeion.",
+    "The field of children, play, and what is made for its own sake. The doctrine of joys places Venus here.",
+    "The field of labour, illness, servitude and daily regimen. Older sources count it among the difficult places and give Mars his joy in it; modern practice recasts the same ground as work and health.",
+    "The ground of the one-to-one relation: marriage, partnership, and the declared opponent. Its cusp is the Descendant.",
+    "The field of death, inheritance, and what is held jointly with another. Its subject matter is what passes between parties rather than what is owned outright.",
+    "The field of the long journey, doctrine, divination and foreign ground. The doctrine of joys places the Sun here.",
+    "The angle at the top of the chart: rank, office, reputation and public action. Its cusp is the Midheaven.",
+    "The field of allies, patrons, associations and hope. The doctrine of joys places Jupiter here.",
+    "The field of confinement, enmity, and what operates out of sight. The doctrine of joys places Saturn here; modern psychological practice reads the same ground as the unconscious.",
   ];
 
   // Per-combination readings live in the data layer (one entry per planet × house
   // pair, written distinctly). Fallback to a planet-only line for planets not
   // included in PLANET_IN_HOUSE (Node, Lilith, Chiron).
   const PIH_FALLBACK = {
-    Node:   "your soul's growth direction points through this area — leaning into it feels unfamiliar but right",
-    Lilith: "your untamed shadow power sits here — this area exposes what you refuse to suppress or domesticate",
-    Chiron: "your deepest wound lives here — healing it becomes your greatest gift to others",
+    Node:   "The mean North Node falls in this house. It is a computed crossing of the Moon's path with the ecliptic rather than a body, and medieval Western sources named it caput draconis, the dragon's head.",
+    Lilith: "Black Moon Lilith falls in this house. It is the mean lunar apogee, a calculated point with nothing visible at it, and which of the four Liliths is meant has to be settled before the placement is read.",
+    Chiron: "Chiron falls in this house. It was identified in 1977, so every attribution made to it is modern and none of it is traditional.",
   };
   const pihText = (planet, houseNum) =>
-    PLANET_IN_HOUSE[planet]?.[houseNum] || PIH_FALLBACK[planet] || "active in this area of your life";
+    PLANET_IN_HOUSE[planet]?.[houseNum] || PIH_FALLBACK[planet] || "No record stands for this body in the house layer.";
   const pisText = (planet, sign) =>
     PLANET_IN_SIGN[planet]?.[sign] || null;
 
@@ -131,12 +131,12 @@ export default function NatalTab({ ctx }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
-        <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Your Natal Chart — A Snapshot of the Sky at Your Birth</div>
+        <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>The Natal Chart — the Sky at the Moment Named</div>
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-          At the moment you were born, every planet occupied a specific position in the zodiac. This page shows that snapshot. The <strong>planet table</strong> lists where each planet was, in both Western (Tropical) and Vedic (Sidereal) systems. The <strong>wheel</strong> is a visual map — the outer ring shows zodiac signs, inner lines divide 12 life areas called "houses," and planet symbols sit where they actually were.
+          At the moment entered, every body held a definite position in the zodiac. This page states those positions and the conventions used to divide them. The <strong>planet table</strong> gives each body in the tropical (Western) and sidereal (Vedic) frames, which are separated by the ayanamsa and so rarely name the same sign. The <strong>wheel</strong> is the same data drawn: the outer ring is the zodiac, the inner divisions are the twelve houses, and each glyph sits at its computed longitude.
         </p>
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
-          <strong>How to read it:</strong> Each planet represents a part of your psyche — ☉ Sun is your core identity, ☽ Moon is your emotions, ☿ Mercury is how you think, ♀ Venus is how you love, ♂ Mars is your drive. The sign a planet is in colors how that part of you expresses. The house it falls in shows which life area it activates.
+          <strong>How it is read:</strong> each body carries a field of signification — ☉ the Sun light, rank and honour; ☽ the Moon the changing and the nocturnal; ☿ Mercury exchange and speech; ♀ Venus attraction and value; ♂ Mars division and force. The sign colours the temper in which that field operates; the house names the subject matter it operates on. Sources disagree over how much weight sign carries against house, and SGE does not resolve the disagreement.
         </p>
       </Card>
 
@@ -154,15 +154,15 @@ export default function NatalTab({ ctx }) {
               </div>
             </div>
             <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.6, color: M3.onSurface, margin: "0 0 10px" }}>
-              {strong >= 4 ? `The sky is highly active for you today with ${strong} strong transits out of ${total}. Expect noticeable shifts — this is a distinct chapter of motion.` 
-               : strong >= 2 ? `You have ${strong} strong transits active today out of ${total} connections. Your personalized theme is currently shaping this momentum.` 
+              {strong >= 4 ? `${strong} of ${total} current contacts fall within a tight orb. A count is not a significance: the number found is a function of the orb policy in use.` 
+               : strong >= 2 ? `${strong} of ${total} current contacts fall within a tight orb. Widening the orb would add more; narrowing it would remove these.` 
                : total > 0 ? `Transits are relatively gentle today with ${total} connections. This is a good day to integrate rather than force rapid change.` 
-               : "Today is quiet transit-wise — a good window for rest, reflection, and grounding in your natal strengths."}
+               : "Few contacts fall within a tight orb for this date. That is a statement about the orb policy and the current positions, not about the day."}
             </p>
             <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: M3.secondary, cursor: "pointer", display: "inline-block", background: M3.primary+"1a", padding: "4px 12px", borderRadius: 16 }} onClick={() => {
               // Simulating a tab switch by clicking the "Today" tab button, which would be ideal, but for now we just show text.
               window.scrollTo({ top: 0, behavior: "smooth" });
-              document.querySelector("button") && setTimeout(() => alert("Navigate to 'Today' tab for the full breakdown."), 10);
+              // The Today tab carries the full transit breakdown.
             }}>
               → VIEW FULL DAILY FORECAST
             </div>
@@ -188,7 +188,7 @@ export default function NatalTab({ ctx }) {
             </div>
           </div>
           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.66rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: 0 }}>
-            The chart ruler steers the overall direction of your life. Its sign and house show the style and area where your life's energy naturally flows.
+            The chart ruler is the traditional ruler of the rising sign. Hellenistic practice treats it as the significator of the chart as a whole; its own sign and house placement are read as qualifying that office.
           </p>
         </Card>
 
@@ -205,14 +205,14 @@ export default function NatalTab({ ctx }) {
               </div>
             </div>
             <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.66rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: 0 }}>
-              {phase.name === "New Moon" ? "Born under a New Moon — you are an initiator, instinctively starting new cycles and projects. Your emotional and conscious drives merge, giving you focused but subjective energy."
-              : phase.name === "Waxing Crescent" ? "Born under a Waxing Crescent — you carry a pioneering spirit, pushing forward despite uncertainty. There is a natural assertiveness to your emotional nature."
-              : phase.name === "First Quarter" ? "Born under a First Quarter Moon — you are a builder who thrives on challenge. Tension between instinct and will drives you to take decisive action."
-              : phase.name === "Waxing Gibbous" ? "Born under a Waxing Gibbous Moon — you are a refiner and perfectionist. You sense what is almost complete and work tirelessly to polish it."
-              : phase.name === "Full Moon" ? "Born under a Full Moon — you experience life through relationships and polarity. Your emotions are vivid, your awareness is broad, and objectivity is your gift."
-              : phase.name === "Waning Gibbous" ? "Born under a Waning Gibbous (Disseminating) Moon — you are a natural teacher and communicator. You distill experience into wisdom and share it."
-              : phase.name === "Last Quarter" ? "Born under a Last Quarter Moon — you are drawn to re-evaluate, release, and reform. An inner tension drives you to question systems and clear the old."
-              : "Born under a Waning Crescent (Balsamic) Moon — you carry deep intuition and karmic sensitivity. Endings and closure feel natural; you sense what must be released."}
+              {phase.name === "New Moon" ? "The Sun and Moon stand in conjunction: the two lights at the same longitude, the Moon unlit from Earth. The tradition reads the conjunction as the start of the lunation cycle."
+              : phase.name === "Waxing Crescent" ? "The Moon has separated from the Sun and is gaining light. The tradition places this phase between the conjunction and the first square."
+              : phase.name === "First Quarter" ? "The Moon stands square the Sun, waxing: a 90-degree separation with light increasing. The classical reading of the square is friction between the two lights."
+              : phase.name === "Waxing Gibbous" ? "The Moon is more than half lit and still gaining, approaching the opposition."
+              : phase.name === "Full Moon" ? "The Sun and Moon stand in opposition: 180 degrees apart, the Moon fully lit. The tradition reads the opposition as the point of maximum separation between the two lights."
+              : phase.name === "Waning Gibbous" ? "The Moon has passed the opposition and is losing light, still more than half lit. Older texts call this the disseminating phase."
+              : phase.name === "Last Quarter" ? "The Moon stands square the Sun, waning: a 90-degree separation with light decreasing."
+              : "The Moon is a thin waning crescent approaching conjunction, the balsamic phase in modern terminology. It closes the lunation cycle."}
             </p>
           </Card>
         )}
@@ -240,7 +240,7 @@ export default function NatalTab({ ctx }) {
           <PlanetTable positions={res.trop} siderealPositions={res.sid} jd={res.jd} />
         </Card>
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          <Card title="⊙ Your Birth Chart">
+          <Card title="⊙ Natal Positions">
             <div style={{ display: "flex", justifyContent: "center" }}>
               <WheelWithTooltip positions={res.trop} houses={res.houses} size={340} id="natal" theme="western" />
             </div>
@@ -279,7 +279,7 @@ export default function NatalTab({ ctx }) {
               </table>
             </div>
           </Card>
-          <Card title="⌂ Life Areas (Houses) — Where Things Happen For You">
+          <Card title="⌂ Life Areas (Houses) — The Twelve Fields">
             <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
               Houses are life domains — each one governs a specific area. The sign on the house sets the style; planets inside bring activity and focus to that area.
             </p>

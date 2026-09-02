@@ -141,19 +141,19 @@ function OverviewSub({ ctx, c }) {
           </div>
           <div style={{ fontSize:13.5, color:M3.onSurface, lineHeight:1.7 }}>
             <p style={{ margin:"4px 0 12px" }}>
-              <strong style={{ color:M3.primary }}>{moonNakInfo.name}</strong> — your <em>Janma Nakshatra</em>.
+              <strong style={{ color:M3.primary }}>{moonNakInfo.name}</strong> — the <em>Janma Nakshatra</em>, the mansion the Moon occupies in this chart.
               {" "}{moonNakInfo.nature}
             </p>
             <p style={{ margin:"4px 0 12px" }}>
-              <strong style={{ color:M3.primary }}>Spirit-animal (Yoni)</strong>: {moonNakInfo.yoni} ({moonNakInfo.yoniSex}).
-              Each nakshatra carries an animal symbology used in Vedic compatibility (Yoni Kuta).
+              <strong style={{ color:M3.primary }}>Yoni (animal attribution)</strong>: {moonNakInfo.yoni} ({moonNakInfo.yoniSex}).
+              Each nakshatra carries an animal attribution, used in the Vedic compatibility scheme (Yoni Kuta).
             </p>
             <p style={{ margin:"4px 0 12px" }}>
               <strong style={{ color:M3.primary }}>Dasha lord at birth</strong>: {P_SYM[moonNakInfo.lord]} {moonNakInfo.lord}.
-              You start life in the {moonNakInfo.lord} Mahadasha period — {DASHA_THEME[moonNakInfo.lord]?.theme.toLowerCase()}
+              The Vimshottari sequence opens on the {moonNakInfo.lord} Mahadasha — {DASHA_THEME[moonNakInfo.lord]?.theme.toLowerCase()}
             </p>
             <p style={{ margin:"4px 0", color:M3.onSurfaceVariant, fontSize:12.5 }}>
-              The wheel above is a <strong>South Indian style chart</strong> — fixed sign positions, planets placed in the cell of the rashi they occupy. Your Lagna (Ascendant) is highlighted.
+              The wheel above is a <strong>South Indian style chart</strong> — fixed sign positions, bodies placed in the cell of the rashi they occupy. The Lagna (Ascendant) is highlighted. Every position here is sidereal and therefore rests on the ayanamsa; SGE computes a linear approximation of Lahiri, so a body lying near a boundary may be reported on the wrong side of it.
             </p>
           </div>
         </div>
@@ -161,7 +161,7 @@ function OverviewSub({ ctx, c }) {
 
       <Card title="ℹ Vedic in one paragraph">
         <p style={{ color:M3.onSurface, lineHeight:1.7, fontSize:13.5, margin:0 }}>
-          Vedic (Jyotish) reads the sky from the <strong>sidereal zodiac</strong> — anchored to the stars rather than the seasons. It centres the <strong>Moon</strong> rather than the Sun for identity. It works through <strong>9 planets</strong> (Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, plus Rahu & Ketu — the lunar nodes), <strong>12 houses (Bhavas)</strong>, <strong>27 lunar mansions (Nakshatras)</strong>, and a <strong>120-year planetary timing system (Vimshottari Dasha)</strong>. Each sub-tab above goes deeper.
+          Vedic practice (Jyotish) reads the sky from the <strong>sidereal zodiac</strong> — anchored to the fixed stars rather than to the seasons, and separated from the tropical frame by the ayanamsa. Where Hellenistic and modern Western practice centre the Sun, Jyotish centres the <strong>Moon</strong>. It works through <strong>9 grahas</strong> (Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, plus Rahu &amp; Ketu — the lunar nodes), <strong>12 houses (Bhavas)</strong>, <strong>27 lunar mansions (Nakshatras)</strong>, and a <strong>120-year timing scheme (Vimshottari Dasha)</strong>. SGE computes the ayanamsa as a linear approximation of Lahiri (Chitrapaksha); Raman, Krishnamurti and Fagan-Bradley fix the sidereal zero point elsewhere, and every figure in this tab moves with that choice. Each sub-tab above goes further into one layer.
         </p>
       </Card>
     </div>
@@ -229,7 +229,7 @@ function GrahasSub({ ctx, c }) {
           ))}
         </div>
         <p style={{ fontSize:12, color:M3.onSurfaceVariant, marginTop:14, lineHeight:1.6 }}>
-          Each planet is the natural <em>karaka</em> (significator) of certain life themes — these meanings layer onto whichever house/sign the planet occupies in your chart.
+          Each graha is the natural <em>karaka</em> (significator) of certain themes in the tradition. Classical method layers those significations onto the rashi and bhava the graha occupies; where the two sets of significations pull apart, the sources leave the reading open rather than ruling one out.
         </p>
       </Card>
     </div>
@@ -259,7 +259,7 @@ function BhavasSub({ ctx, c }) {
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
       <Card title="🏛 Bhavas — The 12 Houses">
         <p style={{ fontSize:12.5, color:M3.onSurfaceVariant, lineHeight:1.6, marginBottom:12 }}>
-          Each Bhava is one whole rashi starting from your Lagna ({RASHI_NAMES[ascRashi]}). Special groupings: <strong style={{ color:"#7dd3fc" }}>Kendra</strong> (1/4/7/10 — angular, structural strength), <strong style={{ color:"#9ccc65" }}>Trikona</strong> (1/5/9 — fortune, dharma), <strong style={{ color:"#ef5350" }}>Trika</strong> (6/8/12 — difficult/transformative), <strong style={{ color:"#ffb74d" }}>Upachaya</strong> (3/6/10/11 — grow with time).
+          Each Bhava is one whole rashi counted from the Lagna ({RASHI_NAMES[ascRashi]}) — whole-sign houses, the Vedic default, so no cusp falls inside a sign here. The classical groupings: <strong style={{ color:"#7dd3fc" }}>Kendra</strong> (1/4/7/10 — the angles, read for structural strength), <strong style={{ color:"#9ccc65" }}>Trikona</strong> (1/5/9 — dharma and fortune), <strong style={{ color:"#ef5350" }}>Trika</strong> (6/8/12 — the houses named as difficult, and read by some schools as the houses of transformation), <strong style={{ color:"#ffb74d" }}>Upachaya</strong> (3/6/10/11 — the houses the tradition holds to strengthen over time).
         </p>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(min(100%, 280px), 1fr))", gap:10 }}>
           {BHAVA_INFO.map(b => {
@@ -304,8 +304,8 @@ function NakshatrasSub({ ctx, c }) {
 
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-      <NakshatraDeepCard ctx={ctx} title={`☽ Janma Nakshatra — ${moonNakInfo.name}`} subtitle="The Moon's nakshatra — the central Vedic identifier." nak={moonNak} info={moonNakInfo} />
-      <NakshatraDeepCard ctx={ctx} title={`↑ Lagna Nakshatra — ${ascNakInfo.name}`} subtitle="The rising nakshatra — your physical/instinctive imprint." nak={ascNak} info={ascNakInfo} />
+      <NakshatraDeepCard ctx={ctx} title={`☽ Janma Nakshatra — ${moonNakInfo.name}`} subtitle="The mansion the Moon occupies — the first thing Jyotish reads, and the anchor of the whole Vimshottari sequence." nak={moonNak} info={moonNakInfo} />
+      <NakshatraDeepCard ctx={ctx} title={`↑ Lagna Nakshatra — ${ascNakInfo.name}`} subtitle="The mansion rising at the Ascendant degree — attributed in the tradition to body and instinct rather than to mind. It depends on the birth time in a way the Moon's mansion does not." nak={ascNak} info={ascNakInfo} />
 
       <Card title="🌌 All Bodies — Nakshatra Map">
         <div style={{ overflowX:"auto" }}>
@@ -344,7 +344,7 @@ function NakshatrasSub({ ctx, c }) {
 
       <Card title="ℹ How nakshatras work">
         <p style={{ color:M3.onSurface, lineHeight:1.7, fontSize:13.5, margin:0 }}>
-          The sidereal zodiac is divided into <strong>27 nakshatras</strong> of 13°20' each. Each is ruled by one of 9 planets, has a presiding deity, a symbol, a <em>gana</em> (temperament: Deva/divine, Manushya/human, Rakshasa/fierce), and a <em>yoni</em> (sacred animal). The <strong>yoni</strong> system pairs the 27 nakshatras with 14 animals — used in Vedic compatibility (Yoni Kuta) to test instinctive resonance between people. Each nakshatra is further split into <strong>4 padas</strong> of 3°20' which add finer flavour (Aries/Taurus/Gemini/Cancer-like, repeating).
+          The sidereal zodiac is divided into <strong>27 nakshatras</strong> of 13°20' each. Each carries one of the 9 Vimshottari lords, a presiding deity, a symbol, a <em>gana</em> (temperament: Deva/divine, Manushya/human, Rakshasa/fierce), and a <em>yoni</em> (animal). The <strong>yoni</strong> scheme pairs the 27 mansions with 14 animals, and is used in the Vedic compatibility calculation (Yoni Kuta). Each nakshatra divides further into <strong>4 padas</strong> of 3°20', which the tradition colours in a repeating Aries/Taurus/Gemini/Cancer order. Note where the arithmetic meets the ephemeris: a pada is 3°20' wide and a mansion boundary falls every 13°20', while the sidereal longitude behind both rests on an ayanamsa SGE computes as a linear approximation of Lahiri — so a body sitting within a few arcminutes of a boundary may be reported in the neighbouring mansion or pada.
         </p>
       </Card>
     </div>
@@ -393,21 +393,21 @@ function VargasSub({ ctx, c }) {
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
       <Card title="◇ Divisional Charts (Vargas)">
         <p style={{ fontSize:13, color:M3.onSurfaceVariant, lineHeight:1.65, marginBottom:14 }}>
-          Vedic divides each sign into smaller arcs to produce <strong>divisional charts (vargas)</strong> — each one zooms in on a life-area. The two most important are D1 (the main Rashi chart) and <strong>D9 Navamsa</strong> (marriage, spiritual path, hidden potential). A planet's strength is read across the vargas combined.
+          Vedic practice divides each sign into smaller equal arcs to produce <strong>divisional charts (vargas)</strong>, and the tradition assigns each division its own domain. The two most consulted are D1, the Rashi chart, and <strong>D9, the Navamsa</strong> — the ninefold division, attributed to marriage, to dharma and to what stands behind the visible chart. Classical method weighs a graha across several vargas together rather than from D1 alone.
         </p>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(min(100%, 320px), 1fr))", gap:20 }}>
           <div>
             <div style={{ fontSize:11, fontWeight:700, letterSpacing:".12em", textTransform:"uppercase", color:M3.onSurfaceVariant, marginBottom:10 }}>D1 — Rashi Chart</div>
             <SouthIndianChart positions={sid} ascSidereal={ascSid} size={340} title="Rashi (D1)" theme={chartTheme} />
             <p style={{ fontSize:12.5, color:M3.onSurfaceVariant, marginTop:10, lineHeight:1.6 }}>
-              The birth chart. Body / appearance / general life, sign-by-sign.
+              The birth chart itself, sign by sign. The tradition assigns it body, circumstance and the general condition of a life.
             </p>
           </div>
           <div>
             <div style={{ fontSize:11, fontWeight:700, letterSpacing:".12em", textTransform:"uppercase", color:M3.onSurfaceVariant, marginBottom:10 }}>D9 — Navamsa</div>
             <SouthIndianChart positions={d9Positions} ascSidereal={ascD9} size={340} title="Navamsa (D9)" theme={chartTheme} />
             <p style={{ fontSize:12.5, color:M3.onSurfaceVariant, marginTop:10, lineHeight:1.6 }}>
-              Marriage, spiritual dharma, the hidden chart. A planet weak in D1 but strong in D9 ripens later in life.
+              The ninefold division, 3°20' to a segment. Marriage, dharma, and what the sources call the sustaining ground of the chart. Where D1 and D9 place a graha differently the classical reading holds both rather than letting either overrule. A segment this narrow is sensitive to the ayanamsa and to positional error alike: near a boundary, this build cannot settle which side a graha falls on.
             </p>
           </div>
         </div>
@@ -442,7 +442,7 @@ function DashaSub({ ctx, c }) {
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
       <Card title="⏳ Vimshottari Dasha — 120-Year Planetary Cycle">
         <p style={{ fontSize:13, color:M3.onSurfaceVariant, lineHeight:1.6, marginBottom:14 }}>
-          Anchored to your Moon's nakshatra at birth. The 9 planets cycle through the 120-year span in a fixed sequence. Each major period (Mahadasha) is sub-divided into Antardashas, and those again into Pratyantars — three nested levels show what's active right now.
+          The sequence is keyed to the nakshatra of the Moon at birth: that mansion fixes which lord holds the first period and how far through it the birth falls. The 9 lords then run the 120-year span in a fixed order. Each major period (Mahadasha) subdivides into Antardashas, and those again into Pratyantars, in the same proportions. The three boxes below name the periods standing at the present moment. Because the anchor is a sidereal longitude, the whole sequence inherits the ayanamsa — and a Moon near a mansion boundary would shift every period after it.
         </p>
 
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(min(100%, 240px), 1fr))", gap:12 }}>
@@ -520,7 +520,7 @@ function YogasSub({ ctx, c }) {
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
       <Card title={`⚡ Detected Yogas (${yogas.length})`}>
         <p style={{ fontSize:12.5, color:M3.onSurfaceVariant, lineHeight:1.6, marginBottom:14 }}>
-          Yogas are special planetary combinations that intensify particular life outcomes. Below are the ones detected in your chart. Many more exist — this is the curated essentials.
+          A yoga is a named combination of placements that the classical texts single out and attach a specific significance to. Listed below are the ones this build detects in this chart. The corpus names hundreds; what follows is a curated set, and the detection tests reduced conditions rather than the full classical criteria — so an absent yoga is a statement about the code, not about the chart.
         </p>
         {yogas.length === 0
           ? <div style={{ padding:16, textAlign:"center", color:M3.onSurfaceVariant, fontStyle:"italic" }}>None of the curated yogas detected in this chart.</div>
@@ -546,7 +546,7 @@ function YogasSub({ ctx, c }) {
 
       <Card title={`⚠ Detected Doshas (${doshas.length})`}>
         <p style={{ fontSize:12.5, color:M3.onSurfaceVariant, lineHeight:1.6, marginBottom:14 }}>
-          Doshas are afflictions — places where the chart asks for skillful navigation. Most have classical cancellations or remedies. Their detection is a starting point, not a verdict.
+          A dosha is a placement the classical texts mark as afflicted. Most are paired in the sources with a cancellation (bhanga) and with remedial measures, so a detection opens a question rather than settling one, and the conditions tested here are reduced rather than complete. Sade Sati is absent by construction: the technique reads transiting Saturn against the natal Moon, and only natal Saturn is available to this build, so nothing on that count is being tested at all.
         </p>
         {doshas.length === 0
           ? <div style={{ padding:16, textAlign:"center", color:M3.onSurfaceVariant, fontStyle:"italic" }}>None of the curated doshas detected in this chart.</div>
