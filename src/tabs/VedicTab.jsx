@@ -153,7 +153,7 @@ function OverviewSub({ ctx, c }) {
               The Vimshottari sequence opens on the {moonNakInfo.lord} Mahadasha — {DASHA_THEME[moonNakInfo.lord]?.theme.toLowerCase()}
             </p>
             <p style={{ margin:"4px 0", color:M3.onSurfaceVariant, fontSize:12.5 }}>
-              The wheel above is a <strong>South Indian style chart</strong> — fixed sign positions, bodies placed in the cell of the rashi they occupy. The Lagna (Ascendant) is highlighted. Every position here is sidereal and therefore rests on the ayanamsa; SGE computes a linear approximation of Lahiri, so a body lying near a boundary may be reported on the wrong side of it.
+              The wheel above is a <strong>South Indian style chart</strong> — fixed sign positions, bodies placed in the cell of the rashi they occupy.
             </p>
           </div>
         </div>
@@ -161,7 +161,7 @@ function OverviewSub({ ctx, c }) {
 
       <Card title="ℹ Vedic in one paragraph">
         <p style={{ color:M3.onSurface, lineHeight:1.7, fontSize:13.5, margin:0 }}>
-          Vedic practice (Jyotish) reads the sky from the <strong>sidereal zodiac</strong> — anchored to the fixed stars rather than to the seasons, and separated from the tropical frame by the ayanamsa. Where Hellenistic and modern Western practice centre the Sun, Jyotish centres the <strong>Moon</strong>. It works through <strong>9 grahas</strong> (Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, plus Rahu &amp; Ketu — the lunar nodes), <strong>12 houses (Bhavas)</strong>, <strong>27 lunar mansions (Nakshatras)</strong>, and a <strong>120-year timing scheme (Vimshottari Dasha)</strong>. SGE computes the ayanamsa as a linear approximation of Lahiri (Chitrapaksha); Raman, Krishnamurti and Fagan-Bradley fix the sidereal zero point elsewhere, and every figure in this tab moves with that choice. Each sub-tab above goes further into one layer.
+          Vedic practice (Jyotish) reads the sky from the <strong>sidereal zodiac</strong> — anchored to the fixed stars rather than to the seasons, and separated from the tropical frame by the ayanamsa.
         </p>
       </Card>
     </div>
@@ -229,7 +229,7 @@ function GrahasSub({ ctx, c }) {
           ))}
         </div>
         <p style={{ fontSize:12, color:M3.onSurfaceVariant, marginTop:14, lineHeight:1.6 }}>
-          Each graha is the natural <em>karaka</em> (significator) of certain themes in the tradition. Classical method layers those significations onto the rashi and bhava the graha occupies; where the two sets of significations pull apart, the sources leave the reading open rather than ruling one out.
+          Each graha is the natural <em>karaka</em> (significator) of certain themes in the tradition.
         </p>
       </Card>
     </div>
@@ -393,7 +393,7 @@ function VargasSub({ ctx, c }) {
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
       <Card title="◇ Divisional Charts (Vargas)">
         <p style={{ fontSize:13, color:M3.onSurfaceVariant, lineHeight:1.65, marginBottom:14 }}>
-          Vedic practice divides each sign into smaller equal arcs to produce <strong>divisional charts (vargas)</strong>, and the tradition assigns each division its own domain. The two most consulted are D1, the Rashi chart, and <strong>D9, the Navamsa</strong> — the ninefold division, attributed to marriage, to dharma and to what stands behind the visible chart. Classical method weighs a graha across several vargas together rather than from D1 alone.
+          Vedic practice divides each sign into smaller equal arcs to produce <strong>divisional charts (vargas)</strong>, and the tradition assigns each division its own domain.
         </p>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(min(100%, 320px), 1fr))", gap:20 }}>
           <div>
@@ -442,7 +442,7 @@ function DashaSub({ ctx, c }) {
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
       <Card title="⏳ Vimshottari Dasha — 120-Year Planetary Cycle">
         <p style={{ fontSize:13, color:M3.onSurfaceVariant, lineHeight:1.6, marginBottom:14 }}>
-          The sequence is keyed to the nakshatra of the Moon at birth: that mansion fixes which lord holds the first period and how far through it the birth falls. The 9 lords then run the 120-year span in a fixed order. Each major period (Mahadasha) subdivides into Antardashas, and those again into Pratyantars, in the same proportions. The three boxes below name the periods standing at the present moment. Because the anchor is a sidereal longitude, the whole sequence inherits the ayanamsa — and a Moon near a mansion boundary would shift every period after it.
+          The sequence is keyed to the nakshatra of the Moon at birth: that mansion fixes which lord holds the first period and how far through it the birth falls.
         </p>
 
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(min(100%, 240px), 1fr))", gap:12 }}>
@@ -520,7 +520,7 @@ function YogasSub({ ctx, c }) {
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
       <Card title={`⚡ Detected Yogas (${yogas.length})`}>
         <p style={{ fontSize:12.5, color:M3.onSurfaceVariant, lineHeight:1.6, marginBottom:14 }}>
-          A yoga is a named combination of placements that the classical texts single out and attach a specific significance to. Listed below are the ones this build detects in this chart. The corpus names hundreds; what follows is a curated set, and the detection tests reduced conditions rather than the full classical criteria — so an absent yoga is a statement about the code, not about the chart.
+          A yoga is a named combination of placements that the classical texts single out and attach a specific significance to.
         </p>
         {yogas.length === 0
           ? <div style={{ padding:16, textAlign:"center", color:M3.onSurfaceVariant, fontStyle:"italic" }}>None of the curated yogas detected in this chart.</div>
@@ -546,7 +546,7 @@ function YogasSub({ ctx, c }) {
 
       <Card title={`⚠ Detected Doshas (${doshas.length})`}>
         <p style={{ fontSize:12.5, color:M3.onSurfaceVariant, lineHeight:1.6, marginBottom:14 }}>
-          A dosha is a placement the classical texts mark as afflicted. Most are paired in the sources with a cancellation (bhanga) and with remedial measures, so a detection opens a question rather than settling one, and the conditions tested here are reduced rather than complete. Sade Sati is absent by construction: the technique reads transiting Saturn against the natal Moon, and only natal Saturn is available to this build, so nothing on that count is being tested at all.
+          A dosha is a placement the classical texts mark as afflicted.
         </p>
         {doshas.length === 0
           ? <div style={{ padding:16, textAlign:"center", color:M3.onSurfaceVariant, fontStyle:"italic" }}>None of the curated doshas detected in this chart.</div>

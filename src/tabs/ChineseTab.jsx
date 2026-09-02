@@ -16,11 +16,11 @@ export default function ChineseTab({ ctx }) {
   const ext = CHINESE_ZODIAC_EXTENDED?.[res.cn.animal] || null;
 
   const elBal = {
-    Wood:  { balanced:"Wood in balance is described as extension that keeps its root: growth against resistance, a boundary that bends without breaking, and anger that moves into work rather than settling.", imbalanced:"Wood in excess or deficit is described as movement blocked rather than absent — rigidity where there was flexibility, control where there was direction, and frustration that does not discharge.", cultivate:"Medical tradition assigns Wood the liver and gall bladder, wind as its climate and anger as its emotion, and places its regulation in movement and in the release of what is held. Water generates Wood; Metal cuts it." },
-    Fire:  { balanced:"Fire in balance is described as warmth that spreads without consuming its fuel — brightness, contact, and the quickening of whatever it reaches.", imbalanced:"Fire in excess or deficit is described in two directions: flaring, scattered and restless when it runs high, and dimmed, joyless and cold when it runs low.", cultivate:"Medical tradition assigns Fire the heart and small intestine, heat as its climate and joy as its emotion. Wood generates Fire; Water overcomes it, so the regulating relation is with what cools rather than with what fans." },
-    Earth: { balanced:"Earth in balance is described as the steady centre — nourishment given and received, and the turning point that holds between the other four phases.", imbalanced:"Earth in excess or deficit is described as circling thought that never settles into action, and as giving that runs further than what is taken in.", cultivate:"Medical tradition assigns Earth the spleen and stomach, damp as its climate and pensiveness as its emotion. Fire generates Earth; Wood parts it. Its regulation is placed in food, in ground, and in what is worked by hand." },
-    Metal: { balanced:"Metal in balance is described as clean division — what is kept set apart from what is released, and grief carried through to its end rather than held.", imbalanced:"Metal in excess or deficit is described as an edge turned inward: exactness hardening into perfectionism, and release hardening into coldness.", cultivate:"Medical tradition assigns Metal the lungs and large intestine, dryness as its climate and grief as its emotion. Earth generates Metal; Fire melts it. Its regulation is placed in breath, in ritual, and in the completed act of mourning." },
-    Water: { balanced:"Water in balance is described as depth that still moves — reserve held in store, adaptation to the shape of the vessel, and a courage that comes from knowing the ground.", imbalanced:"Water in excess or deficit is described as fear that fixes rather than warns: withdrawal, stillness gone frozen, and reserve drawn down past its store.", cultivate:"Medical tradition assigns Water the kidneys and bladder, cold as its climate and fear as its emotion. Metal generates Water; Earth banks it. Its regulation is placed in rest, in stillness, and in the conserving of what has been stored." },
+    Wood:  { balanced:"extension that keeps its root", imbalanced:"rigidity · frustration" },
+    Fire:  { balanced:"warmth without consuming its fuel", imbalanced:"agitation · exhaustion" },
+    Earth: { balanced:"the steady centre", imbalanced:"worry · stagnation" },
+    Metal: { balanced:"clean division", imbalanced:"rigidity · grief" },
+    Water: { balanced:"depth that still moves", imbalanced:"fear · withdrawal" },
   };
   const eb = elBal[res.cn.element];
 
@@ -470,7 +470,7 @@ export default function ChineseTab({ ctx }) {
       {cnSubTab==="generals" && (<>
         <Card title="十二神將 Twelve Heavenly Generals">
           <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 14px" }}>
-            In East Asian Buddhism, the Twelve Heavenly Generals (Yaksha) are protective deities of Bhaiṣajyaguru, the Medicine Buddha. Each is traditionally linked to one of the twelve zodiac branches.
+            In East Asian Buddhism, the Twelve Heavenly Generals (Yaksha) are protective deities of Bhaiṣajyaguru, the Medicine Buddha.
           </p>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))", gap:8 }}>
             {(TWELVE_HEAVENLY_GENERALS||[]).map((g,i)=>{

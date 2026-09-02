@@ -70,7 +70,7 @@ export default function WheelTab({ ctx }) {
       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline, padding: "14px 18px" }}>
         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 6 }}>Interactive Wheels - Circular Maps of This Chart</div>
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>
-          Each wheel is a circular map of one frame. Astrology wheels plot the longitudes of the bodies; calendar wheels plot the segments of a native cycle. Calendar modes carry a normalised overlay marker so that systems can be laid alongside one another without replacing the reckoning each one uses. The frames do not agree, and the disagreement is the instrument, not a fault in it.
+          Each wheel is a circular map of one frame.
         </p>
       </Card>
       <div style={{ display: "flex", gap: 6, flexWrap: "wrap", justifyContent: "center" }}>
@@ -103,7 +103,7 @@ export default function WheelTab({ ctx }) {
       {wheelMode === "western" && (
         <Card title="☉ Western Birth Chart - Tropical Zodiac">
           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-            The tropical zodiac is measured from the seasons - 0° Aries stands at the March equinox. It is the standard frame in Western practice. AC (Ascendant) sits at the <strong>left</strong>, the degree rising over the eastern horizon; MC (Midheaven) sits near the <strong>top</strong>, where the meridian crosses the ecliptic above. Both angles depend on the recorded birth time: four minutes of clock error moves the Ascendant by roughly one degree. Hovering a symbol names the position beneath it.
+            The tropical zodiac is measured from the seasons - 0° Aries stands at the March equinox.
           </p>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <WheelWithTooltip positions={res.trop} houses={res.houses} size={Math.min(560, window.innerWidth - 64)} id="full" theme="western" />
@@ -138,7 +138,7 @@ export default function WheelTab({ ctx }) {
         (res.srPos ? (
           <Card title="↩ Solar Return Chart - The Sun Back at Natal Longitude">
             <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-              The solar return chart is cast for the exact moment the Sun regains the longitude it held at birth - near a birthday, though rarely on it to the hour. That the Sun returns is astronomy; that the chart drawn for the instant governs the year following is an interpretive convention, and the two claims are separate. The houses shift with the place the chart is cast for, and practitioners divide over birthplace against current location.
+              The solar return chart is cast for the exact moment the Sun regains the longitude it held at birth - near a birthday, though rarely on it to the hour.
             </p>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <WheelWithTooltip positions={res.srPos} houses={res.houses} size={Math.min(560, window.innerWidth - 64)} id="srwheel" theme="solar" />
@@ -168,7 +168,7 @@ export default function WheelTab({ ctx }) {
       {wheelMode === "transit_now" && (
         <Card title="⟳ Transit Sky Wheel - Planets Right Now">
           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-            This wheel plots the planetary positions for the current date. Concentration zones and conjunction clusters are visible directly; the natal wheel in the other modes uses the same projection, so the two can be compared by eye.
+            This wheel plots the planetary positions for the current date.
           </p>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <WheelWithTooltip positions={res.trPos} size={Math.min(560, window.innerWidth - 64)} id="transit_wheel_mode" theme="transit" />
@@ -179,7 +179,7 @@ export default function WheelTab({ ctx }) {
       {wheelMode === "chinese" && (
         <Card title={`☯ Chinese Zodiac Wheel - ${res.cn.element} ${res.cn.animal}`}>
           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-            The Chinese zodiac is a 12-year cycle of animals, each paired with one of five elements and a Yin/Yang polarity. The position for this chart is highlighted below. Note that the cycle year begins at the lunar new year, not on 1 January.
+            The Chinese zodiac is a 12-year cycle of animals, each paired with one of five elements and a Yin/Yang polarity.
           </p>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <ChineseWheelWithTooltip cn={res.cn} size={Math.min(500, window.innerWidth - 64)} />

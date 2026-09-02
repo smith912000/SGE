@@ -1,4 +1,5 @@
 import { getPlanetSymbolism } from '../symbolism/planetSymbolism.js';
+import { terse } from '../symbolism/terse.js';
 
 export const P_SYM = { Sun: "☉", Moon: "☽", Mercury: "☿", Venus: "♀", Mars: "♂", Jupiter: "♃", Saturn: "♄", Uranus: "⛢", Neptune: "♆", Pluto: "♇", Chiron: "⚷", Node: "☊", Lilith: "⚸" };
 export const P_COL = {
@@ -128,7 +129,7 @@ export const PLANET_INFO = Object.fromEntries(
     const rec = getPlanetSymbolism(body);
     return [body, {
       ...meta,
-      plain: rec ? rec.plain : "",
+      plain: rec ? terse(rec) : "",
       detail: rec ? rec.reading : "",
       principle: rec ? rec.principle : "",
       record: rec || null,

@@ -26,14 +26,14 @@ export default function NumerologyTab({ ctx }) {
           <DepthControl depth={depth} onChange={setDepth} compact />
         </div>
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.7, color:M3.onSurface, margin:0 }}>
-          Numerology assigns numbers to a date and to the letters of a name, sums them, and reduces the total to a single figure. Two letter maps are computed here and they do not agree: <strong>Pythagorean</strong> runs A to I onto 1 to 9 and then repeats that run twice, so A, J and S all give 1; <strong>Chaldean</strong>, the older Babylonian-derived map, assigns irregularly and gives no letter the value 9. The same name therefore reduces differently under the two, and neither map was ever reconciled with the other. A figure reported without its method is an unread figure, so the method is named beside each total below. The panels also carry a Hebrew gematria reckoning of a typed name and the arithmetic sequences the birth day-of-year falls on. The depth control sets how much of each record is shown.
+          Numerology assigns numbers to a date and to the letters of a name, sums them, and reduces the total to a single figure.
         </p>
       </Card>
 
       {/* ── Core Numbers ── */}
       <Card title="Core Numbers — Each Figure and Its Derivation">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 14px" }}>
-          Eight figures stand below. Each is drawn from a different part of the record — the whole date, the day alone, every letter, the vowels alone, the consonants alone — and the derivation is what fixes what the figure is a figure of. An M marks a total held as a master number rather than reduced further.
+          Eight figures stand below.
         </p>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(140px,1fr))", gap:10 }}>
           {[
@@ -104,7 +104,7 @@ export default function NumerologyTab({ ctx }) {
       {hasName && (
       <Card title="Name Letter Breakdown — Pythagorean & Chaldean Values">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
-          Each letter is assigned a number. The vowels (highlighted) total to the Soul Urge, the consonants to the Personality, and the whole name to the Expression. Pythagorean and Chaldean assign letters different values, so the same name yields different totals under the two — the method has to be named for any of these to mean anything. This table uses the Pythagorean assignment.
+          Each letter is assigned a number.
         </p>
         <div style={{ display:"flex", flexWrap:"wrap", gap:4, marginBottom:12 }}>
           {nuData.letterBreakdown.map((l,i)=>(
@@ -131,7 +131,7 @@ export default function NumerologyTab({ ctx }) {
       {hasName && nuData.missingNums.length > 0 && (
       <Card title="Karmic Lessons — Numbers Absent From the Name">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
-          Numbers that do not appear among the letter values of the name. The tradition marks these as absent rather than deficient, and reads them as the numbers the name does not supply.
+          Numbers that do not appear among the letter values of the name.
         </p>
         <div style={{ display:"flex", flexWrap:"wrap", gap:8 }}>
           {nuData.missingNums.map(n=>(
@@ -147,7 +147,7 @@ export default function NumerologyTab({ ctx }) {
       {/* ── Pinnacles & Challenges ── */}
       <Card title="Life Pinnacles & Challenges — The Four Periods">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 12px" }}>
-          The scheme divides a life into four periods, each carrying a <strong>pinnacle</strong> number and a <strong>challenge</strong> number derived arithmetically from the birth date. The boundaries between periods are set by subtracting the Life Path number from 36, a convention that varies between sources.
+          The scheme divides a life into four periods, each carrying a <strong>pinnacle</strong> number and a <strong>challenge</strong> number derived arithmetically from the birth date.
         </p>
         <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
           {["First (youth)","Second (early adult)","Third (maturity)","Fourth (wisdom)"].map((phase,i)=>(
@@ -171,7 +171,7 @@ export default function NumerologyTab({ ctx }) {
       {/* ── Hebrew Gematria Calculator ── */}
       <Card title="Hebrew Gematria Calculator — The Number in a Name">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 14px" }}>
-          Each Hebrew letter carries a numerical value. Type any name or word in English and it will be phonetically transliterated to Hebrew — digraphs like SH, CH, TH are handled as single Hebrew letters. Hebrew may also be typed directly. Medial vowels are dimmed since Hebrew is primarily consonantal.
+          Each Hebrew letter carries a numerical value.
         </p>
         <input type="text" value={gemaName} onChange={e=>setGemaName(e.target.value)}
           placeholder="English name, Hebrew (אברהם), or phrase..."
@@ -228,7 +228,7 @@ export default function NumerologyTab({ ctx }) {
                 )}
                 {!g.isHebrew && !g.hasKnown && (
                   <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.68rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"8px 0 0", fontStyle:"italic", textAlign:"center" }}>
-                    Phonetic approximation — Hebrew is consonantal, so medial vowels are omitted from the primary value. Digraphs (SH, CH, TH) are mapped to single Hebrew letters. For known Biblical/traditional names, the established spelling is used automatically.
+                    Phonetic approximation — Hebrew is consonantal, so medial vowels are omitted from the primary value.
                   </p>
                 )}
               </div>
@@ -333,7 +333,7 @@ export default function NumerologyTab({ ctx }) {
       {/* ── Birth Day Number Sequences ── */}
       <Card title="Birth Day Number Sequences — Mathematical Resonance">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 12px" }}>
-          The birth day-of-year is checked against a set of mathematical sequences. An active sequence means the day number holds that property. The property is arithmetic; the significance attached to it is an interpretive convention.
+          The birth day-of-year is checked against a set of mathematical sequences.
         </p>
         <div style={{ display:"flex", flexWrap:"wrap", gap:6, justifyContent:"center" }}>
           {nuData.daySeqs.map(s=>(

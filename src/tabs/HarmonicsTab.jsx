@@ -47,10 +47,10 @@ export default function HarmonicsTab({ ctx }) {
       <Card style={{ background:`linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor:M3.outline }}>
         <div style={{ fontFamily:"Cinzel,serif", fontSize:"1rem", color:M3.primary, marginBottom:8 }}>What dividing the circle by n does</div>
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
-          The nth harmonic multiplies every longitude by n and reduces the result modulo 360. Bodies separated by 360/n degrees therefore land together: in the 4th harmonic every square and opposition becomes a conjunction, in the 5th the 72-degree family appears, in the 7th the 51.4-degree family. The technique converts a search for one family of aspects into a search for proximity. The method comes from the harmonic work of John Addey in the twentieth century.
+          The nth harmonic multiplies every longitude by n and reduces the result modulo 360.
         </p>
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.65, color:M3.onSurface, marginTop:8 }}>
-          <strong>Reading the result:</strong> Clusters are bodies grouped in the same sign or conjunct (☜) after the transformation. A caution that matters: multiplying position multiplies positional error with it. In the 7th harmonic an error of half a degree becomes three and a half degrees, so at high n a conjunction may be an artefact of the arithmetic rather than a feature of the chart. This build computes from the in-browser series, whose accuracy is set out under How the techniques work.
+          <strong>Reading the result:</strong> Clusters are bodies grouped in the same sign or conjunct (☜) after the transformation.
         </p>
       </Card>
 

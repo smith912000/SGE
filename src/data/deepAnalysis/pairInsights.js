@@ -3,6 +3,7 @@
 
 import { P_ROLE } from '../astrology/planets.js';
 import { getPairSymbolism } from '../symbolism/pairSymbolism.js';
+import { terse } from '../symbolism/terse.js';
 
 const BODIES = Object.keys(P_ROLE);
 
@@ -13,8 +14,8 @@ for (let i = 0; i < BODIES.length; i++) {
     const b = BODIES[j];
     const rec = getPairSymbolism(a, b);
     if (!rec) continue;
-    entries.push([`${P_ROLE[a]}+${P_ROLE[b]}`, rec.plain]);
-    entries.push([`${P_ROLE[b]}+${P_ROLE[a]}`, rec.plain]);
+    entries.push([`${P_ROLE[a]}+${P_ROLE[b]}`, terse(rec)]);
+    entries.push([`${P_ROLE[b]}+${P_ROLE[a]}`, terse(rec)]);
   }
 }
 

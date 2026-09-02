@@ -3,6 +3,7 @@ import DepthControl from '../components/ui/DepthControl.jsx';
 import { useDepth } from '../store/depthStore.js';
 import { getPlanetInSign } from '../data/symbolism/planetInSign.js';
 import { getSignSymbolism } from '../data/symbolism/signSymbolism.js';
+import { terse } from '../data/symbolism/terse.js';
 export default function DeepTab({ ctx }) {
   const {
     M3,
@@ -59,7 +60,7 @@ export default function DeepTab({ ctx }) {
     <Card style={{ background:`linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor:M3.outline }}>
       <div style={{ fontFamily:"Cinzel,serif", fontSize:"1rem", color:M3.primary, marginBottom:8 }}>Deep Reading — the chart taken factor by factor</div>
       <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
-        This page names each major factor in this chart and what the traditions have attributed to it: the <strong>Sun</strong> by sign, the <strong>Moon</strong> by sign, the <strong>sign rising</strong> at the eastern horizon, and each of the personal and social planets in turn. Below those sit the elemental and modal counts, the aspect figures with their orbs, three harmonic layers, and the Chinese year set alongside the Western figure. A count is a count: the orb policy that produced it is a convention of this instrument, and it is stated on the Education page rather than assumed here.
+        Core symbolism. The depth control adds the tradition behind it.
       </p>
     </Card>
 
@@ -75,9 +76,7 @@ export default function DeepTab({ ctx }) {
         </div>
       </div>
       <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.75, color:M3.onSurface, margin:0 }}>{SOLAR_DEEP[sunSign].plain}</p>
-      {SOLAR_DEEP[sunSign].shadow && (
-        <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.7, color:M3.onSurfaceVariant, margin:"10px 0 0" }}>{SOLAR_DEEP[sunSign].shadow}</p>
-      )}
+      
     </Card>
 
     <Card title="🌙 The Moon by Sign">
@@ -92,9 +91,7 @@ export default function DeepTab({ ctx }) {
         </div>
       </div>
       <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.75, color:M3.onSurface, margin:0 }}>{LUNAR_DEEP[moonSign].plain}</p>
-      {LUNAR_DEEP[moonSign].shadow && (
-        <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.7, color:M3.onSurfaceVariant, margin:"10px 0 0" }}>{LUNAR_DEEP[moonSign].shadow}</p>
-      )}
+      
     </Card>
 
     <Card title="🌅 The Ascendant — the sign rising at the horizon">
@@ -109,15 +106,13 @@ export default function DeepTab({ ctx }) {
         </div>
       </div>
       <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.75, color:M3.onSurface, margin:0 }}>
-        The ascendant is the degree of the ecliptic rising at the eastern horizon for the time and place of this chart. With <strong style={{color:SIGN_COL[ascSign]}}>{ascSign}</strong> rising, the sign of the ascendant is {ascSign}, and its traditional ruler becomes the ruler of the chart as a whole. {getSignSymbolism(ascSign)?.reading || ""}
+        The degree rising at the eastern horizon. Its sign rules the figure.
       </p>
       {RISING_SHADOW[ascSign] && (
         <div style={{ marginTop:14, padding:"12px 16px", borderRadius:10, background:"#ff525208", border:"1px solid #ff525218" }}>
-          <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.64rem", color:"#ff8a50", letterSpacing:"0.1em", marginBottom:6 }}>ATTRIBUTED TO THIS SIGN</div>
+          <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.64rem", color:"#ff8a50", letterSpacing:"0.1em", marginBottom:6 }}>ATTRIBUTED</div>
           <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>{RISING_SHADOW[ascSign].shadow}</p>
           <div style={{ marginTop:10, padding:"10px 14px", borderRadius:8, background:"#69ff8e08", border:"1px solid #69ff8e18" }}>
-            <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", color:"#69ff8e", letterSpacing:"0.1em", marginBottom:4 }}>GROWTH SIGNAL</div>
-            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>{RISING_SHADOW[ascSign].growth}</p>
           </div>
         </div>
       )}
@@ -134,18 +129,16 @@ export default function DeepTab({ ctx }) {
             <span style={{ color:SIGN_COL[venSign], fontFamily:"'Share Tech Mono',monospace", fontWeight:"700" }}>Venus in {venSign}</span>
           </div>
           <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
-            {getPlanetInSign("Venus", venSign)?.reading || SI[venSign].plain}
+            {terse(getPlanetInSign("Venus", venSign)) || terse(getSignSymbolism(venSign))}
           </p>
           {VENUS_SHADOW[venSign] && (
             <div style={{ marginTop:10, padding:"10px 14px", borderRadius:8, background:"#ff525208", border:"1px solid #ff525218" }}>
-              <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color:"#ff8a50", letterSpacing:"0.1em", marginBottom:4 }}>ATTRIBUTED TO THIS PLACEMENT</div>
+              <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color:"#ff8a50", letterSpacing:"0.1em", marginBottom:4 }}>ATTRIBUTED</div>
               <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.74rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{VENUS_SHADOW[venSign].shadow}</p>
             </div>
           )}
           {VENUS_SHADOW[venSign] && (
             <div style={{ marginTop:6, padding:"8px 14px", borderRadius:8, background:"#69ff8e08", border:"1px solid #69ff8e18" }}>
-              <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color:"#69ff8e", letterSpacing:"0.1em", marginBottom:4 }}>GROWTH SIGNAL</div>
-              <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.5, color:M3.onSurface, margin:0 }}>{VENUS_SHADOW[venSign].growth}</p>
             </div>
           )}
         </Card>
@@ -155,18 +148,16 @@ export default function DeepTab({ ctx }) {
             <span style={{ color:SIGN_COL[marSign], fontFamily:"'Share Tech Mono',monospace", fontWeight:"700" }}>Mars in {marSign}</span>
           </div>
           <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
-            {getPlanetInSign("Mars", marSign)?.reading || SI[marSign].plain}
+            {terse(getPlanetInSign("Mars", marSign)) || terse(getSignSymbolism(marSign))}
           </p>
           {MARS_SHADOW[marSign] && (
             <div style={{ marginTop:10, padding:"10px 14px", borderRadius:8, background:"#ff525208", border:"1px solid #ff525218" }}>
-              <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color:"#ff8a50", letterSpacing:"0.1em", marginBottom:4 }}>SHADOW IN CONFLICT</div>
+              <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color:"#ff8a50", letterSpacing:"0.1em", marginBottom:4 }}>ATTRIBUTED</div>
               <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.74rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{MARS_SHADOW[marSign].shadow}</p>
             </div>
           )}
           {MARS_SHADOW[marSign] && (
             <div style={{ marginTop:6, padding:"8px 14px", borderRadius:8, background:"#69ff8e08", border:"1px solid #69ff8e18" }}>
-              <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color:"#69ff8e", letterSpacing:"0.1em", marginBottom:4 }}>GROWTH SIGNAL</div>
-              <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.5, color:M3.onSurface, margin:0 }}>{MARS_SHADOW[marSign].growth}</p>
             </div>
           )}
         </Card>
@@ -184,7 +175,7 @@ export default function DeepTab({ ctx }) {
           <span style={{ color:SIGN_COL[merSign], fontFamily:"'Share Tech Mono',monospace", fontWeight:"700" }}>Mercury in {merSign}</span>
         </div>
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.8rem", lineHeight:1.7, color:M3.onSurface, margin:0 }}>
-          {getPlanetInSign("Mercury", merSign)?.reading || SI[merSign].plain}
+          {terse(getPlanetInSign("Mercury", merSign)) || terse(getSignSymbolism(merSign))}
         </p>
         {MERCURY_SHADOW[merSign] && (
           <div style={{ marginTop:12, padding:"10px 14px", borderRadius:8, background:"#ff525208", border:"1px solid #ff525218" }}>
@@ -194,8 +185,6 @@ export default function DeepTab({ ctx }) {
         )}
         {MERCURY_SHADOW[merSign] && (
           <div style={{ marginTop:6, padding:"8px 14px", borderRadius:8, background:"#69ff8e08", border:"1px solid #69ff8e18" }}>
-            <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", color:"#69ff8e", letterSpacing:"0.1em", marginBottom:4 }}>GROWTH SIGNAL</div>
-            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.74rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{MERCURY_SHADOW[merSign].growth}</p>
           </div>
         )}
       </Card>
@@ -299,7 +288,7 @@ export default function DeepTab({ ctx }) {
 
     <Card title="∞ Harmonic Layers">
       <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 14px" }}>
-        The nth harmonic multiplies every longitude by n and reduces the result modulo 360, so bodies separated by 360/n degrees land together. Each harmonic below therefore makes one family of separations visible as conjunctions. Note that the transform multiplies positional error along with position.
+        The nth harmonic multiplies every longitude by n and reduces the result modulo 360, so bodies separated by 360/n degrees land together.
       </p>
       {[
         { n:5, title:"Creativity & Art (5th Harmonic)", col:"#64b5f6", desc:"The quintile family, 72°. Kepler argued for these divisions on harmonic grounds; they are not part of the Ptolemaic set." },
@@ -510,7 +499,7 @@ export default function DeepTab({ ctx }) {
           return (
             <div>
               <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.79rem", lineHeight:1.68, color:M3.onSurfaceVariant, margin:"0 0 16px" }}>
-                The placements the tradition weights most heavily in a natal figure, gathered in one place. Each is stated with what has been attributed to it; none of it is a statement about a person.
+                The placements the tradition weights most heavily in a natal figure, gathered in one place.
               </p>
               <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))", gap:18 }}>
                 {rows.map((r,i)=>(

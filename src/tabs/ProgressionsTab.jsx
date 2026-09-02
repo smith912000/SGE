@@ -28,7 +28,7 @@ export default function ProgressionsTab({ ctx }) {
               A symbolic timing method rather than an observation. One day of ephemeris time after a birth is read as standing for one year of life: <strong style={{ color: M3.primary }}>one day after birth = one year of life</strong>. The positions below are therefore those of the sky {age} days after the birth moment, read for the {age}th year. Nothing in the present sky corresponds to them.
             </p>
             <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-              The progressed Moon crosses a sign about every two and a half years and completes the circle in roughly twenty-seven, which supplies most of the movement in the technique. The progressed Sun advances close to a degree a year and crosses a sign roughly every thirty.
+              The progressed Moon crosses a sign about every two and a half years and completes the circle in roughly twenty-seven, which supplies most of the movement in the technique.
             </p>
           </div>
           <svg width="160" height="160" viewBox="0 0 160 160" style={{ flexShrink: 0 }}>

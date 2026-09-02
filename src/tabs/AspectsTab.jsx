@@ -20,7 +20,7 @@ export default function AspectsTab({ ctx }) {
       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>What are aspects?</div>
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: "0 0 16px" }}>
-          Aspects are the angles between planets measured around the zodiac circle. Where two bodies stand a stated number of degrees apart, the tradition treats the pair as related and reads the two significations together. The Tetrabiblos takes the conjunction, sextile, square, trine and opposition as the core set; the minor angles were admitted later. The musical analogy is old - concordant and discordant intervals - and it is an analogy rather than a mechanism.
+          Angles between bodies, counted when the separation falls inside the orb in use.
         </p>
         {(() => {
           const gSz = Math.min(400, window.innerWidth - 80);
@@ -106,7 +106,7 @@ export default function AspectsTab({ ctx }) {
 
       <Card title={`⚹ Aspect Web - ${res.aspects.length} connections at the orbs in use`}>
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-          This wheel draws the <strong>angular relations between the bodies in this chart</strong>. Line weight and brightness track closeness to the exact angle. Aspect symbols mark the tightest links. Hover any line for the pair, the angle and the orb.
+          The angular relations between the bodies. Line weight tracks tightness of orb.
         </p>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <WheelWithTooltip positions={res.trop} houses={res.houses} size={Math.min(520, window.innerWidth - 64)} id="aspw" mode="aspects" theme="western" />

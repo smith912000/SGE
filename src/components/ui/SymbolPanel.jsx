@@ -1,4 +1,5 @@
 import { M3 } from '../../theme/m3.js';
+import { terseList } from '../../data/symbolism/terse.js';
 
 // Renders one symbolic record at the requested depth.
 //
@@ -135,17 +136,20 @@ function Prompts({ items }) {
 export default function SymbolPanel({ record, depth = 0, heading, glyph, style = {} }) {
   if (!record) return null;
 
+  // Depth 0 is the core symbolism only: short noun phrases, nothing explained.
+  const core = terseList(record);
+
   const body =
     depth >= 2
       ? record.principle || record.reading || record.plain
       : depth === 1
         ? record.reading || record.plain
-        : record.plain;
+        : null;
 
   return (
     <div style={{ ...style }}>
       {(heading || glyph) && (
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 9, marginBottom: 7 }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 9, marginBottom: 6 }}>
           {glyph && (
             <span style={{ fontSize: '1.05rem', color: M3.primary, lineHeight: 1 }}>{glyph}</span>
           )}
@@ -164,14 +168,28 @@ export default function SymbolPanel({ record, depth = 0, heading, glyph, style =
         </div>
       )}
 
-      {body && <p style={prose}>{body}</p>}
+      {core.length > 0 && (
+        <div
+          style={{
+            fontFamily: M3.fontBody,
+            fontSize: '0.82rem',
+            lineHeight: 1.5,
+            color: M3.onSurface,
+          }}
+        >
+          {core.join('  ·  ')}
+        </div>
+      )}
 
-      {depth >= 1 && <Chips label="Energies" items={record.energies} colour={M3.primary} />}
+      {depth === 0 && depth >= 1 && null}
+
+      {body && <p style={{ ...prose, marginTop: 10 }}>{body}</p>}
+
       {depth >= 1 && <Chips label="Tensions" items={record.tensions} colour={M3.error} />}
       {depth >= 2 && <Chips label="Correspondences" items={record.correspondences} colour={M3.tertiary} />}
       {depth >= 2 && <Attributions items={record.attributions} />}
       {depth >= 2 && <Contested items={record.contested} />}
-      {depth >= 1 && <Prompts items={record.prompts} />}
+      {depth >= 2 && <Prompts items={record.prompts} />}
     </div>
   );
 }

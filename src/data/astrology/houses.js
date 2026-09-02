@@ -2,6 +2,7 @@
 // See docs/VOICE.md.
 
 import { getHouseSymbolism } from '../symbolism/houseSymbolism.js';
+import { terse } from '../symbolism/terse.js';
 
 const HOUSE_LABEL = [
   { n: 1,  name: "1st House — Self",           emoji: "👤" },
@@ -22,7 +23,7 @@ export const HOUSE_INFO = HOUSE_LABEL.map((h) => {
   const rec = getHouseSymbolism(h.n);
   return {
     ...h,
-    plain: rec ? rec.plain : "",
+    plain: rec ? terse(rec) : "",
     detail: rec ? rec.reading : "",
     principle: rec ? rec.principle : "",
     record: rec || null,

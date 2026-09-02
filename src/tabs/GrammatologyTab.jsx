@@ -427,7 +427,7 @@ export default function GrammatologyTab({ ctx }) {
       {gramTab==="ogham" && (
       <Card title="᚛ᚑᚌᚐᚋ᚜ Ogham — The Celtic Tree Alphabet">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 12px" }}>
-          Ogham is an Early Medieval alphabet primarily used to write Primitive and Old Irish. Letters are grouped into four <em>aicmí</em> (families) of five, plus the <em>forfeda</em> (additional letters). Each letter is named after a tree or plant, carrying symbolic meaning. Ogham is read <strong>bottom to top</strong> on stone inscriptions, with strokes cut along a central stem-line.
+          Ogham is an Early Medieval alphabet primarily used to write Primitive and Old Irish.
         </p>
         {["Beithe","hÚatha","Muine","Ailme","Forfeda"].map(aicme=>(
           <div key={aicme} style={{ marginBottom:14 }}>
@@ -453,7 +453,7 @@ export default function GrammatologyTab({ ctx }) {
       {gramTab==="tarot" && (
       <Card title="🃏 Tarot · Hebrew · Chinese · Zodiac Correspondences">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 12px" }}>
-          Each of the 22 Major Arcana maps to one of the 22 Hebrew letters, and through them to Chinese ideograms. The zodiac signs also carry cross-cultural correspondences with Chinese constellation animals.
+          Each of the 22 Major Arcana maps to one of the 22 Hebrew letters, and through them to Chinese ideograms.
         </p>
         <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem", color:M3.secondary, marginBottom:8 }}>MAJOR ARCANA — HEBREW — CHINESE</div>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(200px,1fr))", gap:6 }}>
@@ -664,7 +664,7 @@ export default function GrammatologyTab({ ctx }) {
       {gramTab==="ipa" && (
       <Card title="[ipa] International Phonetic Alphabet — Quick Reference">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 12px" }}>
-          The IPA is the universal system for representing the sounds of human speech. Many ancient letter values (like Hebrew Chet = [χ], or Ayin = [ʕ]) can only be precisely described using IPA symbols. This reference covers the key symbols used in the grammatological analysis here.
+          The IPA is the universal system for representing the sounds of human speech.
         </p>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))", gap:8 }}>
           {IPA_QUICK.map((p,i)=>(

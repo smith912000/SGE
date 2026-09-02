@@ -224,6 +224,7 @@ for (const name of TABS) {
     continue;
   }
 
+  if (process.env.SMOKE_DUMP === name) console.log(String.fromCharCode(10) + "===== " + name + " =====" + String.fromCharCode(10) + text);
   checked++;
   console.log(`✓ ${name.padEnd(18)} ${String(text.length).padStart(6)} chars rendered, voice clean`);
 }

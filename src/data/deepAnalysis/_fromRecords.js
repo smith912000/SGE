@@ -6,12 +6,13 @@
 import { SIGNS } from '../astrology/signs.js';
 import { getPlanetInSign } from '../symbolism/planetInSign.js';
 import { getSignSymbolism } from '../symbolism/signSymbolism.js';
+import { terse } from '../symbolism/terse.js';
 
 function pack(rec) {
   return {
-    shadow: rec ? rec.reading : "",
-    growth: rec ? rec.principle : "",
-    plain: rec ? rec.plain : "",
+    shadow: rec ? terse(rec) : "",
+    growth: rec ? "" : "",
+    plain: rec ? terse(rec) : "",
     record: rec || null,
   };
 }

@@ -25,7 +25,7 @@ export default function CalendarTab({ ctx }) {
       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1.1rem", color: M3.primary, marginBottom: 8 }}>The Sacred Sambraielic Calendar</div>
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.7, color: M3.onSurface, margin: "0 0 10px" }}>
-          This is a <strong>multi-layered sacred calendar</strong> that begins on the Winter Solstice (around December 22nd) and counts 365 days (366 in a leap year). Unlike the Gregorian calendar, which is administrative, this calendar is designed to reveal the <em>symbolic meaning of each day</em> by overlaying multiple ancient traditions onto a single timeline.
+          A multi-layered calendar beginning at the winter solstice. Each card below is one tradition laid over the date.
         </p>
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurfaceVariant, margin: 0 }}>
           <strong>How to read this page:</strong> Each card below shows a different "layer" of meaning for the selected date. Each is a separate tradition laid over the same date; they are not translations of one another. The <em>geometric markers</em> show where the day falls in the year's sacred geometry. The <em>symbolic cycles</em> show which ancient symbols (Chinese, Hebrew, Greek, Norse) are active. The <em>sacred names</em> show which divine names preside today. The <em>cross-cultural zodiacs</em> show the Ogham tree, Indigenous American totem, and Chinese solar animal assigned to the date. <em>Master Teacher</em> days (every 11th day) connect to the Qabbalah's 32 Paths of Wisdom. <em>Reflective Festivals</em> mark the end of each month with dedicated days for integration. The <em>number sequences</em> show whether the day number has special mathematical properties. Browse any date using the navigator below.
@@ -146,7 +146,7 @@ export default function CalendarTab({ ctx }) {
       {cd.egyptianSolar && (
         <Card title="The Ancient Egyptian Solar (Civil) Calendar" style={{ background: `linear-gradient(135deg,${M3.primaryContainer}22,${M3.surfaceContainer})`, borderColor: `${M3.primary}33` }}>
           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
-            The Ancient Egyptian year consisted of three seasons of 120 days each, plus an intercalary month of five epagomenal days. This solar calendar was the backbone of Egyptian agriculture and religious statehood, aligned with the stars and the rising of the Nile.
+            Three seasons of 120 days, plus five epagomenal days.
           </p>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
@@ -240,10 +240,10 @@ export default function CalendarTab({ ctx }) {
       {/* Geometric Markers Ring */}
       <Card title="Geometric Markers — Sacred Divisions of the Year">
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurfaceVariant, margin: "0 0 6px" }}>
-          Imagine dividing the 365-day year into equal segments using different shapes. Split in <strong>half</strong> (day 182/183), the division marks the Yin-Yang midpoint. Split in <strong>thirds</strong>, it marks the Triangle points. In <strong>quarters</strong> = the four seasons. In <strong>fifths</strong> = the Pentagram. And so on, all the way to <strong>21sts</strong>.
+          The year divided by 2, 3, 4 and so on. A marker is active when the day falls on a division point.
         </p>
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
-          When today falls exactly on one of these division points, that marker is "active" — the day sits at a geometrically significant moment in the year's cycle. Most days have no active markers; some rare days activate several at once.
+          Active markers sit on a division point of the year.
         </p>
         <svg viewBox="0 0 320 320" style={{ width: "100%", maxWidth: 320, margin: "0 auto", display: "block" }}>
           <circle cx={markerCx} cy={markerCy} r={markerRadius} fill="none" stroke={M3.outline} strokeWidth={1} />
@@ -283,7 +283,7 @@ export default function CalendarTab({ ctx }) {
       {/* Symbolic Cycles */}
       <Card title="Symbolic Cycles — The Day's Living Symbols">
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
-          Different ancient traditions divide the year into cycles and assign a symbol to each period. Below are the symbols active for this date from six traditions: Chinese divination (I Ching and Tai Xuan Jing), Hebrew mysticism (letter cycles), the Greek-Runic alphabet pairing, Norse runic half-months, and the Tarot's Major Arcana. Each gives a different lens on the day's energy.
+          Symbols assigned to periods of the year, by tradition.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
           {/* I Ching */}
@@ -303,7 +303,7 @@ export default function CalendarTab({ ctx }) {
             <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", color: M3.onSurface, textAlign: "center" }}>#{cyc.tetragram?.n} — {cyc.tetragram?.en}</div>
             <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.onSurfaceVariant, textAlign: "center" }}>{cyc.tetragram?.py}</div>
             <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.6rem", color: M3.onSurfaceVariant, marginTop: 6, fontStyle: "italic", lineHeight: 1.4 }}>
-              The Tai Xuan Jing (Canon of Supreme Mystery) is a lesser-known Chinese text with 81 tetragrams (four-line figures instead of six). It adds a third state beyond yin/yang — representing heaven, earth, and humanity. 81 symbols cycle through the year, offering a subtler reading than the I Ching.
+              81 tetragrams, each a four-line figure.
             </div>
           </div>
           {/* Hebrew 22-letter */}
@@ -313,7 +313,7 @@ export default function CalendarTab({ ctx }) {
             <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", color: M3.onSurface, textAlign: "center" }}>{cyc.hebrew22?.n1} → {cyc.hebrew22?.n2}</div>
             <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.onSurfaceVariant, textAlign: "center" }}>{cyc.hebrew22?.t1}</div>
             <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.6rem", color: M3.onSurfaceVariant, marginTop: 6, fontStyle: "italic", lineHeight: 1.4 }}>
-              The 22 Hebrew letters are mapped across the year so each pair governs ~16.6 days. Each letter corresponds to a Tarot Major Arcana card. Today transitions between these two letters and their associated archetypes. The arrow (→) shows the direction of the transition.
+              The 22 Hebrew letters mapped across the year, about 16.6 days each.
             </div>
           </div>
           {/* Hebrew 27 */}
@@ -323,7 +323,7 @@ export default function CalendarTab({ ctx }) {
             <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", color: M3.onSurface, textAlign: "center" }}>{cyc.hebrew27?.n}</div>
             <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.onSurfaceVariant, textAlign: "center" }}>Greek: {cyc.hebrew27?.g}</div>
             <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.6rem", color: M3.onSurfaceVariant, marginTop: 6, fontStyle: "italic", lineHeight: 1.4 }}>
-              Hebrew has 5 letters that change shape when they appear at the end of a word (the "final" forms). Including these gives 27 letters, which cycle every ~13.5 days. This finer cycle pairs with Greek letters, revealing cross-cultural symbolic links.
+              Five letters take a final form at the end of a word, giving 27 in total.
             </div>
           </div>
           {/* Hebrew 28 */}
@@ -360,7 +360,7 @@ export default function CalendarTab({ ctx }) {
               </div>
             )}
             <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.6rem", color: M3.onSurfaceVariant, marginTop: 6, fontStyle: "italic", lineHeight: 1.4 }}>
-              In Norse tradition, each of the 24 Elder Futhark runes governs about half a month (~15 days). The "shadow rune" is its polar opposite — the energy that challenges or balances it. The "Runic Hour" is the time of day (in a 24-hour cycle) when this rune's energy is at its strongest — each rune maps to one hour of the day, creating a daily micro-cycle within the half-month macro-cycle.
+              Each of the 24 Elder Futhark runes governs about half a month.
             </div>
           </div>
           {/* Major Arcana */}
@@ -379,7 +379,7 @@ export default function CalendarTab({ ctx }) {
       {cyc.monthDayTarot && (
         <Card title="Month-Day Tarot Narrative — The Story of Today">
           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
-            The month number and the day-of-month number sum to a pair of trumps. The pairing names what one card sets against the other. It is a symbolic convention attached to the date, not a prediction.
+            The month number and the day-of-month number sum to a pair of trumps.
           </p>
           <div style={{ padding: "12px 16px", borderRadius: 10, background: M3.primaryContainer + "22", border: `1px solid ${M3.primary}22` }}>
             <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", color: M3.onSurface, lineHeight: 1.7 }}>{cyc.monthDayTarot}</div>
@@ -390,7 +390,7 @@ export default function CalendarTab({ ctx }) {
       {/* Sacred Names */}
       <Card title="Sacred Names — Three Great Naming Traditions">
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
-          Multiple spiritual traditions teach that the divine has many names, each expressing a different quality of the sacred. Below are three such traditions, each cycling through the year so that a specific name "presides" over each span of days.
+          Divine names assigned to periods of the year, by tradition.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
           <div style={{ background: `linear-gradient(135deg,${M3.primaryContainer}44,${M3.surfaceDim})`, padding: "12px", borderRadius: 10, border: `1px solid ${M3.primary}33`, textAlign: "center" }}>
@@ -398,7 +398,7 @@ export default function CalendarTab({ ctx }) {
             <div style={{ fontSize: "1.8rem", direction: "rtl" }}>{cyc.name72?.heb}</div>
             <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", color: M3.onSurface }}>Name #{cyc.name72?.n} of 72</div>
             <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.58rem", color: M3.onSurfaceVariant, marginTop: 6, fontStyle: "italic", lineHeight: 1.4 }}>
-              From the Kabbalistic tradition: 72 three-letter combinations derived from Exodus 14:19-21. Each is treated as a vibrational quality of the divine that governs a ~5-day period.
+              From the Kabbalistic tradition: 72 three-letter combinations derived from Exodus 14:19-21.
             </div>
           </div>
           <div style={{ background: `linear-gradient(135deg,${M3.secondaryContainer}44,${M3.surfaceDim})`, padding: "12px", borderRadius: 10, border: `1px solid ${M3.secondary}33`, textAlign: "center" }}>
@@ -416,7 +416,7 @@ export default function CalendarTab({ ctx }) {
             <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: M3.onSurface }}>{cyc.path32?.west}</div>
             <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.onSurfaceVariant }}>"{cyc.path32?.intel}" Intelligence</div>
             <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.58rem", color: M3.onSurfaceVariant, marginTop: 6, fontStyle: "italic", lineHeight: 1.4 }}>
-              From the Qabbalah (Jewish mystical tradition): 32 paths connect the 10 spheres ("Sephiroth") on the Tree of Life. Each path has an "Intelligence" — a quality of consciousness. The path active today describes the type of wisdom available.
+              32 paths connecting the 10 sephiroth on the Tree of Life.
             </div>
           </div>
         </div>
@@ -502,7 +502,7 @@ export default function CalendarTab({ ctx }) {
       {/* Day Symbolism */}
       <Card title="Day Symbolism — What Does This Day-of-Month Mean?">
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
-          Each day-of-month number (1st through 32nd) carries a universal symbolic meaning tied to the Tarot's Major Arcana. This isn't fortune-telling — it's a meditative theme, like a "word of the day" drawn from centuries of symbolic tradition. The Hebrew letters shown are the pair from the Sefer Yetzirah (Book of Formation) associated with this day number.
+          Each day-of-month number is paired with a Major Arcanum.
         </p>
         {cd.dayMeaning ? (
           <div style={{ textAlign: "center", padding: "10px 0" }}>
@@ -531,7 +531,7 @@ export default function CalendarTab({ ctx }) {
       {/* Cross-Cultural Zodiac Systems */}
       <Card title="Cross-Cultural Zodiacs — Three Traditions, One Day">
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
-          Beyond the familiar Western zodiac, the calendar overlays two additional ancient systems onto the year. Each maps a different set of animal archetypes to the solar cycle, giving three parallel animal assignments for any given day. These are <em>solar</em> assignments (based on the day of the year), distinct from the Chinese <em>yearly</em> animal, which is assigned by birth year.
+          Two further animal systems mapped to the solar year, alongside the Western zodiac.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
           {/* Ogham / Celtic */}
@@ -561,7 +561,7 @@ export default function CalendarTab({ ctx }) {
               Plant: {cd.indigenous?.plant} · Stone: {cd.indigenous?.stone}
             </div>
             <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.58rem", color: M3.onSurfaceVariant, marginTop: 6, fontStyle: "italic", lineHeight: 1.4 }}>
-              This system draws from pan-Indigenous North American traditions, mapping 12 animal totems across the year. Each animal carries an element, a clan affiliation (Turtle=stability, Butterfly=transformation, Frog=emotion, Thunderbird=power), a healing plant, a stone, and a cardinal wind direction.
+              Twelve animal totems mapped across the year.
             </div>
           </div>
           {/* Chinese Solar */}
@@ -583,7 +583,7 @@ export default function CalendarTab({ ctx }) {
       {cd.masterTeacher && (
         <Card title="Day of the Master Teacher — 33-Day Sacred Cycle" style={{ background: `linear-gradient(135deg,${M3.tertiaryContainer}44,${M3.surfaceDim})`, borderColor: `${M3.tertiary}66` }}>
           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
-            Every 11th day (11, 22, 33... up to 365) is a "Master Teacher" day — a moment when the 33-day cycle aligns with the 32 Paths of Wisdom from the Qabbalah (the Tree of Life's connecting pathways). The 33rd occurrence at day 365 is known as "El" — the day of the divine name that crowns the year. These days are considered especially potent for spiritual study and inner work.
+            Every 11th day marks a Master Teacher day.
           </p>
           <div style={{ textAlign: "center", padding: "10px 0" }}>
             <div style={{ fontFamily: "Cinzel,serif", fontSize: "1.3rem", color: M3.tertiary }}>
@@ -609,7 +609,7 @@ export default function CalendarTab({ ctx }) {
       {cd.reflective && (
         <Card title={`${cd.reflective.name} — Reflective Festival`} style={{ background: `linear-gradient(135deg,${M3.primaryContainer}44,${M3.surfaceDim})`, borderColor: `${M3.primary}66` }}>
           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
-            Each month ends with a "Reflective Festival" whose length matches the month number: Month 1 gets 1 day of reflection (Monalia), Month 2 gets 2 days (Duallia), all the way to Month 12 which gets 12 days (Dodekalia). These final days of each month are devoted to looking back on the month's themes and integrating their lessons before the next cycle begins.
+            Each month closes with a reflective festival matching the month number in length.
           </p>
           <div style={{ textAlign: "center", padding: "8px 0" }}>
             <div style={{ fontFamily: "Cinzel,serif", fontSize: "1.2rem", color: M3.primary }}>{cd.reflective.name}</div>

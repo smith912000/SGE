@@ -2,6 +2,7 @@
 // See docs/VOICE.md.
 
 import { getAxisSymbolism } from '../symbolism/aspectSymbolism.js';
+import { terse } from '../symbolism/terse.js';
 
 const AXIS_LABEL = {
   AC: { title: "Ascendant (Rising Degree)", emoji: "🌅" },
@@ -15,7 +16,7 @@ export const AXIS_INFO = Object.fromEntries(
     const rec = getAxisSymbolism(k);
     return [k, {
       ...meta,
-      plain: rec ? rec.plain : "",
+      plain: rec ? terse(rec) : "",
       detail: rec ? rec.reading : "",
       principle: rec ? rec.principle : "",
       record: rec || null,

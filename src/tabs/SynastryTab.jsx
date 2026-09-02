@@ -48,7 +48,7 @@ export default function SynastryTab({ ctx }) {
       <Card style={{ background:`linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor:M3.outline }}>
         <div style={{ fontFamily:"Cinzel,serif", fontSize:"1rem", color:M3.primary, marginBottom:8 }}>Synastry — Contacts Between Two Charts</div>
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
-          Synastry lays one chart over the other and reports the contacts between them: which body of one chart stands at a named angle to which body of the other, and at what orb. <strong>Trines and sextiles</strong> are the soft contacts, <strong>squares and oppositions</strong> the hard ones. The counts below are counts, weighted by the orb policy in use — a wider orb produces more contacts. They are not a verdict about the two people, and no verdict is offered here.
+          Synastry lays one chart over the other and reports the contacts between them: which body of one chart stands at a named angle to which body of the other, and at what orb.
         </p>
       </Card>
 
@@ -186,7 +186,7 @@ export default function SynastryTab({ ctx }) {
         <>
           <Card title="★ The Composite Chart — Midpoints of the Two">
             <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 16px" }}>
-              The composite takes the <strong>midpoint</strong> of each paired body and builds a third chart from the results. It belongs to neither party and corresponds to no moment in the sky. Midpoints can be taken in more than one way, and the methods do not agree; the Davison chart is a different approach again, cast for the midpoint in time and space between the two births, which unlike the composite is an actual moment with a real sky.
+              The composite takes the <strong>midpoint</strong> of each paired body and builds a third chart from the results.
             </p>
             <div style={grid2}>
               <div style={{ display:"flex", justifyContent:"center", alignItems:"center" }}>

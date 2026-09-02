@@ -133,10 +133,10 @@ export default function NatalTab({ ctx }) {
       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>The Natal Chart — the Sky at the Moment Named</div>
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
-          At the moment entered, every body held a definite position in the zodiac. This page states those positions and the conventions used to divide them. The <strong>planet table</strong> gives each body in the tropical (Western) and sidereal (Vedic) frames, which are separated by the ayanamsa and so rarely name the same sign. The <strong>wheel</strong> is the same data drawn: the outer ring is the zodiac, the inner divisions are the twelve houses, and each glyph sits at its computed longitude.
+          At the moment entered, every body held a definite position in the zodiac.
         </p>
         <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
-          <strong>How it is read:</strong> each body carries a field of signification — ☉ the Sun light, rank and honour; ☽ the Moon the changing and the nocturnal; ☿ Mercury exchange and speech; ♀ Venus attraction and value; ♂ Mars division and force. The sign colours the temper in which that field operates; the house names the subject matter it operates on. Sources disagree over how much weight sign carries against house, and SGE does not resolve the disagreement.
+          <strong>How it is read:</strong> each body carries a field of signification — ☉ the Sun light, rank and honour; ☽ the Moon the changing and the nocturnal; ☿ Mercury exchange and speech; ♀ Venus attraction and value; ♂ Mars division and force.
         </p>
       </Card>
 
@@ -188,7 +188,7 @@ export default function NatalTab({ ctx }) {
             </div>
           </div>
           <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.66rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: 0 }}>
-            The chart ruler is the traditional ruler of the rising sign. Hellenistic practice treats it as the significator of the chart as a whole; its own sign and house placement are read as qualifying that office.
+            The chart ruler is the traditional ruler of the rising sign.
           </p>
         </Card>
 
