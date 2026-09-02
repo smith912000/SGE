@@ -104,9 +104,7 @@ const NatalTab = lazy(() => import('./tabs/NatalTab.jsx'));
 const EducationTab = lazy(() => import('./tabs/EducationTab.jsx'));
 const HarmonicsTab = lazy(() => import('./tabs/HarmonicsTab.jsx'));
 const NumerologyTab = lazy(() => import('./tabs/NumerologyTab.jsx'));
-const GrammatologyTab = lazy(() => import('./tabs/GrammatologyTab.jsx'));
 const DeepTab = lazy(() => import('./tabs/DeepTab.jsx'));
-const CalendarTab = lazy(() => import('./tabs/CalendarTab.jsx'));
 const TarotTab = lazy(() => import('./tabs/TarotTab.jsx'));
 const VedicTab = lazy(() => import('./tabs/VedicTab.jsx'));
 
@@ -326,9 +324,7 @@ export default function App() {
     { id: "chinese", label: "☯ Chinese Year" },
     { id: "vedic", label: "🪔 Vedic" },
     { id: "numerology", label: "🔢 Numerology" },
-    { id: "grammatology", label: "𐤀 Grammatology" },
     { id: "tarot", label: "🎴 Tarot Pull" },
-    { id: "calendar", label: "📅 Sacred Calendar" },
     { id: "education", label: "📖 How It Works" },
   ];
 
@@ -2482,24 +2478,7 @@ export default function App() {
                   </div>
                 )}
 
-                {tab === "grammatology" && (
-                  <ErrorBoundary>
-                    <GrammatologyTab
-                      ctx={{
-                        M3, gramTab, setGramTab, LETTER_DB, WRITING_SYSTEM_TYPES, EGYPTIAN_UNILITERALS,
-                        OGHAM_FULL, IPA_QUICK, DIGRAPH_MAP, ACROPHONY_SHIFTS, ZODIAC_CHINESE_MAP,
-                        CHINESE_ZODIAC_HEBREW, MUSICAL_SCALE_OCCULT, planetToLetter,
-                        grid2, cwInput, setCwInput, cwResult, setCwResult, analyzeWord,
-                        res, P_COL, P_SYM, SIGN_COL, SIGN_SYM, SIGN_INFO, EL_COL,
-                        gramScriptFilter, setGramScriptFilter, expandedLetter, setExpandedLetter,
-                        KANGXI_INFO, KANGXI_RADICALS, KANGXI_TOP_10_BY_FREQUENCY, KANGXI_MOST_USED, KANGXI_STANDALONE,
-                        SCRIPT_ATLAS, TWENTY_TWO_NOTE,
-                        Card,
-                      }}
-                    />
-                  </ErrorBoundary>
-                )}
-
+                
                 {false && tab === "numerology-old" && (() => {
                   const nuData = computeNumerology(A.year, A.month, A.day, A.name || "");
                   const hasName = nuData.letterBreakdown.length > 0;
@@ -2720,10 +2699,7 @@ export default function App() {
                   );
                 })()}
 
-                {tab === "calendar" && (
-                  <ErrorBoundary><CalendarTab ctx={{ M3, calDate, setCalDate, calHolFilter, setCalHolFilter, calShowMonth, setCalShowMonth, Card }} /></ErrorBoundary>
-                )}
-                {tab === "numerology" && (
+                                {tab === "numerology" && (
                   <ErrorBoundary><NumerologyTab ctx={{ M3, birthParts: A, res, Card }} /></ErrorBoundary>
                 )}
                 {tab === "education" && (

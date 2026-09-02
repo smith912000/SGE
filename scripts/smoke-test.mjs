@@ -22,10 +22,12 @@ const SECOND_PERSON =
 const FORECAST =
   /\b(this will bring|a good day to|this year brings|expect to|you should)\b/i;
 
+// GrammatologyTab and CalendarTab are retained in the tree but no longer
+// mounted by the app, so they are not part of the rendered surface.
 const TABS = [
   'WheelTab', 'AspectsTab', 'TodayTab', 'ProgressionsTab', 'SynastryTab',
   'ChineseTab', 'NatalTab', 'EducationTab', 'HarmonicsTab', 'NumerologyTab',
-  'GrammatologyTab', 'DeepTab', 'CalendarTab', 'TarotTab', 'VedicTab',
+  'DeepTab', 'TarotTab', 'VedicTab',
 ];
 
 // ── bundle the app for node ──────────────────────────────────────────────────

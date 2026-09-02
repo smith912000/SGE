@@ -84,3 +84,32 @@ The following are verified against the source and are not in doubt:
 Why sub-degree error matters here: navamsa divisions are 3°20′, nakshatra
 boundaries 13°20′, several dignities are degree-exact, and combustion orbs span
 only a few degrees.
+
+---
+
+## 3. Grammatology and Sacred Calendar removed from the app
+
+**Decided.** Neither tab is mounted any more. The app no longer surfaces
+grammatology or the Sacred Calendar.
+
+**Nothing is deleted.** The code and data are retained in full:
+
+| Retained | Path |
+|---|---|
+| Grammatology tab | `src/tabs/GrammatologyTab.jsx` |
+| Grammatology data | `src/data/grammatology/` — letterDb, hebrewMap, yetzirah, ogham, egyptian, ipa, digraphs, kangxiRadicals, scriptAtlas, writingSystems, correspondences, phonetics_data.json |
+| Sacred Calendar tab | `src/tabs/CalendarTab.jsx` |
+| Calendar data | `src/data/calendar/` — sambraielicWheel, subdivisions, symbolicCycles, sacredNames, lunarMansions, months, festivals, crossCultural, egyptianSolar, lunarEgyptian, cuspDays, interpretations, tarot |
+
+What was removed is the wiring only: the two entries in the tab list, the two
+lazy imports and the two render blocks in `src/App.jsx`. Remounting either tab
+is a matter of restoring those three things.
+
+Note that `src/data/calendar/tarot.js` is still used by the Tarot tab, and
+`src/engines/gematria.js` is still used by Numerology, so those paths remain
+live even though the Calendar and Grammatology tabs do not.
+
+`MANSION_CROSSWALK` is no longer surfaced anywhere, so the note about it has
+been dropped from the Education tab. The caveat still stands for the data
+itself: it pairs three 28-fold systems by ordinal index, and they do not divide
+the sky the same way.

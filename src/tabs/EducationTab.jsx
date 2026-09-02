@@ -1,11 +1,11 @@
 import DepthControl from '../components/ui/DepthControl.jsx';
 import { useDepth } from '../store/depthStore.js';
 
-// How the techniques work, and what they assume.
+// Method, not reading.
 //
-// This tab explains method. It does not interpret a chart and it does not
-// address the reader. Depth 0 is plain language; the technical detail sits
-// behind the depth control.
+// Each entry names what a technique does and what it assumes. Depth 0 is one
+// or two lines; the technical detail and the disputes sit behind the depth
+// control. Sections here track the tabs the app actually mounts.
 
 export default function EducationTab({ ctx }) {
   const { M3, Card } = ctx;
@@ -14,26 +14,26 @@ export default function EducationTab({ ctx }) {
   const prose = {
     fontFamily: "'EB Garamond', Georgia, serif",
     fontSize: '0.83rem',
-    lineHeight: 1.72,
+    lineHeight: 1.7,
     color: M3.onSurface,
-    margin: '0 0 10px',
+    margin: '0 0 8px',
   };
 
   const deeper = {
     ...prose,
-    fontSize: '0.79rem',
+    fontSize: '0.78rem',
     color: M3.onSurfaceVariant,
     borderLeft: `2px solid ${M3.glassBorder}`,
-    paddingLeft: 13,
-    margin: '10px 0 0',
+    paddingLeft: 12,
+    margin: '8px 0 0',
   };
 
   const h = {
     fontFamily: M3.fontDisplay,
-    fontSize: '0.95rem',
+    fontSize: '0.92rem',
     color: M3.primary,
     letterSpacing: '0.02em',
-    marginBottom: 7,
+    marginBottom: 5,
   };
 
   const label = {
@@ -45,9 +45,8 @@ export default function EducationTab({ ctx }) {
     marginBottom: 6,
   };
 
-  // One technique: plain always, detail at depth >= 1, structure at depth >= 2.
   const Method = ({ title, plain, detail, structure }) => (
-    <div style={{ marginBottom: 26 }}>
+    <div style={{ marginBottom: 20 }}>
       <div style={h}>{title}</div>
       <p style={prose}>{plain}</p>
       {depth >= 1 && detail && <p style={deeper}>{detail}</p>}
@@ -61,97 +60,105 @@ export default function EducationTab({ ctx }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
 
       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 8 }}>
           <div style={{ fontFamily: M3.fontDisplay, fontSize: '1.05rem', color: M3.primary }}>
             How the techniques work
           </div>
           <DepthControl depth={depth} onChange={setDepth} compact />
         </div>
         <p style={{ ...prose, margin: 0 }}>
-          SGE computes several traditions side by side. They do not agree with each
-          other, and in places they do not agree with themselves. This page states
-          what each technique actually does, what it assumes, and where the choices
-          were made — because a symbolic instrument is only usable by someone who
-          knows which conventions it has adopted. The depth control adds the
-          technical detail behind each explanation.
+          What each technique does, and what it assumes. The depth control adds
+          the detail and the points where sources disagree.
         </p>
       </Card>
 
       <Card title="The frame">
         <Method
-          title="Tropical and sidereal zodiacs"
-          plain="Two different ways of dividing the same circle. The tropical zodiac begins at the March equinox and measures from the seasons. The sidereal zodiac measures from the fixed stars. Because the equinox drifts against the stars, the two frames have separated over time — the gap now stands at roughly 24 degrees."
-          detail="That drift is the precession of the equinoxes, a wobble of the Earth's axis completing a cycle in roughly 25,800 years. Western practice generally works tropically; Vedic practice works siderally. A body sits in one sign tropically and usually the previous sign siderally. Neither frame is a measurement error — they are answers to different questions, one seasonal and one stellar."
-          structure="The offset between the frames is the ayanamsa, and it is a chosen value rather than an observed one, because it depends on where the sidereal zero point is fixed. Lahiri (Chitrapaksha) is the Indian government standard and the most widely used; Raman, Krishnamurti and Fagan-Bradley place the zero point differently and yield offsets differing by a fraction of a degree to over a degree. SGE uses Lahiri. Where a technique divides the circle finely, the ayanamsa chosen changes which division a body falls in."
+          title="Tropical and sidereal"
+          plain="Two ways of dividing the same circle. Tropical begins at the March equinox; sidereal measures from the fixed stars. The gap between them now stands at roughly 24 degrees."
+          detail="The gap is precession, a wobble of the Earth's axis completing a cycle in roughly 25,800 years. Western practice works tropically, Vedic siderally, so a body usually sits one sign earlier in the sidereal frame."
+          structure="The offset is the ayanamsa, a chosen value rather than an observed one, because it depends on where the sidereal zero point is fixed. Lahiri is the Indian government standard; Raman, Krishnamurti and Fagan-Bradley place it differently. SGE uses Lahiri."
         />
         <Method
           title="House systems"
-          plain="Houses divide the chart into twelve fields relative to the horizon and meridian at a specific time and place. Every system agrees on where the horizon is; they disagree on how to cut the space between the angles. The same chart yields different house placements under different systems."
-          detail="Whole Sign gives each sign a house, so the sign of the Ascendant becomes the whole 1st house. Equal House takes twelve 30-degree segments from the Ascendant degree. Porphyry trisects the arcs between the angles. Placidus divides by the time a degree takes to rise, which is why it distorts and then fails at high latitude. Koch and Regiomontanus use further schemes again."
-          structure="SGE computes Porphyry. That is a deliberate choice and it is stated here rather than left implicit: a body reported in the 6th house under Porphyry may sit in the 5th or 7th under Placidus or Whole Sign, particularly when it lies near a cusp. Any technique keyed to house placement inherits that choice. House systems also depend on an accurate birth time in a way that planetary longitudes do not — four minutes of clock error moves the Ascendant by about one degree."
+          plain="Houses divide the chart relative to the horizon and meridian. Systems agree on the angles and disagree on how to cut the space between them. SGE computes Porphyry."
+          detail="Whole Sign gives each sign a house. Equal House takes twelve 30-degree segments from the Ascendant. Porphyry trisects the arcs between the angles. Placidus divides by rising time, which distorts and then fails at high latitude."
+          structure="A body in the 6th under Porphyry may sit in the 5th or 7th under Placidus or Whole Sign, particularly near a cusp. Houses also need an accurate birth time in a way planetary longitudes do not: four minutes of clock error moves the Ascendant about one degree."
         />
         <Method
           title="Aspects and orbs"
-          plain="An aspect is an angular distance between two bodies that a tradition treats as significant. A conjunction is zero degrees apart, an opposition 180, a trine 120, a square 90, a sextile 60. Bodies are rarely at the exact angle, so each aspect is allowed a margin — the orb."
-          detail="SGE applies these orbs: conjunction and opposition 8 degrees, trine and square 6, sextile 4, quincunx 3, semisquare and sesquiquadrate 2. The Tetrabiblos treats the conjunction, sextile, square, trine and opposition as the core set; the minor aspects were added later, several of them by Kepler on harmonic grounds."
-          structure="Orb size is a judgement call, not a measurement. Some schools set orbs by aspect, as here. Others set them by body, giving the Sun and Moon wider orbs than Mercury or Saturn. Others again vary the orb by whether the aspect is applying or separating. Widening an orb creates aspects; narrowing it removes them. Because the number of aspects found is a function of the orb policy, an aspect count is a property of the settings as much as of the chart — it is not by itself a measure of significance."
+          plain="An aspect is an angular distance a tradition treats as significant. Bodies are rarely exact, so each aspect is allowed a margin — the orb."
+          detail="SGE applies: conjunction and opposition 8 degrees, trine and square 6, sextile 4, quincunx 3, semisquare and sesquiquadrate 2. The conjunction, sextile, square, trine and opposition are the Ptolemaic core; the minor aspects came later, several from Kepler."
+          structure="Orb size is a judgement call, not a measurement. Some schools set orbs by aspect, as here; others by body, or by whether the aspect is applying or separating. Widening an orb creates aspects and narrowing it removes them, so an aspect count is a property of the settings as much as of the chart."
         />
       </Card>
 
-      <Card title="Techniques over time">
+      <Card title="Timing">
         <Method
           title="Secondary progressions"
-          plain="A symbolic timing method. One day of ephemeris time after birth is read as standing for one year of life, so the positions on the thirtieth day after a birth are read for the thirtieth year. It is a convention of correspondence, not a claim about where the bodies physically are."
-          detail="Because the Moon moves roughly 13 degrees a day, the progressed Moon travels through a whole chart in about 27 to 28 years, which is what gives the technique most of its movement. The progressed Sun advances about one degree per year, so it changes sign roughly every thirty years."
-          structure="Nothing in the sky corresponds to a progressed position. The bodies are where the ephemeris says they are on the actual date; the progressed chart is a mapping laid over them. This matters for how a result is read: a progressed aspect is a statement about the convention, and the convention is the thing being consulted. Solar arc directions apply the same idea differently again, advancing every body by the arc of the Sun rather than letting each move at its own rate."
+          plain="One day after birth stands for one year of life. A convention of correspondence, not a claim about where the bodies physically are."
+          detail="The progressed Moon crosses a sign about every two and a half years and a whole chart in 27 to 28. The progressed Sun advances about a degree a year, changing sign roughly every thirty."
+          structure="Nothing in the sky corresponds to a progressed position. Solar arc directions apply the same idea differently, advancing every body by the Sun's arc rather than letting each move at its own rate."
         />
         <Method
           title="Solar and lunar returns"
-          plain="A solar return is the moment the Sun comes back to the exact longitude it held at birth — close to a birthday, though rarely on it to the hour. A lunar return is the same idea for the Moon, and happens roughly every 27.3 days. A chart is cast for that moment."
-          detail="The return moment is a real astronomical event and can be computed precisely. The return chart is cast for that instant, and the houses depend on where the chart is cast — which introduces a question the astronomy does not answer: birthplace, or current location. Practitioners differ, and the two produce different house placements from identical planetary positions."
-          structure="The astronomy and the interpretation separate cleanly here. That the Sun regains its natal longitude is a fact. That the chart drawn for that instant governs the following year is an interpretive convention with no astronomical warrant. Precession-corrected returns adjust the target longitude for precession and land at a measurably different moment, which is a live disagreement rather than a settled refinement."
+          plain="The moment a body regains its natal longitude — the Sun near a birthday, the Moon roughly every 27.3 days. A chart is cast for that instant."
+          detail="The return moment is a real astronomical event and computable. Where the chart is cast is not settled by the astronomy: birthplace or current location give different houses from identical planetary positions."
+          structure="That the Sun regains its natal longitude is a fact. That the chart drawn for that instant governs the year is an interpretive convention. Precession-corrected returns adjust the target longitude and land at a measurably different moment."
         />
         <Method
           title="Vimshottari dasha"
-          plain="A Vedic timing system that divides a life into planetary periods totalling 120 years. The nine periods run Ketu 7 years, Venus 20, Sun 6, Moon 10, Mars 7, Rahu 18, Jupiter 16, Saturn 19, Mercury 17. Each period subdivides into sub-periods in the same proportions."
-          detail="The starting point is the nakshatra of the Moon at birth. The nakshatra determines which planetary period is running at birth, and how far through it the birth falls, which sets the sequence for the whole life. The 27 nakshatras are 13 degrees 20 minutes each, and each is assigned one of the nine lords in a repeating cycle."
-          structure="The entire sequence hangs on one number: the sidereal longitude of the Moon at birth. An error that moves the Moon across a nakshatra boundary shifts every subsequent period. Because the boundaries are 13 degrees 20 minutes apart and the Moon moves about 13 degrees a day, an error of a few arcminutes matters only near a boundary — but near one, it changes the reading entirely. The sidereal longitude also depends on the ayanamsa, so the dasha sequence inherits that choice too."
+          plain="A Vedic scheme dividing a life into planetary periods totalling 120 years: Ketu 7, Venus 20, Sun 6, Moon 10, Mars 7, Rahu 18, Jupiter 16, Saturn 19, Mercury 17."
+          detail="The starting point is the nakshatra of the Moon at birth, which sets which period is running and how far through it the birth falls. The 27 nakshatras are 13 degrees 20 minutes each."
+          structure="The whole sequence hangs on the sidereal longitude of the Moon. An error crossing a nakshatra boundary shifts every subsequent period, and the sidereal longitude inherits the ayanamsa choice."
         />
       </Card>
 
-      <Card title="Techniques of division and comparison">
+      <Card title="Division and comparison">
         <Method
           title="Harmonics"
-          plain="A harmonic chart multiplies every longitude by a whole number and reduces the result back into 360 degrees. The fourth harmonic multiplies by four, the fifth by five, and so on. Bodies that were separated by a fraction of the circle land together in the harmonic chart."
-          detail="Dividing the circle by n is a way of making one family of angles visible at once. In the fourth harmonic, bodies 90 degrees apart become conjunct, so every square and opposition in the original chart shows up as a conjunction. In the fifth, the 72-degree family appears; in the seventh, the 51.4-degree family. The technique converts an aspect search into a proximity search."
-          structure="The method comes from the harmonic work of John Addey in the twentieth century, which treated the chart as a set of superimposed waves rather than a set of discrete aspects. A consequence worth holding: harmonics multiply positional error along with position. In the seventh harmonic, an error of half a degree in a longitude becomes an error of three and a half degrees. High harmonics computed from approximate positions produce conjunctions that are artefacts of the arithmetic."
+          plain="The nth harmonic multiplies every longitude by n and reduces modulo 360, so bodies 360/n degrees apart land together. The 4th turns every square and opposition into a conjunction."
+          detail="The method converts an aspect search into a proximity search, and comes from the harmonic work of John Addey in the twentieth century."
+          structure="The transform multiplies positional error along with position. In the 7th harmonic an error of half a degree becomes three and a half, so at high n a conjunction may be an artefact of the arithmetic."
+        />
+        <Method
+          title="Navamsa and the vargas"
+          plain="Vedic practice subdivides each sign and reads the result as a separate chart. The navamsa divides by nine, giving segments of 3 degrees 20 minutes."
+          detail="The scheme runs on: hora by two, drekkana by three, saptamsa by seven, navamsa by nine, dasamsa by ten, dwadasamsa by twelve, shodasamsa by sixteen."
+          structure="Every varga amplifies positional error by its divisor. A third of a degree can place a body in the wrong navamsa; a shodasamsa segment is 1 degree 52 minutes 30 seconds. Exact arithmetic on inexact inputs."
         />
         <Method
           title="Synastry and composite"
-          plain="Two different ways of comparing two charts. Synastry lays one chart over the other and reads the contacts between them — this body against that one, at a stated angle and orb. A composite chart instead builds a third chart from the midpoints between paired bodies."
-          detail="Synastry keeps both charts intact and describes the relations between them, so every statement can be traced back to two named positions. The composite creates a chart belonging to neither party. Its midpoints can be taken in two ways — the straight midpoint of each pair, or midpoints derived from a single derived time and place — and the two methods do not agree."
-          structure="Neither technique yields a verdict. A count of contacts between two charts is a count, weighted by whatever orb policy produced it, and a wider orb produces more contacts. The Davison relationship chart is a third approach again, cast for the midpoint in time and space between two births, which unlike the composite is an actual moment with a real sky. Which of the three a practitioner uses is a methodological commitment, and the results are not interchangeable."
-        />
-        <Method
-          title="Navamsa and the varga scheme"
-          plain="Vedic practice subdivides each sign into equal parts and reads the resulting divisional charts as separate charts. The navamsa divides each sign into nine, giving segments of 3 degrees 20 minutes. It is the most consulted division after the birth chart itself."
-          detail="The vargas form a scheme of such divisions: the hora divides by two, the drekkana by three, the chaturthamsa by four, the saptamsa by seven, the navamsa by nine, the dasamsa by ten, the dwadasamsa by twelve, and the shodasamsa by sixteen, with further divisions beyond. Each is generated arithmetically from the same longitudes, and each has an assigned domain in the tradition."
-          structure="Every varga amplifies positional error by its divisor. A navamsa segment is 3 degrees 20 minutes wide, so an error of a third of a degree can place a body in the wrong navamsa; a shodasamsa segment is 1 degree 52 minutes 30 seconds, and the error required is smaller still. The divisions are exact arithmetic performed on inputs that are not exact, which makes the reliability of a varga a question about the ephemeris, not about the technique."
+          plain="Synastry lays one chart over the other and reports the contacts. A composite instead builds a third chart from the midpoints between paired bodies."
+          detail="Synastry keeps both charts intact, so every statement traces back to two named positions. The composite belongs to neither party, and its midpoints can be taken in more than one way."
+          structure="Neither yields a verdict, and a contact count is weighted by whatever orb policy produced it. The Davison chart is a third approach, cast for the midpoint in time and space between two births — unlike the composite, an actual moment with a real sky."
         />
       </Card>
 
-      <Card title="Letter and number">
-        <Method
-          title="Gematria"
-          plain="Assigning numbers to letters and totalling them for a word. The practice is old in Hebrew and Greek, and the same word yields different totals under different ciphers — so a gematria value means nothing until the cipher is named."
-          detail="In Hebrew, mispar hechrachi is the standard absolute value, with alef 1 through tav 400. Mispar siduri is the ordinal value, alef 1 through tav 22. Mispar katan reduces each letter to a single digit. Final forms of the five letters that have them are sometimes counted as separate higher values and sometimes not. Greek isopsephy uses its own assignments, and the various English and Latin ciphers are later constructions."
-          structure="The choice of cipher is not a detail — it determines the result. Two words that match under one cipher will usually not match under another, which is why an equivalence claimed on gematric grounds has to state its method before it can be assessed at all. SGE reports which cipher it used. Where a source cites a gematric correspondence without naming a cipher, the correspondence cannot be checked."
-        />
+      <Card title="Number, letter and cycle">
         <Method
           title="Numerology: Pythagorean and Chaldean"
-          plain="Two incompatible systems for turning letters into numbers. Pythagorean maps A to I as 1 to 9, then repeats through the alphabet. Chaldean uses a different map derived from sound rather than alphabetical order, and assigns no letter the value 9. The same name produces different numbers under the two."
-          detail="Because the systems disagree at the level of the letter, they disagree at every level built on it — the life path, the expression number, the soul urge. Pythagorean is the more common in modern Anglophone practice; Chaldean is the older claim and treats 9 as reserved. Neither can be derived from the other, and there is no test that settles between them."
-          structure="The master numbers 11, 22 and 33 are a further disagreement inside both systems: some practitioners reduce them to 2, 4 and 6, and others hold them unreduced. Whether a birth date reduces before or after summing its components also varies between sources and changes the result. SGE states which convention it applied. The systems are reported side by side rather than reconciled, because reconciling them would require a decision the sources do not support."
+          plain="Two incompatible letter-to-number systems. Pythagorean maps A–I to 1–9 and repeats; Chaldean uses a different map and assigns no letter the value 9. The same name gives different numbers."
+          detail="Because they disagree at the letter, they disagree at every level built on it — life path, expression, soul urge. Neither can be derived from the other, and no test settles between them."
+          structure="The master numbers 11, 22 and 33 are a further dispute inside both systems: some reduce them, some hold them. Whether a date reduces before or after summing also varies and changes the result."
+        />
+        <Method
+          title="Gematria"
+          plain="Letters carry numbers and a word is totalled. The same word gives different totals under different ciphers, so a value means nothing until the cipher is named."
+          detail="In Hebrew, mispar hechrachi is the absolute value, mispar siduri the ordinal, mispar katan the reduced. The five final forms are sometimes counted separately and sometimes not. Greek isopsephy uses its own assignments."
+          structure="Two words matching under one cipher will usually not match under another, so a gematric equivalence has to state its method before it can be assessed. SGE reports which cipher it used."
+        />
+        <Method
+          title="The Chinese year"
+          plain="A 60-year cycle pairing 12 animals with 5 phases and a yin/yang polarity. The cycle year begins at the lunar new year, not on 1 January."
+          detail="Some reckonings begin it at the solar term Lichun instead, a few days earlier. A January or February birth date is exactly where the two diverge."
+          structure="The five phases carry generating and overcoming cycles, a different scheme from the four Western elements. The two are not translations of one another, and a shared element label between them is a coincidence of naming."
+        />
+        <Method
+          title="Tarot attributions"
+          plain="Trump attributions differ by lineage. The Golden Dawn order swaps Strength and Justice at VIII and XI; the Tarot de Marseille does not."
+          detail="Hebrew-letter and astrological attributions to the trumps also differ between the Golden Dawn and the Continental systems."
+          structure="A correspondence quoted without naming its scheme cannot be checked. Where SGE shows one, it is the Golden Dawn order unless stated."
         />
       </Card>
 
@@ -159,45 +166,38 @@ export default function EducationTab({ ctx }) {
         <div style={label}>What this build does not do</div>
         <div style={{ ...h, color: M3.tertiary }}>Limits of this deployment</div>
         <p style={prose}>
-          The following are properties of this build. They are stated here because a
-          practitioner needs to know which figures can carry weight and which cannot.
+          Properties of this build, stated so it is clear which figures can carry
+          weight and which cannot.
         </p>
 
         <Method
-          title="The deployed app does not use the Swiss Ephemeris backend"
-          plain="This repository contains a Python backend that computes positions with the Swiss Ephemeris. It is not running here. GitHub Pages serves static files only and cannot execute it, so the live site falls back to the hand-rolled series in src/engines/astronomy.js. Every figure shown on this deployment comes from that series."
-          detail="The frontend attempts the backend at a local address and uses the in-browser engine when it is unreachable, which on a static host it always is. Running the backend locally changes the numbers; the interpretive layer is identical either way."
-          structure="Swiss Ephemeris is dual-licensed under the AGPL and a paid professional licence. SGE has adopted the AGPL, which is why the source is linked from the footer. Any future accuracy work stays on static hosting: the intended route is a bounded-range table generated offline in Moshier mode and shipped with interpolation, rather than a deployed backend or a WASM build."
+          title="No Swiss Ephemeris on the deployed site"
+          plain="The repository holds a Python backend that uses the Swiss Ephemeris. It is not running here. GitHub Pages serves static files only, so the live site computes from the hand-rolled series in src/engines/astronomy.js."
+          detail="The frontend tries the backend at a local address and falls back to the in-browser engine when it is unreachable, which on a static host it always is. Running the backend locally changes the numbers; the interpretive layer is identical either way."
+          structure="Swiss Ephemeris is dual-licensed AGPL and paid professional. SGE has taken the AGPL, which is why the source is linked from the footer. Future accuracy work stays on static hosting: a bounded-range table generated offline in Moshier mode and shipped with interpolation, rather than a deployed backend or a WASM build."
         />
         <Method
           title="Accuracy of the in-browser series"
-          plain="The Sun and Moon are effectively exact for interpretive purposes. Mercury is reliable. Venus oscillates from the reference by up to 0.8 degrees. The outer planets drift as the date moves away from the series epoch, reaching about 1.18 degrees on Saturn by 2060."
-          detail="The error is not random noise but a systematic drift that grows with distance from epoch, so dates near the present are better than dates far from it. The reported sign of a body is nearly always right; the reported degree may not be."
-          structure="Sub-degree error matters here more than it would in a general-purpose chart, because several techniques in SGE divide the circle finely enough to be sensitive to it. Navamsa segments are 3 degrees 20 minutes. Nakshatra boundaries fall every 13 degrees 20 minutes, and the whole Vimshottari sequence keys off which side of one the Moon sits. Several classical dignities are exact to the degree. Combustion orbs span only a few degrees in total. Where a placement sits near any such boundary, this deployment cannot settle which side it falls on."
+          plain="Sun and Moon are effectively exact. Mercury is reliable. Venus oscillates from the reference by up to 0.8 degrees. The outer planets drift with distance from epoch, reaching about 1.18 degrees on Saturn by 2060."
+          detail="The error is systematic drift rather than noise, so dates near the present are better than dates far from it. The reported sign is nearly always right; the reported degree may not be."
+          structure="Sub-degree error matters here because several techniques divide finely: navamsa segments are 3 degrees 20 minutes, nakshatra boundaries fall every 13 degrees 20 minutes, several dignities are degree-exact, and combustion orbs span only a few degrees. Near any such boundary this build cannot settle which side a body falls on."
         />
         <Method
           title="The Lahiri ayanamsa is a linear approximation"
-          plain="SGE computes the ayanamsa as a straight-line function of time from a fixed epoch value. The published Lahiri ayanamsa is not linear. The approximation is close near the epoch and diverges as the date moves away from it."
-          detail="Every sidereal figure in the app inherits this — the Vedic positions, the nakshatras, the dashas and the vargas all sit on it. The error is small in absolute terms and compounds with the positional error of the series it is applied to."
-          structure="The consequence is specific rather than general: an approximate ayanamsa applied to an approximate longitude produces a sidereal position whose error is the sum of both, and it is that sum which decides which nakshatra or navamsa a body is reported in."
+          plain="SGE computes the ayanamsa as a straight-line function of time from a fixed epoch. The published Lahiri ayanamsa is not linear."
+          detail="Every sidereal figure inherits it — Vedic positions, nakshatras, dashas and vargas all sit on it."
+          structure="An approximate ayanamsa applied to an approximate longitude gives a sidereal position carrying the sum of both errors, and it is that sum which decides which nakshatra or navamsa a body is reported in."
         />
         <Method
           title="Vedic yoga and dosha detection is simplified"
-          plain="The yoga and dosha detection in this build is described in the source itself as simplified. It tests a reduced set of conditions rather than the full classical criteria, so it will miss combinations a complete implementation would find."
-          detail="The classical definitions frequently involve conditions the current implementation does not evaluate — aspect conditions, dignity conditions, and combinations across divisional charts."
-          structure="Sade Sati is a specific and complete gap. The technique requires the position of transiting Saturn against the natal Moon. The code has access only to natal Saturn, and its own comment records the decision not to infer the condition from natal data alone. As implemented, SGE does not detect Sade Sati at all — an absent result here is not evidence of absence."
-        />
-        <Method
-          title="The mansion crosswalk pairs systems by index"
-          plain="MANSION_CROSSWALK aligns three 28-fold systems by ordinal number: the Arabic manazil, the Indian nakshatra scheme and the Chinese xiu. These systems do not divide the sky the same way, so an index match is a convenience of tabulation and not a correspondence."
-          detail="The manazil are approximately equal segments of 12 degrees 51 minutes 26 seconds. The nakshatra scheme uses equal segments of 13 degrees 20 minutes, with a twenty-eighth inserted to reach that count. The Chinese xiu are unequal and determined by their reference stars, varying widely in width."
-          structure="Because the three schemes have different boundaries, the nth division of one does not occupy the same sky as the nth division of another, and the mismatch is not constant across the circle. The crosswalk is usable as an index of parallel traditions. It is not usable as a claim that the paired divisions refer to the same region of sky."
+          plain="The source describes this detection as simplified. It tests a reduced set of conditions, so it will miss combinations a complete implementation would find."
+          detail="The classical definitions frequently involve aspect conditions, dignity conditions and combinations across divisional charts that are not evaluated here."
+          structure="Sade Sati is a complete gap. The technique needs transiting Saturn against the natal Moon; only natal Saturn is available, and the code records the decision not to infer it from natal data. SGE does not detect Sade Sati at all — an absent result is not evidence of absence."
         />
 
-        <p style={{ ...prose, marginTop: 4, marginBottom: 0, color: M3.onSurfaceVariant }}>
+        <p style={{ ...prose, marginTop: 2, marginBottom: 0, color: M3.onSurfaceVariant }}>
           A house-system selector offering Whole Sign, Porphyry and Placidus is
-          wanted and not yet built. Until it exists, every house figure in this
-          build is Porphyry.
+          wanted and not yet built. Until then every house figure here is Porphyry.
         </p>
       </Card>
 
