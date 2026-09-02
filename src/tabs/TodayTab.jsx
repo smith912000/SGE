@@ -43,7 +43,7 @@ export default function TodayTab({ ctx }) {
     return (
       PAIR_INSIGHT[`${r0}+${r1}`] ||
       PAIR_INSIGHT[`${r1}+${r0}`] ||
-      "No pair record is held for these two significators."
+      ""
     );
   };
 
@@ -265,10 +265,8 @@ export default function TodayTab({ ctx }) {
                     {n1 === n2 ? n1 : `${n1} and ${n2}`} {weekAnchor.sym}{" "}
                     {weekAnchor.name}
                   </strong>{" "}
-                  ({expl}). This is a contact between the{" "}
-                  {` ${r0.toLowerCase()}`} and{" "}
-                  {` ${r1.toLowerCase()}`} significators — {insight} The bodies
-                  involved move slowly, so the contact holds across the week rather than a single day.
+                  ({expl}).{n1 === n2 ? "" : ` A contact between the ${r0.toLowerCase()} and ${r1.toLowerCase()} bodies.`}
+                  {insight ? ` ${insight.charAt(0).toUpperCase()}${insight.slice(1)}.` : ""} These bodies move slowly, so the contact holds across the week rather than a single day.
                 </p>
               );
             })()}
