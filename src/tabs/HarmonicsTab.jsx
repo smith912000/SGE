@@ -39,18 +39,18 @@ export default function HarmonicsTab({ ctx }) {
   const clusters = Object.entries(clusterMap).filter(([,ps])=>ps.length>=2).sort((a,b)=>b[1].length-a[1].length);
   const getPairInsight = (p1, p2) => {
     const r0=P_ROLE[p1]||p1, r1=P_ROLE[p2]||p2;
-    return PAIR_INSIGHT[`${r0}+${r1}`] || PAIR_INSIGHT[`${r1}+${r0}`] || `these two forces work together at a level your surface chart doesn't show — they reinforce and shape each other in ways you may sense but not consciously recognise`;
+    return PAIR_INSIGHT[`${r0}+${r1}`] || PAIR_INSIGHT[`${r1}+${r0}`] || `No pair record is held for these two bodies.`;
   };
 
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
       <Card style={{ background:`linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor:M3.outline }}>
-        <div style={{ fontFamily:"Cinzel,serif", fontSize:"1rem", color:M3.primary, marginBottom:8 }}>What are Hidden Patterns?</div>
+        <div style={{ fontFamily:"Cinzel,serif", fontSize:"1rem", color:M3.primary, marginBottom:8 }}>What dividing the circle by n does</div>
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
-          Your birth chart is like a musical note. Hidden patterns (harmonics) are the overtones — subtler frequencies that shape the timbre. They work by multiplying every planet's position by a number and wrapping it around the 360° circle. When planets that were far apart suddenly land near each other in a harmonic chart, it means they share a hidden resonance at that frequency.
+          The nth harmonic multiplies every longitude by n and reduces the result modulo 360. Bodies separated by 360/n degrees therefore land together: in the 4th harmonic every square and opposition becomes a conjunction, in the 5th the 72-degree family appears, in the 7th the 51.4-degree family. The technique converts a search for one family of aspects into a search for proximity. The method comes from the harmonic work of John Addey in the twentieth century.
         </p>
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.65, color:M3.onSurface, marginTop:8 }}>
-          <strong>How to read this:</strong> Look for clusters — multiple planets grouped in the same sign or conjunct (☌). The more planets clustered, the stronger that pattern operates in your life. The wheel below shows where planets land after the harmonic transformation. The table shows their new positions.
+          <strong>Reading the result:</strong> Clusters are bodies grouped in the same sign or conjunct (☜) after the transformation. A caution that matters: multiplying position multiplies positional error with it. In the 7th harmonic an error of half a degree becomes three and a half degrees, so at high n a conjunction may be an artefact of the arithmetic rather than a feature of the chart. This build computes from the in-browser series, whose accuracy is set out under How the techniques work.
         </p>
       </Card>
 
@@ -85,7 +85,7 @@ export default function HarmonicsTab({ ctx }) {
             Pattern #{n} — {hd?.label || `Harmonic ${n}`}
           </div>
           <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.8rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
-            {hd?.desc || `The ${n}th harmonic divides the circle into ${n} equal parts. Planets that form ${n}-based aspects (${(360/n).toFixed(1)}° apart) in your birth chart will appear conjunct here. Every harmonic reveals a different layer of hidden connection between your planets.`}
+            {hd?.desc || `The ${n}th harmonic divides the circle into ${n} equal parts. Bodies ${(360/n).toFixed(1)}° apart in the natal chart appear conjunct here.`}
           </p>
           {(hd?.lookFor || !hd) && (
             <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.secondary, margin:"8px 0 0", fontStyle:"italic" }}>
@@ -96,7 +96,7 @@ export default function HarmonicsTab({ ctx }) {
       </Card>
 
       {(clusters.length > 0 || tight.length > 0) && (
-        <Card title={`✦ Your Pattern #${n} — Personal Reading`}>
+        <Card title={`✦ Harmonic #${n} — Groupings`}>
           {clusters.length > 0 && (
             <div style={{ marginBottom:14 }}>
               <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.65rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:8 }}>SIGN CLUSTERS — WHERE ENERGY CONCENTRATES</div>
@@ -121,11 +121,11 @@ export default function HarmonicsTab({ ctx }) {
                       const el = si.element||"";
                       const signStyle = sign==="Aries"?"bold, direct action":sign==="Taurus"?"steady, grounded persistence":sign==="Gemini"?"mental agility and communication":sign==="Cancer"?"emotional depth and nurturing":sign==="Leo"?"confident self-expression and warmth":sign==="Virgo"?"careful refinement and service":sign==="Libra"?"balance, fairness, and partnership":sign==="Scorpio"?"intensity, transformation, and depth":sign==="Sagittarius"?"expansive vision and truth-seeking":sign==="Capricorn"?"disciplined structure and ambition":sign==="Aquarius"?"unconventional thinking and community":"intuitive sensitivity and imagination";
                       if (planets.length >= 3) {
-                        return `A powerful concentration — ${planets.map(p=>P_ROLE[p]||p).join(", ")} all resonate together at this frequency in ${sign} (${signStyle}). This is a dominant theme in this layer of your chart, suggesting ${el} energy strongly shapes your ${hd?.label?.toLowerCase() || "pattern #"+n}. When this many planets cluster, the theme is unmistakable — it's a central part of who you are at this level.`;
+                        return `${planets.map(p=>P_ROLE[p]||p).join(", ")} fall together in ${sign} at this harmonic, a grouping of ${planets.length}. ${el} is the element of that sign. In the natal chart these bodies stand at or near the ${(360/n).toFixed(1)}° family of separations.`;
                       }
                       const r0 = P_ROLE[planets[0]]||planets[0], r1 = P_ROLE[planets[1]]||planets[1];
                       const insight = getPairInsight(planets[0], planets[1]);
-                      return `Your ${r0} and ${r1} are linked through ${sign} energy (${signStyle}) at this harmonic level. In practice, this means ${insight}. The ${sign} colouring adds a flavour of ${signStyle.split(" and ")[0]} to how this connection plays out in your life.`;
+                      return `${r0} and ${r1} fall together in ${sign} at this harmonic. ${insight}`;
                     })()}
                   </p>
                 </div>
@@ -149,19 +149,19 @@ export default function HarmonicsTab({ ctx }) {
                       const r0=P_ROLE[a.p1]||a.p1, r1=P_ROLE[a.p2]||a.p2;
                       const insight = getPairInsight(a.p1, a.p2);
                       const hdContext = hd ? {
-                        2:`This link is specifically about internal tension — your ${r0} and ${r1} are in a push-pull dynamic that asks you to find balance between them.`,
-                        3:`This link is about natural ease — your ${r0} and ${r1} cooperate effortlessly here, producing a talent you may take for granted.`,
-                        4:`This link is about productive friction — pressure between your ${r0} and ${r1} generates drive and accomplishment.`,
-                        5:`This link is about creative expression — your ${r0} and ${r1} combine here to produce something original and inventive.`,
-                        6:`This link is about practical service — your ${r0} and ${r1} work together toward craftsmanship and meaningful contribution.`,
-                        7:`This link is about spiritual sensitivity — your ${r0} and ${r1} connect at an intuitive, almost mystical level here.`,
-                        8:`This link is about transformation — your ${r0} and ${r1} are bound together through cycles of crisis and renewal.`,
-                        9:`This link is about deep purpose — your ${r0} and ${r1} are connected at the soul level, shaping your dharma and your most meaningful bonds.`,
-                        10:`This link is about public impact — the interplay of your ${r0} and ${r1} shapes what you project into the world and your lasting legacy.`,
-                        11:`This link is about vision — your ${r0} and ${r1} unite around idealistic, forward-looking themes.`,
-                        12:`This link is about hidden lessons — your ${r0} and ${r1} are bound by a karmic pattern that surfaces as recurring challenges carrying growth.`,
+                        2:`The 2nd harmonic is the opposition family, 180°.`,
+                        3:`The 3rd harmonic is the trine family, 120°.`,
+                        4:`The 4th harmonic is the square and opposition family, 90°.`,
+                        5:`The 5th harmonic is the quintile family, 72°, associated by Kepler with form-making.`,
+                        6:`The 6th harmonic is the sextile family, 60°.`,
+                        7:`The 7th harmonic is the septile family, 51.4°, a division that does not resolve into whole degrees.`,
+                        8:`The 8th harmonic is the semisquare family, 45°.`,
+                        9:`The 9th harmonic is the novile family, 40°, and corresponds to the navamsa division in Vedic practice.`,
+                        10:`The 10th harmonic is the decile family, 36°.`,
+                        11:`The 11th harmonic is the undecile family, 32.7°, little used in classical practice.`,
+                        12:`The 12th harmonic is the semisextile family, 30°.`,
                       }[n] || "" : "";
-                      const strLabel = a.strength>0.85 ? "This is an exceptionally tight bond — one of the strongest hidden links in your chart." : a.strength>0.75 ? "This is a strong bond." : "";
+                      const strLabel = a.strength>0.85 ? "The separation here is unusually tight for this harmonic." : a.strength>0.75 ? "The separation is tight." : "";
                       return `At this level, ${insight}. ${hdContext} ${strLabel}`;
                     })()}
                   </p>
@@ -171,7 +171,7 @@ export default function HarmonicsTab({ ctx }) {
           )}
           {clusters.length === 0 && tight.length === 0 && (
             <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.8rem", lineHeight:1.6, color:M3.onSurfaceVariant, textAlign:"center", padding:20 }}>
-              No strong clusters or tight conjunctions at this harmonic. This pattern layer is more evenly distributed in your chart — the energy is spread rather than concentrated.
+              No clusters or tight conjunctions at this harmonic. The transformed positions are evenly distributed rather than grouped.
             </p>
           )}
         </Card>
@@ -186,7 +186,7 @@ export default function HarmonicsTab({ ctx }) {
         </Card>
         <Card title={`∞ Pattern #${n} — Wheel`}>
           <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
-            The harmonic wheel — planets near each other here are connected at this deeper frequency, even if they're far apart in your birth chart.
+            The harmonic wheel. Bodies close together here stand at or near the {(360/n).toFixed(1)}° family of separations in the natal chart.
           </p>
           <div style={{ display:"flex", justifyContent:"center" }}>
               <WheelWithTooltip positions={hPos} size={300} id={`h${n}`} theme="vedic"/>
@@ -197,7 +197,7 @@ export default function HarmonicsTab({ ctx }) {
       {anyAsp.length > 0 && (
         <Card title={`∞ Pattern #${n} — All Strong Connections (${anyAsp.length})`}>
           <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
-            These are the strongest aspects in your harmonic chart — they show which planet pairs resonate most powerfully at this frequency.
+            The tightest separations in the transformed chart, listed with their orbs.
           </p>
           <AspectTable aspects={anyAsp}/>
         </Card>

@@ -61,9 +61,9 @@ export default function NumerologyTab({ ctx }) {
       </Card>
 
       {/* ── Life Path Deep Dive ── */}
-      <Card title={`Life Path ${nuData.lifePath} — ${lp.title||"Your Path"}`}>
+      <Card title={`Life Path ${nuData.lifePath} — ${lp.title||"Unnamed"}`}>
         {lp.archetype && <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem", color:M3.tertiary, letterSpacing:"0.08em", marginBottom:8 }}>{lp.archetype}</div>}
-        <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.7, color:M3.onSurface, margin:"0 0 12px" }}>{lp.desc||"Your life path carries a unique vibration and purpose."}</p>
+        <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.7, color:M3.onSurface, margin:"0 0 12px" }}>{lp.desc||"No record is held for this number."}</p>
         {lp.shadow && (
           <div style={{ padding:"10px 14px", borderRadius:10, background:"#ff525211", border:"1px solid #ff525222", marginBottom:10 }}>
             <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", color:"#ff5252", letterSpacing:"0.08em", marginBottom:4 }}>SHADOW SIDE</div>
@@ -79,7 +79,7 @@ export default function NumerologyTab({ ctx }) {
       </Card>
 
       {/* ── Core Number Meanings ── */}
-      <Card title="What Each Number Means for You">
+      <Card title="What Each Number Has Been Taken to Mean">
         <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
           {[
             ...(hasName ? [
@@ -94,7 +94,7 @@ export default function NumerologyTab({ ctx }) {
                 <span style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", color:M3.secondary, letterSpacing:"0.08em" }}>{r.label.toUpperCase()}</span>
                 <span style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"1rem", color:M3.tertiary, fontWeight:"700" }}>{r.num}</span>
               </div>
-              <div style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", color:M3.onSurface, lineHeight:1.55 }}>You are a {r.meaning}</div>
+              <div style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", color:M3.onSurface, lineHeight:1.55 }}>{r.meaning}</div>
             </div>
           ))}
         </div>
@@ -104,7 +104,7 @@ export default function NumerologyTab({ ctx }) {
       {hasName && (
       <Card title="Name Letter Breakdown — Pythagorean & Chaldean Values">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
-          Each letter of your name carries a number. Vowels (highlighted) drive your Soul Urge; consonants shape your Personality. Together they form your Expression number.
+          Each letter is assigned a number. The vowels (highlighted) total to the Soul Urge, the consonants to the Personality, and the whole name to the Expression. Pythagorean and Chaldean assign letters different values, so the same name yields different totals under the two — the method has to be named for any of these to mean anything. This table uses the Pythagorean assignment.
         </p>
         <div style={{ display:"flex", flexWrap:"wrap", gap:4, marginBottom:12 }}>
           {nuData.letterBreakdown.map((l,i)=>(
@@ -129,9 +129,9 @@ export default function NumerologyTab({ ctx }) {
 
       {/* ── Missing Numbers ── */}
       {hasName && nuData.missingNums.length > 0 && (
-      <Card title="Karmic Lessons — Missing Numbers in Your Name">
+      <Card title="Karmic Lessons — Numbers Absent From the Name">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
-          Numbers absent from your name's letter values indicate lessons your soul chose to learn through experience rather than innate talent. These aren't weaknesses — they're growth edges.
+          Numbers that do not appear among the letter values of the name. The tradition marks these as absent rather than deficient, and reads them as the numbers the name does not supply.
         </p>
         <div style={{ display:"flex", flexWrap:"wrap", gap:8 }}>
           {nuData.missingNums.map(n=>(
@@ -145,9 +145,9 @@ export default function NumerologyTab({ ctx }) {
       )}
 
       {/* ── Pinnacles & Challenges ── */}
-      <Card title="Life Pinnacles & Challenges — Your Four Seasons">
+      <Card title="Life Pinnacles & Challenges — The Four Periods">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 12px" }}>
-          Your life unfolds in four major phases, each with a <strong>pinnacle</strong> (opportunity/theme) and a <strong>challenge</strong> (lesson/obstacle). Together they map the arc of your growth across decades.
+          The scheme divides a life into four periods, each carrying a <strong>pinnacle</strong> number and a <strong>challenge</strong> number derived arithmetically from the birth date. The boundaries between periods are set by subtracting the Life Path number from 36, a convention that varies between sources.
         </p>
         <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
           {["First (youth)","Second (early adult)","Third (maturity)","Fourth (wisdom)"].map((phase,i)=>(
@@ -171,7 +171,7 @@ export default function NumerologyTab({ ctx }) {
       {/* ── Hebrew Gematria Calculator ── */}
       <Card title="Hebrew Gematria Calculator — The Number in a Name">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 14px" }}>
-          Each Hebrew letter carries a numerical value. Type any name or word in English and it will be phonetically transliterated to Hebrew — digraphs like SH, CH, TH are handled as single Hebrew letters. You can also type Hebrew directly. Medial vowels are dimmed since Hebrew is primarily consonantal.
+          Each Hebrew letter carries a numerical value. Type any name or word in English and it will be phonetically transliterated to Hebrew — digraphs like SH, CH, TH are handled as single Hebrew letters. Hebrew may also be typed directly. Medial vowels are dimmed since Hebrew is primarily consonantal.
         </p>
         <input type="text" value={gemaName} onChange={e=>setGemaName(e.target.value)}
           placeholder="English name, Hebrew (אברהם), or phrase..."
@@ -287,9 +287,9 @@ export default function NumerologyTab({ ctx }) {
 
       {/* ── Planetary Gematria ── */}
       {res && (
-      <Card title="Planetary Gematria — The Numbers Behind Your Planets">
+      <Card title="Planetary Gematria — Double-Letter Values">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
-          In the Sefer Yetzirah tradition, each planet is assigned a Hebrew "double letter" with its own gematria value. This table shows the numerical signature of the planets in your chart.
+          In the Sefer Yetzirah tradition, each planet is assigned a Hebrew "double letter" with its own gematria value. This table lists those values. The Sepher Yetzirah assignment and the Golden Dawn path attributions are not the same scheme, and sources differ on which letter belongs to which body.
         </p>
         <div style={{ display:"flex", flexWrap:"wrap", gap:8 }}>
           {["Sun","Moon","Mercury","Venus","Mars","Jupiter","Saturn"].map(p=>{
@@ -333,7 +333,7 @@ export default function NumerologyTab({ ctx }) {
       {/* ── Birth Day Number Sequences ── */}
       <Card title="Birth Day Number Sequences — Mathematical Resonance">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 12px" }}>
-          Your birth day-of-year is checked against mathematical sequences with mystical significance. Active sequences mean your birth day number possesses that mathematical property — connecting you to that sequence's archetype.
+          The birth day-of-year is checked against a set of mathematical sequences. An active sequence means the day number holds that property. The property is arithmetic; the significance attached to it is an interpretive convention.
         </p>
         <div style={{ display:"flex", flexWrap:"wrap", gap:6, justifyContent:"center" }}>
           {nuData.daySeqs.map(s=>(
@@ -347,15 +347,15 @@ export default function NumerologyTab({ ctx }) {
           const active = nuData.daySeqs.filter(s=>s.active);
           if (active.length === 0) return (
             <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", color:M3.onSurfaceVariant, textAlign:"center", marginTop:10 }}>
-              Your birth day-of-year does not fall on any of the tracked mathematical sequences — which is itself a distinct mathematical position.
+              The birth day-of-year falls on none of the tracked sequences.
             </p>
           );
           return (
             <div style={{ marginTop:10, padding:"8px 12px", borderRadius:8, background:M3.primaryContainer+"22", border:`1px solid ${M3.primary}22` }}>
-              <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem", color:M3.tertiary, marginBottom:4 }}>YOUR BIRTH DAY BELONGS TO:</div>
+              <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem", color:M3.tertiary, marginBottom:4 }}>THE BIRTH DAY-OF-YEAR BELONGS TO:</div>
               {active.map(s=>(
                 <div key={s.key} style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.72rem", color:M3.onSurface, padding:"2px 0" }}>
-                  {s.sym} <strong>{s.name}</strong> — your day-of-year is a {s.name.toLowerCase()} number
+                  {s.sym} <strong>{s.name}</strong> — the day-of-year is a {s.name.toLowerCase()} number
                 </div>
               ))}
             </div>
@@ -365,9 +365,9 @@ export default function NumerologyTab({ ctx }) {
 
       {/* ── Pythagorean Grid ── */}
       {hasName && (
-      <Card title="The Pythagorean Grid — Number Frequency in Your Name">
+      <Card title="The Pythagorean Grid — Number Frequency in the Name">
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
-          This 3×3 grid shows how often each root number (1-9) appears in your name. Heavy concentrations indicate innate strengths; empty cells indicate karmic lessons.
+          This 3×3 grid counts how often each root number (1-9) appears among the letters of the name. The tradition reads heavy cells as emphasis and empty cells as absence.
         </p>
         <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:6, maxWidth:320, margin:"0 auto" }}>
           {[3,6,9,2,5,8,1,4,7].map(n=>{

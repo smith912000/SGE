@@ -23,30 +23,22 @@ export default function SynastryTab({ ctx }) {
   const friction = squares.length + opps.length;
   const ratio = harmony > 0 ? (harmony/(harmony+friction)*100).toFixed(0) : 50;
 
-  const SYN_GROWTH = {
-    "Sun+Sun":"Your core identities clash — each of you challenges the other's sense of self. The growth: learning that two strong identities can coexist without one diminishing the other.",
-    "Sun+Moon":"One person's identity presses against the other's emotional needs. The growth: learning to honour what your partner feels even when it differs from who you are.",
-    "Sun+Mercury":"Identity meets communication friction. The growth: learning that being understood requires patience, not just clarity.",
-    "Sun+Venus":"Identity conflicts with the other person's love language. The growth: discovering that love can look different from what you expect and still be real.",
-    "Sun+Mars":"One person's sense of self triggers the other's aggression or drive. The growth: channelling competition into mutual motivation rather than power struggles.",
-    "Sun+Saturn":"Identity meets restriction — one person feels limited by the other. The growth: real commitment means accepting the weight of responsibility along with the warmth of love.",
-    "Sun+Jupiter":"Overexpansion meets identity — one person's optimism overwhelms the other. The growth: calibrating enthusiasm so it inspires rather than overshadows.",
-    "Moon+Moon":"Emotional needs clash directly. The growth: learning that your partner's emotional reality is as valid as yours, even when they need the opposite.",
-    "Moon+Mercury":"Feelings meet logic, and they don't speak the same language. The growth: building a bridge between emotional truth and rational understanding.",
-    "Moon+Venus":"Emotional needs conflict with love expressions. The growth: discovering that caring for someone means learning their emotional language, not just speaking your own.",
-    "Moon+Mars":"Emotional vulnerability meets aggression. The growth: learning to be tender and direct at the same time — anger doesn't have to mean rejection.",
-    "Moon+Saturn":"Emotions meet coldness or control. The growth: this is often the deepest bond once matured — learning to feel safe with someone who won't let you hide from reality.",
-    "Venus+Mars":"Attraction meets friction — desire and affection pull in different directions. The growth: learning that passion and tenderness are not opposites but partners.",
-    "Venus+Saturn":"Love meets restriction — one person's affection feels blocked by the other's walls. The growth: love that survives Saturn contact becomes unbreakable.",
-    "Mars+Saturn":"Drive meets discipline — one person's energy feels controlled by the other. The growth: learning to focus ambition rather than fight it.",
-    "Mars+Mars":"Two sets of drives competing. The growth: channelling mutual intensity into shared goals rather than opposing battles.",
-    "Mercury+Mercury":"Two different thinking styles colliding. The growth: intellectual diversity strengthens decisions when both people learn to listen.",
-    "Jupiter+Saturn":"Expansion meets contraction. The growth: one person dreams big, the other builds real — together you become unstoppable when you stop fighting over pace.",
+  // What the pairing of two significators has been taken to set against what.
+  // No verdict about the people is offered, and none should be inferred.
+  const SYN_CONTACT = {
+    "Sun+Sun":"Two solar significators in contact. The tradition reads the pairing as the two chart-rulers of identity meeting directly.",
+    "Sun+Moon":"The two lights across charts. Classical texts weight this contact heavily, as the Sun-Moon relation is the primary pair in a single chart too.",
+    "Sun+Mercury":"The light and the messenger. Mercury never departs far from the Sun in longitude, so this contact recurs frequently between any two charts.",
+    "Sun+Venus":"The light and the lesser benefic. Venus, like Mercury, stays within a bounded elongation of the Sun.",
+    "Moon+Moon":"The two lunar significators in contact. The Moon is the fastest body, so lunar contacts are the most sensitive to birth-time accuracy.",
+    "Moon+Venus":"The Moon and the lesser benefic, both traditionally nocturnal and both assigned to the moist and cold in the classical scheme.",
+    "Moon+Saturn":"The Moon and the greater malefic. The classical reading is restriction placed on the lunar significator; the modern psychological reading softens this to structure, and the two readings are not the same claim.",
+    "Jupiter+Saturn":"The two social bodies, and the slowest of the classical seven. Their mutual cycle of roughly twenty years is the great conjunction of mundane astrology.",
   };
 
   const getKey = (a) => {
     const p1 = a.p1.replace(/^[AB]_/,""), p2 = a.p2.replace(/^[AB]_/,"");
-    return SYN_GROWTH[`${p1}+${p2}`]||SYN_GROWTH[`${p2}+${p1}`]||`Your ${(P_ROLE[p1]||p1).toLowerCase()} and their ${(P_ROLE[p2]||p2).toLowerCase()} create friction. The growth: learning to meet difference with curiosity rather than defence.`;
+    return SYN_CONTACT[`${p1}+${p2}`]||SYN_CONTACT[`${p2}+${p1}`]||`A contact between the ${(P_ROLE[p1]||p1).toLowerCase()} significator of one chart and the ${(P_ROLE[p2]||p2).toLowerCase()} significator of the other.`;
   };
 
   const frictionAsp = [...squares, ...opps].sort((a,b)=>b.strength-a.strength).slice(0,3);
@@ -54,17 +46,17 @@ export default function SynastryTab({ ctx }) {
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
       <Card style={{ background:`linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor:M3.outline }}>
-        <div style={{ fontFamily:"Cinzel,serif", fontSize:"1rem", color:M3.primary, marginBottom:8 }}>Synastry — How Two Charts Interact</div>
+        <div style={{ fontFamily:"Cinzel,serif", fontSize:"1rem", color:M3.primary, marginBottom:8 }}>Synastry — Contacts Between Two Charts</div>
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
-          Synastry compares two birth charts to reveal the chemistry between two people. <strong>Trines and sextiles</strong> show where you naturally harmonize. <strong>Squares and oppositions</strong> show friction — where you challenge and push each other to grow. <strong>Conjunctions</strong> amplify shared energy.
+          Synastry lays one chart over the other and reports the contacts between them: which body of one chart stands at a named angle to which body of the other, and at what orb. <strong>Trines and sextiles</strong> are the soft contacts, <strong>squares and oppositions</strong> the hard ones. The counts below are counts, weighted by the orb policy in use — a wider orb produces more contacts. They are not a verdict about the two people, and no verdict is offered here.
         </p>
       </Card>
 
-      <Card title="♡ Compatibility Summary">
+      <Card title="◈ Contact Summary">
         <div style={{ display:"flex", gap:16, flexWrap:"wrap", marginBottom:14 }}>
           <div style={{ flex:1, minWidth:140, textAlign:"center", padding:"14px 12px", borderRadius:12, background:"#69ff8e0c", border:"1px solid #69ff8e22" }}>
             <div style={{ fontFamily:"Cinzel,serif", fontSize:"1.5rem", color:"#69ff8e" }}>{ratio}%</div>
-            <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", color:M3.secondary, marginTop:4 }}>HARMONY RATIO</div>
+            <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", color:M3.secondary, marginTop:4 }}>SOFT / TOTAL</div>
           </div>
           {[
             { n:"Conjunctions", c:conj.length, col:"#FFD700", tip:"Fused energy — amplifies shared themes" },
@@ -80,7 +72,7 @@ export default function SynastryTab({ ctx }) {
           ))}
         </div>
         <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 16px", textAlign:"center" }}>
-          {ratio>=65 ? "This pairing has strong natural harmony — the ease between you is palpable, though growth edges keep things dynamic." : ratio>=45 ? "A balanced mix of harmony and friction — this combination keeps both people growing while maintaining connection." : "This pairing has significant friction — it's growth-oriented rather than comfort-oriented. Challenges build depth if both people are willing."}
+          {`${harmony.toFixed(1)} soft against ${friction} hard contacts. The ratio is a property of the orb policy as much as of the two charts, and the classical benefic/malefic scheme that underwrites the soft/hard split has largely been abandoned in modern practice.`}
         </p>
 
         {/* Sub-scores */}
@@ -130,7 +122,7 @@ export default function SynastryTab({ ctx }) {
       {frictionAsp.length > 0 && (
         <Card title="💪 Relationship Growth Areas — Where Friction Builds Depth">
           <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurfaceVariant, margin:"0 0 12px" }}>
-            These are the most intense friction points between your charts.
+            The tightest hard contacts between the two charts, listed with their orbs.
           </p>
           {frictionAsp.map((a,i)=>{
             const p1=a.p1.replace(/^[AB]_/,""), p2=a.p2.replace(/^[AB]_/,"");
@@ -160,7 +152,7 @@ export default function SynastryTab({ ctx }) {
             </p>
             {supportive.map((a,i)=>{
               const p1=a.p1.replace(/^[AB]_/,""), p2=a.p2.replace(/^[AB]_/,"");
-              const roleDesc = `Your ${(P_ROLE[p1]||p1).toLowerCase()} and their ${(P_ROLE[p2]||p2).toLowerCase()} resonate through a ${a.name.toLowerCase()} — this creates ${a.name==="Conjunction" ? "a fused, amplified energy between you in this area" : "natural ease and mutual support in how you approach this part of life"}.`;
+              const roleDesc = `The ${(P_ROLE[p1]||p1).toLowerCase()} significator of one chart stands ${a.name.toLowerCase()} the ${(P_ROLE[p2]||p2).toLowerCase()} significator of the other.`;
               return (
                 <div key={i} style={{ padding:"12px 16px", marginBottom:8, borderRadius:10, background:a.col+"0a", borderLeft:`3px solid ${a.col}` }}>
                   <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.72rem", color:M3.onSurface, marginBottom:4 }}>
@@ -192,9 +184,9 @@ export default function SynastryTab({ ctx }) {
 
       {res.synR?.composite && (
         <>
-          <Card title="★ The Composite Chart — Your Relationship as a Single Entity">
+          <Card title="★ The Composite Chart — Midpoints of the Two">
             <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 16px" }}>
-              Unlike Synastry (comparison), the Composite Chart <strong>averages</strong> your two charts to find the 'midpoint' for every planet. This represents the relationship itself — the third entity that exists between you.
+              The composite takes the <strong>midpoint</strong> of each paired body and builds a third chart from the results. It belongs to neither party and corresponds to no moment in the sky. Midpoints can be taken in more than one way, and the methods do not agree; the Davison chart is a different approach again, cast for the midpoint in time and space between the two births, which unlike the composite is an actual moment with a real sky.
             </p>
             <div style={grid2}>
               <div style={{ display:"flex", justifyContent:"center", alignItems:"center" }}>
@@ -210,14 +202,12 @@ export default function SynastryTab({ ctx }) {
                 <div style={{ padding:"14px 16px", borderRadius:12, background:M3.primaryContainer+"22", border:`1px solid ${M3.primary}22` }}>
                   <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem", color:M3.primary, marginBottom:6 }}>COMPOSITE VITALITY</div>
                   <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>
-                    The Composite Sun is in <strong>{ctx.zodSign(res.synR.composite.positions.Sun.longitude)}</strong>. This is the heart of the relationship — its core purpose and where you most easily 'shine' as a couple.
-                  </p>
+                    The Composite Sun is in <strong>{ctx.zodSign(res.synR.composite.positions.Sun.longitude)}</strong>. The composite Sun is the midpoint of the two natal Suns.</p>
                 </div>
                 <div style={{ padding:"14px 16px", borderRadius:12, background:M3.tertiaryContainer+"22", border:`1px solid ${M3.tertiary}22` }}>
                   <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem", color:M3.tertiary, marginBottom:6 }}>EMOTIONAL NAVIGATION</div>
                   <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>
-                    The Composite Moon is in <strong>{ctx.zodSign(res.synR.composite.positions.Moon.longitude)}</strong>. This shows how you process emotions together and what you need to feel secure as a unit.
-                  </p>
+                    The Composite Moon is in <strong>{ctx.zodSign(res.synR.composite.positions.Moon.longitude)}</strong>. The composite Moon is the midpoint of the two natal Moons.</p>
                 </div>
                 {res.synR.composite.aspects?.length > 0 && (
                   <div style={{ padding:"14px 16px", borderRadius:12, background:M3.surfaceContainer, border:`1px solid ${M3.outlineVariant}` }}>
@@ -248,7 +238,7 @@ export default function SynastryTab({ ctx }) {
             <span style={{ fontSize: "2rem", marginBottom: 8, opacity: 0.5 }}>⚮</span>
             <p style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.72rem", color:M3.secondary, letterSpacing:"0.1em" }}>GENERATING COMPOSITE DATA...</p>
             <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.74rem", color:M3.onSurfaceVariant, marginTop: 6 }}>
-              The midpoint map reveals the energetic 'entity' that is your relationship.
+              The midpoint map. Each point is the arithmetic midpoint of the two corresponding natal positions.
             </p>
           </div>
         </Card>

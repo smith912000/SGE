@@ -42,7 +42,7 @@ export default function TodayTab({ ctx }) {
     return (
       PAIR_INSIGHT[`${r0}+${r1}`] ||
       PAIR_INSIGHT[`${r1}+${r0}`] ||
-      "these two parts of you are in dialogue — the current sky is asking them to work together more consciously."
+      "No pair record is held for these two significators."
     );
   };
 
@@ -69,9 +69,9 @@ export default function TodayTab({ ctx }) {
       id: "love",
       label: "Love & Relationships",
       desc: {
-        today: "How your heart and connections are being activated today.",
-        week: "The emotional pulse and relationship themes of your week.",
-        month: "Major shifts in your connection style and heart-centered growth."
+        today: "Contacts involving Venus, Mars and the Moon for this date.",
+        week: "Contacts involving Venus, Mars and the Moon across the week.",
+        month: "Contacts involving Venus, Mars and the Moon across the month."
       },
       planets: ["Venus", "Mars", "Moon"],
     },
@@ -79,9 +79,9 @@ export default function TodayTab({ ctx }) {
       id: "work",
       label: "Work, Career & Money",
       desc: {
-        today: "Momentum around goals, career, and resources today.",
-        week: "Strategic opportunities and practical focus for the coming days.",
-        month: "Long-term professional expansion and financial planning."
+        today: "Contacts involving the Sun, Saturn and Jupiter for this date.",
+        week: "Contacts involving the Sun, Saturn and Jupiter across the week.",
+        month: "Contacts involving the Sun, Saturn and Jupiter across the month."
       },
       planets: ["Sun", "Saturn", "Jupiter"],
     },
@@ -89,9 +89,9 @@ export default function TodayTab({ ctx }) {
       id: "growth",
       label: "Inner Growth & Destiny",
       desc: {
-        today: "Individual shifts in purpose sparking today.",
-        week: "The deeper narrative arc unfolding in your life right now.",
-        month: "The karmic and evolutionary background of your month."
+        today: "Contacts involving the social and outer bodies for this date.",
+        week: "Contacts involving the social and outer bodies across the week.",
+        month: "Contacts involving the social and outer bodies across the month."
       },
       planets: ["Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"],
     },
@@ -99,9 +99,9 @@ export default function TodayTab({ ctx }) {
       id: "body",
       label: "Body, Mood & Energy",
       desc: {
-        today: "How your nervous system and vitality may feel today.",
-        week: "Rest and activity cycles for the next seven days.",
-        month: "The overall energetic baseline for your physical well-being."
+        today: "Contacts involving the Sun, Moon and Mars for this date.",
+        week: "Contacts involving the Sun, Moon and Mars across the week.",
+        month: "Contacts involving the Sun, Moon and Mars across the month."
       },
       planets: ["Sun", "Moon", "Mars"],
     },
@@ -156,7 +156,7 @@ export default function TodayTab({ ctx }) {
 
         <div style={{ padding: "12px 16px", borderRadius: 12, background: M3.surfaceContainer, border: `1px solid ${M3.outlineVariant}` }}>
           <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.secondary, letterSpacing: "0.12em", marginBottom: 8 }}>
-            YOUR FOCUS
+            FILTER
           </div>
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
             {FOCUS_OPTIONS.map(opt => (
@@ -204,7 +204,7 @@ export default function TodayTab({ ctx }) {
           <strong>inner growth</strong>, and <strong>body/mood</strong>. It
           starts with the <strong>slow-planet background chapter</strong> that
           colours this week, then shows where today&apos;s sky most strongly
-          connects to your birth chart.
+          contacts the natal positions. A count is not a significance: the number found is a function of the orb policy in use.
         </p>
         <p
           style={{
@@ -216,7 +216,7 @@ export default function TodayTab({ ctx }) {
           }}
         >
           {todayStr.toUpperCase()} — {res.trAsp?.length || 0} transit
-          connections to your chart
+          contacts to the natal chart at the orbs in use
         </p>
         {weekAnchor && (
           <div
@@ -264,10 +264,10 @@ export default function TodayTab({ ctx }) {
                     {n1 === n2 ? n1 : `${n1} and ${n2}`} {weekAnchor.sym}{" "}
                     {weekAnchor.name}
                   </strong>{" "}
-                  ({expl}). In plain language, this links your{" "}
+                  ({expl}). This is a contact between the{" "}
                   {` ${r0.toLowerCase()}`} and{" "}
-                  {` ${r1.toLowerCase()}`} — {insight} Expect this theme
-                  to colour the whole week rather than just a single day.
+                  {` ${r1.toLowerCase()}`} significators — {insight} The bodies
+                  involved move slowly, so the contact holds across the week rather than a single day.
                 </p>
               );
             })()}
@@ -305,14 +305,15 @@ export default function TodayTab({ ctx }) {
                 margin: 0,
               }}
             >
-              The geometry of your profile currently resonates at{" "}
+              The current configuration scores{" "}
               <strong>
                 {(res.mathematical_resonance.average_correlation_index * 100).toFixed(1)}%
               </strong>{" "}
-              systemic harmony. This indicates how proportionally aligned your
-              current configuration is with the Golden Ratio (Phi),
-              Fibonacci sequences, and Tesla&apos;s 369 Vortex Mathematics.
-              Highly resonant periods often feel more "synchronic" or orderly.
+              on this build's index, which compares the current separations against
+              ratios drawn from the Golden Ratio (Phi), Fibonacci sequences and
+              369 vortex arithmetic. The index is an arithmetic property of the
+              positions; the significance attached to it is an interpretive
+              convention of this application, not a claim from any tradition.
             </p>
           </div>
         )}
@@ -340,8 +341,8 @@ export default function TodayTab({ ctx }) {
             const expl = ASP_EXPLAIN[top.name] || short;
             const flavor1 = role1 ? `${role1}` : n1;
             const flavor2 = role2 ? `${role2}` : n2;
-            body = `Transiting ${n1 === n2 ? n1 : `${n1} and ${n2}`} links your ${flavor1}${role2 ? ` with your ${flavor2}` : ""
-              } via a ${top.name} aspect — ${expl}.`;
+            body = `Transiting ${n1 === n2 ? n1 : `${n1} and ${n2}`} contacts the ${flavor1} significator${role2 ? ` and the ${flavor2} significator` : ""
+              } by ${top.name} — ${expl}.`;
           }
           const isPriority = focus !== "all" && sortedCategories.indexOf(cat) === 0;
           return (
