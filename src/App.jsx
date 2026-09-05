@@ -707,7 +707,7 @@ export default function App() {
                                   <span style={{ color: P_COL[a.p2] }}>{P_SYM[a.p2]} {a.p2}</span>
                                 </div>
                                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: "6px 0 0" }}>
-                                  {pi ? `${r0} and ${r1}: ${pi}` : `${a.p1} and ${a.p2} — ${r0} and ${r1}.`}
+                                  {pi ? `${r0} and ${r1}: ${pi}` : `${a.p1} and ${a.p2} — ${r0 === r1 ? `both ${r0}s` : `${r0} and ${r1}`}.`}
                                 </p>
                                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.55, color: "#69ff8e", margin: "6px 0 0", fontStyle: "italic" }}>
                                   {giftAdvice}
@@ -735,7 +735,7 @@ export default function App() {
                                   <span style={{ color: P_COL[a.p2] }}>{P_SYM[a.p2]} {a.p2}</span>
                                 </div>
                                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: "6px 0 0" }}>
-                                  {pi ? `${r0} and ${r1}: ${pi}` : `${a.p1} and ${a.p2} — ${r0} and ${r1}.`}
+                                  {pi ? `${r0} and ${r1}: ${pi}` : `${a.p1} and ${a.p2} — ${r0 === r1 ? `both ${r0}s` : `${r0} and ${r1}`}.`}
                                 </p>
                                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.55, color: "#ff8a50", margin: "6px 0 0", fontStyle: "italic" }}>
                                   {growthAdvice}

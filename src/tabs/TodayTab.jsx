@@ -265,7 +265,7 @@ export default function TodayTab({ ctx }) {
                     {n1 === n2 ? n1 : `${n1} and ${n2}`} {weekAnchor.sym}{" "}
                     {weekAnchor.name}
                   </strong>{" "}
-                  ({expl}).{n1 === n2 ? "" : ` ${n1} the ${r0}, ${n2} the ${r1}.`}
+                  ({expl}).{n1 === n2 ? "" : ` ${r0 === r1 ? `${n1} and ${n2}, both ${r0}s` : `${n1} the ${r0}, ${n2} the ${r1}`}.`}
                   {insight ? ` ${insight.charAt(0).toUpperCase()}${insight.slice(1)}.` : ""} These bodies move slowly, so the contact holds across the week rather than a single day.
                 </p>
               );
