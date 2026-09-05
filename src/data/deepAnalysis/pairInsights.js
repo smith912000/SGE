@@ -1,4 +1,4 @@
-// PAIR_INSIGHT is keyed by the pair of P_ROLE labels, e.g. "Identity+Emotions".
+// PAIR_INSIGHT is keyed by the pair of P_ROLE labels, e.g. "greater light+lesser light".
 // The line comes from the pair record for the two bodies. See docs/VOICE.md.
 
 import { P_ROLE } from '../astrology/planets.js';

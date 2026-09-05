@@ -1,3 +1,4 @@
+import { ASP_ADJ } from '../data/astrology/aspects.js';
 export default function SynastryTab({ ctx }) {
   const { M3, res, grid2, P_COL, P_SYM, P_ROLE, Card, WheelWithTooltip, AspectTable } = ctx;
 
@@ -40,7 +41,7 @@ export default function SynastryTab({ ctx }) {
     const p1 = a.p1.replace(/^[AB]_/,""), p2 = a.p2.replace(/^[AB]_/,"");
     return SYN_CONTACT[`${p1}+${p2}`]||SYN_CONTACT[`${p2}+${p1}`]|| (p1 === p2
       ? `${p1} in one chart to ${p2} in the other.`
-      : `${p1} in one chart to ${p2} in the other — the ${(P_ROLE[p1]||p1).toLowerCase()} body to the ${(P_ROLE[p2]||p2).toLowerCase()} body.`);
+      : `${p1} in one chart to ${p2} in the other — ${p1} the ${(P_ROLE[p1]||p1)}, ${p2} the ${(P_ROLE[p2]||p2)}.`);
   };
 
   const frictionAsp = [...squares, ...opps].sort((a,b)=>b.strength-a.strength).slice(0,3);
@@ -154,7 +155,7 @@ export default function SynastryTab({ ctx }) {
             </p>
             {supportive.map((a,i)=>{
               const p1=a.p1.replace(/^[AB]_/,""), p2=a.p2.replace(/^[AB]_/,"");
-              const roleDesc = `The ${(P_ROLE[p1]||p1).toLowerCase()} significator of one chart stands ${a.name.toLowerCase()} the ${(P_ROLE[p2]||p2).toLowerCase()} significator of the other.`;
+              const roleDesc = `${p1} in one chart stands ${ASP_ADJ[a.name] || a.name.toLowerCase()} ${p2} in the other.`;
               return (
                 <div key={i} style={{ padding:"12px 16px", marginBottom:8, borderRadius:10, background:a.col+"0a", borderLeft:`3px solid ${a.col}` }}>
                   <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.72rem", color:M3.onSurface, marginBottom:4 }}>

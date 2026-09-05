@@ -230,7 +230,7 @@ export default function DeepTab({ ctx }) {
               <span style={{color:P_COL[a.p2]}}>{P_SYM[a.p2]} {a.p2}</span>
             </div>
             <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurface, margin:"6px 0 0" }}>
-              {pi ? `${r0} and ${r1}: ${pi}` : `A soft contact between the ${r0.toLowerCase()} and ${r1.toLowerCase()} significators.`}
+              {pi ? `${r0} and ${r1}: ${pi}` : `${a.p1} and ${a.p2} — ${r0} and ${r1}.`}
             </p>
             <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.55, color:"#69ff8e", margin:"6px 0 0", fontStyle:"italic" }}>
               {giftAdvice}
@@ -258,7 +258,7 @@ export default function DeepTab({ ctx }) {
               <span style={{color:P_COL[a.p2]}}>{P_SYM[a.p2]} {a.p2}</span>
             </div>
             <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurface, margin:"6px 0 0" }}>
-              {pi ? `${r0} and ${r1}: ${pi}` : `A hard contact between the ${r0.toLowerCase()} and ${r1.toLowerCase()} significators.`}
+              {pi ? `${r0} and ${r1}: ${pi}` : `${a.p1} and ${a.p2} — ${r0} and ${r1}.`}
             </p>
             <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.55, color:"#ff8a50", margin:"6px 0 0", fontStyle:"italic" }}>
               {growthAdvice}
@@ -508,7 +508,7 @@ export default function DeepTab({ ctx }) {
               </div>
               {hard && (
                 <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.79rem", lineHeight:1.68, color:M3.onSurface, margin:"18px 0 0" }}>
-                  The tightest hard contact in this chart is {(P_ROLE[hard.p1]||hard.p1)} {hard.name.toLowerCase()} {(P_ROLE[hard.p2]||hard.p2)}, at an orb of {typeof hard.orb === "number" ? hard.orb.toFixed(2) : hard.orb}&deg;. Whether it appears at all depends on the orb policy in use.
+                  The tightest hard contact in this chart is {hard.p1} {hard.name.toLowerCase()} {hard.p2}, at an orb of {typeof hard.orb === "number" ? hard.orb.toFixed(2) : hard.orb}&deg;. Whether it appears at all depends on the orb policy in use.
                 </p>
               )}
               <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.62, color:M3.onSurfaceVariant, fontStyle:"italic", margin:"14px 0 0" }}>

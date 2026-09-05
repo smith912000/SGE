@@ -8,9 +8,15 @@ export const P_COL = {
   Neptune: "#5c6bc0", Pluto: "#ab47bc", Chiron: "#b388ff", Node: "#78909c", Lilith: "#e040fb",
 };
 export const P_ROLE = {
-  Sun: "Identity", Moon: "Emotions", Mercury: "Thinking", Venus: "Love", Mars: "Drive",
-  Jupiter: "Growth", Saturn: "Discipline", Uranus: "Change", Neptune: "Imagination", Pluto: "Transformation",
-  Chiron: "Healing", Node: "Life Purpose", Lilith: "Shadow Self",
+  // Classical designations. The seven traditional bodies carry the office the
+  // Hellenistic and medieval sources give them; the rest are named for what
+  // they are, since no classical office exists for them.
+  Sun: "greater light", Moon: "lesser light", Mercury: "messenger",
+  Venus: "lesser benefic", Mars: "lesser malefic",
+  Jupiter: "greater benefic", Saturn: "greater malefic",
+  Uranus: "modern addition", Neptune: "modern addition", Pluto: "modern addition",
+  Chiron: "modern addition", Lilith: "lunar apogee",
+  Node: "north node", Rahu: "north node", Ketu: "south node",
 };
 export const PL = {};
 

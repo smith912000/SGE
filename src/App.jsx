@@ -707,7 +707,7 @@ export default function App() {
                                   <span style={{ color: P_COL[a.p2] }}>{P_SYM[a.p2]} {a.p2}</span>
                                 </div>
                                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: "6px 0 0" }}>
-                                  {pi ? `${r0} and ${r1}: ${pi}` : `A soft contact between the ${r0.toLowerCase()} and ${r1.toLowerCase()} significators.`}
+                                  {pi ? `${r0} and ${r1}: ${pi}` : `${a.p1} and ${a.p2} — ${r0} and ${r1}.`}
                                 </p>
                                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.55, color: "#69ff8e", margin: "6px 0 0", fontStyle: "italic" }}>
                                   {giftAdvice}
@@ -735,7 +735,7 @@ export default function App() {
                                   <span style={{ color: P_COL[a.p2] }}>{P_SYM[a.p2]} {a.p2}</span>
                                 </div>
                                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: "6px 0 0" }}>
-                                  {pi ? `${r0} and ${r1}: ${pi}` : `A hard contact between the ${r0.toLowerCase()} and ${r1.toLowerCase()} significators.`}
+                                  {pi ? `${r0} and ${r1}: ${pi}` : `${a.p1} and ${a.p2} — ${r0} and ${r1}.`}
                                 </p>
                                 <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.55, color: "#ff8a50", margin: "6px 0 0", fontStyle: "italic" }}>
                                   {growthAdvice}
@@ -1896,11 +1896,11 @@ export default function App() {
                                       const el = si.element || "";
                                       const signStyle = sign === "Aries" ? "bold, direct action" : sign === "Taurus" ? "steady, grounded persistence" : sign === "Gemini" ? "mental agility and communication" : sign === "Cancer" ? "emotional depth and nurturing" : sign === "Leo" ? "confident self-expression and warmth" : sign === "Virgo" ? "careful refinement and service" : sign === "Libra" ? "balance, fairness, and partnership" : sign === "Scorpio" ? "intensity, transformation, and depth" : sign === "Sagittarius" ? "expansive vision and truth-seeking" : sign === "Capricorn" ? "disciplined structure and ambition" : sign === "Aquarius" ? "unconventional thinking and community" : "intuitive sensitivity and imagination";
                                       if (planets.length >= 3) {
-                                        return `${planets.map(p => P_ROLE[p] || p).join(", ")} fall together in ${sign} at this harmonic, a grouping of ${planets.length}. In the natal figure these bodies stand at or near the ${(360 / n).toFixed(1)}° family of separations.`;
+                                        return `${planets.join(", ")} fall together in ${sign} at this harmonic, a grouping of ${planets.length}. In the natal figure these bodies stand at or near the ${(360 / n).toFixed(1)}° family of separations.`;
                                       }
                                       const r0 = P_ROLE[planets[0]] || planets[0], r1 = P_ROLE[planets[1]] || planets[1];
                                       const insight = getPairInsight(planets[0], planets[1]);
-                                      return `${r0} and ${r1} fall together in ${sign} at this harmonic. ${insight}`;
+                                      return `${planets[0]} and ${planets[1]} fall together in ${sign} at this harmonic. ${insight}`;
                                     })()}
                                   </p>
                                 </div>
@@ -2143,7 +2143,7 @@ export default function App() {
                             const p1 = a.p1.replace(/^[AB]_/, ""), p2 = a.p2.replace(/^[AB]_/, "");
                             return SYN_CONTACT[`${p1}+${p2}`] || SYN_CONTACT[`${p2}+${p1}`] || (p1 === p2
       ? `${p1} in one chart to ${p2} in the other.`
-      : `${p1} in one chart to ${p2} in the other — the ${(P_ROLE[p1]||p1).toLowerCase()} body to the ${(P_ROLE[p2]||p2).toLowerCase()} body.`);
+      : `${p1} in one chart to ${p2} in the other — ${p1} the ${(P_ROLE[p1]||p1)}, ${p2} the ${(P_ROLE[p2]||p2)}.`);
                           };
                           return (
                             <Card title="◈ Hard Contacts Between the Two Charts">

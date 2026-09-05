@@ -121,11 +121,11 @@ export default function HarmonicsTab({ ctx }) {
                       const el = si.element||"";
                       const signStyle = sign==="Aries"?"bold, direct action":sign==="Taurus"?"steady, grounded persistence":sign==="Gemini"?"mental agility and communication":sign==="Cancer"?"emotional depth and nurturing":sign==="Leo"?"confident self-expression and warmth":sign==="Virgo"?"careful refinement and service":sign==="Libra"?"balance, fairness, and partnership":sign==="Scorpio"?"intensity, transformation, and depth":sign==="Sagittarius"?"expansive vision and truth-seeking":sign==="Capricorn"?"disciplined structure and ambition":sign==="Aquarius"?"unconventional thinking and community":"intuitive sensitivity and imagination";
                       if (planets.length >= 3) {
-                        return `${planets.map(p=>P_ROLE[p]||p).join(", ")} fall together in ${sign} at this harmonic, a grouping of ${planets.length}. ${el} is the element of that sign. In the natal chart these bodies stand at or near the ${(360/n).toFixed(1)}° family of separations.`;
+                        return `${planets.join(", ")} fall together in ${sign} at this harmonic, a grouping of ${planets.length}. ${el} is the element of that sign. In the natal chart these bodies stand at or near the ${(360/n).toFixed(1)}° family of separations.`;
                       }
                       const r0 = P_ROLE[planets[0]]||planets[0], r1 = P_ROLE[planets[1]]||planets[1];
                       const insight = getPairInsight(planets[0], planets[1]);
-                      return `${r0} and ${r1} fall together in ${sign} at this harmonic. ${insight}`;
+                      return `${planets[0]} and ${planets[1]} fall together in ${sign} at this harmonic. ${insight}`;
                     })()}
                   </p>
                 </div>
