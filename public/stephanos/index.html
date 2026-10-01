@@ -514,7 +514,7 @@ const md=([m,d])=>MON[m-1]+" "+d;
 // day offset from Dec 22 in a common (non-leap) reference year
 const DOY=[0,31,59,90,120,151,181,212,243,273,304,334];
 const off=([m,d])=>{const y=DOY[m-1]+d-1,s=DOY[11]+21;return (y-s+365)%365};
-const OFF=STEPS.map(s=>off(s.cp));
+const OFF=STEPS.map(s=>off(s.st));
 const NS="http://www.w3.org/2000/svg",svg=document.getElementById("dial");
 const el=(t,a,p=svg)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e};
 const pol=(r,a)=>[r*Math.sin(a),-r*Math.cos(a)];
@@ -557,7 +557,7 @@ function show(i,live){
   $("r-name").textContent=s.k=="he"?s.name:s.name+" (rune)";
   $("r-sign").textContent=vs(s.k=="he"?s.sign:"Between "+STEPS[i-1].sign+" and "+STEPS[(i+1)%48].sign);
   $("r-corr").textContent=vs(s.k=="he"?s.corr:"The full moon of the hour");
-  $("r-check").textContent=md(s.cp)+(md(s.cp)!=md(s.st)?" · strict count "+md(s.st):"");
+  $("r-check").textContent=md(s.st)+(md(s.cp)!=md(s.st)?" · observed "+md(s.cp):"");
   $("r-obs").textContent=s.obs||"—";
 }
 let pinned=false;svg.addEventListener("click",()=>{pinned=true});
