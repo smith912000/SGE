@@ -490,7 +490,7 @@ const R=[
 ["ᛖ","Ehwaz",[3,28],[3,31],"Twins & Sleipnir"],
 ["ᛗ","Mannaz",[4,12],[4,14],"Κερεαλια"],
 ["ᛚ","Laguz",[4,27],[4,29],"Floralia (Nehalennia & Freja)"],
-["ᛜ","Ingwaz",[5,13],[5,15],"Kundalinalia / Κηρύκειοναλια"],
+["ᛝ","Ingwaz",[5,13],[5,15],"Kundalinalia / Κηρύκειοναλια"],
 ["ᛞ","Dagaz",[5,28],[5,29],""],
 ["ᛟ","Othala",[6,13],[6,13],""],
 ["ᚠ","Fehu",[6,29],[6,28],"Runic New Year"],
@@ -514,7 +514,12 @@ const md=([m,d])=>MON[m-1]+" "+d;
 // day offset from Dec 22 in a common (non-leap) reference year
 const DOY=[0,31,59,90,120,151,181,212,243,273,304,334];
 const off=([m,d])=>{const y=DOY[m-1]+d-1,s=DOY[11]+21;return (y-s+365)%365};
-const OFF=STEPS.map(s=>off(s.st));
+// Day numbers of the year as Stephanos gives them: Day 1 = Dec 22
+const DAYS=[1, 8, 15, 22, 30, 38, 46, 53, 61, 69, 76, 84, 91, 99, 107, 114, 122, 129, 137, 145, 152, 160, 167, 175, 183, 190, 198, 205, 213, 221, 228, 236, 244, 251, 259, 266, 274, 282, 289, 297, 304, 312, 320, 327, 335, 342, 350, 358];
+STEPS.forEach((s,i)=>{s.day=DAYS[i]});
+const OFF=DAYS.map(d=>d-1);
+const cycleStart=n=>{const y=n.getFullYear();return new Date(n>=new Date(y,11,22)?y:y-1,11,22)};
+const dayDate=d=>{const c=cycleStart(new Date()),t=new Date(c.getFullYear(),11,22+d-1);return MON[t.getMonth()]+" "+t.getDate()};
 const NS="http://www.w3.org/2000/svg",svg=document.getElementById("dial");
 const el=(t,a,p=svg)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e};
 const pol=(r,a)=>[r*Math.sin(a),-r*Math.cos(a)];
@@ -557,12 +562,12 @@ function show(i,live){
   $("r-name").textContent=s.k=="he"?s.name:s.name+" (rune)";
   $("r-sign").textContent=vs(s.k=="he"?s.sign:"Between "+STEPS[i-1].sign+" and "+STEPS[(i+1)%48].sign);
   $("r-corr").textContent=vs(s.k=="he"?s.corr:"The full moon of the hour");
-  $("r-check").textContent=md(s.st)+(md(s.cp)!=md(s.st)?" · observed "+md(s.cp):"");
+  $("r-check").textContent="Day "+s.day+" · "+dayDate(s.day)+(md(s.cp)!=dayDate(s.day)?" · observed "+md(s.cp):"");
   $("r-obs").textContent=s.obs||"—";
 }
 let pinned=false;svg.addEventListener("click",()=>{pinned=true});
 function where(now){
-  const y=now.getFullYear(),start=new Date(now>=new Date(y,11,22)?y:y-1,11,22);
+  const start=cycleStart(now);
   let d=(now-start)/864e5;
   d=Math.min(d,364.999);
   let k=47;for(let i=0;i<48;i++){if(OFF[i]<=d)k=i}
