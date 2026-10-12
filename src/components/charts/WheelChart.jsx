@@ -222,11 +222,11 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
   const axisMC  = houses?.MC ?? 90;
   const axisIC  = norm(axisMC + 180);
   const axisPairs = [
-    { a1:lon2a(axisAC), a2:lon2a(axisDC), lbl1:"AC", lbl2:"DC", col:"#f6c840" },
+    { a1:lon2a(axisAC), a2:lon2a(axisDC), lbl1:"AC", lbl2:"DC", col:"#E9C766" },
     { a1:lon2a(axisMC), a2:lon2a(axisIC), lbl1:"MC", lbl2:"IC", col:TH.axisAccent },
   ];
   const axisLabels = [
-    { lon:axisAC, lbl:"AC", col:"#f6c840" }, { lon:axisDC, lbl:"DC", col:"#f6c840" },
+    { lon:axisAC, lbl:"AC", col:"#E9C766" }, { lon:axisDC, lbl:"DC", col:"#E9C766" },
     { lon:axisMC, lbl:"MC", col:TH.axisAccent }, { lon:axisIC, lbl:"IC", col:TH.axisAccent },
   ];
 
@@ -417,7 +417,7 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
               opacity={axis ? 0.18 : 0.08}/>
             <text x={lx} y={ly} textAnchor="middle" dominantBaseline="middle"
               fill={TH.ring} fontSize={R*0.044}
-              fontFamily="'Share Tech Mono', monospace" fontWeight="600"
+              fontFamily="'JetBrains Mono', monospace" fontWeight="600"
               opacity={axis ? 0.5 : 0.25}
               style={{userSelect:"none"}}>{n}</text>
           </g>
@@ -456,7 +456,7 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
             <circle cx={dotX} cy={dotY} r={R*0.006} fill="#fff" opacity="0.9"/>
             <text x={labX} y={labY}
               textAnchor="middle" dominantBaseline="middle"
-              fill={col} fontSize={R*0.054} fontFamily="'Share Tech Mono', monospace"
+              fill={col} fontSize={R*0.054} fontFamily="'JetBrains Mono', monospace"
               fontWeight="700" opacity="0.95"
               style={{userSelect:"none", filter:`drop-shadow(0 0 8px ${col}66)`}}>{lbl}</text>
           </g>
@@ -549,7 +549,7 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
               style={{userSelect:"none", filter:`drop-shadow(0 0 4px ${col}66)`}}>{P_SYM[planet]}</text>
             <text x={px} y={py + bubbleR + degSize*0.9} textAnchor="middle"
               fill={col} fontSize={degSize} opacity={isHovered ? 0.8 : 0.5}
-              fontFamily="'Share Tech Mono', monospace" style={{userSelect:"none"}}>
+              fontFamily="'JetBrains Mono', monospace" style={{userSelect:"none"}}>
               {zodDeg(lon)}°
             </text>
           </g>

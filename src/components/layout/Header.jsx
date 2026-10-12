@@ -1,44 +1,34 @@
-import { useRef, useEffect } from 'react';
-import { useAnime } from '../../hooks/useAnime.js';
 import { M3 } from '../../theme/m3.js';
+import Mark from '../ui/Mark.jsx';
+
+const HUB = 'https://smith912000.github.io/wild-programme/';
 
 export default function Header() {
-  const ref = useRef(null);
-  const anime = useAnime();
-
-  useEffect(() => {
-    if (!anime || !ref.current) return;
-    anime({
-      targets: ref.current.querySelectorAll('.anim'),
-      opacity: [0, 1], translateY: [-16, 0],
-      delay: anime.stagger(70), duration: 650, easing: 'easeOutQuart',
-    });
-  }, [anime]);
-
   return (
-    <header ref={ref} style={{
-      textAlign: 'center', padding: '52px 20px 32px',
+    <header style={{
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      gap: 16, flexWrap: 'wrap', padding: '18px 0 16px',
       borderBottom: `1px solid ${M3.glassBorder}`,
     }}>
-      <div className="anim" style={{
-        fontFamily: M3.fontMono, fontSize: '0.63rem',
-        color: M3.secondary, letterSpacing: '0.55em', marginBottom: 10,
+      <a href={HUB} style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none', color: 'inherit' }}>
+        <Mark size={30} />
+        <div>
+          <div style={{
+            fontFamily: M3.fontDisplay, fontWeight: 600, fontSize: '1.7rem',
+            letterSpacing: '0.14em', lineHeight: 1, color: M3.onSurface,
+          }}>SGE</div>
+          <div style={{
+            fontFamily: M3.fontBody, fontWeight: 600, fontSize: '0.66rem',
+            letterSpacing: '0.18em', textTransform: 'uppercase', color: M3.tertiary, marginTop: 4,
+          }}>Astrology engine</div>
+        </div>
+      </a>
+      <div style={{
+        fontFamily: M3.fontBody, fontSize: '0.8rem', color: M3.outlineVariant,
+        display: 'flex', gap: 14, alignItems: 'center', flexWrap: 'wrap',
       }}>
-        ASTRO-TEMPORAL SYSTEM  ·  VERSION 5.0
-      </div>
-      <h1 className="anim" style={{
-        fontFamily: M3.fontDisplay, fontWeight: 900,
-        fontSize: 'clamp(2rem,6vw,4rem)', color: M3.primary,
-        textShadow: `0 0 60px ${M3.primary}44, 0 0 120px ${M3.primary}22`,
-        letterSpacing: '0.07em', lineHeight: 1.1,
-      }}>
-        SGE <span style={{ color: M3.tertiary }}>v5.0</span>
-      </h1>
-      <div className="anim" style={{
-        fontFamily: M3.fontMono, fontSize: '0.68rem',
-        color: M3.outlineVariant, marginTop: 10, letterSpacing: '0.28em',
-      }}>
-        DETERMINISTIC · ASTRONOMICALLY RIGOROUS · NO ML · PROFESSIONAL
+        <span>Deterministic. Astronomically rigorous. No machine learning.</span>
+        <span className="badge">v5.0</span>
       </div>
     </header>
   );

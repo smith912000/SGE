@@ -59,10 +59,10 @@ export default function PlanetTable({ positions, jd = null, siderealPositions = 
 
   const TH = {
     padding: "4px 6px", textAlign: "left", color: M3.secondary,
-    fontFamily: "'Share Tech Mono', monospace", fontSize: "0.58rem",
+    fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem",
     letterSpacing: "0.06em", borderBottom: `1px solid ${M3.outlineVariant}`, whiteSpace: "nowrap"
   };
-  const TD = { padding: "3px 6px", fontFamily: "'Share Tech Mono', monospace", fontSize: "0.7rem", color: M3.onSurface };
+  const TD = { padding: "3px 6px", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.7rem", color: M3.onSurface };
   const SC = { ...TD, fontSize: "0.78rem", letterSpacing: 2 };
 
   return (
@@ -106,7 +106,7 @@ export default function PlanetTable({ positions, jd = null, siderealPositions = 
                   {p}
                   <ResonanceBadge resonance={resonance?.profiles?.[p]} />
                 </td>
-                <td style={{ ...TD, color: M3.onSurfaceVariant, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.64rem", fontStyle: "italic", borderRight: `1px solid ${M3.outlineVariant}33` }}>{P_ROLE[p] || "—"}</td>
+                <td style={{ ...TD, color: M3.onSurfaceVariant, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.64rem", fontStyle: "italic", borderRight: `1px solid ${M3.outlineVariant}33` }}>{P_ROLE[p] || "—"}</td>
                 <td style={{ ...SC, background: "#ce93d811" }}>
                   <Glyphs letter={hermetic} title={hermetic ? `Hermetic: ${hermetic.hebrewName} (${hermetic.hebrew}) → ${p}` : undefined} />
                 </td>

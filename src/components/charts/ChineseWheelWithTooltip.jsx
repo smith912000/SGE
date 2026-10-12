@@ -25,7 +25,7 @@ export default function ChineseWheelWithTooltip(props) {
         </div>
         <div style={{ display:"flex", flexDirection:"column", alignItems:"center", minWidth:320 }}>
           <ChineseWheel {...props} onTooltip={handleTip}/>
-          <div style={{ textAlign:"center", marginTop:8, fontFamily:"'Share Tech Mono', monospace",
+          <div style={{ textAlign:"center", marginTop:8, fontFamily:"'JetBrains Mono', monospace",
             fontSize:"0.6rem", color:M3.outlineVariant, letterSpacing:"0.1em" }}>
             HOVER ANIMALS · ELEMENTS · TRIGRAMS · YIN-YANG FOR INFO
           </div>

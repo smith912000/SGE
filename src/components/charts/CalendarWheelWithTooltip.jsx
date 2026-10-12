@@ -74,7 +74,7 @@ function CalendarTooltip({ info, x, y, visible }) {
         <span
           style={{
             color: M3.primary,
-            fontFamily: "'Cinzel', serif",
+            fontFamily: "'Cormorant Garamond', serif",
             fontSize: "0.78rem",
             fontWeight: 600,
             letterSpacing: "0.04em",
@@ -101,7 +101,7 @@ function CalendarTooltip({ info, x, y, visible }) {
                   borderRadius: 20,
                   background: "rgba(155,135,200,0.18)",
                   color: M3.onPrimaryContainer,
-                  fontFamily: "'Share Tech Mono', monospace",
+                  fontFamily: "'JetBrains Mono', monospace",
                   fontSize: "0.62rem",
                   letterSpacing: "0.05em",
                   border: "1px solid rgba(155,135,200,0.25)",
@@ -115,7 +115,7 @@ function CalendarTooltip({ info, x, y, visible }) {
         <p
           style={{
             color: M3.onSurface,
-            fontFamily: "'EB Garamond', Georgia, serif",
+            fontFamily: "'DM Sans', system-ui, sans-serif",
             fontSize: "0.74rem",
             lineHeight: 1.55,
             margin: 0,
@@ -127,7 +127,7 @@ function CalendarTooltip({ info, x, y, visible }) {
           <p
             style={{
               color: M3.onSurfaceVariant,
-              fontFamily: "'EB Garamond', Georgia, serif",
+              fontFamily: "'DM Sans', system-ui, sans-serif",
               fontStyle: "italic",
               fontSize: "0.68rem",
               lineHeight: 1.55,
@@ -168,7 +168,7 @@ export default function CalendarWheelWithTooltip({ model, size = 500, showOverla
           style={{
             textAlign: "center",
             marginTop: 8,
-            fontFamily: "'Share Tech Mono', monospace",
+            fontFamily: "'JetBrains Mono', monospace",
             fontSize: "0.6rem",
             color: M3.outlineVariant,
             letterSpacing: "0.1em",

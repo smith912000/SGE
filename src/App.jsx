@@ -77,6 +77,7 @@ import Field from './components/ui/Field.jsx';
 import ComputeButton from './components/ui/ComputeButton.jsx';
 import TabContent from './components/ui/TabContent.jsx';
 import DistBar from './components/ui/DistBar.jsx';
+import Mark from './components/ui/Mark.jsx';
 import StarCanvas from './components/ui/StarCanvas.jsx';
 import ProfilePanel from './components/ui/ProfilePanel.jsx';
 
@@ -204,6 +205,12 @@ export default function App() {
       delay: anime.stagger(70), duration: 650, easing: "easeOutQuart"
     });
   }, [anime]);
+
+  // On a phone the birth form sits above the chart, so bring the chart up once it exists.
+  useEffect(() => {
+    if (!res || window.innerWidth >= 960) return;
+    document.querySelector('.sge-main')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [res]);
 
   const compute = useCallback(async () => {
     setLoading(true);
@@ -339,29 +346,33 @@ export default function App() {
   const [cwResult, setCwResult] = useState(null);
 
   return (
-    <div style={{ minHeight: "100vh", background: M3.surfaceDim, color: M3.onSurface, position: "relative", overflowX: "hidden" }}>
+    <div style={{ minHeight: "100vh", color: M3.onSurface, position: "relative", overflowX: "hidden" }}>
 
       <StarCanvas />
 
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 1440, margin: "0 auto", padding: "0 16px 56px" }}>
+      <div className="sge-shell">
 
         <Header />
 
-        <div style={{ paddingTop: 28, display: "flex", flexDirection: "column", gap: 20 }}>
+        <div className="sge-body">
 
-          <InputPanel A={A} setA={setA} B={B} setB={setB} syn={syn} setSyn={setSyn} compute={compute} loading={loading} />
+          <aside className="sge-side">
+            <InputPanel A={A} setA={setA} B={B} setB={setB} syn={syn} setSyn={setSyn} compute={compute} loading={loading} />
+          </aside>
 
+          <div className="sge-main">
+          {!res && (
+            <div className="sge-empty">
+              <Mark size={44} />
+              <h2>Begin with a <em>birth moment.</em></h2>
+              <p>Enter the date, time and place, then compute. The natal chart, today's transits, progressions and the Vedic, Chinese and symbolic systems all open from it.</p>
+            </div>
+          )}
           {res && (
             <>
-              <div style={{
-                fontFamily: "'Share Tech Mono', monospace", fontSize: "0.66rem",
-                color: M3.secondary, padding: "10px 16px",
-                background: M3.surfaceContainer, borderRadius: 10,
-                border: `1px solid ${M3.outlineVariant}`, letterSpacing: "0.06em",
-                display: "flex", flexWrap: "wrap", gap: "4px 16px"
-              }}>
-                <span>Rising Sign <span style={{ color: SIGN_COL[zodSign(res.houses.ASC)] }}>{zodSign(res.houses.ASC)}</span> <span style={{ color: M3.outlineVariant }}>({norm(res.houses.ASC).toFixed(1)}°)</span></span>
-                <span>Career Point <span style={{ color: SIGN_COL[zodSign(res.houses.MC)] }}>{zodSign(res.houses.MC)}</span> <span style={{ color: M3.outlineVariant }}>({norm(res.houses.MC).toFixed(1)}°)</span></span>
+              <div className="info-strip">
+                <span>Rising sign <b style={{ color: SIGN_COL[zodSign(res.houses.ASC)] }}>{zodSign(res.houses.ASC)}</b> <span style={{ color: M3.outlineVariant }}>({norm(res.houses.ASC).toFixed(1)}°)</span></span>
+                <span>Career point <b style={{ color: SIGN_COL[zodSign(res.houses.MC)] }}>{zodSign(res.houses.MC)}</b> <span style={{ color: M3.outlineVariant }}>({norm(res.houses.MC).toFixed(1)}°)</span></span>
                 <span style={{ color: M3.outlineVariant }}>Vedic offset {ayanamsa(res.jd).toFixed(1)}°</span>
               </div>
 
@@ -413,10 +424,10 @@ export default function App() {
                   <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                     <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                       <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>The Natal Figure — The Sky at the Recorded Moment</div>
-                      <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
+                      <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
                         At the moment entered, every body held a specific longitude in the zodiac. This page states that figure. The <strong>planet table</strong> lists each position in both the tropical frame (measured from the equinox) and the sidereal frame (measured from the fixed stars). The <strong>wheel</strong> plots the same numbers — the outer ring carries the signs, the inner lines cut the twelve houses, and each glyph sits at its computed longitude.
                       </p>
-                      <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
+                      <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
                         <strong>What the tradition attributes:</strong> each body carries a domain — ☉ the Sun is the light and the centre, ☽ the Moon the receptive and the changing, ☿ Mercury the exchange of signs, ♀ Venus the attractive principle, ♂ Mars the cutting and initiating force. The sign inflects the mode in which that principle operates; the house names the field in which it is read.
                       </p>
                     </Card>
@@ -431,7 +442,7 @@ export default function App() {
                           </div>
                         </Card>
                         <Card title="⌂ The Twelve Houses — Fields of the Figure">
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
                             The houses are twelve fields cut from the horizon and meridian. The sign on the cusp inflects the field; bodies falling inside it are read as tenanting that field. These cusps are Porphyry.
                           </p>
                           {(() => {
@@ -481,18 +492,18 @@ export default function App() {
                               return (
                                 <div key={i} style={{ padding: "10px 14px", marginBottom: 6, borderRadius: 10, background: SIGN_COL[sign] + "08", borderLeft: `3px solid ${SIGN_COL[sign]}33` }}>
                                   <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: pls.length ? 4 : 0 }}>
-                                    <span style={{ color: M3.secondary, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "700", minWidth: 22 }}>{i + 1}.</span>
-                                    <span style={{ color: SIGN_COL[sign], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "700" }}>{sign}</span>
-                                    <span style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.68rem", fontStyle: "italic", color: M3.onSurfaceVariant }}>{HOUSE_AREA[i]}</span>
-                                    {pls.length > 0 && <span style={{ marginLeft: "auto", fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.primary }}>{pls.map(p => P_SYM[p] || p).join(" ")}</span>}
+                                    <span style={{ color: M3.secondary, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: "700", minWidth: 22 }}>{i + 1}.</span>
+                                    <span style={{ color: SIGN_COL[sign], fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: "700" }}>{sign}</span>
+                                    <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.68rem", fontStyle: "italic", color: M3.onSurfaceVariant }}>{HOUSE_AREA[i]}</span>
+                                    {pls.length > 0 && <span style={{ marginLeft: "auto", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: M3.primary }}>{pls.map(p => P_SYM[p] || p).join(" ")}</span>}
                                   </div>
-                                  <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.68rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: 0 }}>{HOUSE_DESC[i]}</p>
+                                  <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.68rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: 0 }}>{HOUSE_DESC[i]}</p>
                                   {pls.length > 0 && pls.map(p => (
-                                    <p key={p} style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.66rem", lineHeight: 1.45, color: M3.onSurface, margin: "4px 0 0", paddingLeft: 8, borderLeft: `2px solid ${P_COL[p] || M3.primary}44` }}>
+                                    <p key={p} style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.66rem", lineHeight: 1.45, color: M3.onSurface, margin: "4px 0 0", paddingLeft: 8, borderLeft: `2px solid ${P_COL[p] || M3.primary}44` }}>
                                       <strong style={{ color: P_COL[p] || M3.primary }}>{P_SYM[p]} {p}</strong> — {PLANET_IN_HOUSE[p] || "tenanting this field"}.
                                     </p>
                                   ))}
-                                  {pls.length === 0 && <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.64rem", lineHeight: 1.4, color: M3.outlineVariant, margin: "4px 0 0", fontStyle: "italic" }}>No body falls in this field. The tradition then reads it through the sign on the cusp and through the ruler of that sign, wherever it stands.</p>}
+                                  {pls.length === 0 && <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.64rem", lineHeight: 1.4, color: M3.outlineVariant, margin: "4px 0 0", fontStyle: "italic" }}>No body falls in this field. The tradition then reads it through the sign on the cusp and through the ruler of that sign, wherever it stands.</p>}
                                 </div>
                               );
                             });
@@ -530,7 +541,7 @@ export default function App() {
 
                       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Deep Reading — What the Traditions Attribute to This Figure</div>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
                           This page takes each major factor of the figure and states what has been attributed to it. It covers the <strong>solar placement</strong> (the light and its sign), the <strong>lunar placement</strong> (the receptive body and its sign), the <strong>rising sign</strong> (the degree on the eastern horizon), and each of the remaining bodies. Below that stand the element and modality counts, the harmonic layers, and a summary of the whole figure. Attributions are named, not resolved; where sources disagree, the disagreement is left standing.
                         </p>
                       </Card>
@@ -541,12 +552,12 @@ export default function App() {
                             <span style={{ fontSize: "1.6rem" }}>{SI[sunSign].emoji}</span>
                           </div>
                           <div>
-                            <div style={{ color: SIGN_COL[sunSign], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.82rem", fontWeight: "700" }}>Sun in {sunSign}</div>
-                            <div style={{ color: M3.onSurfaceVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.65rem" }}>{SI[sunSign].element} · {SI[sunSign].mode} · ruled by {SI[sunSign].ruler}</div>
-                            {SI[sunSign].hebrew && <div style={{ color: M3.outlineVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", marginTop: 2 }}>{SI[sunSign].emoji} ← {SI[sunSign].letterName} ({SI[sunSign].hebrew}) ← {SI[sunSign].phoenician} ← {SI[sunSign].hiero} — {SI[sunSign].letterMeaning.split("—")[1]?.trim() || ""}</div>}
+                            <div style={{ color: SIGN_COL[sunSign], fontFamily: "'JetBrains Mono', monospace", fontSize: "0.82rem", fontWeight: "700" }}>Sun in {sunSign}</div>
+                            <div style={{ color: M3.onSurfaceVariant, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.65rem" }}>{SI[sunSign].element} · {SI[sunSign].mode} · ruled by {SI[sunSign].ruler}</div>
+                            {SI[sunSign].hebrew && <div style={{ color: M3.outlineVariant, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", marginTop: 2 }}>{SI[sunSign].emoji} ← {SI[sunSign].letterName} ({SI[sunSign].hebrew}) ← {SI[sunSign].phoenician} ← {SI[sunSign].hiero} — {SI[sunSign].letterMeaning.split("—")[1]?.trim() || ""}</div>}
                           </div>
                         </div>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>{SOLAR_DEEP[sunSign]?.plain}</p>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>{SOLAR_DEEP[sunSign]?.plain}</p>
                       </Card>
 
                       <Card title="🌙 The Lunar Placement — The Receptive Body and Its Sign">
@@ -555,12 +566,12 @@ export default function App() {
                             <span style={{ fontSize: "1.6rem" }}>{SI[moonSign].emoji}</span>
                           </div>
                           <div>
-                            <div style={{ color: SIGN_COL[moonSign], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.82rem", fontWeight: "700" }}>Moon in {moonSign}</div>
-                            <div style={{ color: M3.onSurfaceVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.65rem" }}>{SI[moonSign].element} · {SI[moonSign].mode} · ruled by {SI[moonSign].ruler}</div>
-                            {SI[moonSign].hebrew && <div style={{ color: M3.outlineVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", marginTop: 2 }}>{SI[moonSign].emoji} ← {SI[moonSign].letterName} ({SI[moonSign].hebrew}) ← {SI[moonSign].phoenician} ← {SI[moonSign].hiero} — {SI[moonSign].letterMeaning.split("—")[1]?.trim() || ""}</div>}
+                            <div style={{ color: SIGN_COL[moonSign], fontFamily: "'JetBrains Mono', monospace", fontSize: "0.82rem", fontWeight: "700" }}>Moon in {moonSign}</div>
+                            <div style={{ color: M3.onSurfaceVariant, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.65rem" }}>{SI[moonSign].element} · {SI[moonSign].mode} · ruled by {SI[moonSign].ruler}</div>
+                            {SI[moonSign].hebrew && <div style={{ color: M3.outlineVariant, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", marginTop: 2 }}>{SI[moonSign].emoji} ← {SI[moonSign].letterName} ({SI[moonSign].hebrew}) ← {SI[moonSign].phoenician} ← {SI[moonSign].hiero} — {SI[moonSign].letterMeaning.split("—")[1]?.trim() || ""}</div>}
                           </div>
                         </div>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>{LUNAR_DEEP[moonSign]?.plain}</p>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>{LUNAR_DEEP[moonSign]?.plain}</p>
                       </Card>
 
                       <Card title="🌅 The Ascendant — The Degree on the Eastern Horizon">
@@ -569,21 +580,21 @@ export default function App() {
                             <span style={{ fontSize: "1.6rem" }}>{SI[ascSign].emoji}</span>
                           </div>
                           <div>
-                            <div style={{ color: SIGN_COL[ascSign], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.82rem", fontWeight: "700" }}>{ascSign} Rising</div>
-                            <div style={{ color: M3.onSurfaceVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.65rem" }}>The ascendant — the sign rising on the eastern horizon at the recorded moment</div>
-                            {SI[ascSign].hebrew && <div style={{ color: M3.outlineVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", marginTop: 2 }}>{SI[ascSign].emoji} ← {SI[ascSign].letterName} ({SI[ascSign].hebrew}) ← {SI[ascSign].phoenician} ← {SI[ascSign].hiero} — {SI[ascSign].letterMeaning.split("—")[1]?.trim() || ""}</div>}
+                            <div style={{ color: SIGN_COL[ascSign], fontFamily: "'JetBrains Mono', monospace", fontSize: "0.82rem", fontWeight: "700" }}>{ascSign} Rising</div>
+                            <div style={{ color: M3.onSurfaceVariant, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.65rem" }}>The ascendant — the sign rising on the eastern horizon at the recorded moment</div>
+                            {SI[ascSign].hebrew && <div style={{ color: M3.outlineVariant, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", marginTop: 2 }}>{SI[ascSign].emoji} ← {SI[ascSign].letterName} ({SI[ascSign].hebrew}) ← {SI[ascSign].phoenician} ← {SI[ascSign].hiero} — {SI[ascSign].letterMeaning.split("—")[1]?.trim() || ""}</div>}
                           </div>
                         </div>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>
                           The ascendant is the point of the ecliptic rising at the eastern horizon at the recorded instant. With <strong style={{ color: SIGN_COL[ascSign] }}>{ascSign}</strong> on that point, the tradition reads the figure through {SI[ascSign].plain.split(".")[0].toLowerCase()}. Hellenistic practice makes the ascendant the first house and the ruler of its sign the lord of the whole figure. Note that the ascendant depends on the birth time more sharply than any longitude does: four minutes of clock error moves it about one degree.
                         </p>
                         {RISING_SHADOW[ascSign] && (
                           <div style={{ marginTop: 14, padding: "12px 16px", borderRadius: 10, background: "#ff525208", border: "1px solid #ff525218" }}>
-                            <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.64rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 6 }}>ATTRIBUTED</div>
-                            <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>{RISING_SHADOW[ascSign].shadow}</p>
+                            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.64rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 6 }}>ATTRIBUTED</div>
+                            <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>{RISING_SHADOW[ascSign].shadow}</p>
                             <div style={{ marginTop: 10, padding: "10px 14px", borderRadius: 8, background: "#69ff8e08", border: "1px solid #69ff8e18" }}>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 4 }}>STRUCTURE</div>
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>{RISING_SHADOW[ascSign].growth}</p>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 4 }}>STRUCTURE</div>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>{RISING_SHADOW[ascSign].growth}</p>
                             </div>
                           </div>
                         )}
@@ -597,42 +608,42 @@ export default function App() {
                             <Card title="💖 Venus — The Attractive Principle">
                               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
                                 <span style={{ color: P_COL.Venus, fontSize: "1.4rem" }}>♀</span>
-                                <span style={{ color: SIGN_COL[venSign], fontFamily: "'Share Tech Mono',monospace", fontWeight: "700" }}>Venus in {venSign}</span>
+                                <span style={{ color: SIGN_COL[venSign], fontFamily: "'JetBrains Mono', monospace", fontWeight: "700" }}>Venus in {venSign}</span>
                               </div>
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
                                 Venus is the lesser benefic and the principle of attraction — beauty, value, concord, and what is held desirable. In <strong style={{ color: SIGN_COL[venSign] }}>{venSign}</strong>, the tradition inflects that principle as {SI[venSign].plain.split(".")[0].toLowerCase()}. The sign is {SI[venSign].element.toLowerCase()} and {SI[venSign].mode.toLowerCase()}, and Venus placed here is read as expressing concord through {loveStyle[SI[venSign].element]}.
                               </p>
                               {VENUS_SHADOW[venSign] && (
                                 <div style={{ marginTop: 10, padding: "10px 14px", borderRadius: 8, background: "#ff525208", border: "1px solid #ff525218" }}>
-                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 4 }}>ATTRIBUTED</div>
-                                  <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{VENUS_SHADOW[venSign].shadow}</p>
+                                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 4 }}>ATTRIBUTED</div>
+                                  <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{VENUS_SHADOW[venSign].shadow}</p>
                                 </div>
                               )}
                               {VENUS_SHADOW[venSign] && (
                                 <div style={{ marginTop: 6, padding: "8px 14px", borderRadius: 8, background: "#69ff8e08", border: "1px solid #69ff8e18" }}>
-                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 4 }}>STRUCTURE</div>
-                                  <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurface, margin: 0 }}>{VENUS_SHADOW[venSign].growth}</p>
+                                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 4 }}>STRUCTURE</div>
+                                  <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurface, margin: 0 }}>{VENUS_SHADOW[venSign].growth}</p>
                                 </div>
                               )}
                             </Card>
                             <Card title="🔥 Mars — The Cutting Force">
                               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
                                 <span style={{ color: P_COL.Mars, fontSize: "1.4rem" }}>♂</span>
-                                <span style={{ color: SIGN_COL[marSign], fontFamily: "'Share Tech Mono',monospace", fontWeight: "700" }}>Mars in {marSign}</span>
+                                <span style={{ color: SIGN_COL[marSign], fontFamily: "'JetBrains Mono', monospace", fontWeight: "700" }}>Mars in {marSign}</span>
                               </div>
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
                                 Mars is the lesser malefic and the principle of severance — pursuit, conflict, appetite, and the cut. In <strong style={{ color: SIGN_COL[marSign] }}>{marSign}</strong>, the tradition inflects that force as {SI[marSign].plain.split(".")[0].toLowerCase()}. Under provocation, Mars in a {SI[marSign].element.toLowerCase()} sign is read as acting through {angerStyle[SI[marSign].element]}.
                               </p>
                               {MARS_SHADOW[marSign] && (
                                 <div style={{ marginTop: 10, padding: "10px 14px", borderRadius: 8, background: "#ff525208", border: "1px solid #ff525218" }}>
-                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 4 }}>ATTRIBUTED</div>
-                                  <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{MARS_SHADOW[marSign].shadow}</p>
+                                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 4 }}>ATTRIBUTED</div>
+                                  <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{MARS_SHADOW[marSign].shadow}</p>
                                 </div>
                               )}
                               {MARS_SHADOW[marSign] && (
                                 <div style={{ marginTop: 6, padding: "8px 14px", borderRadius: 8, background: "#69ff8e08", border: "1px solid #69ff8e18" }}>
-                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 4 }}>STRUCTURE</div>
-                                  <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurface, margin: 0 }}>{MARS_SHADOW[marSign].growth}</p>
+                                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 4 }}>STRUCTURE</div>
+                                  <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurface, margin: 0 }}>{MARS_SHADOW[marSign].growth}</p>
                                 </div>
                               )}
                             </Card>
@@ -647,21 +658,21 @@ export default function App() {
                           <Card title="🧠 Mercury — The Messenger">
                             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
                               <span style={{ color: P_COL.Mercury, fontSize: "1.3rem" }}>☿</span>
-                              <span style={{ color: SIGN_COL[merSign], fontFamily: "'Share Tech Mono',monospace", fontWeight: "700" }}>Mercury in {merSign}</span>
+                              <span style={{ color: SIGN_COL[merSign], fontFamily: "'JetBrains Mono', monospace", fontWeight: "700" }}>Mercury in {merSign}</span>
                             </div>
-                            <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
+                            <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
                               Mercury is the neutral body and the principle of exchange — sign, speech, reckoning, and the crossing between. In <strong style={{ color: SIGN_COL[merSign] }}>{merSign}</strong>, the tradition inflects that principle as {SI[merSign].plain.split(".")[0].toLowerCase()}. A {SI[merSign].element.toLowerCase()} sign is read as taking knowledge through {learnStyle[SI[merSign].element]}; a {SI[merSign].mode.toLowerCase()} sign as delivering it {commStyle[SI[merSign].mode]}.
                             </p>
                             {MERCURY_SHADOW[merSign] && (
                               <div style={{ marginTop: 12, padding: "10px 14px", borderRadius: 8, background: "#ff525208", border: "1px solid #ff525218" }}>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 4 }}>ATTRIBUTED</div>
-                                <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>{MERCURY_SHADOW[merSign].shadow}</p>
+                                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 4 }}>ATTRIBUTED</div>
+                                <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>{MERCURY_SHADOW[merSign].shadow}</p>
                               </div>
                             )}
                             {MERCURY_SHADOW[merSign] && (
                               <div style={{ marginTop: 6, padding: "8px 14px", borderRadius: 8, background: "#69ff8e08", border: "1px solid #69ff8e18" }}>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 4 }}>STRUCTURE</div>
-                                <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{MERCURY_SHADOW[merSign].growth}</p>
+                                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 4 }}>STRUCTURE</div>
+                                <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{MERCURY_SHADOW[merSign].growth}</p>
                               </div>
                             )}
                           </Card>
@@ -672,18 +683,18 @@ export default function App() {
                         <Card title="♃ Jupiter — The Greater Benefic">
                           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
                             <span style={{ color: P_COL.Jupiter, fontSize: "1.4rem" }}>♃</span>
-                            <span style={{ color: SIGN_COL[jupSign], fontFamily: "'Share Tech Mono',monospace", fontWeight: "700" }}>Jupiter in {jupSign}</span>
+                            <span style={{ color: SIGN_COL[jupSign], fontFamily: "'JetBrains Mono', monospace", fontWeight: "700" }}>Jupiter in {jupSign}</span>
                           </div>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
                             {JUPITER_DEEP[jupSign]?.plain}
                           </p>
                         </Card>
                         <Card title="♄ Saturn — The Greater Malefic">
                           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
                             <span style={{ color: P_COL.Saturn, fontSize: "1.4rem" }}>♄</span>
-                            <span style={{ color: SIGN_COL[satSign], fontFamily: "'Share Tech Mono',monospace", fontWeight: "700" }}>Saturn in {satSign}</span>
+                            <span style={{ color: SIGN_COL[satSign], fontFamily: "'JetBrains Mono', monospace", fontWeight: "700" }}>Saturn in {satSign}</span>
                           </div>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
                             {SATURN_DEEP[satSign]?.plain}
                           </p>
                         </Card>
@@ -691,7 +702,7 @@ export default function App() {
 
                       <Card title="⚖ Soft and Hard Contacts">
                         <div style={{ marginBottom: 16 }}>
-                          <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 10 }}>SOFT CONTACTS ({softAsp.length})</div>
+                          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 10 }}>SOFT CONTACTS ({softAsp.length})</div>
                           {softAsp.slice(0, 5).map((a, i) => {
                             const r0 = (P_ROLE[a.p1] || a.p1).toLowerCase(), r1 = (P_ROLE[a.p2] || a.p2).toLowerCase();
                             const k1 = `${P_ROLE[a.p1]}+${P_ROLE[a.p2]}`, k2 = `${P_ROLE[a.p2]}+${P_ROLE[a.p1]}`;
@@ -701,15 +712,15 @@ export default function App() {
                                 : `The sextile is 60°, a sixth of the circle, and carries the narrowest orb of the soft aspects here.`;
                             return (
                               <div key={i} style={{ padding: "10px 14px", marginBottom: 8, borderRadius: 10, background: a.col + "0e", borderLeft: `3px solid ${a.col}` }}>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", color: M3.onSurface }}>
+                                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: M3.onSurface }}>
                                   <span style={{ color: P_COL[a.p1] }}>{P_SYM[a.p1]} {a.p1}</span>
                                   <span style={{ color: a.col, margin: "0 6px" }}>{a.sym} {a.name}</span>
                                   <span style={{ color: P_COL[a.p2] }}>{P_SYM[a.p2]} {a.p2}</span>
                                 </div>
-                                <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: "6px 0 0" }}>
+                                <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: "6px 0 0" }}>
                                   {pi ? `${r0} and ${r1}: ${pi}` : `${a.p1} and ${a.p2} — ${r0 === r1 ? `both ${r0}s` : `${r0} and ${r1}`}.`}
                                 </p>
-                                <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.55, color: "#69ff8e", margin: "6px 0 0", fontStyle: "italic" }}>
+                                <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.72rem", lineHeight: 1.55, color: "#69ff8e", margin: "6px 0 0", fontStyle: "italic" }}>
                                   {giftAdvice}
                                 </p>
                               </div>
@@ -717,7 +728,7 @@ export default function App() {
                           })}
                         </div>
                         <div>
-                          <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 10 }}>HARD CONTACTS ({hardAsp.length})</div>
+                          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 10 }}>HARD CONTACTS ({hardAsp.length})</div>
                           {hardAsp.slice(0, 5).map((a, i) => {
                             const r0 = (P_ROLE[a.p1] || a.p1).toLowerCase(), r1 = (P_ROLE[a.p2] || a.p2).toLowerCase();
                             const k1 = `${P_ROLE[a.p1]}+${P_ROLE[a.p2]}`, k2 = `${P_ROLE[a.p2]}+${P_ROLE[a.p1]}`;
@@ -729,15 +740,15 @@ export default function App() {
                                 : `A minor hard aspect. Its orb is narrow, so whether it registers depends on the orb policy in use.`;
                             return (
                               <div key={i} style={{ padding: "10px 14px", marginBottom: 8, borderRadius: 10, background: a.col + "0e", borderLeft: `3px solid ${a.col}` }}>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", color: M3.onSurface }}>
+                                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: M3.onSurface }}>
                                   <span style={{ color: P_COL[a.p1] }}>{P_SYM[a.p1]} {a.p1}</span>
                                   <span style={{ color: a.col, margin: "0 6px" }}>{a.sym} {a.name}</span>
                                   <span style={{ color: P_COL[a.p2] }}>{P_SYM[a.p2]} {a.p2}</span>
                                 </div>
-                                <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: "6px 0 0" }}>
+                                <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: "6px 0 0" }}>
                                   {pi ? `${r0} and ${r1}: ${pi}` : `${a.p1} and ${a.p2} — ${r0 === r1 ? `both ${r0}s` : `${r0} and ${r1}`}.`}
                                 </p>
-                                <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.55, color: "#ff8a50", margin: "6px 0 0", fontStyle: "italic" }}>
+                                <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.72rem", lineHeight: 1.55, color: "#ff8a50", margin: "6px 0 0", fontStyle: "italic" }}>
                                   {growthAdvice}
                                 </p>
                               </div>
@@ -750,21 +761,21 @@ export default function App() {
                         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>
                           {Object.entries(res.el).sort(([, a], [, b]) => b - a).map(([el, v]) => (
                             <div key={el} style={{ flex: 1, minWidth: 120, padding: "12px 14px", borderRadius: 12, background: EL_COL[el] + "11", border: `1px solid ${EL_COL[el]}33`, textAlign: "center" }}>
-                              <div style={{ color: EL_COL[el], fontFamily: "'Share Tech Mono',monospace", fontSize: "1.4rem", fontWeight: "700" }}>{v}</div>
-                              <div style={{ color: EL_COL[el], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "700" }}>{el}</div>
+                              <div style={{ color: EL_COL[el], fontFamily: "'JetBrains Mono', monospace", fontSize: "1.4rem", fontWeight: "700" }}>{v}</div>
+                              <div style={{ color: EL_COL[el], fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: "700" }}>{el}</div>
                             </div>
                           ))}
                         </div>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
                         The most represented element in this figure is <strong style={{color:EL_COL[domEl[0]]}}>{domEl[0]} ({domEl[1]} bodies)</strong>. Which bodies are counted, and whether the angles count, varies between schools, so a dominance figure is partly an artefact of the counting rule.
                         </p>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, marginTop: 10 }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, marginTop: 10 }}>
                         The most represented mode is <strong style={{color:MOD_COL[domMod[0]]}}>{domMod[0]} ({domMod[1]} bodies)</strong>. The three modes divide the twelve signs by position within each season.
                         </p>
                       </Card>
 
                       <Card title="∞ Harmonic Layers">
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
                         The nth harmonic multiplies every longitude by n and reduces modulo 360, so bodies separated by 360/n degrees land together. The transform multiplies positional error along with position.
                         </p>
                         {[
@@ -777,13 +788,13 @@ export default function App() {
                           const tight = hAsp.filter(a => a.strength > 0.7).slice(0, 3);
                           return (
                             <div key={h.n} style={{ padding: "14px 16px", marginBottom: 12, borderRadius: 12, background: h.col + "0a", border: `1px solid ${h.col}22` }}>
-                              <div style={{ color: h.col, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.76rem", fontWeight: "700", marginBottom: 6 }}>{h.title}</div>
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: "0 0 8px" }}>{h.desc}</p>
+                              <div style={{ color: h.col, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.76rem", fontWeight: "700", marginBottom: 6 }}>{h.title}</div>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: "0 0 8px" }}>{h.desc}</p>
                               {tight.length > 0 && (
                                 <div style={{ borderTop: `1px solid ${h.col}22`, paddingTop: 8 }}>
-                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.secondary, marginBottom: 4 }}>TIGHTEST GROUPINGS IN THIS CHART:</div>
+                                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: M3.secondary, marginBottom: 4 }}>TIGHTEST GROUPINGS IN THIS CHART:</div>
                                   {tight.map((a, i) => (
-                                    <div key={i} style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", color: M3.onSurfaceVariant, padding: "2px 0" }}>
+                                    <div key={i} style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.72rem", color: M3.onSurfaceVariant, padding: "2px 0" }}>
                                       {P_SYM[a.p1]} {a.p1} ({P_ROLE[a.p1] || ""}) {a.sym} {P_SYM[a.p2]} {a.p2} ({P_ROLE[a.p2] || ""}) — <span style={{ color: h.col }}>{a.name}</span> at {(a.strength * 100).toFixed(0)}% strength
                                     </div>
                                   ))}
@@ -862,79 +873,79 @@ export default function App() {
 
                         return (<>
                           <Card title="📖 Understanding the Building Blocks">
-                            <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 16px" }}>
+                            <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 16px" }}>
                               What the tradition attributes to each of the principal placements in this figure.
                             </p>
 
                             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 12, marginBottom: 16 }}>
                               <div style={{ padding: "14px 16px", borderRadius: 12, background: SIGN_COL[sunSign] + "0a", border: `1px solid ${SIGN_COL[sunSign]}22` }}>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>SUN SIGN — THE SOLAR SIGNIFICATOR</div>
+                                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>SUN SIGN — THE SOLAR SIGNIFICATOR</div>
                                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
                                   <span style={{ fontSize: "1.3rem" }}>{SI[sunSign].emoji}</span>
-                                  <span style={{ color: SIGN_COL[sunSign], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.82rem", fontWeight: "700" }}>{sunSign}</span>
+                                  <span style={{ color: SIGN_COL[sunSign], fontFamily: "'JetBrains Mono', monospace", fontSize: "0.82rem", fontWeight: "700" }}>{sunSign}</span>
                                 </div>
-                                <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
+                                <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
                                   {sunPlain}
                                 </p>
                               </div>
 
                               <div style={{ padding: "14px 16px", borderRadius: 12, background: SIGN_COL[moonSign] + "0a", border: `1px solid ${SIGN_COL[moonSign]}22` }}>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>MOON SIGN — THE LUNAR SIGNIFICATOR</div>
+                                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>MOON SIGN — THE LUNAR SIGNIFICATOR</div>
                                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
                                   <span style={{ fontSize: "1.3rem" }}>{SI[moonSign].emoji}</span>
-                                  <span style={{ color: SIGN_COL[moonSign], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.82rem", fontWeight: "700" }}>{moonSign}</span>
+                                  <span style={{ color: SIGN_COL[moonSign], fontFamily: "'JetBrains Mono', monospace", fontSize: "0.82rem", fontWeight: "700" }}>{moonSign}</span>
                                 </div>
-                                <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
+                                <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
                                   {moonPlain} {moonAsEmotional}
                                 </p>
                               </div>
 
                               <div style={{ padding: "14px 16px", borderRadius: 12, background: SIGN_COL[ascSign] + "0a", border: `1px solid ${SIGN_COL[ascSign]}22` }}>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>RISING SIGN — THE ASCENDING DEGREE</div>
+                                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>RISING SIGN — THE ASCENDING DEGREE</div>
                                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
                                   <span style={{ fontSize: "1.3rem" }}>{SI[ascSign].emoji}</span>
-                                  <span style={{ color: SIGN_COL[ascSign], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.82rem", fontWeight: "700" }}>{ascSign}</span>
+                                  <span style={{ color: SIGN_COL[ascSign], fontFamily: "'JetBrains Mono', monospace", fontSize: "0.82rem", fontWeight: "700" }}>{ascSign}</span>
                                 </div>
-                                <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
+                                <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
                                   {ascPlain} {ascAsFilter}
                                 </p>
                               </div>
                             </div>
 
                             <div style={{ padding: "14px 16px", borderRadius: 12, background: EL_COL[domEl[0]] + "0a", border: `1px solid ${EL_COL[domEl[0]]}22`, marginBottom: 12 }}>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>MOST REPRESENTED ELEMENT — {domEl[0].toUpperCase()} ({domEl[1]} BODIES)</div>
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>MOST REPRESENTED ELEMENT — {domEl[0].toUpperCase()} ({domEl[1]} BODIES)</div>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
                                 The most represented element here is <strong style={{ color: EL_COL[domEl[0]] }}>{domEl[0]}</strong> — {EL_DESC[domEl[0]]}.
                               </p>
                             </div>
 
                             <div style={{ padding: "14px 16px", borderRadius: 12, background: MOD_COL[domMod[0]] + "0a", border: `1px solid ${MOD_COL[domMod[0]]}22`, marginBottom: 12 }}>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>MOST REPRESENTED MODE — {domMod[0].toUpperCase()} ({domMod[1]} PLANETS)</div>
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>MOST REPRESENTED MODE — {domMod[0].toUpperCase()} ({domMod[1]} PLANETS)</div>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
                                 The most represented mode is <strong style={{ color: MOD_COL[domMod[0]] }}>{domMod[0]}</strong> — {MOD_DESC[domMod[0]]}.
                               </p>
                             </div>
 
                             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 12 }}>
                               <div style={{ padding: "14px 16px", borderRadius: 12, background: "#69ff8e0a", border: "1px solid #69ff8e22" }}>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 6 }}>FLOWING CONNECTIONS — {softCount}</div>
-                                <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{flowDesc}</p>
+                                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 6 }}>FLOWING CONNECTIONS — {softCount}</div>
+                                <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{flowDesc}</p>
                               </div>
                               <div style={{ padding: "14px 16px", borderRadius: 12, background: "#ff8a500a", border: "1px solid #ff8a5022" }}>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 6 }}>HARD CONTACTS — {hardCount}</div>
-                                <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{growthDesc}</p>
+                                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 6 }}>HARD CONTACTS — {hardCount}</div>
+                                <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{growthDesc}</p>
                               </div>
                             </div>
 
                             <div style={{ padding: "14px 16px", borderRadius: 12, background: M3.surfaceDim, border: `1px solid ${M3.outlineVariant}` }}>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>THE BALANCE BETWEEN THEM</div>
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>{balanceParagraph}</p>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>THE BALANCE BETWEEN THEM</div>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>{balanceParagraph}</p>
                             </div>
                           </Card>
 
                           {res.cn && (
                             <Card title={`${cnAnimal.emoji || "☯"} The ${res.cn.animal} — Two Systems Side by Side`}>
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.84rem", lineHeight: 1.8, color: M3.onSurface, margin: 0 }}>{cnBridge}</p>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.84rem", lineHeight: 1.8, color: M3.onSurface, margin: 0 }}>{cnBridge}</p>
                             </Card>
                           )}
 
@@ -950,7 +961,7 @@ export default function App() {
                             ].filter(r => r.rec);
                             return (
                               <div>
-                                <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.79rem", lineHeight: 1.68, color: M3.onSurfaceVariant, margin: "0 0 16px" }}>
+                                <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.79rem", lineHeight: 1.68, color: M3.onSurfaceVariant, margin: "0 0 16px" }}>
                                   Each placement below is named with what the tradition has attributed to it.
                                 </p>
                                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 18 }}>
@@ -973,7 +984,7 @@ export default function App() {
                             ].filter(r => r.rec);
                             return (
                               <div>
-                                <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.79rem", lineHeight: 1.68, color: M3.onSurfaceVariant, margin: "0 0 16px" }}>
+                                <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.79rem", lineHeight: 1.68, color: M3.onSurfaceVariant, margin: "0 0 16px" }}>
                                   The placements the tradition weights most heavily in a natal figure, gathered in one place.
                                 </p>
                                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 18 }}>
@@ -1069,9 +1080,9 @@ export default function App() {
                     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                       <Card style={{ background: `linear-gradient(135deg,#ff525222,${M3.surfaceContainer})`, borderColor: "#ff525244" }}>
                         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: "#ff8a50", marginBottom: 8 }}>Where the Tradition Locates Difficulty</div>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
                           This page gathers the placements and contacts to which the tradition has attached difficulty. It is a gathering of attributions, but because <strong>the tradition records them as plainly as it records the favourable placements</strong>. The patterns here aren't flaws to fix.</p>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
                           Sources differ on how much weight to give any of these, and the classical benefic/malefic scheme that underwrites much of it has largely been abandoned in modern practice.
                         </p>
                       </Card>
@@ -1082,11 +1093,11 @@ export default function App() {
                             <span style={{ fontSize: "1.5rem", color: P_COL.Saturn }}>♄</span>
                           </div>
                           <div>
-                            <div style={{ color: SIGN_COL[satSign], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.76rem", fontWeight: "700" }}>Saturn in {satSign}</div>
-                            <div style={{ color: M3.outlineVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem" }}>The place the tradition assigns to limit and constraint</div>
+                            <div style={{ color: SIGN_COL[satSign], fontFamily: "'JetBrains Mono', monospace", fontSize: "0.76rem", fontWeight: "700" }}>Saturn in {satSign}</div>
+                            <div style={{ color: M3.outlineVariant, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem" }}>The place the tradition assigns to limit and constraint</div>
                           </div>
                         </div>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>
                           {SATURN_DEEP[satSign]?.plain}
                         </p>
                       </Card>
@@ -1098,22 +1109,22 @@ export default function App() {
                               <span style={{ fontSize: "1.2rem", color: "#b388ff" }}>⚷</span>
                             </div>
                             <div>
-                              <div style={{ color: "#b388ff", fontFamily: "'Share Tech Mono',monospace", fontSize: "0.76rem", fontWeight: "700" }}>Chiron in House {chironHouse + 1} — {HOUSE_AREA[chironHouse]}</div>
-                              <div style={{ color: M3.outlineVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem" }}>The place the modern attribution calls the "wounded healer" — a late twentieth-century reading, and contested</div>
+                              <div style={{ color: "#b388ff", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.76rem", fontWeight: "700" }}>Chiron in House {chironHouse + 1} — {HOUSE_AREA[chironHouse]}</div>
+                              <div style={{ color: M3.outlineVariant, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem" }}>The place the modern attribution calls the "wounded healer" — a late twentieth-century reading, and contested</div>
                             </div>
                           </div>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>
                             {CHIRON_HOUSE_WOUND[chironHouse]}
                           </p>
                         </Card>
                       )}
 
                       <Card title="⚡ The Tightest Hard Contacts">
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
                           The tightest squares (□ — 90°) and oppositions (☍ — 180°) in this figure, listed with their orbs.
                         </p>
                         {hardAsp.length === 0 ? (
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", color: M3.onSurfaceVariant, fontStyle: "italic" }}>No hard contacts fall within the orbs in use.</p>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", color: M3.onSurfaceVariant, fontStyle: "italic" }}>No hard contacts fall within the orbs in use.</p>
                         ) : hardAsp.slice(0, 6).map((a, i) => {
                           const r0 = (P_ROLE[a.p1] || a.p1), r1 = (P_ROLE[a.p2] || a.p2);
                           const k1 = `${r0}+${r1}`, k2 = `${r1}+${r0}`;
@@ -1125,21 +1136,21 @@ export default function App() {
                             <div key={i} style={{ padding: "12px 16px", marginBottom: 10, borderRadius: 12, background: a.col + "0c", borderLeft: `4px solid ${a.col}` }}>
                               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
                                 <span style={{ color: P_COL[a.p1], fontSize: "1rem" }}>{P_SYM[a.p1]}</span>
-                                <span style={{ color: P_COL[a.p1], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "700" }}>{a.p1}</span>
-                                <span style={{ color: a.col, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem" }}>{a.sym} {a.name}</span>
+                                <span style={{ color: P_COL[a.p1], fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: "700" }}>{a.p1}</span>
+                                <span style={{ color: a.col, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem" }}>{a.sym} {a.name}</span>
                                 <span style={{ color: P_COL[a.p2], fontSize: "1rem" }}>{P_SYM[a.p2]}</span>
-                                <span style={{ color: P_COL[a.p2], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "700" }}>{a.p2}</span>
-                                <span style={{ color: M3.outlineVariant, marginLeft: "auto", fontSize: "0.62rem", fontFamily: "'Share Tech Mono',monospace" }}>{(a.strength * 100).toFixed(0)}% strength</span>
+                                <span style={{ color: P_COL[a.p2], fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: "700" }}>{a.p2}</span>
+                                <span style={{ color: M3.outlineVariant, marginLeft: "auto", fontSize: "0.62rem", fontFamily: "'JetBrains Mono', monospace" }}>{(a.strength * 100).toFixed(0)}% strength</span>
                               </div>
-                              {pi && <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurface, margin: "0 0 6px" }}>At its core: {pi}.</p>}
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>{struggleNarrative}</p>
+                              {pi && <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurface, margin: "0 0 6px" }}>At its core: {pi}.</p>}
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>{struggleNarrative}</p>
                             </div>
                           );
                         })}
                       </Card>
 
                       <Card title="🎭 Attributions of Difficulty">
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
                           These are the attributions the tradition attaches to the placements below. They are readings of the symbol — they're defence mechanisms. Recognising them is the first step to choosing differently.
                         </p>
                         {[
@@ -1151,13 +1162,13 @@ export default function App() {
                           <div key={i} style={{ padding: "12px 16px", marginBottom: 10, borderRadius: 12, background: "#ff525208", borderLeft: "3px solid #ff525233" }}>
                             <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
                               <span style={{ fontSize: "1rem" }}>{x.icon}</span>
-                              <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.7rem", fontWeight: "700", color: "#ff8a50" }}>{x.label}</span>
-                              <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: M3.outlineVariant, marginLeft: 4 }}>({x.area})</span>
+                              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.7rem", fontWeight: "700", color: "#ff8a50" }}>{x.label}</span>
+                              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: M3.outlineVariant, marginLeft: 4 }}>({x.area})</span>
                             </div>
-                            <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: "0 0 8px" }}>{x.data.shadow}</p>
+                            <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: "0 0 8px" }}>{x.data.shadow}</p>
                             <div style={{ padding: "8px 12px", borderRadius: 8, background: "#69ff8e08", borderLeft: "3px solid #69ff8e44" }}>
-                              <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: "#69ff8e", letterSpacing: "0.08em" }}>THE SHIFT: </span>
-                              <span style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.5, color: M3.onSurface }}>{x.data.growth}</span>
+                              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "#69ff8e", letterSpacing: "0.08em" }}>THE SHIFT: </span>
+                              <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.74rem", lineHeight: 1.5, color: M3.onSurface }}>{x.data.growth}</span>
                             </div>
                           </div>
                         ))}
@@ -1165,19 +1176,19 @@ export default function App() {
 
                       {(weakEl.length > 0 || lowEl.length > 0) && (
                         <Card title="△ Elements Not Represented">
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
                             An element counted as absent or thinly represented is a property of the counting rule as much as of the figure: which bodies are counted, and whether the angles count, varies between schools.
                           </p>
                           {weakEl.map(el => (
                             <div key={el} style={{ padding: "14px 18px", marginBottom: 10, borderRadius: 12, background: EL_COL[el] + "0a", border: `1px solid ${EL_COL[el]}22` }}>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.7rem", fontWeight: "700", color: EL_COL[el], marginBottom: 6 }}>NO {el.toUpperCase()} — COMPLETELY ABSENT</div>
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>{MISSING_ELEMENT[el]}</p>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.7rem", fontWeight: "700", color: EL_COL[el], marginBottom: 6 }}>NO {el.toUpperCase()} — COMPLETELY ABSENT</div>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>{MISSING_ELEMENT[el]}</p>
                             </div>
                           ))}
                           {lowEl.map(el => (
                             <div key={el} style={{ padding: "12px 16px", marginBottom: 8, borderRadius: 10, background: EL_COL[el] + "08", border: `1px solid ${EL_COL[el]}18` }}>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", fontWeight: "700", color: EL_COL[el], marginBottom: 4 }}>LOW {el.toUpperCase()} — UNDERREPRESENTED</div>
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>{LOW_ELEMENT[el]}</p>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", fontWeight: "700", color: EL_COL[el], marginBottom: 4 }}>LOW {el.toUpperCase()} — UNDERREPRESENTED</div>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>{LOW_ELEMENT[el]}</p>
                             </div>
                           ))}
                         </Card>
@@ -1185,16 +1196,16 @@ export default function App() {
 
                       {in12th.length > 0 && (
                         <Card title="🌙 Bodies in the 12th House">
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
                             Classical texts place confinement, hidden adversaries and things set apart in the 12th; modern practice reads it as the unconscious. Bodies here are read against whichever of those two frames is in use.
                           </p>
                           {in12th.map(p => (
                             <div key={p} style={{ padding: "12px 16px", marginBottom: 8, borderRadius: 10, background: P_COL[p] + "0c", borderLeft: `3px solid ${P_COL[p]}44` }}>
                               <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
                                 <span style={{ color: P_COL[p], fontSize: "1.1rem" }}>{P_SYM[p]}</span>
-                                <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "700", color: P_COL[p] }}>{p} in the 12th House</span>
+                                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: "700", color: P_COL[p] }}>{p} in the 12th House</span>
                               </div>
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>{TH_PLANET[p] || `The ${(P_ROLE[p] || p).toLowerCase()} significator placed in the 12th house.`}</p>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>{TH_PLANET[p] || `The ${(P_ROLE[p] || p).toLowerCase()} significator placed in the 12th house.`}</p>
                             </div>
                           ))}
                         </Card>
@@ -1205,11 +1216,11 @@ export default function App() {
                           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
                             <span style={{ fontSize: "2.4rem" }}>{(ANIMAL_INFO[res.cn.animal] || {}).emoji || "☯"}</span>
                             <div>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.76rem", fontWeight: "700", color: M3.primary }}>The Shadow of the {res.cn.animal}</div>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: M3.outlineVariant }}>What the {res.cn.animal} looks like at its worst</div>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.76rem", fontWeight: "700", color: M3.primary }}>The Shadow of the {res.cn.animal}</div>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: M3.outlineVariant }}>What the {res.cn.animal} looks like at its worst</div>
                             </div>
                           </div>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.75, color: M3.onSurface, margin: 0 }}>
                             {(ANIMAL_INFO[res.cn.animal] || {}).shadow}
                           </p>
                         </Card>
@@ -1217,7 +1228,7 @@ export default function App() {
 
                       <Card style={{ background: `linear-gradient(135deg,#69ff8e11,${M3.surfaceContainer})`, borderColor: "#69ff8e33" }}>
                         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: "#69ff8e", marginBottom: 10 }}>A Note on Struggles</div>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.84rem", lineHeight: 1.8, color: M3.onSurface, margin: 0 }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.84rem", lineHeight: 1.8, color: M3.onSurface, margin: 0 }}>
                           None of the above is a prediction, and none of it is a statement about a person. Each is an attribution a tradition has made to a position.
                         </p>
                       </Card>
@@ -1229,7 +1240,7 @@ export default function App() {
                   <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                     <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline, padding: "14px 18px" }}>
                       <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 6 }}>Interactive Wheels</div>
-                      <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>
+                      <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>
                         Each wheel is a circular sky-map. The outer ring shows the zodiac signs. Planet symbols sit at the computed positions for this chart — hover or tap any symbol for detailed info. Lines between planets show aspects (angles of connection).
                       </p>
                     </Card>
@@ -1245,13 +1256,13 @@ export default function App() {
                             style={{
                               padding: "7px 18px", borderRadius: 20, border: `1.5px solid ${wheelMode === m.id ? m.col : M3.outline + "66"}`,
                               background: wheelMode === m.id ? m.col + "22" : "transparent", color: wheelMode === m.id ? m.col : M3.onSurfaceVariant,
-                              fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: wheelMode === m.id ? "700" : "400",
+                              fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: wheelMode === m.id ? "700" : "400",
                               cursor: "pointer", transition: "all 0.2s"
                             }}>
                             {m.label}
                           </button>
                           {wheelMode === m.id && (
-                            <span style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.64rem", color: M3.onSurfaceVariant, textAlign: "center", maxWidth: 180 }}>{m.tip}</span>
+                            <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.64rem", color: M3.onSurfaceVariant, textAlign: "center", maxWidth: 180 }}>{m.tip}</span>
                           )}
                         </div>
                       ))}
@@ -1259,7 +1270,7 @@ export default function App() {
 
                     {wheelMode === "western" && (
                       <Card title="☉ Western Birth Chart — Tropical Zodiac">
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
                           The tropical zodiac is anchored to the seasons: 0° Aries begins at the March equinox. It is the standard frame in Western practice, and it separates from the sidereal frame by the precession of the equinoxes.
                         </p>
                         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -1268,8 +1279,8 @@ export default function App() {
                         <div style={{ display: "flex", justifyContent: "center", gap: 16, marginTop: 12, flexWrap: "wrap" }}>
                           {[{ l: "AC", c: M3.tertiary, d: "Ascendant (left) — the degree rising at the eastern horizon" }, { l: "MC", c: M3.primary, d: "Midheaven (top) — career, public reputation" }, { l: "DC", c: M3.tertiary, d: "Descendant (right) — the degree setting at the western horizon" }, { l: "IC", c: M3.primary, d: "Imum Coeli (bottom) — home, roots, private self" }].map(a => (
                             <div key={a.l} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                              <span style={{ color: a.c, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "700" }}>{a.l}</span>
-                              <span style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.62rem", color: M3.onSurfaceVariant }}>{a.d}</span>
+                              <span style={{ color: a.c, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: "700" }}>{a.l}</span>
+                              <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.62rem", color: M3.onSurfaceVariant }}>{a.d}</span>
                             </div>
                           ))}
                         </div>
@@ -1278,15 +1289,15 @@ export default function App() {
 
                     {wheelMode === "sidereal" && (
                       <Card title="☽ Sidereal Birth Chart — Vedic/Lunar Zodiac">
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
                           The sidereal zodiac is anchored to the fixed stars and is the frame used in Jyotish. The offset from the tropical frame is the ayanamsa, a chosen value rather than an observed one; SGE uses a linear approximation of Lahiri.
                         </p>
                         <div style={{ display: "flex", justifyContent: "center" }}>
                           <WheelWithTooltip positions={res.sid} houses={res.houses} size={Math.min(560, window.innerWidth - 64)} id="sidwheel" />
                         </div>
                         <div style={{ marginTop: 12, padding: "10px 14px", borderRadius: 10, background: M3.surfaceDim, textAlign: "center" }}>
-                          <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: "#ce93d8" }}>Ayanamsa offset: {ayanamsa(res.jd).toFixed(2)}°</span>
-                          <span style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.66rem", color: M3.onSurfaceVariant, marginLeft: 8 }}>— every planet shifts by this amount from the tropical chart</span>
+                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: "#ce93d8" }}>Ayanamsa offset: {ayanamsa(res.jd).toFixed(2)}°</span>
+                          <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.66rem", color: M3.onSurfaceVariant, marginLeft: 8 }}>— every planet shifts by this amount from the tropical chart</span>
                         </div>
                       </Card>
                     )}
@@ -1294,7 +1305,7 @@ export default function App() {
                     {wheelMode === "solar" && (
                       res.srPos ? (
                         <Card title="↩ Solar Return Chart">
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
                             The solar return chart is cast for the moment the Sun regains its natal longitude. That moment is a real astronomical event; reading the resulting chart as governing the year is an interpretive convention.
                           </p>
                           <div style={{ display: "flex", justifyContent: "center" }}>
@@ -1308,7 +1319,7 @@ export default function App() {
                               return (
                                 <div key={p} style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 10px", borderRadius: 8, background: P_COL[p] + "0c", border: `1px solid ${P_COL[p]}22` }}>
                                   <span style={{ color: P_COL[p], fontSize: "0.9rem" }}>{P_SYM[p]}</span>
-                                  <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: SIGN_COL[s] }}>{s}</span>
+                                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: SIGN_COL[s] }}>{s}</span>
                                 </div>
                               );
                             })}
@@ -1316,7 +1327,7 @@ export default function App() {
                         </Card>
                       ) : (
                         <Card title="↩ Solar Return Chart">
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", color: M3.onSurfaceVariant, textAlign: "center", padding: 40 }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", color: M3.onSurfaceVariant, textAlign: "center", padding: 40 }}>
                             Solar Return data is not available for this birth date. Try adjusting the year.
                           </p>
                         </Card>
@@ -1325,14 +1336,14 @@ export default function App() {
 
                     {wheelMode === "chinese" && (
                       <Card title={`☯ Chinese Zodiac Wheel — ${res.cn.element} ${res.cn.animal}`}>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
                           The Chinese zodiac is a 12-year cycle of animals, each paired with one of five elements and a Yin/Yang polarity. The cycle year begins at the lunar new year. The position is highlighted below.
                         </p>
                         <div style={{ display: "flex", justifyContent: "center" }}>
                           <ChineseWheelWithTooltip cn={res.cn} size={Math.min(500, window.innerWidth - 64)} />
                         </div>
                         {res.cn.lunar && (
-                          <div style={{ textAlign: "center", marginTop: 12, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", color: M3.secondary }}>
+                          <div style={{ textAlign: "center", marginTop: 12, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: M3.secondary }}>
                             Lunar Date: Day {res.cn.lunar.day} of the {res.cn.lunar.monthName} Month
                           </div>
                         )}
@@ -1345,7 +1356,7 @@ export default function App() {
                   <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                     <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                       <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>What are aspects?</div>
-                      <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: "0 0 16px" }}>
+                      <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: "0 0 16px" }}>
                         Aspects are the angles between planets measured around the zodiac circle. When two planets are a precise number of degrees apart, they form a geometric relationship — and their energies blend in a specific way. Think of it like music: some intervals sound harmonious, some create tension, all create meaning.
                       </p>
                       {/* ── Sacred Geometry Aspect Wheel ── */}
@@ -1424,8 +1435,8 @@ export default function App() {
                                 }}>
                                   <span style={{ color: a.col, fontSize: "1rem", fontFamily: "serif" }}>{a.sym}</span>
                                   <div>
-                                    <div style={{ color: a.col, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", fontWeight: "700" }}>{a.name} {a.angle}°</div>
-                                    <div style={{ color: M3.onSurfaceVariant, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.67rem", lineHeight: 1.4 }}>{a.tip}</div>
+                                    <div style={{ color: a.col, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", fontWeight: "700" }}>{a.name} {a.angle}°</div>
+                                    <div style={{ color: M3.onSurfaceVariant, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.67rem", lineHeight: 1.4 }}>{a.tip}</div>
                                   </div>
                                 </div>
                               ))}
@@ -1436,7 +1447,7 @@ export default function App() {
                     </Card>
 
                     <Card title={`⚹ Aspect Web — ${res.aspects.length} connections visualised`}>
-                      <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
+                      <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
                         This wheel draws the <strong>contacts between the bodies</strong>. Thicker, brighter lines mean tighter aspects. Aspect symbols appear on the strongest links. Hover any line for details.
                       </p>
                       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -1455,9 +1466,9 @@ export default function App() {
                               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
                                 <span style={{ color: def?.col, fontSize: "1.5rem", fontFamily: "serif" }}>{def?.sym}</span>
                                 <div>
-                                  <div style={{ color: def?.col, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.74rem", fontWeight: "700" }}>{name} {def?.angle}°</div>
-                                  <div style={{ color: M3.onSurfaceVariant, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.58rem", fontStyle: "italic" }}>{ASP_EXPLAIN[name] || ""}</div>
-                                  <div style={{ color: M3.onSurfaceVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem" }}>{matches.length} found{matches.length > 0 ? ` · avg ${(avgStr * 100).toFixed(0)}% strength` : ""}</div>
+                                  <div style={{ color: def?.col, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", fontWeight: "700" }}>{name} {def?.angle}°</div>
+                                  <div style={{ color: M3.onSurfaceVariant, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.58rem", fontStyle: "italic" }}>{ASP_EXPLAIN[name] || ""}</div>
+                                  <div style={{ color: M3.onSurfaceVariant, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem" }}>{matches.length} found{matches.length > 0 ? ` · avg ${(avgStr * 100).toFixed(0)}% strength` : ""}</div>
                                 </div>
                               </div>
                               <div style={{ height: 5, background: M3.outlineVariant, borderRadius: 3, overflow: "hidden", marginBottom: 8 }}>
@@ -1468,15 +1479,15 @@ export default function App() {
                                   <span style={{ color: P_COL[a.p1], fontSize: "0.9rem" }}>{P_SYM[a.p1]}</span>
                                   <span style={{ color: def?.col, fontSize: "0.7rem" }}>{def?.sym}</span>
                                   <span style={{ color: P_COL[a.p2], fontSize: "0.9rem" }}>{P_SYM[a.p2]}</span>
-                                  <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.onSurfaceVariant, marginLeft: "auto" }}>{a.p1}–{a.p2}</span>
-                                  <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: def?.col }}>{(a.strength * 100).toFixed(0)}%</span>
+                                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: M3.onSurfaceVariant, marginLeft: "auto" }}>{a.p1}–{a.p2}</span>
+                                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: def?.col }}>{(a.strength * 100).toFixed(0)}%</span>
                                 </div>
-                              )) : <div style={{ color: M3.outlineVariant, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.7rem", fontStyle: "italic" }}>None within the orbs in use</div>}
+                              )) : <div style={{ color: M3.outlineVariant, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.7rem", fontStyle: "italic" }}>None within the orbs in use</div>}
                             </div>
                           );
                         })}
                       </div>
-                      <div style={{ marginTop: 16, padding: "12px 16px", background: M3.surfaceVariant, borderRadius: 12, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", color: M3.onSurface, lineHeight: 1.7 }}>
+                      <div style={{ marginTop: 16, padding: "12px 16px", background: M3.surfaceVariant, borderRadius: 12, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", color: M3.onSurface, lineHeight: 1.7 }}>
                         {(() => {
                           const trines = res.aspects.filter(a => a.name === "Trine").length;
                           const squares = res.aspects.filter(a => a.name === "Square").length;
@@ -1516,10 +1527,10 @@ export default function App() {
                       <div style={{ display: "flex", gap: 20, flexWrap: "wrap", alignItems: "flex-start" }}>
                         <div style={{ flex: 1, minWidth: 220 }}>
                           <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.secondary, marginBottom: 8 }}>Secondary Progressions — the day-for-a-year convention</div>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: "0 0 10px" }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: "0 0 10px" }}>
                             Secondary progressions read one day of ephemeris time after birth as standing for one year of life. It is a convention of correspondence, not a claim about where the bodies physically stand.
                           </p>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
                             The Progressed Moon changes sign every ~2.5 years and is the most felt. The Progressed Sun shifts sign roughly every 30 years — a complete identity rebirth.
                           </p>
                         </div>
@@ -1531,12 +1542,12 @@ export default function App() {
                             return (
                               <g key={i}>
                                 <line x1="72" y1={y} x2="88" y2={y} stroke={isNow ? M3.tertiary : M3.outlineVariant} strokeWidth={isNow ? 2 : 1} />
-                                <text x="65" y={y} textAnchor="end" dominantBaseline="middle" fill={isNow ? M3.tertiary : M3.onSurfaceVariant} fontSize="9" fontFamily="'Share Tech Mono',monospace">{a}y</text>
-                                {isNow && <text x="92" y={y} dominantBaseline="middle" fill={M3.tertiary} fontSize="8" fontFamily="'Share Tech Mono',monospace">← NOW</text>}
+                                <text x="65" y={y} textAnchor="end" dominantBaseline="middle" fill={isNow ? M3.tertiary : M3.onSurfaceVariant} fontSize="9" fontFamily="'JetBrains Mono', monospace">{a}y</text>
+                                {isNow && <text x="92" y={y} dominantBaseline="middle" fill={M3.tertiary} fontSize="8" fontFamily="'JetBrains Mono', monospace">← NOW</text>}
                               </g>
                             );
                           })}
-                          <text x="80" y="6" textAnchor="middle" fill={M3.secondary} fontSize="8" fontFamily="'Share Tech Mono',monospace">BIRTH</text>
+                          <text x="80" y="6" textAnchor="middle" fill={M3.secondary} fontSize="8" fontFamily="'JetBrains Mono', monospace">BIRTH</text>
                         </svg>
                       </div>
                     </Card>
@@ -1560,38 +1571,38 @@ export default function App() {
                       };
                       return (
                         <Card title="📖 Progressed Positions">
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.7, color: M3.onSurface, margin: "0 0 14px" }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.7, color: M3.onSurface, margin: "0 0 14px" }}>
                             Progressed positions are generated by the day-for-a-year convention. They are a mapping laid over the ephemeris, not a record of events.
                           </p>
                           {sunChanged ? (
                             <div style={{ padding: "14px 16px", borderRadius: 12, background: P_COL.Sun + "12", border: `1px solid ${P_COL.Sun}33`, marginBottom: 12 }}>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: P_COL.Sun, letterSpacing: "0.1em", marginBottom: 6 }}>☉ IDENTITY SHIFT — {nSun} → {pSun}</div>
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: P_COL.Sun, letterSpacing: "0.1em", marginBottom: 6 }}>☉ IDENTITY SHIFT — {nSun} → {pSun}</div>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
                                 The natal Sun stands in <strong style={{ color: SIGN_COL[nSun] }}>{nSun}</strong>. {PLANET_IN_SIGN.Sun?.[nSun] || SI[nSun].plain}
                               </p>
                             </div>
                           ) : (
                             <div style={{ padding: "12px 16px", borderRadius: 10, background: M3.surfaceDim, marginBottom: 12 }}>
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: 0 }}>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: 0 }}>
                                 The progressed Sun remains in <strong style={{ color: SIGN_COL[nSun] }}>{nSun}</strong>. The progressed Sun advances about one degree a year, so it crosses a sign roughly every thirty years.
                               </p>
                             </div>
                           )}
                           {moonChanged ? (
                             <div style={{ padding: "14px 16px", borderRadius: 12, background: P_COL.Moon + "12", border: `1px solid ${P_COL.Moon}33`, marginBottom: 12 }}>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: P_COL.Moon, letterSpacing: "0.1em", marginBottom: 6 }}>☽ EMOTIONAL SHIFT — {nMoon} → {pMoon}</div>
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: P_COL.Moon, letterSpacing: "0.1em", marginBottom: 6 }}>☽ EMOTIONAL SHIFT — {nMoon} → {pMoon}</div>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
                                 The natal Moon stands in <strong style={{ color: SIGN_COL[nMoon] }}>{nMoon}</strong>, and the progressed Moon has since changed sign. The progressed Moon crosses a sign about every two and a half years.
                               </p>
                             </div>
                           ) : (
                             <div style={{ padding: "12px 16px", borderRadius: 10, background: M3.surfaceDim, marginBottom: 12 }}>
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: 0 }}>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: 0 }}>
                                 The progressed Moon remains in <strong style={{ color: SIGN_COL[nMoon] }}>{nMoon}</strong>.
                               </p>
                             </div>
                           )}
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: 0, fontStyle: "italic" }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: 0, fontStyle: "italic" }}>
                             {sunChanged && moonChanged ? "Both progressed lights have changed sign since birth."
                               : sunChanged ? "The progressed Sun has changed sign; the progressed Moon has not."
                                 : moonChanged ? "The progressed Moon has changed sign; the progressed Sun has not."
@@ -1615,16 +1626,16 @@ export default function App() {
                             }}>
                               <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5 }}>
                                 <span style={{ color: P_COL[planet], fontSize: "1rem" }}>{P_SYM[planet]}</span>
-                                <span style={{ color: P_COL[planet], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "700" }}>{planet}</span>
-                                {changed && <span style={{ marginLeft: "auto", background: M3.tertiary, color: M3.onPrimary, fontSize: "0.58rem", padding: "1px 6px", borderRadius: 10, fontFamily: "'Share Tech Mono',monospace" }}>SHIFTED</span>}
+                                <span style={{ color: P_COL[planet], fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: "700" }}>{planet}</span>
+                                {changed && <span style={{ marginLeft: "auto", background: M3.tertiary, color: M3.onPrimary, fontSize: "0.58rem", padding: "1px 6px", borderRadius: 10, fontFamily: "'JetBrains Mono', monospace" }}>SHIFTED</span>}
                               </div>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: M3.onSurfaceVariant }}>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: M3.onSurfaceVariant }}>
                                 <span style={{ color: SIGN_COL[natalSign] }}>Born: {natalSign}</span>
                                 {changed && <span style={{ color: M3.secondary }}> → </span>}
                                 {changed && <span style={{ color: SIGN_COL[progSign] }}>Now: {progSign}</span>}
                               </div>
                               {changed && (
-                                <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.71rem", color: M3.onSurface, lineHeight: 1.5, margin: "6px 0 0" }}>
+                                <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.71rem", color: M3.onSurface, lineHeight: 1.5, margin: "6px 0 0" }}>
                                   {`The progressed ${planet} has crossed into ${progSign}. `}
                                   {PLANET_IN_SIGN[planet]?.[progSign] || SI[progSign]?.plain || ""}
                                 </p>
@@ -1658,10 +1669,10 @@ export default function App() {
                       <div style={{ display: "flex", gap: 20, flexWrap: "wrap", alignItems: "flex-start" }}>
                         <div style={{ flex: 1, minWidth: 220 }}>
                           <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.tertiary, marginBottom: 8 }}>Solar Return — the moment the Sun regains its natal longitude</div>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: "0 0 10px" }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: "0 0 10px" }}>
                             Once a year the Sun returns to the <em>exact degree and minute</em> of its natal longitude. That instant is computable; the convention of reading a chart cast for it as governing the year is interpretive, not astronomical.
                           </p>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
                             The Solar Return chart is read like a natal chart, but its influence lasts only one year.
                           </p>
                         </div>
@@ -1673,7 +1684,7 @@ export default function App() {
                             const x = 80 + 55 * Math.cos((a - 90) * RAD), y = 80 + 55 * Math.sin((a - 90) * RAD);
                             return <circle key={i} cx={x} cy={y} r="4" fill={i === 0 ? M3.tertiary : M3.outlineVariant} stroke={M3.primary} strokeWidth="0.5" />;
                           })}
-                          <text x="80" y="16" textAnchor="middle" fill={M3.tertiary} fontSize="8" fontFamily="'Share Tech Mono',monospace">SR MOMENT</text>
+                          <text x="80" y="16" textAnchor="middle" fill={M3.tertiary} fontSize="8" fontFamily="'JetBrains Mono', monospace">SR MOMENT</text>
                           <path d={`M80,25 A55,55 0 0,1 ${80 + 55} 80`} fill="none" stroke={M3.tertiary} strokeWidth="1.5" strokeDasharray="3 2" />
                         </svg>
                       </div>
@@ -1722,7 +1733,7 @@ export default function App() {
                           ];
                           return (<>
                             <Card title="↩ Solar Return — Positions">
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 16px" }}>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 16px" }}>
                                 The return chart is cast for the moment the Sun regains its natal longitude. That moment is a real astronomical event; the practice of reading the resulting chart as governing the following year is an interpretive convention with no astronomical warrant. The houses depend on where the chart is cast, and practitioners differ between birthplace and current location.
                               </p>
                               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -1730,17 +1741,17 @@ export default function App() {
                                   <div key={yc.title} style={{ padding: "14px 16px", borderRadius: 12, background: yc.col + "08", border: `1px solid ${yc.col}22` }}>
                                     <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
                                       <span style={{ fontSize: "1.2rem", color: yc.col }}>{yc.icon}</span>
-                                      <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.76rem", fontWeight: "700", color: yc.col }}>{yc.title}</span>
-                                      <span style={{ marginLeft: "auto", fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", color: SIGN_COL[yc.sign], fontWeight: "600" }}>{yc.sign}</span>
+                                      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.76rem", fontWeight: "700", color: yc.col }}>{yc.title}</span>
+                                      <span style={{ marginLeft: "auto", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: SIGN_COL[yc.sign], fontWeight: "600" }}>{yc.sign}</span>
                                     </div>
-                                    <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>{yc.body}</p>
+                                    <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.8rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>{yc.body}</p>
                                   </div>
                                 ))}
                               </div>
                             </Card>
 
                             <Card title="↩ Year Ahead — Summary">
-                              <div style={{ padding: "14px 16px", background: M3.surfaceVariant, borderRadius: 12, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.84rem", color: M3.onSurface, lineHeight: 1.8 }}>
+                              <div style={{ padding: "14px 16px", background: M3.surfaceVariant, borderRadius: 12, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.84rem", color: M3.onSurface, lineHeight: 1.8 }}>
                                 <p style={{ margin: 0 }}>
                                   The return positions are listed above. Nothing in the astronomy makes them govern the year; that is a convention of the technique.
                                 </p>
@@ -1754,12 +1765,12 @@ export default function App() {
 
                         <div style={grid2}>
                           <Card title="↩ Year-Ahead Planet Positions">
-                            <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
+                            <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
                               The computed positions for the return moment.</p>
                             {res.srPos && <PlanetTable positions={res.srPos} jd={res.srJD} />}
                           </Card>
                           <Card title="↩ Year-Ahead Wheel">
-                            <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
+                            <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
                               The wheel plots the return positions. Hover or tap any body for details.
                             </p>
                             <div style={{ display: "flex", justifyContent: "center" }}>
@@ -1769,7 +1780,7 @@ export default function App() {
                         </div>
                       </>
                     ) : (
-                      <Card><div style={{ textAlign: "center", color: M3.secondary, fontFamily: "'Share Tech Mono',monospace", padding: 40 }}>Solar return not found in search range.</div></Card>
+                      <Card><div style={{ textAlign: "center", color: M3.secondary, fontFamily: "'JetBrains Mono', monospace", padding: 40 }}>Solar return not found in search range.</div></Card>
                     )}
                   </div>
                 )}
@@ -1813,10 +1824,10 @@ export default function App() {
                     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>What are Hidden Patterns?</div>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
                           The nth harmonic multiplies every longitude by n and reduces modulo 360, so bodies separated by 360/n degrees land together. The 4th harmonic turns every square and opposition into a conjunction; the 5th shows the 72-degree family; the 7th the 51.4-degree family. The method comes from the harmonic work of John Addey.
                         </p>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
                           <strong>Reading the result:</strong> clusters are bodies grouped in the same sign after the transform. The transform multiplies positional error along with position, so at high n a conjunction may be an artefact of the arithmetic rather than a feature of the figure.
                         </p>
                       </Card>
@@ -1832,7 +1843,7 @@ export default function App() {
                                   borderRadius: 20, cursor: "pointer",
                                   background: n === num ? d.col + "33" : "transparent",
                                   color: n === num ? d.col : M3.onSurfaceVariant,
-                                  fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: n === num ? "700" : "400",
+                                  fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: n === num ? "700" : "400",
                                   transition: "all 0.2s"
                                 }}>
                                 #{num} {d.label.split("(")[0].trim()}
@@ -1840,26 +1851,26 @@ export default function App() {
                             );
                           })}
                           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                            <span style={{ color: M3.secondary, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem" }}>Other:</span>
+                            <span style={{ color: M3.secondary, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem" }}>Other:</span>
                             <input type="number" value={n} min={2} max={24} step={1}
                               onChange={e => setN(Math.max(2, Math.min(24, parseInt(e.target.value) || n)))}
                               style={{
                                 width: 52, padding: "6px 8px", background: M3.surfaceDim,
                                 border: `1px solid ${M3.outline}`, borderRadius: 8, color: M3.onSurface,
-                                fontFamily: "'Share Tech Mono',monospace", fontSize: "0.75rem", outline: "none"
+                                fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", outline: "none"
                               }} />
                           </div>
                         </div>
 
                         <div style={{ padding: "14px 16px", borderRadius: 12, background: (hd?.col || M3.primary) + "0e", border: `1px solid ${(hd?.col || M3.primary)}28` }}>
-                          <div style={{ color: hd?.col || M3.primary, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.82rem", fontWeight: "700", marginBottom: 6 }}>
+                          <div style={{ color: hd?.col || M3.primary, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.82rem", fontWeight: "700", marginBottom: 6 }}>
                             Pattern #{n} — {hd?.label || `Harmonic ${n}`}
                           </div>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.8rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
                             {hd?.desc || `The ${n}th harmonic divides the circle into ${n} equal parts. Bodies ${(360 / n).toFixed(1)}° apart in the natal figure appear conjunct here.`}
                           </p>
                           {(hd?.lookFor || !hd) && (
-                            <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.secondary, margin: "8px 0 0", fontStyle: "italic" }}>
+                            <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.secondary, margin: "8px 0 0", fontStyle: "italic" }}>
                               {hd?.lookFor || `Look for clusters and conjunctions in the chart below — they reveal planets that resonate together at this ${n}-fold frequency.`}
                             </p>
                           )}
@@ -1870,7 +1881,7 @@ export default function App() {
                         <Card title={`✦ Harmonic #${n} — Groupings`}>
                           {clusters.length > 0 && (
                             <div style={{ marginBottom: 14 }}>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.65rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 8 }}>SIGN CLUSTERS — WHERE ENERGY CONCENTRATES</div>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.65rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 8 }}>SIGN CLUSTERS — WHERE ENERGY CONCENTRATES</div>
                               {clusters.map(([sign, planets]) => (
                                 <div key={sign} style={{
                                   padding: "10px 14px", marginBottom: 8, borderRadius: 10,
@@ -1878,19 +1889,19 @@ export default function App() {
                                 }}>
                                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
                                     <span style={{ color: SIGN_COL[sign], fontSize: "1.1rem" }}>{SIGN_SYM[SIGNS.indexOf(sign)]}</span>
-                                    <span style={{ color: SIGN_COL[sign], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.78rem", fontWeight: "700" }}>{sign} — {planets.length} planets</span>
+                                    <span style={{ color: SIGN_COL[sign], fontFamily: "'JetBrains Mono', monospace", fontSize: "0.78rem", fontWeight: "700" }}>{sign} — {planets.length} planets</span>
                                   </div>
                                   <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 6 }}>
                                     {planets.map(p => (
                                       <span key={p} style={{
                                         padding: "3px 10px", borderRadius: 14, background: P_COL[p] + "18", border: `1px solid ${P_COL[p]}44`,
-                                        color: P_COL[p], fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem"
+                                        color: P_COL[p], fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem"
                                       }}>
                                         {P_SYM[p]} {p} <span style={{ opacity: 0.6 }}>({P_ROLE[p] || ""})</span>
                                       </span>
                                     ))}
                                   </div>
-                                  <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: 0 }}>
+                                  <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: 0 }}>
                                     {(() => {
                                       const si = SIGN_INFO[sign] || {};
                                       const el = si.element || "";
@@ -1909,19 +1920,19 @@ export default function App() {
                           )}
                           {tight.length > 0 && (
                             <div>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.65rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 8 }}>TIGHT CONJUNCTIONS — STRONGEST HIDDEN LINKS</div>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.65rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 8 }}>TIGHT CONJUNCTIONS — STRONGEST HIDDEN LINKS</div>
                               {tight.map((a, i) => (
                                 <div key={i} style={{
                                   padding: "8px 12px", marginBottom: 6, borderRadius: 8,
                                   background: (hd?.col || M3.primary) + "08", borderLeft: `3px solid ${hd?.col || a.col}`
                                 }}>
-                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", color: M3.onSurface }}>
+                                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: M3.onSurface }}>
                                     <span style={{ color: P_COL[a.p1] }}>{P_SYM[a.p1]} {a.p1}</span>
                                     <span style={{ color: hd?.col || a.col, margin: "0 6px" }}>☌</span>
                                     <span style={{ color: P_COL[a.p2] }}>{P_SYM[a.p2]} {a.p2}</span>
                                     <span style={{ color: M3.onSurfaceVariant, marginLeft: 8, fontSize: "0.65rem" }}>{(a.strength * 100).toFixed(0)}% strength</span>
                                   </div>
-                                  <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "4px 0 0" }}>
+                                  <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "4px 0 0" }}>
                                     {(() => {
                                       const r0 = P_ROLE[a.p1] || a.p1, r1 = P_ROLE[a.p2] || a.p2;
                                       const insight = getPairInsight(a.p1, a.p2);
@@ -1947,7 +1958,7 @@ export default function App() {
                             </div>
                           )}
                           {clusters.length === 0 && tight.length === 0 && (
-                            <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.8rem", lineHeight: 1.6, color: M3.onSurfaceVariant, textAlign: "center", padding: 20 }}>
+                            <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.8rem", lineHeight: 1.6, color: M3.onSurfaceVariant, textAlign: "center", padding: 20 }}>
                               No clusters or tight conjunctions at this harmonic. The transformed positions are evenly distributed rather than grouped.</p>
                           )}
                         </Card>
@@ -1955,13 +1966,13 @@ export default function App() {
 
                       <div style={grid2}>
                         <Card title={`∞ Pattern #${n} — Remapped Positions`}>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
                             Each planet's birth position × {n}, wrapped to 360°. Planets in the same sign here share a hidden {n}-fold resonance.
                           </p>
                           <PlanetTable positions={hPos} jd={res.jd} resonance={res.mathematical_resonance} />
                         </Card>
                         <Card title={`∞ Pattern #${n} — Wheel`}>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
                             The harmonic wheel. Bodies close together here stand at or near the corresponding family of separations in the natal figure.</p>
                           <div style={{ display: "flex", justifyContent: "center" }}>
                             <WheelWithTooltip positions={hPos} size={300} id={`h${n}`} />
@@ -1971,7 +1982,7 @@ export default function App() {
 
                       {anyAsp.length > 0 && (
                         <Card title={`∞ Pattern #${n} — All Strong Connections (${anyAsp.length})`}>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.72rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
                             The tightest separations in the transformed chart, listed with their orbs.</p>
                           <AspectTable aspects={anyAsp} />
                         </Card>
@@ -2005,17 +2016,17 @@ export default function App() {
                     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Transits — Current Positions Against the Natal Figure</div>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
                           Transits are the current computed positions set against the natal positions. A contact is reported when the angular separation falls within the orb in use.
                         </p>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
                           <strong>Fast planets</strong> (Sun, Moon, Mercury, Venus, Mars) move quickly and create brief, passing influences — moods, events, conversations.
                           <strong> Slow planets</strong> (Jupiter, Saturn, Uranus, Neptune, Pluto) move gradually and create major life chapters lasting months or years.
                         </p>
                       </Card>
 
                       <Card title="⟳ Transiting Positions Against the Natal Figure">
-                        <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.65rem", color: M3.secondary, marginBottom: 10, letterSpacing: "0.1em" }}>
+                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.65rem", color: M3.secondary, marginBottom: 10, letterSpacing: "0.1em" }}>
                           {new Date().toDateString().toUpperCase()} — {hits.length} of {activeTransits.length} bodies form a contact within the orbs in use</div>
                         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                           {activeTransits.map(({ p, lon, aspMatch }) => {
@@ -2028,19 +2039,19 @@ export default function App() {
                               }}>
                                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                                   <span style={{ color: P_COL[p], width: 18, textAlign: "center", fontSize: "1rem" }}>{P_SYM[p]}</span>
-                                  <span style={{ color: M3.onSurface, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "600", minWidth: 70 }}>{p}</span>
-                                  <span style={{ color: M3.onSurfaceVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", flex: 1 }}>
+                                  <span style={{ color: M3.onSurface, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: "600", minWidth: 70 }}>{p}</span>
+                                  <span style={{ color: M3.onSurfaceVariant, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", flex: 1 }}>
                                     currently in {zodSign(lon)} at {zodDeg(lon)}°
                                   </span>
                                   {aspMatch && (
-                                    <span style={{ color: aspMatch.col, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", fontWeight: "700" }}>
+                                    <span style={{ color: aspMatch.col, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", fontWeight: "700" }}>
                                       {aspMatch.sym} {aspMatch.name}
                                     </span>
                                   )}
                                 </div>
                                 {aspMatch && (
                                   <div style={{ marginTop: 5, marginLeft: 26 }}>
-                                    <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: 0 }}>
+                                    <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.74rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: 0 }}>
                                       Transiting {p} ({tm.flavor || ""}) is forming a <strong style={{ color: aspMatch.col }}>{aspMatch.name}</strong> ({ASP_EXPLAIN[aspMatch.name] || aspMatch.name}) to natal {p}.
                                       {tm.slow ? " This is a slow-moving transit — its influence unfolds over weeks or months and marks a significant chapter." : " This is a fast-moving transit — its influence is felt today and passes within days."}
                                     </p>
@@ -2048,7 +2059,7 @@ export default function App() {
                                 )}
                                 {!aspMatch && (
                                   <div style={{ marginTop: 3, marginLeft: 26 }}>
-                                    <span style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.68rem", color: M3.outlineVariant, fontStyle: "italic" }}>
+                                    <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.68rem", color: M3.outlineVariant, fontStyle: "italic" }}>
                                       No contact to natal {p} within the orbs in use.
                                     </span>
                                   </div>
@@ -2061,7 +2072,7 @@ export default function App() {
 
                       {res.trAsp.length > 0 && (
                         <Card title={`⟳ All Cross-Chart Connections (${res.trAsp.length})`}>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.74rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
                             Every contact between the current positions and the natal figure, at the orbs in use. A count is not a significance.
                           </p>
                           <AspectTable aspects={res.trAsp.slice(0, 30)} />
@@ -2084,10 +2095,10 @@ export default function App() {
                       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                         <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                           <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Synastry — How Two Charts Interact</div>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
                             Synastry lays one chart over the other and reports the contacts between them, with their orbs. The counts depend on the orb policy in use and are not a verdict about the two people.
                           </p>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
                             <strong>How to read it:</strong> Look at which planets connect between the two charts. Sun-Moon links suggest emotional resonance, Venus-Mars links suggest attraction, Mercury connections shape communication, and Saturn contacts indicate where things get serious or tested.
                           </p>
                         </Card>
@@ -2096,7 +2107,7 @@ export default function App() {
                           <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 14 }}>
                             <div style={{ flex: 1, minWidth: 140, textAlign: "center", padding: "14px 12px", borderRadius: 12, background: "#69ff8e0c", border: "1px solid #69ff8e22" }}>
                               <div style={{ fontFamily: "Cinzel,serif", fontSize: "1.5rem", color: "#69ff8e" }}>{ratio}%</div>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, marginTop: 4 }}>SOFT / TOTAL</div>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: M3.secondary, marginTop: 4 }}>SOFT / TOTAL</div>
                             </div>
                             {[
                               { n: "Conjunctions", c: conj.length, col: "#FFD700", tip: "Fused energy — amplifies shared themes" },
@@ -2106,12 +2117,12 @@ export default function App() {
                             ].map(x => (
                               <div key={x.n} style={{ flex: 1, minWidth: 110, textAlign: "center", padding: "12px 8px", borderRadius: 12, background: x.col + "0a", border: `1px solid ${x.col}22` }}>
                                 <div style={{ fontFamily: "Cinzel,serif", fontSize: "1.3rem", color: x.col }}>{x.c}</div>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: x.col, marginTop: 2 }}>{x.n}</div>
-                                <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.62rem", color: M3.outlineVariant, marginTop: 2 }}>{x.tip}</div>
+                                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: x.col, marginTop: 2 }}>{x.n}</div>
+                                <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.62rem", color: M3.outlineVariant, marginTop: 2 }}>{x.tip}</div>
                               </div>
                             ))}
                           </div>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: 0, textAlign: "center" }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: 0, textAlign: "center" }}>
                             {`${harmony.toFixed(1)} soft against ${friction} hard contacts, at the orbs in use.`}
                           </p>
                         </Card>
@@ -2147,19 +2158,19 @@ export default function App() {
                           };
                           return (
                             <Card title="◈ Hard Contacts Between the Two Charts">
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
                                 The tightest hard contacts between the two charts, listed with their orbs.</p>
                               {frictionAsp.map((a, i) => {
                                 const p1 = a.p1.replace(/^[AB]_/, ""), p2 = a.p2.replace(/^[AB]_/, "");
                                 return (
                                   <div key={i} style={{ padding: "12px 16px", marginBottom: 8, borderRadius: 10, background: a.col + "0e", borderLeft: `3px solid ${a.col}` }}>
-                                    <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", color: M3.onSurface, marginBottom: 4 }}>
+                                    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: M3.onSurface, marginBottom: 4 }}>
                                       <span style={{ color: P_COL[p1] || M3.primary }}>{P_SYM[p1] || ""} A's {p1}</span>
                                       <span style={{ color: a.col, margin: "0 6px" }}>{a.sym} {a.name}</span>
                                       <span style={{ color: P_COL[p2] || M3.primary }}>{P_SYM[p2] || ""} B's {p2}</span>
                                       <span style={{ color: M3.outlineVariant, marginLeft: 8, fontSize: "0.62rem" }}>{(a.strength * 100).toFixed(0)}%</span>
                                     </div>
-                                    <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>{getKey(a)}</p>
+                                    <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>{getKey(a)}</p>
                                   </div>
                                 );
                               })}
@@ -2181,7 +2192,7 @@ export default function App() {
                         </div>
 
                         <Card title={`♡ All Cross-Chart Connections (${res.synR.aspects.length} links)`}>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.74rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
                             Each row shows a connection between one of Person A's planets and one of Person B's. The "strength" percentage indicates how tight the aspect is — higher means more strongly felt by both people.
                           </p>
                           <AspectTable aspects={res.synR.aspects} />
@@ -2191,10 +2202,10 @@ export default function App() {
                   })() : (
                     <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                       <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Synastry — Relationship Chart Comparison</div>
-                      <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: "0 0 16px" }}>
+                      <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: "0 0 16px" }}>
                         Synastry reports the contacts between two charts with their orbs. It offers no verdict about the two people.
                       </p>
-                      <div style={{ textAlign: "center", color: M3.secondary, fontFamily: "'Share Tech Mono', monospace", padding: "30px 0", borderTop: `1px solid ${M3.outlineVariant}` }}>
+                      <div style={{ textAlign: "center", color: M3.secondary, fontFamily: "'JetBrains Mono', monospace", padding: "30px 0", borderTop: `1px solid ${M3.outlineVariant}` }}>
                         To use: check "Synastry" in the birth data form above, enter Person B's birth details, and click Compute.
                       </div>
                     </Card>
@@ -2209,9 +2220,9 @@ export default function App() {
                     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Chinese Astrology — The Sexagenary Cycle</div>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
                           Chinese astrology is based on a 60-year cycle (sexagenary cycle) combining 12 animals, 5 elements (Wood, Fire, Earth, Metal, Water), and Yin/Yang polarity. Unlike Western astrology which maps the sky at birth, the Chinese system uses the lunar calendar year, so the animal and element are fixed by the cycle year, which begins at the lunar new year</p>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
                           <strong>How to read it:</strong> the <strong>animal</strong> names the earthly branch of the year, and the <strong>element</strong> names the phase paired with it. The cycle year begins at the lunar new year, not on 1 January.
                         </p>
                       </Card>
@@ -2219,28 +2230,28 @@ export default function App() {
                         <div style={{ textAlign: "center", marginBottom: 16 }}>
                           <div style={{ fontSize: "4rem", lineHeight: 1 }}>{ai.emoji || "☯"}</div>
                           <div style={{ fontSize: "2.4rem", color: M3.primary, marginTop: 4 }}>{res.cn.stem}{res.cn.branch}</div>
-                          <div style={{ fontSize: "1rem", color: M3.secondary, marginTop: 2, fontFamily: "'EB Garamond',Georgia,serif", fontStyle: "italic" }}>
+                          <div style={{ fontSize: "1rem", color: M3.secondary, marginTop: 2, fontFamily: "'DM Sans', system-ui, sans-serif", fontStyle: "italic" }}>
                             {res.cn.stemPinyin}-{res.cn.branchPinyin}
                           </div>
                           {res.cn.lunar && (
                             <div style={{ marginTop: 8, padding: "6px 18px", borderRadius: 20, background: M3.surfaceVariant + "66", display: "inline-block" }}>
-                              <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.76rem", color: M3.primary, fontWeight: "700" }}>
+                              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.76rem", color: M3.primary, fontWeight: "700" }}>
                                 Day {res.cn.lunar.day}, {res.cn.lunar.monthName} Month
                               </span>
-                              <span style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.68rem", color: M3.onSurfaceVariant, marginLeft: 8 }}>
+                              <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.68rem", color: M3.onSurfaceVariant, marginLeft: 8 }}>
                                 (Chinese lunar calendar)
                               </span>
                             </div>
                           )}
                           <div style={{ marginTop: 8, display: "flex", justifyContent: "center", gap: 8, flexWrap: "wrap" }}>
-                            <span style={{ padding: "4px 14px", borderRadius: 20, background: ei.color + "22", border: `1px solid ${ei.color}66`, color: ei.color, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "700" }}>{res.cn.element}</span>
-                            <span style={{ padding: "4px 14px", borderRadius: 20, background: M3.primaryContainer, color: M3.onPrimaryContainer, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem" }}>{pi.label}</span>
+                            <span style={{ padding: "4px 14px", borderRadius: 20, background: ei.color + "22", border: `1px solid ${ei.color}66`, color: ei.color, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: "700" }}>{res.cn.element}</span>
+                            <span style={{ padding: "4px 14px", borderRadius: 20, background: M3.primaryContainer, color: M3.onPrimaryContainer, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem" }}>{pi.label}</span>
                           </div>
-                          <div style={{ color: M3.onSurfaceVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.65rem", marginTop: 6 }}>
+                          <div style={{ color: M3.onSurfaceVariant, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.65rem", marginTop: 6 }}>
                             Position {res.cn.cycle60} of 60 in the Sexagenary Cycle (a 60-year grand cycle that combines the 12 animals with the 5 elements)
                           </div>
                           {res.cn.effectiveYear && res.cn.effectiveYear !== A.year && (
-                            <div style={{ color: M3.tertiary, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.7rem", fontStyle: "italic", marginTop: 6 }}>
+                            <div style={{ color: M3.tertiary, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.7rem", fontStyle: "italic", marginTop: 6 }}>
                               Note: this date, {A.month}/{A.day}/{A.year}, falls before the Chinese New Year for that year, so the branch is taken from the preceding cycle year.</div>
                           )}
                         </div>
@@ -2255,14 +2266,14 @@ export default function App() {
                       <Card title={`${ai.emoji} The ${res.cn.animal} — "${ai.archetype}"`}>
                         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 12 }}>
                           {(ai.trait || "").split(", ").map(t => (
-                            <span key={t} style={{ padding: "3px 12px", borderRadius: 16, background: M3.primaryContainer, color: M3.onPrimaryContainer, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem" }}>{t}</span>
+                            <span key={t} style={{ padding: "3px 12px", borderRadius: 16, background: M3.primaryContainer, color: M3.onPrimaryContainer, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem" }}>{t}</span>
                           ))}
                         </div>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>{ai.desc}</p>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>{ai.desc}</p>
                         {ai.shadow && (
                           <div style={{ marginTop: 12, padding: "10px 14px", borderRadius: 10, background: "#ff525211", border: "1px solid #ff525233" }}>
-                            <span style={{ color: "#ff8a80", fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", fontWeight: "700" }}>SHADOW SIDE: </span>
-                            <span style={{ color: M3.onSurfaceVariant, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem" }}>{ai.shadow}</span>
+                            <span style={{ color: "#ff8a80", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", fontWeight: "700" }}>SHADOW SIDE: </span>
+                            <span style={{ color: M3.onSurfaceVariant, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem" }}>{ai.shadow}</span>
                           </div>
                         )}
                       </Card>
@@ -2271,11 +2282,11 @@ export default function App() {
                         <Card title={`☯ Element: ${res.cn.element}`}>
                           <div style={{ textAlign: "center", marginBottom: 10 }}>
                             <div style={{ width: 56, height: 56, borderRadius: "50%", background: ei.color + "22", border: `2px solid ${ei.color}`, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-                              <span style={{ color: ei.color, fontFamily: "'Share Tech Mono',monospace", fontSize: "1.4rem", fontWeight: "700" }}>{res.cn.element[0]}</span>
+                              <span style={{ color: ei.color, fontFamily: "'JetBrains Mono', monospace", fontSize: "1.4rem", fontWeight: "700" }}>{res.cn.element[0]}</span>
                             </div>
                           </div>
-                          <div style={{ textAlign: "center", color: ei.color, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "700", marginBottom: 8 }}>{ei.trait}</div>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>{ei.desc}</p>
+                          <div style={{ textAlign: "center", color: ei.color, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: "700", marginBottom: 8 }}>{ei.trait}</div>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>{ei.desc}</p>
                           {(() => {
                             const elBal = {
                               Wood: { balanced: "Wood is the phase of growth and expansion in the five-phase scheme, associated with spring and with the liver in Chinese medicine.", imbalanced: "Excess or deficiency of the wood phase is described in the tradition through rigidity or frustration.", cultivate: "The generating and overcoming cycles set each phase against its neighbours." },
@@ -2288,16 +2299,16 @@ export default function App() {
                             return eb ? (
                               <div style={{ marginTop: 14 }}>
                                 <div style={{ padding: "10px 14px", borderRadius: 10, background: "#69ff8e08", border: "1px solid #69ff8e18", marginBottom: 8 }}>
-                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 4 }}>WHEN BALANCED</div>
-                                  <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{eb.balanced}</p>
+                                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 4 }}>WHEN BALANCED</div>
+                                  <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{eb.balanced}</p>
                                 </div>
                                 <div style={{ padding: "10px 14px", borderRadius: 10, background: "#ff525208", border: "1px solid #ff525218", marginBottom: 8 }}>
-                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 4 }}>WHEN OUT OF BALANCE</div>
-                                  <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{eb.imbalanced}</p>
+                                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: "#ff8a50", letterSpacing: "0.1em", marginBottom: 4 }}>WHEN OUT OF BALANCE</div>
+                                  <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{eb.imbalanced}</p>
                                 </div>
                                 <div style={{ padding: "10px 14px", borderRadius: 10, background: ei.color + "08", border: `1px solid ${ei.color}18` }}>
-                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: ei.color, letterSpacing: "0.1em", marginBottom: 4 }}>HOW TO CULTIVATE HEALTHY {res.cn.element.toUpperCase()}</div>
-                                  <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{eb.cultivate}</p>
+                                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: ei.color, letterSpacing: "0.1em", marginBottom: 4 }}>HOW TO CULTIVATE HEALTHY {res.cn.element.toUpperCase()}</div>
+                                  <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.74rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>{eb.cultivate}</p>
                                 </div>
                               </div>
                             ) : null;
@@ -2305,20 +2316,20 @@ export default function App() {
                         </Card>
 
                         <Card title={`${pi.symbol} Energy: ${pi.label}`}>
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>{pi.desc}</p>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>{pi.desc}</p>
                           <div style={{ marginTop: 14, padding: "10px 14px", borderRadius: 10, background: M3.surfaceDim }}>
-                            <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: M3.secondary, marginBottom: 4 }}>COMBINED READING</div>
-                            <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
+                            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: M3.secondary, marginBottom: 4 }}>COMBINED READING</div>
+                            <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
                               As a <strong style={{ color: ei.color }}>{res.cn.element}</strong> <strong style={{ color: M3.primary }}>{res.cn.animal}</strong> in a <strong>{res.cn.polarity}</strong> year, the {res.cn.element.toLowerCase()} phase is paired with the {res.cn.animal.toLowerCase()}, to which the tradition attributes a {(ai.trait || "").split(", ")[0]?.toLowerCase()} quality.</p>
                           </div>
                           <div style={{ marginTop: 14, padding: "12px 16px", borderRadius: 12, background: M3.primaryContainer + "44", border: `1px solid ${M3.outline}33` }}>
-                            <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.64rem", color: M3.primary, letterSpacing: "0.1em", marginBottom: 6 }}>YIN/YANG INTEGRATION — WHAT TO CULTIVATE</div>
+                            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.64rem", color: M3.primary, letterSpacing: "0.1em", marginBottom: 6 }}>YIN/YANG INTEGRATION — WHAT TO CULTIVATE</div>
                             {res.cn.polarity === "Yang" ? (
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
                                 Yang polarity is read in the tradition as outward-moving and assertive. Its complement is Yin, to which the tradition attributes receptivity and reflection; the pair is a relation, not a ranking.
                               </p>
                             ) : (
-                              <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
+                              <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurface, margin: 0 }}>
                                 Yin polarity is read in the tradition as inward-moving and receptive. Its complement is Yang, to which the tradition attributes assertion and outward movement; the pair is a relation, not a ranking.
                               </p>
                             )}
@@ -2329,30 +2340,30 @@ export default function App() {
                       <Card title="◈ Contacts">
                         <div style={grid2}>
                           <div>
-                            <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 8 }}>BEST ALLIES</div>
+                            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 8 }}>BEST ALLIES</div>
                             {(ai.compat || []).map(a => {
                               const inf = ANIMAL_INFO[a] || {};
                               return (
                                 <div key={a} style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderBottom: `1px solid ${M3.outlineVariant}22` }}>
                                   <span style={{ fontSize: "1.2rem" }}>{inf.emoji}</span>
                                   <div>
-                                    <div style={{ color: M3.onSurface, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "700" }}>{a}</div>
-                                    <div style={{ color: M3.onSurfaceVariant, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.66rem", fontStyle: "italic" }}>{inf.trait}</div>
+                                    <div style={{ color: M3.onSurface, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: "700" }}>{a}</div>
+                                    <div style={{ color: M3.onSurfaceVariant, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.66rem", fontStyle: "italic" }}>{inf.trait}</div>
                                   </div>
                                 </div>
                               );
                             })}
                           </div>
                           <div>
-                            <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.66rem", color: "#ff5252", letterSpacing: "0.1em", marginBottom: 8 }}>CHALLENGING MATCHES</div>
+                            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "#ff5252", letterSpacing: "0.1em", marginBottom: 8 }}>CHALLENGING MATCHES</div>
                             {(ai.clash || []).map(a => {
                               const inf = ANIMAL_INFO[a] || {};
                               return (
                                 <div key={a} style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderBottom: `1px solid ${M3.outlineVariant}22` }}>
                                   <span style={{ fontSize: "1.2rem" }}>{inf.emoji}</span>
                                   <div>
-                                    <div style={{ color: M3.onSurface, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.72rem", fontWeight: "700" }}>{a}</div>
-                                    <div style={{ color: M3.onSurfaceVariant, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.66rem", fontStyle: "italic" }}>{inf.trait}</div>
+                                    <div style={{ color: M3.onSurface, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: "700" }}>{a}</div>
+                                    <div style={{ color: M3.onSurfaceVariant, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.66rem", fontStyle: "italic" }}>{inf.trait}</div>
                                   </div>
                                 </div>
                               );
@@ -2371,16 +2382,16 @@ export default function App() {
                                 background: active ? inf.color + "33" : "transparent",
                                 border: `1px solid ${inf.color}${active ? "bb" : "33"}`,
                                 color: active ? inf.color : M3.onSurfaceVariant,
-                                fontFamily: "'Share Tech Mono', monospace", fontSize: "0.73rem",
+                                fontFamily: "'JetBrains Mono', monospace", fontSize: "0.73rem",
                                 fontWeight: active ? "700" : "400"
                               }}>{el}</div>
                             );
                           })}
                         </div>
-                        <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, textAlign: "center" }}>
+                        <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, textAlign: "center" }}>
                           Wood feeds Fire · Fire creates Earth (ash) · Earth yields Metal (ore) · Metal carries Water (condensation) · Water nourishes Wood
                         </div>
-                        <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.72rem", lineHeight: 1.6, color: M3.outlineVariant, textAlign: "center", marginTop: 4, fontStyle: "italic" }}>
+                        <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.72rem", lineHeight: 1.6, color: M3.outlineVariant, textAlign: "center", marginTop: 4, fontStyle: "italic" }}>
                           Wood parts Earth · Earth dams Water · Water quenches Fire · Fire melts Metal · Metal cuts Wood
                         </div>
                       </Card>
@@ -2397,7 +2408,7 @@ export default function App() {
                                 padding: "5px 8px", borderRadius: 8,
                                 background: isYou ? M3.primaryContainer + "44" : "transparent",
                                 display: "flex", alignItems: "center", gap: 6,
-                                fontFamily: "'Share Tech Mono', monospace", fontSize: "0.68rem",
+                                fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem",
                                 color: isYou ? M3.tertiary : M3.onSurfaceVariant
                               }}>
                                 <span style={{ fontSize: "0.9rem" }}>{inf.emoji}</span>
@@ -2417,7 +2428,7 @@ export default function App() {
                   <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                     <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                       <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>Elements, Modality & Phi Rhythm</div>
-                      <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
+                      <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
                         The bodies of this figure are distributed across four <strong>elements</strong> (Fire, Earth, Air and Water in the classical scheme) and three <strong>modalities</strong> (Cardinal = initiator, Fixed = sustainer, Mutable = adapter). The proportion between them is what the scheme records. The <strong>Phi rhythm</strong> (φ = 1.618, the golden ratio) maps the birth day-of-year onto a cycle derived from that ratio. The mapping is an arithmetic construction of this application, not a claim from any tradition.</p>
                     </Card>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(240px,1fr))", gap: 16 }}>
@@ -2429,13 +2440,13 @@ export default function App() {
                           return (
                             <div style={{ textAlign: "center" }}>
                               <div style={{ fontSize: "2.6rem", color: c, lineHeight: 1 }}>φ</div>
-                              <div style={{ color: c, fontFamily: "'Share Tech Mono', monospace", fontWeight: "700", marginTop: 6 }}>{stateLabel[res.phi.state] || res.phi.state}</div>
-                              <div style={{ color: M3.onSurfaceVariant, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.71rem", fontStyle: "italic", marginTop: 4 }}>
+                              <div style={{ color: c, fontFamily: "'JetBrains Mono', monospace", fontWeight: "700", marginTop: 6 }}>{stateLabel[res.phi.state] || res.phi.state}</div>
+                              <div style={{ color: M3.onSurfaceVariant, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.71rem", fontStyle: "italic", marginTop: 4 }}>
                                 {res.phi.phase < 0.38 ? "Energy is low — good for reflection and planning." :
                                   res.phi.phase < 0.62 ? "Momentum is building — act on steady goals." :
                                     "The index stands at its high point in this cycle."}
                               </div>
-                              <div style={{ color: M3.onSurfaceVariant, fontFamily: "'Share Tech Mono', monospace", fontSize: "0.68rem", marginTop: 4 }}>cycle position {(res.phi.phase * 100).toFixed(0)}% · multiplier ×{res.phi.mult}</div>
+                              <div style={{ color: M3.onSurfaceVariant, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", marginTop: 4 }}>cycle position {(res.phi.phase * 100).toFixed(0)}% · multiplier ×{res.phi.mult}</div>
                               <div style={{ marginTop: 12, height: 4, background: M3.outlineVariant, borderRadius: 2, overflow: "hidden" }}>
                                 <div style={{ width: `${res.phi.phase * 100}%`, height: "100%", background: c }} />
                               </div>
@@ -2452,7 +2463,7 @@ export default function App() {
                       <Card title="◈ The Figure at a Glance">
                         <div style={{
                           display: "flex", flexDirection: "column", gap: 6,
-                          fontFamily: "'Share Tech Mono', monospace", fontSize: "0.72rem"
+                          fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem"
                         }}>
                           {Object.entries(res.el).sort(([, a], [, b]) => b - a).map(([el, v]) => (
                             <div key={el} style={{ display: "flex", justifyContent: "space-between" }}>
@@ -2487,14 +2498,14 @@ export default function App() {
                     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
                         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1.1rem", color: M3.primary, marginBottom: 8 }}>Numerology — The Mathematics of Identity</div>
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
                           Numerology assigns numbers to dates and to letters and reads the totals. The two principal systems, Pythagorean and Chaldean, assign letters different values and cannot be derived from one another.
                         </p>
                       </Card>
 
                       {/* ── Core Numbers ── */}
                       <Card title="Core Numbers">
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
                           Five numbers are derived from the birth date and name. Pythagorean and Chaldean assign letters different values, so the same name yields different totals under the two; the method has to be named for any of these to mean anything.
                         </p>
                         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(140px,1fr))", gap: 10 }}>
@@ -2509,14 +2520,14 @@ export default function App() {
                             { label: "Chaldean Expr.", val: nuData.chaldeanExpr, color: "#ff5252", tip: "Babylonian system — older and considered by some to be more vibrationally accurate.", needsName: true },
                           ].map(c => (
                             <div key={c.label} style={{ padding: "14px", borderRadius: 12, background: c.color + "11", border: `1px solid ${c.color}33`, textAlign: "center", opacity: c.needsName && !hasName ? 0.4 : 1 }}>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: c.color, letterSpacing: "0.1em", marginBottom: 6 }}>{c.label.toUpperCase()}</div>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "2.2rem", color: c.color, fontWeight: "700", lineHeight: 1 }}>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: c.color, letterSpacing: "0.1em", marginBottom: 6 }}>{c.label.toUpperCase()}</div>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "2.2rem", color: c.color, fontWeight: "700", lineHeight: 1 }}>
                                 {c.needsName && !hasName ? "—" : <>{c.val}{MASTER_NUMBERS.has(c.val) ? <span style={{ fontSize: "0.6rem", verticalAlign: "super", color: "#ffd54f" }}> M</span> : ""}</>}
                               </div>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: M3.onSurfaceVariant, marginTop: 4 }}>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: M3.onSurfaceVariant, marginTop: 4 }}>
                                 {c.needsName && !hasName ? "enter name above" : NUM_PLANET[c.val] ? `${P_SYM[NUM_PLANET[c.val]] || ""} ${NUM_PLANET[c.val]}` : ""}
                               </div>
-                              <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.58rem", color: M3.onSurfaceVariant, marginTop: 6, fontStyle: "italic", lineHeight: 1.4 }}>{c.tip}</div>
+                              <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.58rem", color: M3.onSurfaceVariant, marginTop: 6, fontStyle: "italic", lineHeight: 1.4 }}>{c.tip}</div>
                             </div>
                           ))}
                         </div>
@@ -2524,18 +2535,18 @@ export default function App() {
 
                       {/* ── Life Path Deep Dive ── */}
                       <Card title={`Life Path ${nuData.lifePath} — ${lp.title || "Unnamed"}`}>
-                        {lp.archetype && <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", color: M3.tertiary, letterSpacing: "0.08em", marginBottom: 8 }}>{lp.archetype}</div>}
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", lineHeight: 1.7, color: M3.onSurface, margin: "0 0 12px" }}>{lp.desc || "No record is held for this number."}</p>
+                        {lp.archetype && <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: M3.tertiary, letterSpacing: "0.08em", marginBottom: 8 }}>{lp.archetype}</div>}
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.7, color: M3.onSurface, margin: "0 0 12px" }}>{lp.desc || "No record is held for this number."}</p>
                         {lp.shadow && (
                           <div style={{ padding: "10px 14px", borderRadius: 10, background: "#ff525211", border: "1px solid #ff525222", marginBottom: 10 }}>
-                            <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: "#ff5252", letterSpacing: "0.08em", marginBottom: 4 }}>SHADOW SIDE</div>
-                            <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", color: M3.onSurface, lineHeight: 1.5 }}>{lp.shadow}</div>
+                            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#ff5252", letterSpacing: "0.08em", marginBottom: 4 }}>SHADOW SIDE</div>
+                            <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", color: M3.onSurface, lineHeight: 1.5 }}>{lp.shadow}</div>
                           </div>
                         )}
                         {lp.growth && (
                           <div style={{ padding: "10px 14px", borderRadius: 10, background: "#69ff8e11", border: "1px solid #69ff8e22" }}>
-                            <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: "#69ff8e", letterSpacing: "0.08em", marginBottom: 4 }}>GROWTH PATH</div>
-                            <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", color: M3.onSurface, lineHeight: 1.5 }}>{lp.growth}</div>
+                            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#69ff8e", letterSpacing: "0.08em", marginBottom: 4 }}>GROWTH PATH</div>
+                            <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", color: M3.onSurface, lineHeight: 1.5 }}>{lp.growth}</div>
                           </div>
                         )}
                       </Card>
@@ -2553,10 +2564,10 @@ export default function App() {
                           ].map(r => (
                             <div key={r.label} style={{ padding: "10px 14px", borderRadius: 10, background: M3.surfaceVariant + "44", border: `1px solid ${M3.outlineVariant}` }}>
                               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                                <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.secondary, letterSpacing: "0.08em" }}>{r.label.toUpperCase()}</span>
-                                <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "1rem", color: M3.tertiary, fontWeight: "700" }}>{r.num}</span>
+                                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: M3.secondary, letterSpacing: "0.08em" }}>{r.label.toUpperCase()}</span>
+                                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "1rem", color: M3.tertiary, fontWeight: "700" }}>{r.num}</span>
                               </div>
-                              <div style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.78rem", color: M3.onSurface, lineHeight: 1.55 }}>{r.meaning}</div>
+                              <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", color: M3.onSurface, lineHeight: 1.55 }}>{r.meaning}</div>
                             </div>
                           ))}
                         </div>
@@ -2565,7 +2576,7 @@ export default function App() {
                       {/* ── Name Letter Breakdown ── */}
                       {hasName && (
                         <Card title="Name Letter Breakdown — Pythagorean & Chaldean Values">
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
                             Each letter is assigned a number. The vowels total to the Soul Urge, the consonants to the Personality, and the whole name to the Expression. Pythagorean and Chaldean disagree on the letter values, so the method must be named. This table uses the Pythagorean assignment.
                           </p>
                           <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 12 }}>
@@ -2575,14 +2586,14 @@ export default function App() {
                                 background: l.isVowel ? M3.primaryContainer + "44" : M3.surfaceVariant,
                                 border: `1px solid ${l.isVowel ? M3.primary + "44" : M3.outlineVariant}`
                               }}>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "1rem", color: l.isVowel ? M3.primary : M3.onSurface, fontWeight: "700" }}>{l.ch}</div>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: M3.tertiary }}>P:{l.pythagorean}</div>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: "#ff8a50" }}>C:{l.chaldean}</div>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.48rem", color: l.isVowel ? M3.primary : M3.onSurfaceVariant, marginTop: 2 }}>{l.isVowel ? "vowel" : "cons."}</div>
+                                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "1rem", color: l.isVowel ? M3.primary : M3.onSurface, fontWeight: "700" }}>{l.ch}</div>
+                                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: M3.tertiary }}>P:{l.pythagorean}</div>
+                                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "#ff8a50" }}>C:{l.chaldean}</div>
+                                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.48rem", color: l.isVowel ? M3.primary : M3.onSurfaceVariant, marginTop: 2 }}>{l.isVowel ? "vowel" : "cons."}</div>
                               </div>
                             ))}
                           </div>
-                          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem" }}>
+                          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem" }}>
                             <span style={{ color: M3.onSurface }}>Expression sum: <strong>{nuData.exprSum}</strong> → <strong>{nuData.expression}</strong></span>
                             <span style={{ color: "#ce93d8" }}>Soul (vowels): <strong>{nuData.soulSum}</strong> → <strong>{nuData.soulUrge}</strong></span>
                             <span style={{ color: "#4fc3f7" }}>Personality (cons.): <strong>{nuData.persSum}</strong> → <strong>{nuData.personality}</strong></span>
@@ -2594,14 +2605,14 @@ export default function App() {
                       {/* ── Missing Numbers ── */}
                       {hasName && nuData.missingNums.length > 0 && (
                         <Card title="Karmic Lessons — Numbers Absent From the Name">
-                          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
+                          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
                             Numbers that do not appear among the letter values of the name. The tradition marks these as absent rather than deficient.
                           </p>
                           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                             {nuData.missingNums.map(n => (
                               <div key={n} style={{ padding: "8px 14px", borderRadius: 10, background: "#ff525211", border: "1px solid #ff525222", textAlign: "center" }}>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "1.4rem", color: "#ff5252", fontWeight: "700" }}>{n}</div>
-                                <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: M3.onSurfaceVariant }}>{NUM_PLANET[n] || ""}</div>
+                                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "1.4rem", color: "#ff5252", fontWeight: "700" }}>{n}</div>
+                                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: M3.onSurfaceVariant }}>{NUM_PLANET[n] || ""}</div>
                               </div>
                             ))}
                           </div>
@@ -2610,21 +2621,21 @@ export default function App() {
 
                       {/* ── Pinnacles & Challenges ── */}
                       <Card title="Life Pinnacles & Challenges — The Four Periods">
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
                           The scheme divides a life into four periods, each carrying a pinnacle number and a challenge number derived arithmetically from the birth date. Where the boundaries fall varies between sources.
                         </p>
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                           {["First (youth)", "Second (early adult)", "Third (maturity)", "Fourth (wisdom)"].map((phase, i) => (
                             <div key={i} style={{ padding: "10px 12px", borderRadius: 10, background: M3.surfaceVariant + "44", border: `1px solid ${M3.outlineVariant}` }}>
-                              <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: M3.secondary, letterSpacing: "0.08em", marginBottom: 6 }}>{phase.toUpperCase()}</div>
+                              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: M3.secondary, letterSpacing: "0.08em", marginBottom: 6 }}>{phase.toUpperCase()}</div>
                               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                                 <div style={{ textAlign: "center" }}>
-                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.52rem", color: "#69ff8e" }}>PINNACLE</div>
-                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "1.4rem", color: "#69ff8e", fontWeight: "700" }}>{nuData.pinnacles[i]}</div>
+                                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.52rem", color: "#69ff8e" }}>PINNACLE</div>
+                                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "1.4rem", color: "#69ff8e", fontWeight: "700" }}>{nuData.pinnacles[i]}</div>
                                 </div>
                                 <div style={{ textAlign: "center" }}>
-                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.52rem", color: "#ff5252" }}>CHALLENGE</div>
-                                  <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "1.4rem", color: "#ff5252", fontWeight: "700" }}>{nuData.challenges[i]}</div>
+                                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.52rem", color: "#ff5252" }}>CHALLENGE</div>
+                                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "1.4rem", color: "#ff5252", fontWeight: "700" }}>{nuData.challenges[i]}</div>
                                 </div>
                               </div>
                             </div>
@@ -2634,14 +2645,14 @@ export default function App() {
 
                       {/* ── Hebrew Gematria Calculator ── */}
                       <Card title="Hebrew Gematria Calculator — The Number in a Name">
-                        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
+                        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
                           Each Hebrew letter carries a numerical value. Any name or word typed in English is phonetically transliterated to Hebrew — digraphs like SH, CH, TH are handled as single Hebrew letters. Hebrew may also be typed directly. Medial vowels are dimmed since Hebrew is primarily consonantal.
                         </p>
                         <input type="text" value={gemaName} onChange={e => setGemaName(e.target.value)}
                           placeholder="English name, Hebrew (אברהם), or phrase..."
                           style={{
                             width: "100%", padding: "10px 14px", background: M3.surfaceDim, border: `1px solid ${M3.outline}`, borderRadius: 10,
-                            color: M3.onSurface, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.82rem", outline: "none", boxSizing: "border-box"
+                            color: M3.onSurface, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.82rem", outline: "none", boxSizing: "border-box"
                           }} />
                         {gemaName.trim() && (() => {
                           const g = calcGematria(gemaName);
@@ -2650,42 +2661,42 @@ export default function App() {
                               <div style={{ marginBottom: 14, padding: "10px 16px", borderRadius: 10, background: M3.primaryContainer + "33", border: `1px solid ${M3.primary}22` }}>
                                 {g.isHebrew ? (
                                   <>
-                                    <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>HEBREW INPUT</div>
+                                    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>HEBREW INPUT</div>
                                     <div style={{ fontSize: "1.8rem", color: M3.primary, fontFamily: "serif", letterSpacing: "0.05em", direction: "rtl", textAlign: "center" }}>{g.hebrewStr}</div>
                                   </>
                                 ) : g.hasKnown && g.knownStr ? (
                                   <>
-                                    <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 6 }}>ESTABLISHED HEBREW SPELLING</div>
+                                    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: "#69ff8e", letterSpacing: "0.1em", marginBottom: 6 }}>ESTABLISHED HEBREW SPELLING</div>
                                     <div style={{ fontSize: "1.8rem", color: M3.primary, fontFamily: "serif", letterSpacing: "0.05em", direction: "rtl", textAlign: "center" }}>{g.knownStr}</div>
                                     {g.knownTotal !== null && (
                                       <div style={{ textAlign: "center", marginTop: 4 }}>
-                                        <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.65rem", color: "#69ff8e" }}>Traditional gematria: {g.knownTotal}</span>
+                                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.65rem", color: "#69ff8e" }}>Traditional gematria: {g.knownTotal}</span>
                                       </div>
                                     )}
                                     <div style={{ marginTop: 8, padding: "8px 12px", borderRadius: 8, background: M3.surfaceDim }}>
-                                      <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.55rem", color: M3.onSurfaceVariant, letterSpacing: "0.1em", marginBottom: 4 }}>PHONETIC TRANSLITERATION (for comparison)</div>
+                                      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: M3.onSurfaceVariant, letterSpacing: "0.1em", marginBottom: 4 }}>PHONETIC TRANSLITERATION (for comparison)</div>
                                       <div style={{ fontSize: "1.1rem", color: M3.onSurfaceVariant, fontFamily: "serif", direction: "rtl", textAlign: "center", opacity: 0.6 }}>
                                         {g.transHebrewStr}
-                                        <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", marginLeft: 8 }}>= {g.transTotal}</span>
+                                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", marginLeft: 8 }}>= {g.transTotal}</span>
                                       </div>
                                     </div>
                                   </>
                                 ) : (
                                   <>
-                                    <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>PHONETIC TRANSLITERATION (CONSONANTAL)</div>
+                                    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: M3.secondary, letterSpacing: "0.1em", marginBottom: 6 }}>PHONETIC TRANSLITERATION (CONSONANTAL)</div>
                                     <div style={{ fontSize: "1.8rem", color: M3.primary, fontFamily: "serif", letterSpacing: "0.05em", direction: "rtl", textAlign: "center" }}>{g.hebrewStr}</div>
                                     {g.fullHebrewStr !== g.hebrewStr && (
                                       <div style={{ marginTop: 4, textAlign: "center" }}>
-                                        <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.55rem", color: M3.onSurfaceVariant }}>with vowels: </span>
+                                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: M3.onSurfaceVariant }}>with vowels: </span>
                                         <span style={{ fontSize: "1rem", color: M3.onSurfaceVariant, fontFamily: "serif", direction: "rtl", opacity: 0.5 }}>{g.fullHebrewStr}</span>
-                                        {g.fullTotal !== g.total && <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.6rem", color: M3.onSurfaceVariant, marginLeft: 8 }}>= {g.fullTotal}</span>}
+                                        {g.fullTotal !== g.total && <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: M3.onSurfaceVariant, marginLeft: 8 }}>= {g.fullTotal}</span>}
                                       </div>
                                     )}
                                   </>
                                 )}
                                 {!g.isHebrew && g.hasAlt && g.altHebrewStr && !g.hasKnown && (
                                   <div style={{ marginTop: 6 }}>
-                                    <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: M3.outlineVariant }}>
+                                    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: M3.outlineVariant }}>
                                       Alternate transliteration available.
                                     </div>
                                   </div>
@@ -2719,6 +2730,7 @@ export default function App() {
               </TabContent>
             </>
           )}
+          </div>
         </div>
         <Footer />
       </div>

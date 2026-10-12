@@ -30,7 +30,7 @@ function wedgePath(cx, cy, rOuter, rInner, startDeg, endDeg) {
 const RING_PALETTES = [
   { base: "#bb86fc", active: "#e0b0ff", glow: "rgba(187,134,252,0.25)" },
   { base: "#80cbc4", active: "#a7f3d0", glow: "rgba(128,203,196,0.22)" },
-  { base: "#f6c840", active: "#ffe082", glow: "rgba(246,200,64,0.22)" },
+  { base: "#E9C766", active: "#ffe082", glow: "rgba(246,200,64,0.22)" },
   { base: "#f48fb1", active: "#f8bbd0", glow: "rgba(244,143,177,0.22)" },
 ];
 
@@ -183,7 +183,7 @@ export default function CalendarWheel({ model, size = 500, onTooltip, showOverla
               x={cx + (ringOuter + 4) * Math.cos((-90 + 2) * RAD)}
               y={cy + (ringOuter + 4) * Math.sin((-90 + 2) * RAD)}
               fill={palette.base} fontSize={Math.max(7, R * 0.015)}
-              fontFamily="'Share Tech Mono', monospace" opacity="0.25"
+              fontFamily="'JetBrains Mono', monospace" opacity="0.25"
               textAnchor="start" dominantBaseline="middle"
               style={{ userSelect: "none", pointerEvents: "none" }}>
               {ring.label}
@@ -248,7 +248,7 @@ export default function CalendarWheel({ model, size = 500, onTooltip, showOverla
         x={cx} y={cy + S * 0.018}
         textAnchor="middle" fill={M3.onSurfaceVariant}
         fontSize={R * 0.02}
-        fontFamily="'Share Tech Mono', monospace" opacity="0.6">
+        fontFamily="'JetBrains Mono', monospace" opacity="0.6">
         {model.confidence}
       </text>
       {model.nativeRings[0]?.segments[model.nativeRings[0]?.activeIndex]?.label && (

@@ -75,7 +75,7 @@ const PhoneticCrosswalk = () => {
 
     const rootMapping = getLetterMapping(selectedIpa?.ipa_symbol);
 
-    if (loading) return <div style={{ color: M3.onSurfaceVariant, padding: 20, fontFamily: "'Share Tech Mono', monospace" }}>Loading phonetic matrix...</div>;
+    if (loading) return <div style={{ color: M3.onSurfaceVariant, padding: 20, fontFamily: "'JetBrains Mono', monospace" }}>Loading phonetic matrix...</div>;
     if (error) return <div style={{ color: '#ff5252', padding: 20 }}>Error: {error}</div>;
 
     return (
@@ -227,7 +227,7 @@ const FeatureItem = ({ label, value, highlight, mono }) => (
             fontSize: highlight ? '1.1rem' : '0.85rem', 
             fontWeight: highlight ? 'bold' : 'normal',
             color: highlight ? M3.primary : M3.onSurface,
-            fontFamily: mono ? "'Share Tech Mono', monospace" : 'inherit'
+            fontFamily: mono ? "'JetBrains Mono', monospace" : 'inherit'
         }}>
             {value}
         </span>

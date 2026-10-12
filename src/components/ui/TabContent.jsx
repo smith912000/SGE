@@ -1,12 +1,4 @@
-import { useRef, useEffect } from 'react';
-import { useAnime } from '../../hooks/useAnime.js';
-
+// Fades each view in with CSS, so the content never depends on a script loading.
 export default function TabContent({ children, id }) {
-  const ref   = useRef(null);
-  const anime = useAnime();
-  useEffect(()=>{
-    if (!anime||!ref.current) return;
-    anime({ targets:ref.current, opacity:[0,1], translateY:[8,0], duration:320, easing:"easeOutQuad" });
-  }, [id, anime]);
-  return <div ref={ref} style={{ opacity:0 }}>{children}</div>;
+  return <div key={id} className="fade-in">{children}</div>;
 }

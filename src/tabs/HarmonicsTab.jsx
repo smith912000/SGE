@@ -46,10 +46,10 @@ export default function HarmonicsTab({ ctx }) {
     <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
       <Card style={{ background:`linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor:M3.outline }}>
         <div style={{ fontFamily:"Cinzel,serif", fontSize:"1rem", color:M3.primary, marginBottom:8 }}>What dividing the circle by n does</div>
-        <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
+        <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.82rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
           The nth harmonic multiplies every longitude by n and reduces the result modulo 360.
         </p>
-        <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.65, color:M3.onSurface, marginTop:8 }}>
+        <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.82rem", lineHeight:1.65, color:M3.onSurface, marginTop:8 }}>
           <strong>Reading the result:</strong> Clusters are bodies grouped in the same sign or conjunct (☜) after the transformation.
         </p>
       </Card>
@@ -64,31 +64,31 @@ export default function HarmonicsTab({ ctx }) {
                   borderRadius:20, cursor:"pointer",
                   background: n===num ? d.col+"33" : "transparent",
                   color: n===num ? d.col : M3.onSurfaceVariant,
-                  fontFamily:"'Share Tech Mono',monospace", fontSize:"0.72rem", fontWeight:n===num?"700":"400",
+                  fontFamily:"'JetBrains Mono', monospace", fontSize:"0.72rem", fontWeight:n===num?"700":"400",
                   transition:"all 0.2s" }}>
                 #{num} {d.label.split("(")[0].trim()}
               </button>
             );
           })}
           <div style={{ display:"flex", alignItems:"center", gap:6 }}>
-            <span style={{ color:M3.secondary, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.68rem" }}>Other:</span>
+            <span style={{ color:M3.secondary, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.68rem" }}>Other:</span>
             <input type="number" value={n} min={2} max={24} step={1}
               onChange={e=>setN(Math.max(2,Math.min(24,parseInt(e.target.value)||n)))}
               style={{ width:52, padding:"6px 8px", background:M3.surfaceDim,
                 border:`1px solid ${M3.outline}`, borderRadius:8, color:M3.onSurface,
-                fontFamily:"'Share Tech Mono',monospace", fontSize:"0.75rem", outline:"none" }}/>
+                fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", outline:"none" }}/>
           </div>
         </div>
 
         <div style={{ padding:"14px 16px", borderRadius:12, background:(hd?.col||M3.primary)+"0e", border:`1px solid ${(hd?.col||M3.primary)}28` }}>
-          <div style={{ color:hd?.col||M3.primary, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.82rem", fontWeight:"700", marginBottom:6 }}>
+          <div style={{ color:hd?.col||M3.primary, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.82rem", fontWeight:"700", marginBottom:6 }}>
             Pattern #{n} — {hd?.label || `Harmonic ${n}`}
           </div>
-          <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.8rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
+          <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.8rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
             {hd?.desc || `The ${n}th harmonic divides the circle into ${n} equal parts. Bodies ${(360/n).toFixed(1)}° apart in the natal chart appear conjunct here.`}
           </p>
           {(hd?.lookFor || !hd) && (
-            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.secondary, margin:"8px 0 0", fontStyle:"italic" }}>
+            <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.secondary, margin:"8px 0 0", fontStyle:"italic" }}>
               {hd?.lookFor || `Look for clusters and conjunctions in the chart below — they reveal planets that resonate together at this ${n}-fold frequency.`}
             </p>
           )}
@@ -99,23 +99,23 @@ export default function HarmonicsTab({ ctx }) {
         <Card title={`✦ Harmonic #${n} — Groupings`}>
           {clusters.length > 0 && (
             <div style={{ marginBottom:14 }}>
-              <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.65rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:8 }}>SIGN CLUSTERS — WHERE ENERGY CONCENTRATES</div>
+              <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.65rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:8 }}>SIGN CLUSTERS — WHERE ENERGY CONCENTRATES</div>
               {clusters.map(([sign, planets])=>(
                 <div key={sign} style={{ padding:"10px 14px", marginBottom:8, borderRadius:10,
                   background:SIGN_COL[sign]+"0c", border:`1px solid ${SIGN_COL[sign]}22` }}>
                   <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6 }}>
                     <span style={{ color:SIGN_COL[sign], fontSize:"1.1rem" }}>{SIGN_SYM[SIGNS.indexOf(sign)]}</span>
-                    <span style={{ color:SIGN_COL[sign], fontFamily:"'Share Tech Mono',monospace", fontSize:"0.78rem", fontWeight:"700" }}>{sign} — {planets.length} planets</span>
+                    <span style={{ color:SIGN_COL[sign], fontFamily:"'JetBrains Mono', monospace", fontSize:"0.78rem", fontWeight:"700" }}>{sign} — {planets.length} planets</span>
                   </div>
                   <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginBottom:6 }}>
                     {planets.map(p=>(
                       <span key={p} style={{ padding:"3px 10px", borderRadius:14, background:P_COL[p]+"18", border:`1px solid ${P_COL[p]}44`,
-                        color:P_COL[p], fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem" }}>
+                        color:P_COL[p], fontFamily:"'JetBrains Mono', monospace", fontSize:"0.66rem" }}>
                         {P_SYM[p]} {p} <span style={{opacity:0.6}}>({P_ROLE[p]||""})</span>
                       </span>
                     ))}
                   </div>
-                  <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.74rem", lineHeight:1.55, color:M3.onSurfaceVariant, margin:0 }}>
+                  <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.74rem", lineHeight:1.55, color:M3.onSurfaceVariant, margin:0 }}>
                     {(()=>{
                       const si = SIGN_INFO[sign]||{};
                       const el = si.element||"";
@@ -134,17 +134,17 @@ export default function HarmonicsTab({ ctx }) {
           )}
           {tight.length > 0 && (
             <div>
-              <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.65rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:8 }}>TIGHT CONJUNCTIONS — STRONGEST HIDDEN LINKS</div>
+              <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.65rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:8 }}>TIGHT CONJUNCTIONS — STRONGEST HIDDEN LINKS</div>
               {tight.map((a,i)=>(
                 <div key={i} style={{ padding:"8px 12px", marginBottom:6, borderRadius:8,
                   background:(hd?.col||M3.primary)+"08", borderLeft:`3px solid ${hd?.col||a.col}` }}>
-                  <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.72rem", color:M3.onSurface }}>
+                  <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.72rem", color:M3.onSurface }}>
                     <span style={{color:P_COL[a.p1]}}>{P_SYM[a.p1]} {a.p1}</span>
                     <span style={{color:hd?.col||a.col, margin:"0 6px"}}>☌</span>
                     <span style={{color:P_COL[a.p2]}}>{P_SYM[a.p2]} {a.p2}</span>
                     <span style={{color:M3.onSurfaceVariant, marginLeft:8, fontSize:"0.65rem"}}>{(a.strength*100).toFixed(0)}% strength</span>
                   </div>
-                  <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"4px 0 0" }}>
+                  <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.72rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"4px 0 0" }}>
                     {(()=>{
                       const r0=P_ROLE[a.p1]||a.p1, r1=P_ROLE[a.p2]||a.p2;
                       const insight = getPairInsight(a.p1, a.p2);
@@ -170,7 +170,7 @@ export default function HarmonicsTab({ ctx }) {
             </div>
           )}
           {clusters.length === 0 && tight.length === 0 && (
-            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.8rem", lineHeight:1.6, color:M3.onSurfaceVariant, textAlign:"center", padding:20 }}>
+            <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.8rem", lineHeight:1.6, color:M3.onSurfaceVariant, textAlign:"center", padding:20 }}>
               No clusters or tight conjunctions at this harmonic. The transformed positions are evenly distributed rather than grouped.
             </p>
           )}
@@ -179,13 +179,13 @@ export default function HarmonicsTab({ ctx }) {
 
       <div style={grid2}>
         <Card title={`∞ Pattern #${n} — Remapped Positions`}>
-          <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
+          <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.72rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
             Each planet's birth position × {n}, wrapped to 360°. Planets in the same sign here share a hidden {n}-fold resonance.
           </p>
           <PlanetTable positions={hPos} jd={res.jd}/>
         </Card>
         <Card title={`∞ Pattern #${n} — Wheel`}>
-          <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
+          <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.72rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
             The harmonic wheel. Bodies close together here stand at or near the {(360/n).toFixed(1)}° family of separations in the natal chart.
           </p>
           <div style={{ display:"flex", justifyContent:"center" }}>
@@ -196,7 +196,7 @@ export default function HarmonicsTab({ ctx }) {
 
       {anyAsp.length > 0 && (
         <Card title={`∞ Pattern #${n} — All Strong Connections (${anyAsp.length})`}>
-          <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
+          <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.72rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
             The tightest separations in the transformed chart, listed with their orbs.
           </p>
           <AspectTable aspects={anyAsp}/>

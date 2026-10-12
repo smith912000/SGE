@@ -2,19 +2,15 @@ import { M3 } from '../../theme/m3.js';
 
 const VARIANTS = {
   default: {
-    background: M3.glass,
+    background: M3.surfaceContainer,
     border: `1px solid ${M3.glassBorder}`,
-    backdropFilter: 'blur(16px)',
-    WebkitBackdropFilter: 'blur(16px)',
   },
   highlight: {
-    background: `linear-gradient(135deg, ${M3.primaryContainer}55, ${M3.glass})`,
-    border: `1px solid ${M3.primary}22`,
-    backdropFilter: 'blur(16px)',
-    WebkitBackdropFilter: 'blur(16px)',
+    background: `linear-gradient(135deg, ${M3.primaryContainer}66, ${M3.surfaceContainer})`,
+    border: `1px solid ${M3.outline}66`,
   },
   sunken: {
-    background: M3.surfaceDim,
+    background: M3.surface,
     border: `1px solid ${M3.glassBorder}`,
   },
 };
@@ -22,23 +18,24 @@ const VARIANTS = {
 export default function Card({ children, title, style = {}, variant = 'default' }) {
   const v = VARIANTS[variant] || VARIANTS.default;
   return (
-    <div style={{
+    <section style={{
       ...v,
       borderRadius: M3.radius.lg,
       padding: 20,
       ...style,
     }}>
       {title && (
-        <div style={{
-          fontFamily: M3.fontMono,
-          fontSize: '0.65rem',
-          letterSpacing: '0.2em',
-          color: M3.secondary,
+        <h3 style={{
+          fontFamily: M3.fontBody,
+          fontWeight: 600,
+          fontSize: '0.68rem',
+          letterSpacing: '0.16em',
+          color: M3.tertiary,
           marginBottom: 14,
           textTransform: 'uppercase',
-        }}>{title}</div>
+        }}>{title}</h3>
       )}
       {children}
-    </div>
+    </section>
   );
 }

@@ -59,7 +59,7 @@ export default function DeepTab({ ctx }) {
 
     <Card style={{ background:`linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor:M3.outline }}>
       <div style={{ fontFamily:"Cinzel,serif", fontSize:"1rem", color:M3.primary, marginBottom:8 }}>Deep Reading — the chart taken factor by factor</div>
-      <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
+      <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.82rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
         Core symbolism. The depth control adds the tradition behind it.
       </p>
     </Card>
@@ -70,12 +70,12 @@ export default function DeepTab({ ctx }) {
           <span style={{ fontSize:"1.6rem" }}>{SI[sunSign].emoji}</span>
         </div>
         <div>
-          <div style={{ color:SIGN_COL[sunSign], fontFamily:"'Share Tech Mono',monospace", fontSize:"0.82rem", fontWeight:"700" }}>Sun in {sunSign}</div>
-          <div style={{ color:M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.65rem" }}>{SI[sunSign].element} · {SI[sunSign].mode} · ruled by {SI[sunSign].ruler}</div>
-          {SI[sunSign].hebrew && <div style={{ color:M3.outlineVariant, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", marginTop:2 }}>{SI[sunSign].emoji} ← {SI[sunSign].letterName} ({SI[sunSign].hebrew}) ← {SI[sunSign].phoenician} ← {SI[sunSign].hiero} — {SI[sunSign].letterMeaning.split("—")[1]?.trim()||""}</div>}
+          <div style={{ color:SIGN_COL[sunSign], fontFamily:"'JetBrains Mono', monospace", fontSize:"0.82rem", fontWeight:"700" }}>Sun in {sunSign}</div>
+          <div style={{ color:M3.onSurfaceVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.65rem" }}>{SI[sunSign].element} · {SI[sunSign].mode} · ruled by {SI[sunSign].ruler}</div>
+          {SI[sunSign].hebrew && <div style={{ color:M3.outlineVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.6rem", marginTop:2 }}>{SI[sunSign].emoji} ← {SI[sunSign].letterName} ({SI[sunSign].hebrew}) ← {SI[sunSign].phoenician} ← {SI[sunSign].hiero} — {SI[sunSign].letterMeaning.split("—")[1]?.trim()||""}</div>}
         </div>
       </div>
-      <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.75, color:M3.onSurface, margin:0 }}>{SOLAR_DEEP[sunSign].plain}</p>
+      <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.82rem", lineHeight:1.75, color:M3.onSurface, margin:0 }}>{SOLAR_DEEP[sunSign].plain}</p>
       
     </Card>
 
@@ -85,12 +85,12 @@ export default function DeepTab({ ctx }) {
           <span style={{ fontSize:"1.6rem" }}>{SI[moonSign].emoji}</span>
         </div>
         <div>
-          <div style={{ color:SIGN_COL[moonSign], fontFamily:"'Share Tech Mono',monospace", fontSize:"0.82rem", fontWeight:"700" }}>Moon in {moonSign}</div>
-          <div style={{ color:M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.65rem" }}>{SI[moonSign].element} · {SI[moonSign].mode} · ruled by {SI[moonSign].ruler}</div>
-          {SI[moonSign].hebrew && <div style={{ color:M3.outlineVariant, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", marginTop:2 }}>{SI[moonSign].emoji} ← {SI[moonSign].letterName} ({SI[moonSign].hebrew}) ← {SI[moonSign].phoenician} ← {SI[moonSign].hiero} — {SI[moonSign].letterMeaning.split("—")[1]?.trim()||""}</div>}
+          <div style={{ color:SIGN_COL[moonSign], fontFamily:"'JetBrains Mono', monospace", fontSize:"0.82rem", fontWeight:"700" }}>Moon in {moonSign}</div>
+          <div style={{ color:M3.onSurfaceVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.65rem" }}>{SI[moonSign].element} · {SI[moonSign].mode} · ruled by {SI[moonSign].ruler}</div>
+          {SI[moonSign].hebrew && <div style={{ color:M3.outlineVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.6rem", marginTop:2 }}>{SI[moonSign].emoji} ← {SI[moonSign].letterName} ({SI[moonSign].hebrew}) ← {SI[moonSign].phoenician} ← {SI[moonSign].hiero} — {SI[moonSign].letterMeaning.split("—")[1]?.trim()||""}</div>}
         </div>
       </div>
-      <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.75, color:M3.onSurface, margin:0 }}>{LUNAR_DEEP[moonSign].plain}</p>
+      <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.82rem", lineHeight:1.75, color:M3.onSurface, margin:0 }}>{LUNAR_DEEP[moonSign].plain}</p>
       
     </Card>
 
@@ -100,18 +100,18 @@ export default function DeepTab({ ctx }) {
           <span style={{ fontSize:"1.6rem" }}>{SI[ascSign].emoji}</span>
         </div>
         <div>
-          <div style={{ color:SIGN_COL[ascSign], fontFamily:"'Share Tech Mono',monospace", fontSize:"0.82rem", fontWeight:"700" }}>{ascSign} Rising</div>
-          <div style={{ color:M3.onSurfaceVariant, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.65rem" }}>The ascendant — the degree of the ecliptic rising at the eastern horizon for this time and place</div>
-          {SI[ascSign].hebrew && <div style={{ color:M3.outlineVariant, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", marginTop:2 }}>{SI[ascSign].emoji} ← {SI[ascSign].letterName} ({SI[ascSign].hebrew}) ← {SI[ascSign].phoenician} ← {SI[ascSign].hiero} — {SI[ascSign].letterMeaning.split("—")[1]?.trim()||""}</div>}
+          <div style={{ color:SIGN_COL[ascSign], fontFamily:"'JetBrains Mono', monospace", fontSize:"0.82rem", fontWeight:"700" }}>{ascSign} Rising</div>
+          <div style={{ color:M3.onSurfaceVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.65rem" }}>The ascendant — the degree of the ecliptic rising at the eastern horizon for this time and place</div>
+          {SI[ascSign].hebrew && <div style={{ color:M3.outlineVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.6rem", marginTop:2 }}>{SI[ascSign].emoji} ← {SI[ascSign].letterName} ({SI[ascSign].hebrew}) ← {SI[ascSign].phoenician} ← {SI[ascSign].hiero} — {SI[ascSign].letterMeaning.split("—")[1]?.trim()||""}</div>}
         </div>
       </div>
-      <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.82rem", lineHeight:1.75, color:M3.onSurface, margin:0 }}>
+      <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.82rem", lineHeight:1.75, color:M3.onSurface, margin:0 }}>
         The degree rising at the eastern horizon. Its sign rules the figure.
       </p>
       {RISING_SHADOW[ascSign] && (
         <div style={{ marginTop:14, padding:"12px 16px", borderRadius:10, background:"#ff525208", border:"1px solid #ff525218" }}>
-          <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.64rem", color:"#ff8a50", letterSpacing:"0.1em", marginBottom:6 }}>ATTRIBUTED</div>
-          <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>{RISING_SHADOW[ascSign].shadow}</p>
+          <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.64rem", color:"#ff8a50", letterSpacing:"0.1em", marginBottom:6 }}>ATTRIBUTED</div>
+          <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>{RISING_SHADOW[ascSign].shadow}</p>
           <div style={{ marginTop:10, padding:"10px 14px", borderRadius:8, background:"#69ff8e08", border:"1px solid #69ff8e18" }}>
           </div>
         </div>
@@ -126,15 +126,15 @@ export default function DeepTab({ ctx }) {
         <Card title="💖 Venus — The Lesser Benefic">
           <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
             <span style={{ color:P_COL.Venus, fontSize:"1.4rem" }}>♀</span>
-            <span style={{ color:SIGN_COL[venSign], fontFamily:"'Share Tech Mono',monospace", fontWeight:"700" }}>Venus in {venSign}</span>
+            <span style={{ color:SIGN_COL[venSign], fontFamily:"'JetBrains Mono', monospace", fontWeight:"700" }}>Venus in {venSign}</span>
           </div>
-          <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
+          <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
             {terse(getPlanetInSign("Venus", venSign)) || terse(getSignSymbolism(venSign))}
           </p>
           {VENUS_SHADOW[venSign] && (
             <div style={{ marginTop:10, padding:"10px 14px", borderRadius:8, background:"#ff525208", border:"1px solid #ff525218" }}>
-              <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color:"#ff8a50", letterSpacing:"0.1em", marginBottom:4 }}>ATTRIBUTED</div>
-              <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.74rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{VENUS_SHADOW[venSign].shadow}</p>
+              <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.6rem", color:"#ff8a50", letterSpacing:"0.1em", marginBottom:4 }}>ATTRIBUTED</div>
+              <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.74rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{VENUS_SHADOW[venSign].shadow}</p>
             </div>
           )}
           {VENUS_SHADOW[venSign] && (
@@ -145,15 +145,15 @@ export default function DeepTab({ ctx }) {
         <Card title="🔥 Mars — The Lesser Malefic">
           <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
             <span style={{ color:P_COL.Mars, fontSize:"1.4rem" }}>♂</span>
-            <span style={{ color:SIGN_COL[marSign], fontFamily:"'Share Tech Mono',monospace", fontWeight:"700" }}>Mars in {marSign}</span>
+            <span style={{ color:SIGN_COL[marSign], fontFamily:"'JetBrains Mono', monospace", fontWeight:"700" }}>Mars in {marSign}</span>
           </div>
-          <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
+          <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
             {terse(getPlanetInSign("Mars", marSign)) || terse(getSignSymbolism(marSign))}
           </p>
           {MARS_SHADOW[marSign] && (
             <div style={{ marginTop:10, padding:"10px 14px", borderRadius:8, background:"#ff525208", border:"1px solid #ff525218" }}>
-              <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.6rem", color:"#ff8a50", letterSpacing:"0.1em", marginBottom:4 }}>ATTRIBUTED</div>
-              <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.74rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{MARS_SHADOW[marSign].shadow}</p>
+              <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.6rem", color:"#ff8a50", letterSpacing:"0.1em", marginBottom:4 }}>ATTRIBUTED</div>
+              <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.74rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{MARS_SHADOW[marSign].shadow}</p>
             </div>
           )}
           {MARS_SHADOW[marSign] && (
@@ -172,15 +172,15 @@ export default function DeepTab({ ctx }) {
       <Card title="🧠 Mercury — The Messenger">
         <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
           <span style={{ color:P_COL.Mercury, fontSize:"1.3rem" }}>☿</span>
-          <span style={{ color:SIGN_COL[merSign], fontFamily:"'Share Tech Mono',monospace", fontWeight:"700" }}>Mercury in {merSign}</span>
+          <span style={{ color:SIGN_COL[merSign], fontFamily:"'JetBrains Mono', monospace", fontWeight:"700" }}>Mercury in {merSign}</span>
         </div>
-        <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.8rem", lineHeight:1.7, color:M3.onSurface, margin:0 }}>
+        <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.8rem", lineHeight:1.7, color:M3.onSurface, margin:0 }}>
           {terse(getPlanetInSign("Mercury", merSign)) || terse(getSignSymbolism(merSign))}
         </p>
         {MERCURY_SHADOW[merSign] && (
           <div style={{ marginTop:12, padding:"10px 14px", borderRadius:8, background:"#ff525208", border:"1px solid #ff525218" }}>
-            <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", color:"#ff8a50", letterSpacing:"0.1em", marginBottom:4 }}>THE MERCURIAL TRAP</div>
-            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>{MERCURY_SHADOW[merSign].shadow}</p>
+            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.62rem", color:"#ff8a50", letterSpacing:"0.1em", marginBottom:4 }}>THE MERCURIAL TRAP</div>
+            <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>{MERCURY_SHADOW[merSign].shadow}</p>
           </div>
         )}
         {MERCURY_SHADOW[merSign] && (
@@ -195,18 +195,18 @@ export default function DeepTab({ ctx }) {
       <Card title="♃ Jupiter — The Greater Benefic">
         <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
           <span style={{ color:P_COL.Jupiter, fontSize:"1.4rem" }}>♃</span>
-          <span style={{ color:SIGN_COL[jupSign], fontFamily:"'Share Tech Mono',monospace", fontWeight:"700" }}>Jupiter in {jupSign}</span>
+          <span style={{ color:SIGN_COL[jupSign], fontFamily:"'JetBrains Mono', monospace", fontWeight:"700" }}>Jupiter in {jupSign}</span>
         </div>
-        <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
+        <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
           {JUPITER_DEEP[jupSign]?.plain}
         </p>
       </Card>
       <Card title="♄ Saturn — The Greater Malefic">
         <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
           <span style={{ color:P_COL.Saturn, fontSize:"1.4rem" }}>♄</span>
-          <span style={{ color:SIGN_COL[satSign], fontFamily:"'Share Tech Mono',monospace", fontWeight:"700" }}>Saturn in {satSign}</span>
+          <span style={{ color:SIGN_COL[satSign], fontFamily:"'JetBrains Mono', monospace", fontWeight:"700" }}>Saturn in {satSign}</span>
         </div>
-        <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
+        <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
           {SATURN_DEEP[satSign]?.plain}
         </p>
       </Card>
@@ -214,7 +214,7 @@ export default function DeepTab({ ctx }) {
 
     <Card title="⚖ Soft and Hard Contacts">
       <div style={{ marginBottom:16 }}>
-        <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", color:"#69ff8e", letterSpacing:"0.1em", marginBottom:10 }}>SOFT CONTACTS ({softAsp.length})</div>
+        <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.66rem", color:"#69ff8e", letterSpacing:"0.1em", marginBottom:10 }}>SOFT CONTACTS ({softAsp.length})</div>
         {softAsp.slice(0,5).map((a,i)=>{
           const r0=(P_ROLE[a.p1]||a.p1).toLowerCase(), r1=(P_ROLE[a.p2]||a.p2).toLowerCase();
           const k1=`${P_ROLE[a.p1]}+${P_ROLE[a.p2]}`, k2=`${P_ROLE[a.p2]}+${P_ROLE[a.p1]}`;
@@ -224,15 +224,15 @@ export default function DeepTab({ ctx }) {
             :`The sextile is 60°, a sixth of the circle. It is read as concordant but weaker than the trine, and it carries the narrowest orb of the soft aspects here.`;
           return (
           <div key={i} style={{ padding:"10px 14px", marginBottom:8, borderRadius:10, background:a.col+"0e", borderLeft:`3px solid ${a.col}` }}>
-            <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.72rem", color:M3.onSurface }}>
+            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.72rem", color:M3.onSurface }}>
               <span style={{color:P_COL[a.p1]}}>{P_SYM[a.p1]} {a.p1}</span>
               <span style={{color:a.col, margin:"0 6px"}}>{a.sym} {a.name}</span>
               <span style={{color:P_COL[a.p2]}}>{P_SYM[a.p2]} {a.p2}</span>
             </div>
-            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurface, margin:"6px 0 0" }}>
+            <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurface, margin:"6px 0 0" }}>
               {pi ? `${r0} and ${r1}: ${pi}` : `${a.p1} and ${a.p2} — ${r0 === r1 ? `both ${r0}s` : `${r0} and ${r1}`}.`}
             </p>
-            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.55, color:"#69ff8e", margin:"6px 0 0", fontStyle:"italic" }}>
+            <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.72rem", lineHeight:1.55, color:"#69ff8e", margin:"6px 0 0", fontStyle:"italic" }}>
               {giftAdvice}
             </p>
           </div>
@@ -240,7 +240,7 @@ export default function DeepTab({ ctx }) {
         })}
       </div>
       <div>
-        <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", color:"#ff8a50", letterSpacing:"0.1em", marginBottom:10 }}>HARD CONTACTS ({hardAsp.length})</div>
+        <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.66rem", color:"#ff8a50", letterSpacing:"0.1em", marginBottom:10 }}>HARD CONTACTS ({hardAsp.length})</div>
         {hardAsp.slice(0,5).map((a,i)=>{
           const r0=(P_ROLE[a.p1]||a.p1).toLowerCase(), r1=(P_ROLE[a.p2]||a.p2).toLowerCase();
           const k1=`${P_ROLE[a.p1]}+${P_ROLE[a.p2]}`, k2=`${P_ROLE[a.p2]}+${P_ROLE[a.p1]}`;
@@ -252,15 +252,15 @@ export default function DeepTab({ ctx }) {
             :`A minor hard aspect. Its orb here is narrow, so whether it registers at all depends on the orb policy in use.`;
           return (
           <div key={i} style={{ padding:"10px 14px", marginBottom:8, borderRadius:10, background:a.col+"0e", borderLeft:`3px solid ${a.col}` }}>
-            <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.72rem", color:M3.onSurface }}>
+            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.72rem", color:M3.onSurface }}>
               <span style={{color:P_COL[a.p1]}}>{P_SYM[a.p1]} {a.p1}</span>
               <span style={{color:a.col, margin:"0 6px"}}>{a.sym} {a.name}</span>
               <span style={{color:P_COL[a.p2]}}>{P_SYM[a.p2]} {a.p2}</span>
             </div>
-            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurface, margin:"6px 0 0" }}>
+            <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurface, margin:"6px 0 0" }}>
               {pi ? `${r0} and ${r1}: ${pi}` : `${a.p1} and ${a.p2} — ${r0 === r1 ? `both ${r0}s` : `${r0} and ${r1}`}.`}
             </p>
-            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", lineHeight:1.55, color:"#ff8a50", margin:"6px 0 0", fontStyle:"italic" }}>
+            <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.72rem", lineHeight:1.55, color:"#ff8a50", margin:"6px 0 0", fontStyle:"italic" }}>
               {growthAdvice}
             </p>
           </div>
@@ -273,21 +273,21 @@ export default function DeepTab({ ctx }) {
       <div style={{ display:"flex", gap:10, flexWrap:"wrap", marginBottom:14 }}>
         {Object.entries(res.el).sort(([,a],[,b])=>b-a).map(([el,v])=>(
           <div key={el} style={{ flex:1, minWidth:120, padding:"12px 14px", borderRadius:12, background:EL_COL[el]+"11", border:`1px solid ${EL_COL[el]}33`, textAlign:"center" }}>
-            <div style={{ color:EL_COL[el], fontFamily:"'Share Tech Mono',monospace", fontSize:"1.4rem", fontWeight:"700" }}>{v}</div>
-            <div style={{ color:EL_COL[el], fontFamily:"'Share Tech Mono',monospace", fontSize:"0.72rem", fontWeight:"700" }}>{el}</div>
+            <div style={{ color:EL_COL[el], fontFamily:"'JetBrains Mono', monospace", fontSize:"1.4rem", fontWeight:"700" }}>{v}</div>
+            <div style={{ color:EL_COL[el], fontFamily:"'JetBrains Mono', monospace", fontSize:"0.72rem", fontWeight:"700" }}>{el}</div>
           </div>
         ))}
       </div>
-      <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.8rem", lineHeight:1.7, color:M3.onSurface, margin:0 }}>
+      <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.8rem", lineHeight:1.7, color:M3.onSurface, margin:0 }}>
         The most represented element in this chart is <strong style={{color:EL_COL[domEl[0]]}}>{domEl[0]} ({domEl[1]} bodies)</strong>. The elemental scheme is Empedoclean in origin and was carried into astrology through the Hellenistic tradition; which bodies are counted, and whether the angles count, varies between schools, so a dominance figure is partly an artefact of the counting rule.
       </p>
-      <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.8rem", lineHeight:1.7, color:M3.onSurface, marginTop:10 }}>
+      <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.8rem", lineHeight:1.7, color:M3.onSurface, marginTop:10 }}>
         The most represented mode is <strong style={{color:MOD_COL[domMod[0]]}}>{domMod[0]} ({domMod[1]} bodies)</strong>: {modLabel[domMod[0]]||domMod[0]}. The three modes divide the twelve signs into cardinal, fixed and mutable by their position within each season.
       </p>
     </Card>
 
     <Card title="∞ Harmonic Layers">
-      <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 14px" }}>
+      <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 14px" }}>
         The nth harmonic multiplies every longitude by n and reduces the result modulo 360, so bodies separated by 360/n degrees land together.
       </p>
       {[
@@ -300,13 +300,13 @@ export default function DeepTab({ ctx }) {
         const tight = hAsp.filter(a=>a.strength>0.7).slice(0,3);
         return (
           <div key={h.n} style={{ padding:"14px 16px", marginBottom:12, borderRadius:12, background:h.col+"0a", border:`1px solid ${h.col}22` }}>
-            <div style={{ color:h.col, fontFamily:"'Share Tech Mono',monospace", fontSize:"0.76rem", fontWeight:"700", marginBottom:6 }}>{h.title}</div>
-            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurface, margin:"0 0 8px" }}>{h.desc}</p>
+            <div style={{ color:h.col, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.76rem", fontWeight:"700", marginBottom:6 }}>{h.title}</div>
+            <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurface, margin:"0 0 8px" }}>{h.desc}</p>
             {tight.length>0 && (
               <div style={{ borderTop:`1px solid ${h.col}22`, paddingTop:8 }}>
-                <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.62rem", color:M3.secondary, marginBottom:4 }}>TIGHTEST GROUPINGS IN THIS CHART:</div>
+                <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.62rem", color:M3.secondary, marginBottom:4 }}>TIGHTEST GROUPINGS IN THIS CHART:</div>
                 {tight.map((a,i)=>(
-                  <div key={i} style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.72rem", color:M3.onSurfaceVariant, padding:"2px 0" }}>
+                  <div key={i} style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.72rem", color:M3.onSurfaceVariant, padding:"2px 0" }}>
                     {P_SYM[a.p1]} {a.p1} ({P_ROLE[a.p1]||""}) {a.sym} {P_SYM[a.p2]} {a.p2} ({P_ROLE[a.p2]||""}) — <span style={{color:h.col}}>{a.name}</span> at {(a.strength*100).toFixed(0)}% strength
                   </div>
                 ))}
@@ -385,79 +385,79 @@ export default function DeepTab({ ctx }) {
 
       return (<>
       <Card title="📖 Understanding the Building Blocks">
-        <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 16px" }}>
+        <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 16px" }}>
           What the tradition attributes to each of the principal placements in this figure.
         </p>
 
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))", gap:12, marginBottom:16 }}>
           <div style={{ padding:"14px 16px", borderRadius:12, background:SIGN_COL[sunSign]+"0a", border:`1px solid ${SIGN_COL[sunSign]}22` }}>
-            <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>SUN SIGN — THE SOLAR SIGNIFICATOR</div>
+            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.66rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>SUN SIGN — THE SOLAR SIGNIFICATOR</div>
             <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
               <span style={{ fontSize:"1.3rem" }}>{SI[sunSign].emoji}</span>
-              <span style={{ color:SIGN_COL[sunSign], fontFamily:"'Share Tech Mono',monospace", fontSize:"0.82rem", fontWeight:"700" }}>{sunSign}</span>
+              <span style={{ color:SIGN_COL[sunSign], fontFamily:"'JetBrains Mono', monospace", fontSize:"0.82rem", fontWeight:"700" }}>{sunSign}</span>
             </div>
-            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>
+            <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>
               {sunPlain}
             </p>
           </div>
 
           <div style={{ padding:"14px 16px", borderRadius:12, background:SIGN_COL[moonSign]+"0a", border:`1px solid ${SIGN_COL[moonSign]}22` }}>
-            <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>MOON SIGN — THE LUNAR SIGNIFICATOR</div>
+            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.66rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>MOON SIGN — THE LUNAR SIGNIFICATOR</div>
             <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
               <span style={{ fontSize:"1.3rem" }}>{SI[moonSign].emoji}</span>
-              <span style={{ color:SIGN_COL[moonSign], fontFamily:"'Share Tech Mono',monospace", fontSize:"0.82rem", fontWeight:"700" }}>{moonSign}</span>
+              <span style={{ color:SIGN_COL[moonSign], fontFamily:"'JetBrains Mono', monospace", fontSize:"0.82rem", fontWeight:"700" }}>{moonSign}</span>
             </div>
-            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>
+            <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>
               {moonPlain} {moonAsEmotional}
             </p>
           </div>
 
           <div style={{ padding:"14px 16px", borderRadius:12, background:SIGN_COL[ascSign]+"0a", border:`1px solid ${SIGN_COL[ascSign]}22` }}>
-            <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>RISING SIGN — THE ASCENDING DEGREE</div>
+            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.66rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>RISING SIGN — THE ASCENDING DEGREE</div>
             <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
               <span style={{ fontSize:"1.3rem" }}>{SI[ascSign].emoji}</span>
-              <span style={{ color:SIGN_COL[ascSign], fontFamily:"'Share Tech Mono',monospace", fontSize:"0.82rem", fontWeight:"700" }}>{ascSign}</span>
+              <span style={{ color:SIGN_COL[ascSign], fontFamily:"'JetBrains Mono', monospace", fontSize:"0.82rem", fontWeight:"700" }}>{ascSign}</span>
             </div>
-            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>
+            <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>
               {ascPlain} {ascAsFilter}
             </p>
           </div>
         </div>
 
         <div style={{ padding:"14px 16px", borderRadius:12, background:EL_COL[domEl[0]]+"0a", border:`1px solid ${EL_COL[domEl[0]]}22`, marginBottom:12 }}>
-          <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>MOST REPRESENTED ELEMENT — {domEl[0].toUpperCase()} ({domEl[1]} BODIES)</div>
-          <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>
+          <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.66rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>MOST REPRESENTED ELEMENT — {domEl[0].toUpperCase()} ({domEl[1]} BODIES)</div>
+          <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>
             The most represented element here is <strong style={{color:EL_COL[domEl[0]]}}>{domEl[0]}</strong> — {EL_DESC[domEl[0]]}.
           </p>
         </div>
 
         <div style={{ padding:"14px 16px", borderRadius:12, background:MOD_COL[domMod[0]]+"0a", border:`1px solid ${MOD_COL[domMod[0]]}22`, marginBottom:12 }}>
-          <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>MOST REPRESENTED MODE — {domMod[0].toUpperCase()} ({domMod[1]} BODIES)</div>
-          <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>
+          <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.66rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>MOST REPRESENTED MODE — {domMod[0].toUpperCase()} ({domMod[1]} BODIES)</div>
+          <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>
             The most represented mode is <strong style={{color:MOD_COL[domMod[0]]}}>{domMod[0]}</strong> — {MOD_DESC[domMod[0]]}.
           </p>
         </div>
 
         <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:12 }}>
           <div style={{ padding:"14px 16px", borderRadius:12, background:"#69ff8e0a", border:"1px solid #69ff8e22" }}>
-            <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", color:"#69ff8e", letterSpacing:"0.1em", marginBottom:6 }}>FLOWING CONNECTIONS — {softCount}</div>
-            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{flowDesc}</p>
+            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.66rem", color:"#69ff8e", letterSpacing:"0.1em", marginBottom:6 }}>FLOWING CONNECTIONS — {softCount}</div>
+            <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{flowDesc}</p>
           </div>
           <div style={{ padding:"14px 16px", borderRadius:12, background:"#ff8a500a", border:"1px solid #ff8a5022" }}>
-            <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", color:"#ff8a50", letterSpacing:"0.1em", marginBottom:6 }}>HARD CONTACTS — {hardCount}</div>
-            <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{growthDesc}</p>
+            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.66rem", color:"#ff8a50", letterSpacing:"0.1em", marginBottom:6 }}>HARD CONTACTS — {hardCount}</div>
+            <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{growthDesc}</p>
           </div>
         </div>
 
         <div style={{ padding:"14px 16px", borderRadius:12, background:M3.surfaceDim, border:`1px solid ${M3.outlineVariant}` }}>
-          <div style={{ fontFamily:"'Share Tech Mono',monospace", fontSize:"0.66rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>THE BALANCE BETWEEN THEM</div>
-          <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>{balanceParagraph}</p>
+          <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.66rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>THE BALANCE BETWEEN THEM</div>
+          <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>{balanceParagraph}</p>
         </div>
       </Card>
 
       {res.cn && (
         <Card title={`${cnAnimal.emoji||"☯"} The ${res.cn.animal} — Two Systems Side by Side`}>
-          <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.84rem", lineHeight:1.8, color:M3.onSurface, margin:0 }}>{cnBridge}</p>
+          <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.84rem", lineHeight:1.8, color:M3.onSurface, margin:0 }}>{cnBridge}</p>
         </Card>
       )}
 
@@ -473,13 +473,13 @@ export default function DeepTab({ ctx }) {
           ].filter(r => r.rec);
           return (
             <div>
-              <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.79rem", lineHeight:1.68, color:M3.onSurfaceVariant, margin:"0 0 16px" }}>
+              <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.79rem", lineHeight:1.68, color:M3.onSurfaceVariant, margin:"0 0 16px" }}>
                 Each placement below is named with what the tradition has attributed to it. The depth control adds the lineage and the points on which sources disagree.
               </p>
               <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))", gap:18 }}>
                 {rows.map((r,i)=>(<SymbolPanel key={i} record={r.rec} depth={deepDepth} heading={r.heading} glyph={r.glyph} />))}
               </div>
-              <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.62, color:M3.onSurfaceVariant, fontStyle:"italic", margin:"16px 0 0" }}>
+              <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.62, color:M3.onSurfaceVariant, fontStyle:"italic", margin:"16px 0 0" }}>
                 Which of these placements share a ruler, an element, or a mode &mdash; and where do they meet by aspect?
               </p>
             </div>
@@ -498,7 +498,7 @@ export default function DeepTab({ ctx }) {
           const hard = hardAsp[0];
           return (
             <div>
-              <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.79rem", lineHeight:1.68, color:M3.onSurfaceVariant, margin:"0 0 16px" }}>
+              <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.79rem", lineHeight:1.68, color:M3.onSurfaceVariant, margin:"0 0 16px" }}>
                 The placements the tradition weights most heavily in a natal figure, gathered in one place.
               </p>
               <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))", gap:18 }}>
@@ -507,11 +507,11 @@ export default function DeepTab({ ctx }) {
                 ))}
               </div>
               {hard && (
-                <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.79rem", lineHeight:1.68, color:M3.onSurface, margin:"18px 0 0" }}>
+                <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.79rem", lineHeight:1.68, color:M3.onSurface, margin:"18px 0 0" }}>
                   The tightest hard contact in this chart is {hard.p1} {hard.name.toLowerCase()} {hard.p2}, at an orb of {typeof hard.orb === "number" ? hard.orb.toFixed(2) : hard.orb}&deg;. Whether it appears at all depends on the orb policy in use.
                 </p>
               )}
-              <p style={{ fontFamily:"'EB Garamond',Georgia,serif", fontSize:"0.78rem", lineHeight:1.62, color:M3.onSurfaceVariant, fontStyle:"italic", margin:"14px 0 0" }}>
+              <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.62, color:M3.onSurfaceVariant, fontStyle:"italic", margin:"14px 0 0" }}>
                 Where else in this figure do these four placements meet — by rulership, by aspect, or by house?
               </p>
             </div>

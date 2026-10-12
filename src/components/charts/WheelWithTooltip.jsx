@@ -37,7 +37,7 @@ export default function WheelWithTooltip(props) {
               onClick={() => exportWheelAsSvg(wheelId)}
               style={{
                 background:"transparent", border:`1px solid ${M3.primary}44`, borderRadius:6, padding:"4px 12px",
-                color:M3.primary, fontFamily:"'Share Tech Mono', monospace", fontSize:"0.65rem", cursor:"pointer",
+                color:M3.primary, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.65rem", cursor:"pointer",
                 transition:"all 0.2s", letterSpacing:"0.05em"
               }}>
               ⎙ SAVE CHART (.SVG)
@@ -47,14 +47,14 @@ export default function WheelWithTooltip(props) {
               onClick={() => setAspMode(aspMode === "default" ? "aspects" : "default")}
               style={{
                 background:"transparent", border:`1px solid ${M3.secondary}44`, borderRadius:6, padding:"4px 12px",
-                color:M3.secondary, fontFamily:"'Share Tech Mono', monospace", fontSize:"0.65rem", cursor:"pointer",
+                color:M3.secondary, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.65rem", cursor:"pointer",
                 transition:"all 0.2s", letterSpacing:"0.05em"
               }}>
               ⌥ {aspMode === "default" ? "VIEW ALL ASPECTS" : "SIMPLIFIED VIEW"}
             </button>
           </div>
 
-          <div style={{ textAlign:"center", marginTop:10, fontFamily:"'Share Tech Mono', monospace",
+          <div style={{ textAlign:"center", marginTop:10, fontFamily:"'JetBrains Mono', monospace",
             fontSize:"0.6rem", color:M3.outlineVariant, letterSpacing:"0.1em", opacity: 0.6 }}>
             HOVER PLANETS · SIGNS · HOUSES · ASPECTS FOR INFO
           </div>

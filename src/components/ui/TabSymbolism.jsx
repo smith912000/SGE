@@ -44,7 +44,7 @@ export default function TabSymbolism({ title, blurb, records = [], columns = 1 }
       {blurb && (
         <p
           style={{
-            fontFamily: "'EB Garamond', Georgia, serif",
+            fontFamily: "'DM Sans', system-ui, sans-serif",
             fontSize: '0.78rem',
             lineHeight: 1.66,
             color: M3.onSurfaceVariant,
