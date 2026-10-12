@@ -30,7 +30,7 @@ class ErrorBoundary extends React.Component {
           <h2 style={{ fontFamily: "Cinzel,serif", color: M3.error, marginBottom: 12 }}>
             Something went wrong in this module.
           </h2>
-          <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "1rem", color: M3.onSurfaceVariant, maxWidth: 500, margin: "0 auto 24px" }}>
+          <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "1rem", color: M3.onSurfaceVariant, maxWidth: 500, margin: "0 auto 24px" }}>
             The SGE engine encountered a calculation or rendering anomaly. Reloading the page or moving to another tab may clear it.
           </p>
           <button
@@ -41,7 +41,7 @@ class ErrorBoundary extends React.Component {
               background: M3.primary,
               color: M3.onPrimary,
               border: "none",
-              fontFamily: "'Share Tech Mono',monospace",
+              fontFamily: "'JetBrains Mono', monospace",
               cursor: "pointer",
               fontSize: "0.8rem",
               letterSpacing: "0.1em"

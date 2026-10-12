@@ -147,7 +147,7 @@ export default function TarotTab({ ctx }) {
                                         {card.astro.toUpperCase()}
                                     </div>
                                     <h3 style={{ margin: 0, color: card.col, fontFamily: "Cinzel, serif", fontSize: "1.3rem" }}>{card.name}</h3>
-                                    <p style={{ fontSize: "0.85rem", marginTop: 12, color: M3.onSurface, lineHeight: 1.5, fontFamily: "'EB Garamond', serif" }}>
+                                    <p style={{ fontSize: "0.85rem", marginTop: 12, color: M3.onSurface, lineHeight: 1.5, fontFamily: "'DM Sans', sans-serif" }}>
                                         {card.meaning}
                                     </p>
                                 </div>

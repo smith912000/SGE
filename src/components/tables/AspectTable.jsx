@@ -15,10 +15,10 @@ function ResonanceIndicator({ res }) {
 export default function AspectTable({ aspects }) {
   const TH = {
     padding: "5px 10px", textAlign: "left", color: M3.secondary,
-    fontFamily: "'Share Tech Mono', monospace", fontSize: "0.67rem",
+    fontFamily: "'JetBrains Mono', monospace", fontSize: "0.67rem",
     letterSpacing: "0.1em", borderBottom: `1px solid ${M3.outlineVariant}`
   };
-  const TD = { padding: "4px 10px", fontFamily: "'Share Tech Mono', monospace", fontSize: "0.72rem", color: M3.onSurface };
+  const TD = { padding: "4px 10px", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: M3.onSurface };
   const cleanName = n => n.replace(/^(T_|B_|A_|natal_|transit_)/, "");
   return (
     <div style={{ overflowX: "auto" }}>
@@ -51,7 +51,7 @@ export default function AspectTable({ aspects }) {
                     <span style={{ color: a.col, fontSize: "0.66rem" }}>{(a.strength * 100).toFixed(0)}%</span>
                   </div>
                 </td>
-                <td style={{ ...TD, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.68rem", fontStyle: "italic", color: M3.onSurfaceVariant }}>
+                <td style={{ ...TD, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.68rem", fontStyle: "italic", color: M3.onSurfaceVariant }}>
                   {r1 && r2 ? `${r1} & ${r2}: ${ASP_SHORT[a.name] || a.name.toLowerCase()}` : ASP_SHORT[a.name] || ""}
                 </td>
               </tr>

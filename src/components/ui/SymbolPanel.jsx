@@ -11,7 +11,7 @@ import { terseList } from '../../data/symbolism/terse.js';
 // (attributions, contested points, prompts) surface as depth increases.
 
 const prose = {
-  fontFamily: "'EB Garamond', Georgia, serif",
+  fontFamily: "'DM Sans', system-ui, sans-serif",
   fontSize: '0.84rem',
   lineHeight: 1.72,
   color: M3.onSurface,

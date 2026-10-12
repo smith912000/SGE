@@ -19,7 +19,7 @@ export default function AspectsTab({ ctx }) {
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
         <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>What are aspects?</div>
-        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: "0 0 16px" }}>
+        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: "0 0 16px" }}>
           Angles between bodies, counted when the separation falls inside the orb in use.
         </p>
         {(() => {
@@ -93,8 +93,8 @@ export default function AspectsTab({ ctx }) {
                   <div key={a.name} style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 10px", borderRadius: 8, background: a.col + "11", border: `1px solid ${a.col}33` }}>
                     <span style={{ color: a.col, fontSize: "1rem", fontFamily: "serif" }}>{a.sym}</span>
                     <div>
-                      <div style={{ color: a.col, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.68rem", fontWeight: "700" }}>{a.name} {a.angle}°</div>
-                      <div style={{ color: M3.onSurfaceVariant, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.67rem", lineHeight: 1.4 }}>{a.tip}</div>
+                      <div style={{ color: a.col, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", fontWeight: "700" }}>{a.name} {a.angle}°</div>
+                      <div style={{ color: M3.onSurfaceVariant, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.67rem", lineHeight: 1.4 }}>{a.tip}</div>
                     </div>
                   </div>
                 ))}
@@ -105,7 +105,7 @@ export default function AspectsTab({ ctx }) {
       </Card>
 
       <Card title={`⚹ Aspect Web - ${res.aspects.length} connections at the orbs in use`}>
-        <p style={{ fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
+        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.76rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
           The angular relations between the bodies. Line weight tracks tightness of orb.
         </p>
         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -124,9 +124,9 @@ export default function AspectsTab({ ctx }) {
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
                   <span style={{ color: def?.col, fontSize: "1.5rem", fontFamily: "serif" }}>{def?.sym}</span>
                   <div>
-                    <div style={{ color: def?.col, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.74rem", fontWeight: "700" }}>{name} {def?.angle}°</div>
-                    <div style={{ color: M3.onSurfaceVariant, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.58rem", fontStyle: "italic" }}>{ASP_EXPLAIN[name] || ""}</div>
-                    <div style={{ color: M3.onSurfaceVariant, fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem" }}>{matches.length} found{matches.length > 0 ? ` - avg ${(avgStr * 100).toFixed(0)}% strength` : ""}</div>
+                    <div style={{ color: def?.col, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", fontWeight: "700" }}>{name} {def?.angle}°</div>
+                    <div style={{ color: M3.onSurfaceVariant, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.58rem", fontStyle: "italic" }}>{ASP_EXPLAIN[name] || ""}</div>
+                    <div style={{ color: M3.onSurfaceVariant, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem" }}>{matches.length} found{matches.length > 0 ? ` - avg ${(avgStr * 100).toFixed(0)}% strength` : ""}</div>
                   </div>
                 </div>
                 <div style={{ height: 5, background: M3.outlineVariant, borderRadius: 3, overflow: "hidden", marginBottom: 8 }}>
@@ -137,15 +137,15 @@ export default function AspectsTab({ ctx }) {
                     <span style={{ color: P_COL[a.p1], fontSize: "0.9rem" }}>{P_SYM[a.p1]}</span>
                     <span style={{ color: def?.col, fontSize: "0.7rem" }}>{def?.sym}</span>
                     <span style={{ color: P_COL[a.p2], fontSize: "0.9rem" }}>{P_SYM[a.p2]}</span>
-                    <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.62rem", color: M3.onSurfaceVariant, marginLeft: "auto" }}>{a.p1}-{a.p2}</span>
-                    <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: "0.58rem", color: def?.col }}>{(a.strength * 100).toFixed(0)}%</span>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: M3.onSurfaceVariant, marginLeft: "auto" }}>{a.p1}-{a.p2}</span>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: def?.col }}>{(a.strength * 100).toFixed(0)}%</span>
                   </div>
-                )) : <div style={{ color: M3.outlineVariant, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.7rem", fontStyle: "italic" }}>None at the orbs in use</div>}
+                )) : <div style={{ color: M3.outlineVariant, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.7rem", fontStyle: "italic" }}>None at the orbs in use</div>}
               </div>
             );
           })}
         </div>
-        <div style={{ marginTop: 16, padding: "12px 16px", background: M3.surfaceVariant, borderRadius: 12, fontFamily: "'EB Garamond',Georgia,serif", fontSize: "0.82rem", color: M3.onSurface, lineHeight: 1.7 }}>
+        <div style={{ marginTop: 16, padding: "12px 16px", background: M3.surfaceVariant, borderRadius: 12, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", color: M3.onSurface, lineHeight: 1.7 }}>
           {(() => {
             const trines = res.aspects.filter((a) => a.name === "Trine").length;
             const squares = res.aspects.filter((a) => a.name === "Square").length;

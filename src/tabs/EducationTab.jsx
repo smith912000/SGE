@@ -12,7 +12,7 @@ export default function EducationTab({ ctx }) {
   const [depth, setDepth] = useDepth();
 
   const prose = {
-    fontFamily: "'EB Garamond', Georgia, serif",
+    fontFamily: "'DM Sans', system-ui, sans-serif",
     fontSize: '0.83rem',
     lineHeight: 1.7,
     color: M3.onSurface,

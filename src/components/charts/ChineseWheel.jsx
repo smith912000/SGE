@@ -133,7 +133,7 @@ export default function ChineseWheel({ cn, size = 460, onTooltip }) {
             </g>
             <g style={{ transformOrigin:`${tx}px ${ty-R*0.01}px`, animation:"cnSpinCW 120s linear infinite" }}>
               <text x={tx} y={ty-R*0.01} textAnchor="middle" dominantBaseline="middle"
-                fill={isActive ? cream : cream+"55"} fontSize={R*0.033} fontFamily="'Share Tech Mono',monospace"
+                fill={isActive ? cream : cream+"55"} fontSize={R*0.033} fontFamily="'JetBrains Mono', monospace"
                 fontWeight={isActive?"700":"400"} style={{userSelect:"none"}}>{animal}</text>
             </g>
             <g style={{ transformOrigin:`${bx}px ${by}px`, animation:"cnSpinCW 120s linear infinite" }}>
@@ -173,7 +173,7 @@ export default function ChineseWheel({ cn, size = 460, onTooltip }) {
             <path d={elPath} fill={isActive ? col+"25" : col+"0a"} stroke={isActive ? col : col+"33"} strokeWidth={isActive ? 1.5 : 0.5}/>
             <g style={{ transformOrigin:`${lx}px ${ly}px`, animation:"cnSpinCCW 90s linear infinite" }}>
               <text x={lx} y={ly} textAnchor="middle" dominantBaseline="middle"
-                fill={isActive ? col : col+"77"} fontSize={R*0.034} fontFamily="'Share Tech Mono',monospace"
+                fill={isActive ? col : col+"77"} fontSize={R*0.034} fontFamily="'JetBrains Mono', monospace"
                 fontWeight={isActive?"700":"400"} style={{userSelect:"none"}}>{el}</text>
             </g>
           </g>
@@ -218,7 +218,7 @@ export default function ChineseWheel({ cn, size = 460, onTooltip }) {
             </g>
             <g style={{ transformOrigin:`${lx}px ${ly}px`, animation:"cnSpinCW 150s linear infinite" }}>
               <text x={lx} y={ly} textAnchor="middle" dominantBaseline="middle"
-                fill={isActive ? gold+"cc" : cream+"33"} fontSize={R*0.024} fontFamily="'EB Garamond',Georgia,serif"
+                fill={isActive ? gold+"cc" : cream+"33"} fontSize={R*0.024} fontFamily="'DM Sans', system-ui, sans-serif"
                 fontStyle="italic" style={{userSelect:"none"}}>
                 {tri.label}
               </text>
@@ -247,11 +247,11 @@ export default function ChineseWheel({ cn, size = 460, onTooltip }) {
       {activeIdx >= 0 && (
         <g>
           <text x={cx} y={cy + yyR + R*0.10} textAnchor="middle" dominantBaseline="middle"
-            fill={gold} fontSize={R*0.058} fontFamily="'Share Tech Mono',monospace" fontWeight="700" style={{userSelect:"none"}}>
+            fill={gold} fontSize={R*0.058} fontFamily="'JetBrains Mono', monospace" fontWeight="700" style={{userSelect:"none"}}>
             {cn.stem}{cn.branch} · {cn.stemPinyin}-{cn.branchPinyin}
           </text>
           <text x={cx} y={cy + yyR + R*0.155} textAnchor="middle" dominantBaseline="middle"
-            fill={cream+"aa"} fontSize={R*0.034} fontFamily="'EB Garamond',Georgia,serif" fontStyle="italic" style={{userSelect:"none"}}>
+            fill={cream+"aa"} fontSize={R*0.034} fontFamily="'DM Sans', system-ui, sans-serif" fontStyle="italic" style={{userSelect:"none"}}>
             {cn.element} {cn.animal} · {cn.polarity} · {TRIGRAMS[activeTrigramIdx]?.name} {TRIGRAMS[activeTrigramIdx]?.label}
           </text>
         </g>

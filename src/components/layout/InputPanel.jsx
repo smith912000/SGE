@@ -153,7 +153,7 @@ export default function InputPanel({ A, setA, B, setB, syn, setSyn, compute, loa
             })}
           </div>
         )}
-        {locError && <div style={{ marginTop: 8, color: '#ff9b9b', fontFamily: M3.fontMono, fontSize: '0.6rem' }}>{locError}</div>}
+        {locError && <div style={{ marginTop: 8, color: '#E07A85', fontFamily: M3.fontMono, fontSize: '0.6rem' }}>{locError}</div>}
         <div style={{ marginTop: 8, display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
           <span style={{ fontFamily: M3.fontMono, fontSize: '0.6rem', color: M3.onSurfaceVariant }}>
             {A.place ? `Selected: ${A.place}` : 'No location selected yet.'}
