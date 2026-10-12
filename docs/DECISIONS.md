@@ -113,3 +113,41 @@ live even though the Calendar and Grammatology tabs do not.
 been dropped from the Education tab. The caveat still stands for the data
 itself: it pairs three 28-fold systems by ordinal index, and they do not divide
 the sky the same way.
+
+---
+
+## 4. Swiss Ephemeris dropped (2026-10-12)
+
+**Decided** by Brandon, 12 October 2026: "drop swiss". SGE is going into a
+paid subscription app, and Swiss Ephemeris (`pyswisseph`) is available only
+under the AGPL or a paid professional licence. No part of SGE may depend on it.
+
+What changed:
+
+- Chart calculation runs only in the browser, in the JavaScript engines under
+  `src/engines/` (chiefly `astronomy.js`). `src/App.jsx` no longer calls the
+  backend `/full-analysis` endpoint; the in-browser path, which was already
+  what the static site used, is now the only path.
+- `pyswisseph` is gone from `backend/requirements.txt`. The backend engines
+  that could not work without it were removed rather than left with dead
+  imports: `planetary_engine.py`, `house_engine.py`, `transit_engine.py`,
+  `progression_engine.py`, `solar_return_engine.py`, `return_engine.py`, the
+  `sge.py` orchestrator, and the chart endpoints in `api.py` (`/natal`,
+  `/full-analysis`, `/transits`, `/synastry`, `/progressions`,
+  `/solar-return`, `/lunar-return`, `/harmonic`). The backend now serves
+  `/health` and the phonetics data only.
+- `time_engine.py` computes Julian days with the Meeus algorithm instead of
+  `swe.julday` / `swe.revjul`; `harmonic_engine.py` carries its own sign table.
+- `tools/accuracy_check.py`, which compared the JS engines against
+  `pyswisseph`, was removed. Measuring `astronomy.js` against a reference
+  ephemeris (see "Ephemeris accuracy" above) remains outstanding; it must be
+  done with a reference that SGE does not ship or link against.
+
+This supersedes the "route B" plan in entry 1: the offline table is no longer
+to be generated with Swiss Ephemeris in Moshier mode. Future accuracy work
+stays inside the JavaScript engines and must not reintroduce AGPL code.
+
+Entry 1's reasoning for the AGPL licence rested on Swiss Ephemeris. That
+reason no longer applies, but SGE's own licence (`LICENSE`, `package.json`,
+the footer link) is unchanged by this entry; relicensing is a separate
+decision for the owner.

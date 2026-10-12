@@ -8,7 +8,7 @@ Computation engines: JavaScript (frontend) and Python (backend).
 
 | Engine | Purpose |
 |--------|---------|
-| **astronomy.js** | Tropical/sidereal positions, house calculations, aspects, harmonics, progressions, solar returns, ayanamsa, phi cycle. Can call backend or use local fallback. |
+| **astronomy.js** | Tropical/sidereal positions, house calculations, aspects, harmonics, progressions, solar returns, ayanamsa, phi cycle. The only source of chart positions; nothing is fetched from a server. |
 | **calendar.js** | Šambraielic calendar conversion, subdivisions, symbolic cycles (I Ching, Hebrew, Greek, Runic, Tarot), sacred names (72/99, 32 paths), festivals. |
 | **calendarWheelEngine.js** | Builds multi-calendar wheel model (Mayan, Chinese, Islamic, Jewish, etc.) for CalendarWheel component. |
 | **chinese.js** | Chinese cycle calculation: Heavenly Stems, Earthly Branches, zodiac animals, elements, lunar dates. |
@@ -22,16 +22,15 @@ Computation engines: JavaScript (frontend) and Python (backend).
 
 ## Backend Engines (`backend/`)
 
+The ephemeris-based Python engines (`planetary_engine`, `house_engine`,
+`transit_engine`, `progression_engine`, `solar_return_engine`, `return_engine`)
+and the `sge.py` orchestrator were removed on 2026-10-12 with Swiss Ephemeris
+(see DECISIONS.md, entry 4). What remains is pure Python with no ephemeris:
+
 | Engine | Purpose |
 |--------|---------|
-| **time_engine.py** | Timezone conversion, Julian day calculations. |
-| **planetary_engine.py** | Swiss Ephemeris integration for planetary positions (tropical/sidereal). |
-| **house_engine.py** | House calculations (Placidus, Whole Sign). |
+| **time_engine.py** | Timezone conversion, Julian day calculations (Meeus). |
 | **aspect_engine.py** | Aspect detection (conjunction, square, trine, opposition, etc.). |
-| **transit_engine.py** | Current planetary positions vs natal chart. |
-| **progression_engine.py** | Secondary progressions (1 day = 1 year). |
-| **solar_return_engine.py** | Solar return chart finder and calculation. |
-| **return_engine.py** | Lunar return chart finder. |
 | **synastry_engine.py** | Relationship chart comparison (Person A vs Person B). |
 | **harmonic_engine.py** | Harmonic chart calculations (2nd–12th). |
 | **chinese_cycle.py** | Chinese calendar cycle calculations. |
@@ -41,14 +40,7 @@ Computation engines: JavaScript (frontend) and Python (backend).
 
 ---
 
-## API Orchestration
+## API
 
-**sge.py** — Main SGE class that wires all backend engines. **api.py** exposes FastAPI endpoints:
-
-- `/natal` — Natal chart (positions, houses, aspects)
-- `/full` — Full analysis (natal + transits + progressions + solar return)
-- `/transits` — Current transits vs natal
-- `/progressions` — Secondary progressions
-- `/solar_return` — Solar return chart
-- `/synastry` — Synastry comparison
-- Additional endpoints for harmonics, Chinese cycles, etc.
+**api.py** exposes `/health` and the phonetics router (`/phonetics/*`). There
+are no chart endpoints; the frontend computes charts with the JS engines.

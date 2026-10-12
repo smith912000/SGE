@@ -17,7 +17,7 @@ SGE/
 │   ├── styles/             # Global CSS
 │   ├── hooks/              # React hooks (e.g. useAnime)
 │   └── App.jsx             # Root app & routing
-├── backend/                # Python API & engines
+├── backend/                # Optional Python API (phonetics data)
 │   ├── api.py              # FastAPI endpoints
 │   ├── sge.py              # Main orchestrator
 │   └── *_engine.py         # Computation modules
@@ -56,7 +56,7 @@ Static constants: sign/planet/aspect definitions, calendar months, letter databa
 
 ### `src/tabs/`
 
-Page-level views. Each tab composes components, calls engines, and fetches from the backend when needed. One tab per route/section.
+Page-level views. Each tab composes components, and calls engines. One tab per route/section.
 
 ### `src/theme/`
 
@@ -68,20 +68,19 @@ Global CSS: fonts, reset, scrollbar styling, animations, selection styling.
 
 ### `backend/`
 
-Python FastAPI application. Orchestrates Swiss Ephemeris via `pyswisseph` for planetary positions, houses, aspects, transits, progressions, solar returns, synastry, harmonics. Additional engines for Chinese cycles, chronometric rulers, phi rhythm, element/modality.
+Optional Python FastAPI application. It serves the phonetics data (`/phonetics/*`, used by the phonetic crosswalk, which falls back to bundled static data when the API is unreachable) and a `/health` check. It does **not** compute charts: every chart figure is computed in the browser by `src/engines/`. The Swiss Ephemeris-based chart endpoints were removed on 2026-10-12 (see DECISIONS.md, entry 4).
 
-- **api.py** — REST endpoints (natal, full analysis, transits, progressions, solar return, synastry, etc.)
-- **sge.py** — Main SGE class that wires engines together
-- **\*_engine.py** — Modular engines (time, planetary, house, aspect, transit, progression, solar return, synastry, harmonic, Chinese, chronometric, phi, element_modality)
+- **api.py** — FastAPI app: `/health` plus the phonetics router
+- **phonetic_router.py / phonetic_db.py** — phonetics endpoints and SQLite models
+- **\*_engine.py** — Pure-Python helper engines with no ephemeris dependency (time, aspect, synastry, harmonic, Chinese, chronometric, phi, element_modality, resonance). They are not wired to any endpoint.
 
 ---
 
 ## Data Flow
 
 1. **User input** → `InputPanel` (birth data, location, synastry toggle)
-2. **Frontend** → Calls `fetch()` to backend `/natal`, `/full`, `/transits`, etc.
-3. **Backend** → `sge.py` runs engines, returns JSON
-4. **Frontend** → Engines (JS) process or augment data; tabs render components with results
+2. **Frontend** → `App.jsx` computes the chart with the JS engines in `src/engines/` (positions, houses, aspects, progressions, solar return, harmonics, synastry); no server call
+3. **Frontend** → Tabs render components with the results
 
 ---
 

@@ -41,7 +41,8 @@ API runs at `http://localhost:8000`. (If running from `backend/` directory, use 
 ## Tech Stack
 
 - **Frontend:** React 18, Vite 6, Material Design 3, anime.js
-- **Backend:** FastAPI, Swiss Ephemeris (pyswisseph), Pydantic
+- **Ephemeris:** in-browser JavaScript engines (`src/engines/astronomy.js`); no Swiss Ephemeris
+- **Backend (optional, phonetics data only):** FastAPI, SQLAlchemy, Pydantic
 
 ---
 

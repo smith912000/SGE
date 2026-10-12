@@ -1,28 +1,25 @@
 """
-SGE v5.0 Smoke Test
-Runs every engine with a known birth datetime and validates structural correctness.
+SGE backend smoke test
+Runs the remaining Python engines and validates structural correctness.
+
+Chart positions are computed in the browser by the JavaScript engines
+(src/engines/). The Python ephemeris engines were removed with Swiss
+Ephemeris on 2026-10-12 (see docs/DECISIONS.md), so these tests feed the
+pure-math engines a fixed set of sample longitudes instead.
 Test subject: June 15, 1990, 14:30, New York (40.7128, -74.006)
 """
 
-import json
 import sys
 from datetime import datetime
 
 from time_engine import TimeEngine
-from planetary_engine import PlanetaryEngine
-from house_engine import HouseEngine
 from aspect_engine import AspectEngine
-from transit_engine import TransitEngine
-from progression_engine import ProgressionEngine
-from solar_return_engine import SolarReturnEngine
-from return_engine import LunarReturnEngine
 from synastry_engine import SynastryEngine
-from harmonic_engine import HarmonicEngine
+from harmonic_engine import HarmonicEngine, _lon_to_sign
 from chinese_cycle import chinese_year, chinese_day
 from chronometric_engine import ChronometricEngine
 from phi_engine import PhiEngine
 from element_modality import ElementModalityEngine
-from sge import SGE
 
 BIRTH_DT = datetime(1990, 6, 15, 14, 30, 0)
 TZ = "America/New_York"
@@ -31,6 +28,27 @@ LON = -74.006
 
 PASS = 0
 FAIL = 0
+
+
+def sample_positions(longitudes: dict) -> dict:
+    return {
+        name: {"longitude": lon, "speed": 0.0, **_lon_to_sign(lon)}
+        for name, lon in longitudes.items()
+    }
+
+
+# Approximate tropical longitudes for the test subject (rounded; used as
+# fixtures for the pure-math engines, not as an accuracy reference).
+NATAL = sample_positions({
+    "Sun": 84.3, "Moon": 334.1, "Mercury": 70.6, "Venus": 43.6,
+    "Mars": 2.2, "Jupiter": 98.6, "Saturn": 293.9, "Uranus": 277.6,
+    "Neptune": 283.9, "Pluto": 225.4,
+})
+OTHER = sample_positions({
+    "Sun": 0.1, "Moon": 312.0, "Mercury": 344.5, "Venus": 316.2,
+    "Mars": 304.8, "Jupiter": 95.5, "Saturn": 302.6, "Uranus": 286.9,
+    "Neptune": 288.5, "Pluto": 231.6,
+})
 
 
 def check(name: str, condition: bool, detail: str = ""):
@@ -42,6 +60,7 @@ def check(name: str, condition: bool, detail: str = ""):
     else:
         PASS += 1
         print(f"  [{status}] {name}")
+
 
 
 def test_time_engine():
@@ -61,44 +80,6 @@ def test_time_engine():
     check("JD roundtrip day", roundtrip.day == utc.day)
     return utc, jd
 
-
-def test_planetary_engine(jd):
-    print("\n=== PlanetaryEngine ===")
-    pe = PlanetaryEngine()
-    trop, sid = pe.compute_positions(jd)
-
-    check("Tropical has >= 11 bodies", len(trop) >= 11, f"Got {len(trop)}")
-    check("Sidereal has >= 11 bodies", len(sid) >= 11, f"Got {len(sid)}")
-    check("Sun in tropical", "Sun" in trop)
-    check("Moon in tropical", "Moon" in trop)
-
-    sun = trop["Sun"]
-    check("Sun has longitude", "longitude" in sun)
-    check("Sun has sign", "sign" in sun)
-    check("Sun has speed", "speed" in sun)
-    check("Sun has retrograde flag", "retrograde" in sun)
-    check("Sun longitude 0-360", 0 <= sun["longitude"] < 360)
-
-    check("Sidereal offset from tropical",
-          abs(trop["Sun"]["longitude"] - sid["Sun"]["longitude"]) > 15,
-          "Ayanamsa offset should be ~24 degrees")
-
-    return trop, sid
-
-
-def test_house_engine(jd, positions):
-    print("\n=== HouseEngine ===")
-    he = HouseEngine()
-    houses = he.compute(jd, LAT, LON, positions)
-
-    check("Has placidus", "placidus" in houses)
-    check("Has whole_sign", "whole_sign" in houses)
-    check("Placidus has 12 cusps", len(houses["placidus"]["cusps"]) == 12)
-    check("Whole sign has 12 cusps", len(houses["whole_sign"]["cusps"]) == 12)
-    check("Placidus has ascendant", "ascendant" in houses["placidus"])
-    check("Placidus has MC", "mc" in houses["placidus"])
-    check("Placidus has planet_houses", "planet_houses" in houses["placidus"])
-    return houses
 
 
 def test_aspect_engine(positions):
@@ -120,73 +101,12 @@ def test_aspect_engine(positions):
     return aspects
 
 
-def test_transit_engine(natal_positions, jd):
-    print("\n=== TransitEngine ===")
-    te = TransitEngine()
-    transit_jd = jd + 365 * 30
-    trop, sid = te.compute_transits(transit_jd)
-    check("Transit tropical has planets", len(trop) >= 10)
-
-    cross = te.compare(natal_positions, trop)
-    check("Cross aspects is list", isinstance(cross, list))
-
-    aspects, score = te.weighted_transits(natal_positions, transit_jd)
-    check("Weighted transits returns aspects", isinstance(aspects, list))
-    check("Weighted transits returns score", isinstance(score, float))
-
-
-def test_progression_engine(jd):
-    print("\n=== ProgressionEngine ===")
-    pe = ProgressionEngine()
-    prog = pe.secondary_progressions(jd, 30)
-    check("Progression has jd", "jd" in prog)
-    check("Progression has tropical", "tropical" in prog)
-    check("Progression has sidereal", "sidereal" in prog)
-    check("Progressed JD offset", abs(prog["jd"] - jd - 30) < 0.001)
-
-    moon = pe.progressed_moon(jd, 30)
-    check("Progressed moon has longitude", "longitude" in moon)
-    check("Progressed moon has sign", "sign" in moon)
-
-    changes = pe.progressed_sun_sign_changes(jd, 90)
-    check("Sun sign changes is list", isinstance(changes, list))
-    check("At least one sign change in 90 years", len(changes) > 0)
-
-
-def test_solar_return_engine(natal_sun_lon):
-    print("\n=== SolarReturnEngine ===")
-    sre = SolarReturnEngine()
-    result = sre.find_solar_return(natal_sun_lon, 2025, LAT, LON)
-    check("Solar return found", result is not None)
-    if result:
-        check("SR has jd", "jd" in result)
-        check("SR has tropical", "tropical" in result)
-        check("SR has houses", "houses" in result)
-
-
-def test_lunar_return_engine(natal_moon_lon, jd):
-    print("\n=== LunarReturnEngine ===")
-    lre = LunarReturnEngine()
-    result = lre.find_lunar_return(natal_moon_lon, jd, LAT, LON)
-    check("Lunar return found", result is not None)
-    if result:
-        check("LR has jd", "jd" in result)
-        check("LR has tropical", "tropical" in result)
-        check("LR JD after start", result["jd"] >= jd)
-
 
 def test_synastry_engine(natal_trop):
     print("\n=== SynastryEngine ===")
     se = SynastryEngine()
-    pe = PlanetaryEngine()
-    te = TimeEngine()
-    other_dt = datetime(1992, 3, 20, 10, 0, 0)
-    other_utc = te.to_utc(other_dt, TZ)
-    other_jd = te.julian_day(other_utc)
-    other_trop, _ = pe.compute_positions(other_jd)
-
     chart_a = {"tropical": natal_trop}
-    chart_b = {"tropical": other_trop}
+    chart_b = {"tropical": OTHER}
     result = se.compare(chart_a, chart_b)
 
     check("Synastry has aspects", "aspects" in result)
@@ -209,6 +129,7 @@ def test_harmonic_engine(positions):
         break
 
 
+
 def test_chinese_cycle(jd):
     print("\n=== Chinese Cycle ===")
     cy = chinese_year(1990)
@@ -224,6 +145,7 @@ def test_chinese_cycle(jd):
     check("Chinese day has branch", "earthly_branch" in cd)
 
 
+
 def test_chronometric_engine(utc):
     print("\n=== ChronometricEngine ===")
     ce = ChronometricEngine()
@@ -232,6 +154,7 @@ def test_chronometric_engine(utc):
     check("Has 24 slots", len(slots["all_slots"]) == 24)
     check("Has current_slot", "current_slot" in slots)
     check("Current slot has ruler", "ruler" in slots["current_slot"])
+
 
 
 def test_phi_engine():
@@ -250,6 +173,7 @@ def test_phi_engine():
     check("Day 14 is not fibonacci", fib_off["is_fibonacci_day"] is False)
 
 
+
 def test_element_modality(positions):
     print("\n=== ElementModalityEngine ===")
     em = ElementModalityEngine()
@@ -263,65 +187,19 @@ def test_element_modality(positions):
     check("Element totals > 0", sum(result["elements"].values()) > 0)
 
 
-def test_full_sge():
-    print("\n=== SGE Full Analysis ===")
-    sge = SGE()
-    result = sge.full_analysis(
-        birth_dt=BIRTH_DT,
-        tz=TZ,
-        lat=LAT,
-        lon=LON,
-        age=35,
-        harmonic_n=7,
-        phi_cycle_length=29,
-    )
-    check("Has version", result.get("version") == "5.0")
-    check("Has tropical", "tropical" in result)
-    check("Has sidereal", "sidereal" in result)
-    check("Has houses", "houses" in result)
-    check("Has aspects", "aspects" in result)
-    check("Has progressions", "progressions" in result)
-    check("Has solar_return", "solar_return" in result)
-    check("Has lunar_return", "lunar_return" in result)
-    check("Has harmonic", "harmonic" in result)
-    check("Has chinese", "chinese" in result)
-    check("Has chronometric", "chronometric" in result)
-    check("Has phi", "phi" in result)
-    check("Has element_modality", "element_modality" in result)
-
-    print("\n--- Full Analysis Output (sample keys) ---")
-    for key in result:
-        val = result[key]
-        if isinstance(val, dict):
-            print(f"  {key}: dict with {len(val)} keys")
-        elif isinstance(val, list):
-            print(f"  {key}: list with {len(val)} items")
-        else:
-            print(f"  {key}: {val}")
-
-    return result
-
-
 def main():
     print("=" * 60)
-    print("SGE v5.0 SMOKE TEST")
+    print("SGE BACKEND SMOKE TEST")
     print("=" * 60)
 
     utc, jd = test_time_engine()
-    trop, sid = test_planetary_engine(jd)
-    test_house_engine(jd, trop)
-    test_aspect_engine(trop)
-    test_transit_engine(trop, jd)
-    test_progression_engine(jd)
-    test_solar_return_engine(trop["Sun"]["longitude"])
-    test_lunar_return_engine(trop["Moon"]["longitude"], jd)
-    test_synastry_engine(trop)
-    test_harmonic_engine(trop)
+    test_aspect_engine(NATAL)
+    test_synastry_engine(NATAL)
+    test_harmonic_engine(NATAL)
     test_chinese_cycle(jd)
     test_chronometric_engine(utc)
     test_phi_engine()
-    test_element_modality(trop)
-    result = test_full_sge()
+    test_element_modality(NATAL)
 
     print("\n" + "=" * 60)
     print(f"RESULTS: {PASS} passed, {FAIL} failed")
