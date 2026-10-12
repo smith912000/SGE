@@ -122,50 +122,6 @@ const to24Hour = (hour12, meridiem) => {
   if (meridiem === "PM") return clamped === 12 ? 12 : clamped + 12;
   return clamped === 12 ? 0 : clamped;
 };
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000";
-const normalizePlanet = (k) => (k === "North Node" ? "Node" : k);
-const flattenPlanetMap = (obj = {}) =>
-  Object.fromEntries(Object.entries(obj).map(([k, v]) => [normalizePlanet(k), typeof v === "object" ? v.longitude : v]));
-const toUtcBirthPayload = (input) => {
-  const h24 = to24Hour(input.hour, input.meridiem);
-  const utcMs = Date.UTC(input.year, input.month - 1, input.day, h24, input.min || 0, 0, 0) - (Number(input.tz) || 0) * 3600000;
-  const d = new Date(utcMs);
-  return {
-    year: d.getUTCFullYear(),
-    month: d.getUTCMonth() + 1,
-    day: d.getUTCDate(),
-    hour: d.getUTCHours(),
-    minute: d.getUTCMinutes(),
-    second: 0,
-    timezone: "UTC",
-    latitude: Number(input.lat),
-    longitude: Number(input.lon),
-  };
-};
-const mapBackendHouses = (housesData) => {
-  const placidus = housesData?.placidus;
-  const out = {};
-  (placidus?.cusps || []).forEach((c) => { out[c.house] = c.longitude; });
-  out.ASC = placidus?.ascendant ?? 0;
-  out.MC = placidus?.mc ?? 0;
-  out.IC = norm(out.MC + 180);
-  out.DSC = norm(out.ASC + 180);
-  return out;
-};
-const backendAspectToUi = (aspect) => {
-  const name = String(aspect.aspect || "").split("-").map((s) => s ? (s[0].toUpperCase() + s.slice(1)) : "").join("-");
-  const def = ASPECTS.find((a) => a.angle === aspect.angle) || ASPECTS.find((a) => a.name === name);
-  return {
-    p1: normalizePlanet(aspect.planet1),
-    p2: normalizePlanet(aspect.planet2),
-    name: def?.name || name || "Aspect",
-    angle: aspect.angle,
-    orb: Number(aspect.orb ?? 0).toFixed(2),
-    strength: Number(aspect.strength ?? 0),
-    col: def?.col || "#8ea7ff",
-    sym: def?.sym || "•",
-  };
-};
 
 export default function App() {
   const anime = useAnime();
@@ -215,75 +171,6 @@ export default function App() {
   const compute = useCallback(async () => {
     setLoading(true);
     try {
-      const birthPayload = toUtcBirthPayload(A);
-      const comparisonBirth = syn ? toUtcBirthPayload(B) : null;
-      const req = { 
-        birth: birthPayload, 
-        age, 
-        harmonic_n: n, 
-        phi_cycle_length: 30,
-        comparison_birth: comparisonBirth
-      };
-      const r = await fetch(`${BACKEND_URL}/full-analysis`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(req),
-      });
-      if (!r.ok) throw new Error(`Backend /full-analysis ${r.status}`);
-      const data = await r.json();
-
-      const jd = data.jd;
-      const trop = flattenPlanetMap(data.tropical);
-      const sid = flattenPlanetMap(data.sidereal);
-      const houses = mapBackendHouses(data.houses);
-      const ay = ayanamsa(jd);
-      const sidHouses = Object.fromEntries(Object.entries(houses).map(([k, v]) => [k, norm(v - ay)]));
-      const aspects = (data.aspects || []).map(backendAspectToUi);
-      const prog = data.progressions?.tropical ? flattenPlanetMap(data.progressions.tropical) : progChart(jd, age);
-      const srJD = data.solar_return?.jd ?? findSolarReturn(trop.Sun, A.year + 1);
-      const srPos = data.solar_return?.tropical ? flattenPlanetMap(data.solar_return.tropical) : (srJD ? allPlanets(srJD) : null);
-      const harm = data.harmonic?.positions ? flattenPlanetMap(data.harmonic.positions) : harmonic(trop, n);
-      const cn = chineseCycle(A.year, A.month, A.day);
-      const phi = data.phi ? { state: data.phi.phi_state, mult: Number(data.phi.multiplier || 1).toFixed(4), phase: Number(data.phi.cycle_position || 0).toFixed(4) } : phiEngine(A.day, 30);
-      const el = data.element_modality?.elements || elemMod(trop).el;
-      const mod = data.element_modality?.modalities || elemMod(trop).mod;
-      const tJD = julianDay(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate(), 12);
-      const trPos = allPlanets(tJD);
-      const trAsp = calcAspects({ ...trop, ...Object.fromEntries(Object.entries(trPos).map(([k, v]) => [`T_${k}`, v])) });
-
-      let synR = null;
-      if (syn && data.synastry) {
-        const synData = data.synastry;
-        const tB = flattenPlanetMap(synData.composite?.positions ? {} : (data.input?.comparison_birth ? {} : {})); // Placeholder check
-        // Actually, the backend synastry result in data.synastry contains:
-        // aspects (cross-chart), score, composite {positions, houses, aspects}
-        synR = {
-          aspects: (synData.aspects || []).map(backendAspectToUi),
-          score: synData.score || { harmony: 0, tension: 0 },
-          composite: synData.composite ? {
-            positions: flattenPlanetMap(synData.composite.positions),
-            houses: mapBackendHouses(synData.composite.houses),
-            aspects: (synData.composite.aspects || []).map(backendAspectToUi)
-          } : null
-        };
-      }
-      
-      // Local fallback for Synastry if B is needed but backend failed or didn't return it
-      if (syn && !synR) {
-        const hourB24 = to24Hour(B.hour, B.meridiem);
-        const jd2 = julianDay(B.year, B.month, B.day, hourB24 - B.tz + B.min / 60);
-        const tB = allPlanets(jd2);
-        const hB = calcHouses(jd2, B.lat, B.lon);
-        synR = {
-          positions: tB,
-          houses: hB,
-          aspects: calcAspects({ ...trop, ...Object.fromEntries(Object.entries(tB).map(([k, v]) => [`B_${k}`, v])) }),
-        };
-      }
-
-      setRes({ jd, trop, sid, houses, sidHouses, aspects, prog, srJD, srPos, harm, cn, phi, el, mod, trPos, trAsp, synR });
-    } catch (err) {
-      console.warn("Backend compute failed, using frontend fallback:", err);
       const hourA24 = to24Hour(A.hour, A.meridiem);
       const jd = julianDay(A.year, A.month, A.day, hourA24 - A.tz + A.min / 60);
       const trop = allPlanets(jd);

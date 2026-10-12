@@ -28,8 +28,8 @@
 | Frontend | React 18, Vite 6 |
 | Styling | Material Design 3 (deep-space theme), global.css |
 | Animation | anime.js (CDN-loaded) |
-| Backend | FastAPI, Python 3 |
-| Ephemeris | Swiss Ephemeris (pyswisseph) |
+| Ephemeris | In-browser JavaScript engines (`src/engines/astronomy.js`); no Swiss Ephemeris |
+| Backend | FastAPI, Python 3 (phonetics data only; charts are computed in the browser) |
 | Data | Pydantic, NumPy, pytz |
 
 ---

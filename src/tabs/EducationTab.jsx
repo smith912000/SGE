@@ -171,10 +171,10 @@ export default function EducationTab({ ctx }) {
         </p>
 
         <Method
-          title="No Swiss Ephemeris on the deployed site"
-          plain="The repository holds a Python backend that uses the Swiss Ephemeris. It is not running here. GitHub Pages serves static files only, so the live site computes from the hand-rolled series in src/engines/astronomy.js."
-          detail="The frontend tries the backend at a local address and falls back to the in-browser engine when it is unreachable, which on a static host it always is. Running the backend locally changes the numbers; the interpretive layer is identical either way."
-          structure="Swiss Ephemeris is dual-licensed AGPL and paid professional. SGE has taken the AGPL, which is why the source is linked from the footer. Future accuracy work stays on static hosting: a bounded-range table generated offline in Moshier mode and shipped with interpolation, rather than a deployed backend or a WASM build."
+          title="No Swiss Ephemeris"
+          plain="SGE does not use the Swiss Ephemeris. Every position on this site is computed in the browser by the JavaScript engines in src/engines/, chiefly the hand-rolled series in src/engines/astronomy.js."
+          detail="No chart figure is fetched from a server. The repository's Python backend no longer computes charts; it serves phonetics data only. The numbers shown are the in-browser numbers, with the accuracy limits stated below."
+          structure="Swiss Ephemeris is dual-licensed AGPL and paid professional, and it was removed in October 2026 so that no part of SGE depends on it. Future accuracy work stays inside the JavaScript engines, for example a bounded-range table shipped with interpolation, rather than a deployed backend or a WASM build of an external ephemeris."
         />
         <Method
           title="Accuracy of the in-browser series"

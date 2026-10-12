@@ -1,4 +1,19 @@
-from planetary_engine import ZODIAC_SIGNS, _lon_to_sign
+ZODIAC_SIGNS = [
+    "Aries", "Taurus", "Gemini", "Cancer",
+    "Leo", "Virgo", "Libra", "Scorpio",
+    "Sagittarius", "Capricorn", "Aquarius", "Pisces",
+]
+
+
+def _lon_to_sign(lon: float) -> dict:
+    sign_index = int(lon / 30) % 12
+    degree_in_sign = lon % 30
+    return {
+        "sign": ZODIAC_SIGNS[sign_index],
+        "sign_index": sign_index,
+        "degree_in_sign": round(degree_in_sign, 6),
+    }
+
 
 HARMONIC_MEANINGS = {
     1: "Radical (natal chart)",

@@ -1,4 +1,3 @@
-pyswisseph
 numpy
 fastapi
 uvicorn[standard]
