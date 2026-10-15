@@ -14,6 +14,10 @@ on:
 permissions:
   contents: write
 
+# Supply chain: the lockfile is honoured (npm ci), so a push cannot pull in
+# unreviewed dependency versions. Pin actions to commit SHAs when the owner
+# can look them up; tags are mutable.
+
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -26,8 +30,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: rm -f package-lock.json
-      - run: npm install
+      - run: npm ci
       - run: npm run build
       - run: touch dist/.nojekyll
       - name: Publish to gh-pages
