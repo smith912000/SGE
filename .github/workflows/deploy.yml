@@ -39,3 +39,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           publish_branch: gh-pages
+          # Keep only the latest build on gh-pages, so no old build (which once
+          # held the members-only data in plain text) stays in its history.
+          force_orphan: true
