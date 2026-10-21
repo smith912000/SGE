@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import wildVault from './vite-plugin-wild-vault.js'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [wildVault(), react()],
   base: '/SGE/',
   build: {
     rollupOptions: {

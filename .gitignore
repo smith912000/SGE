@@ -6,3 +6,6 @@ __pycache__/
 .env
 .DS_Store
 Thumbs.db
+
+# Members-only data: plain text never goes in the repo (see scripts/vault.mjs)
+src/data/

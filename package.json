@@ -9,7 +9,10 @@
     "build": "vite build",
     "preview": "vite preview",
     "smoke": "node scripts/verify-records.mjs && node scripts/smoke-test.mjs",
-    "smoke:tabs": "node scripts/smoke-test.mjs"
+    "smoke:tabs": "node scripts/smoke-test.mjs",
+    "vault:open": "node scripts/vault.mjs open",
+    "vault:seal": "node scripts/vault.mjs seal",
+    "prebuild": "node scripts/check-no-plain-data.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

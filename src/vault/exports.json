@@ -1,0 +1,779 @@
+{
+ "astrology/aspects.js": [
+  "ASPECTS",
+  "ASPECT_MEANINGS",
+  "ASP_ADJ",
+  "ASP_EXPLAIN",
+  "ASP_SHORT"
+ ],
+ "astrology/axes.js": [
+  "AXIS_INFO"
+ ],
+ "astrology/chinese.js": [
+  "ANIMALS",
+  "ANIMAL_INFO",
+  "ANIMAL_TRIGRAM",
+  "BRANCHES",
+  "BRANCH_PINYIN",
+  "CNY_DATES",
+  "CN_EL",
+  "CN_EL_INFO",
+  "CN_MONTH_NAMES",
+  "POLARITY_INFO",
+  "STEMS",
+  "STEM_PINYIN"
+ ],
+ "astrology/chineseCorpus.js": [
+  "CHINESE_ASTRO_INTRO",
+  "CHINESE_TRANSLATION_NOTES",
+  "CHINESE_ZODIAC_EXTENDED",
+  "TWELVE_HEAVENLY_GENERALS",
+  "WUXING_CONTROLLING",
+  "WUXING_GENERATING",
+  "WUXING_PROFILES",
+  "YEAR_END_STEM_POLARITY",
+  "ZI_WEI_INFO",
+  "ZI_WEI_MAJOR_STARS",
+  "ZI_WEI_PALACES_SEQUENCES",
+  "ZODIAC_TRINES"
+ ],
+ "astrology/houses.js": [
+  "HOUSE_AREA",
+  "HOUSE_INFO"
+ ],
+ "astrology/index.js": [
+  "ANIMALS",
+  "ANIMAL_INFO",
+  "ANIMAL_TRIGRAM",
+  "ASPECTS",
+  "ASPECT_MEANINGS",
+  "ASP_ADJ",
+  "ASP_EXPLAIN",
+  "ASP_SHORT",
+  "AXIS_INFO",
+  "BRANCHES",
+  "BRANCH_PINYIN",
+  "CHINESE_ASTRO_INTRO",
+  "CHINESE_TRANSLATION_NOTES",
+  "CHINESE_ZODIAC_EXTENDED",
+  "CNY_DATES",
+  "CN_EL",
+  "CN_EL_INFO",
+  "CN_MONTH_NAMES",
+  "EL_COL",
+  "HOUSE_AREA",
+  "HOUSE_INFO",
+  "MOD_COL",
+  "PL",
+  "PLANET_INFO",
+  "PLANET_IN_HOUSE",
+  "PLANET_IN_SIGN",
+  "PLANET_LETTER",
+  "POLARITY_INFO",
+  "P_COL",
+  "P_ROLE",
+  "P_SYM",
+  "SIGNS",
+  "SIGN_COL",
+  "SIGN_INFO",
+  "SIGN_SYM",
+  "STEMS",
+  "STEM_PINYIN",
+  "TAIXUANJING_INFO",
+  "TWELVE_HEAVENLY_GENERALS",
+  "TXJ_DIGRAMS",
+  "TXJ_MONOGRAMS",
+  "TXJ_TERNARY_MATH",
+  "TXJ_TETRAGRAMS",
+  "WUXING_CONTROLLING",
+  "WUXING_GENERATING",
+  "WUXING_PROFILES",
+  "YEAR_END_STEM_POLARITY",
+  "ZI_WEI_INFO",
+  "ZI_WEI_MAJOR_STARS",
+  "ZI_WEI_PALACES_SEQUENCES",
+  "ZODIAC_TRINES",
+  "getPlanetInHouse",
+  "getPlanetInSign"
+ ],
+ "astrology/nakshatras.js": [
+  "BHAVA_INFO",
+  "COMBUSTION_ORB",
+  "DASHA_THEME",
+  "DIGNITY",
+  "DOSHA_DEFS",
+  "KARAKAS",
+  "NAKSHATRA_INFO",
+  "RASHI_INFO",
+  "YOGA_DEFS"
+ ],
+ "astrology/planetInHouse.js": [
+  "PLANET_IN_HOUSE",
+  "getPlanetInHouse"
+ ],
+ "astrology/planetInSign.js": [
+  "PLANET_IN_SIGN",
+  "getPlanetInSign"
+ ],
+ "astrology/planets.js": [
+  "PL",
+  "PLANET_INFO",
+  "PLANET_LETTER",
+  "P_COL",
+  "P_ROLE",
+  "P_SYM"
+ ],
+ "astrology/signs.js": [
+  "EL_COL",
+  "MOD_COL",
+  "SIGNS",
+  "SIGN_COL",
+  "SIGN_INFO",
+  "SIGN_SYM"
+ ],
+ "astrology/taixuanjing.js": [
+  "TAIXUANJING_INFO",
+  "TXJ_DIGRAMS",
+  "TXJ_MONOGRAMS",
+  "TXJ_TERNARY_MATH",
+  "TXJ_TETRAGRAMS"
+ ],
+ "calendar/crossCultural.js": [
+  "CHINESE_SOLAR_ZODIAC",
+  "INDIGENOUS_ZODIAC",
+  "OGHAM_TREES"
+ ],
+ "calendar/cuspDays.js": [
+  "SAMB_CUSP_DAYS"
+ ],
+ "calendar/egyptianSolar.js": [
+  "EGYPTIAN_SEASONS",
+  "EGYPTIAN_SOLAR_INFO",
+  "EGYPTIAN_SOLAR_MONTHS",
+  "EPAGOMENAL_DAYS"
+ ],
+ "calendar/festivals.js": [
+  "MASTER_TEACHER_DAYS",
+  "REFLECTIVE_FESTIVALS",
+  "SAMB_WEEKDAYS"
+ ],
+ "calendar/index.js": [
+  "CHINESE_SOLAR_ZODIAC",
+  "EGYPTIAN_MONTHS",
+  "GREEK_24_CYCLE",
+  "HEBREW_22_CYCLE",
+  "HEBREW_27_CYCLE",
+  "HEBREW_28_CYCLE",
+  "HEBREW_LUNAR_MONTHS",
+  "ICHING_HEX",
+  "INDIGENOUS_ZODIAC",
+  "MAJOR_ARCANA",
+  "MASTER_TEACHER_DAYS",
+  "MONTH_DAY_TAROT",
+  "NAMES_72",
+  "NAMES_99",
+  "NUM_SEQ_DEFS",
+  "OGHAM_TREES",
+  "PATHS_32",
+  "REFLECTIVE_FESTIVALS",
+  "RUNIC_HALF_MONTHS",
+  "SAMB_CUSP_DAYS",
+  "SAMB_MONTHS",
+  "SAMB_SUBDIVISIONS",
+  "SAMB_WEEKDAYS",
+  "SAMB_ZODIAC_RANGES",
+  "TAIXUANJING"
+ ],
+ "calendar/interpretations.js": [
+  "EGYPTIAN_SEASON_DATA",
+  "HEBREW_MONTH_DATA",
+  "ISLAMIC_MONTH_DATA",
+  "MAYAN_TZOLKIN_DATA",
+  "VEDIC_TITHI_DATA"
+ ],
+ "calendar/lunarEgyptian.js": [
+  "ATHENIAN_CALENDAR_INFO",
+  "ATHENIAN_MONTHS",
+  "EGYPTIAN_MONTHS",
+  "HEBREW_CALENDAR_INFO",
+  "HEBREW_LUNAR_MONTHS",
+  "HINDU_CALENDAR_INFO",
+  "HINDU_LEAP_MONTH",
+  "HINDU_MONTHS",
+  "HINDU_RITUS",
+  "KALAS_INFO",
+  "SIXTEEN_KALAS"
+ ],
+ "calendar/lunarMansions.js": [
+  "CHINESE_FOUR_SYMBOLS",
+  "CHINESE_MANSIONS",
+  "LUNAR_MANSIONS_INFO",
+  "MANAZIL_AL_QAMAR",
+  "MANSION_CROSSWALK",
+  "NAKSHATRAS",
+  "NAKSHATRA_INFO"
+ ],
+ "calendar/months.js": [
+  "SAMB_MONTHS",
+  "SAMB_ZODIAC_RANGES"
+ ],
+ "calendar/sacredNames.js": [
+  "NAMES_72",
+  "NAMES_99",
+  "PATHS_32"
+ ],
+ "calendar/sambraielicWheel.js": [
+  "ELDER_FUTHARK",
+  "SAMBRAIELIC_HALF_HOUR_NOTES",
+  "SAMBRAIELIC_HOURLY_CHECKPOINTS",
+  "resolveCheckpointForDate",
+  "sambraielicDayOfYear"
+ ],
+ "calendar/subdivisions.js": [
+  "NUM_SEQ_DEFS",
+  "SAMB_SUBDIVISIONS"
+ ],
+ "calendar/symbolicCycles.js": [
+  "GREEK_24_CYCLE",
+  "HEBREW_22_CYCLE",
+  "HEBREW_27_CYCLE",
+  "HEBREW_28_CYCLE",
+  "ICHING_HEX",
+  "MAJOR_ARCANA",
+  "RUNIC_HALF_MONTHS",
+  "TAIXUANJING"
+ ],
+ "calendar/tarot.js": [
+  "MONTH_DAY_TAROT"
+ ],
+ "datasets/astrology/symbolic_overlays.json": [
+  "default",
+  "domains",
+  "id",
+  "notes",
+  "source",
+  "status",
+  "title",
+  "updatedAt",
+  "version"
+ ],
+ "datasets/calendars/athenian_lunar.json": [
+  "default",
+  "domains",
+  "id",
+  "notes",
+  "source",
+  "status",
+  "title",
+  "updatedAt",
+  "version",
+  "wheel"
+ ],
+ "datasets/calendars/buddhist.json": [
+  "default",
+  "domains",
+  "id",
+  "notes",
+  "source",
+  "status",
+  "title",
+  "updatedAt",
+  "version",
+  "wheel"
+ ],
+ "datasets/calendars/chinese.json": [
+  "default",
+  "domains",
+  "id",
+  "notes",
+  "source",
+  "status",
+  "title",
+  "updatedAt",
+  "version",
+  "wheel"
+ ],
+ "datasets/calendars/egyptian_ancient_solar.json": [
+  "default",
+  "domains",
+  "id",
+  "notes",
+  "source",
+  "status",
+  "title",
+  "updatedAt",
+  "version",
+  "wheel"
+ ],
+ "datasets/calendars/islamic.json": [
+  "default",
+  "domains",
+  "id",
+  "notes",
+  "source",
+  "status",
+  "title",
+  "updatedAt",
+  "version",
+  "wheel"
+ ],
+ "datasets/calendars/jewish.json": [
+  "default",
+  "domains",
+  "id",
+  "notes",
+  "source",
+  "status",
+  "title",
+  "updatedAt",
+  "version",
+  "wheel"
+ ],
+ "datasets/calendars/mayan.json": [
+  "default",
+  "domains",
+  "id",
+  "notes",
+  "source",
+  "status",
+  "title",
+  "updatedAt",
+  "version",
+  "wheel"
+ ],
+ "datasets/calendars/panchanga.json": [
+  "default",
+  "domains",
+  "id",
+  "notes",
+  "source",
+  "status",
+  "title",
+  "updatedAt",
+  "version",
+  "wheel"
+ ],
+ "datasets/calendars/sambraielic.json": [
+  "default",
+  "domains",
+  "id",
+  "notes",
+  "source",
+  "status",
+  "title",
+  "updatedAt",
+  "version",
+  "wheel"
+ ],
+ "datasets/calendars/vedic.json": [
+  "default",
+  "domains",
+  "id",
+  "notes",
+  "source",
+  "status",
+  "title",
+  "updatedAt",
+  "version",
+  "wheel"
+ ],
+ "datasets/index.json": [
+  "categories",
+  "default",
+  "updatedAt",
+  "version"
+ ],
+ "datasets/linguistics/alphabet_index.json": [
+  "default",
+  "description",
+  "id",
+  "scripts",
+  "source",
+  "title",
+  "updatedAt",
+  "version"
+ ],
+ "datasets/linguistics/script_families.json": [
+  "default",
+  "domains",
+  "id",
+  "notes",
+  "source",
+  "status",
+  "title",
+  "unicodeScriptsFile",
+  "unicodeScriptsNote",
+  "updatedAt",
+  "version"
+ ],
+ "datasets/linguistics/unicode_scripts.json": [
+  "default",
+  "scripts",
+  "source",
+  "updatedAt",
+  "version"
+ ],
+ "datasets/semiotics/symbol_taxonomy.json": [
+  "default",
+  "domains",
+  "id",
+  "notes",
+  "source",
+  "status",
+  "title",
+  "updatedAt",
+  "version"
+ ],
+ "deepAnalysis/_fromRecords.js": [
+  "bySign",
+  "signOnly"
+ ],
+ "deepAnalysis/index.js": [
+  "JUPITER_DEEP",
+  "LUNAR_DEEP",
+  "MARS_SHADOW",
+  "MERCURY_SHADOW",
+  "NEPTUNE_DEEP",
+  "PAIR_INSIGHT",
+  "PLUTO_DEEP",
+  "RISING_SHADOW",
+  "SATURN_DEEP",
+  "SOLAR_DEEP",
+  "URANUS_DEEP",
+  "VENUS_SHADOW"
+ ],
+ "deepAnalysis/outerPlanets.js": [
+  "JUPITER_DEEP",
+  "SATURN_DEEP"
+ ],
+ "deepAnalysis/pairInsights.js": [
+  "PAIR_INSIGHT"
+ ],
+ "deepAnalysis/shadows.js": [
+  "MARS_SHADOW",
+  "MERCURY_SHADOW",
+  "RISING_SHADOW",
+  "VENUS_SHADOW"
+ ],
+ "deepAnalysis/solarLunar.js": [
+  "LUNAR_DEEP",
+  "SOLAR_DEEP"
+ ],
+ "deepAnalysis/transpersonals.js": [
+  "NEPTUNE_DEEP",
+  "PLUTO_DEEP",
+  "URANUS_DEEP"
+ ],
+ "grammatology/correspondences.js": [
+  "CHINESE_ZODIAC_HEBREW",
+  "MUSICAL_SCALE_OCCULT",
+  "ZODIAC_CHINESE_MAP"
+ ],
+ "grammatology/digraphs.js": [
+  "DIGRAPH_MAP"
+ ],
+ "grammatology/egyptian.js": [
+  "ACROPHONY_SHIFTS",
+  "EGYPTIAN_UNILITERALS"
+ ],
+ "grammatology/hebrewMap.js": [
+  "FINAL_FORMS",
+  "HEBREW_CHAR_MAP",
+  "KNOWN_HEBREW"
+ ],
+ "grammatology/index.js": [
+  "ACROPHONY_SHIFTS",
+  "CHINESE_ZODIAC_HEBREW",
+  "CROSS_SCRIPTS",
+  "DIGRAPH_MAP",
+  "EGYPTIAN_UNILITERALS",
+  "FINAL_FORMS",
+  "HEBREW_CHAR_MAP",
+  "HERMETIC_PLANET",
+  "IPA_QUICK",
+  "KANGXI_INFO",
+  "KANGXI_MOST_USED",
+  "KANGXI_RADICALS",
+  "KANGXI_STANDALONE",
+  "KANGXI_TOP_10_BY_FREQUENCY",
+  "KNOWN_HEBREW",
+  "LATIN_TO_LETTER",
+  "LETTER_DB",
+  "MUSICAL_SCALE_OCCULT",
+  "OGHAM_FULL",
+  "SCRIPT_ATLAS",
+  "TWENTY_TWO_NOTE",
+  "WRITING_SYSTEM_TYPES",
+  "YETZIRAH_ELEMENT",
+  "YETZIRAH_PLANET",
+  "YETZIRAH_SIGN",
+  "ZODIAC_CHINESE_MAP",
+  "hermeticPlanetToLetter",
+  "planetToLetter",
+  "signToLetter"
+ ],
+ "grammatology/ipa.js": [
+  "IPA_QUICK"
+ ],
+ "grammatology/kangxiRadicals.js": [
+  "KANGXI_INFO",
+  "KANGXI_MOST_USED",
+  "KANGXI_RADICALS",
+  "KANGXI_STANDALONE",
+  "KANGXI_TOP_10_BY_FREQUENCY"
+ ],
+ "grammatology/letterDb.js": [
+  "CROSS_SCRIPTS",
+  "LETTER_DB"
+ ],
+ "grammatology/ogham.js": [
+  "OGHAM_FULL"
+ ],
+ "grammatology/phonetics_data.json": [
+  "default"
+ ],
+ "grammatology/scriptAtlas.js": [
+  "SCRIPT_ATLAS",
+  "TWENTY_TWO_NOTE"
+ ],
+ "grammatology/writingSystems.js": [
+  "WRITING_SYSTEM_TYPES"
+ ],
+ "grammatology/yetzirah.js": [
+  "HERMETIC_PLANET",
+  "LATIN_TO_LETTER",
+  "YETZIRAH_ELEMENT",
+  "YETZIRAH_PLANET",
+  "YETZIRAH_SIGN",
+  "hermeticPlanetToLetter",
+  "planetToLetter",
+  "signToLetter"
+ ],
+ "index.js": [
+  "ACROPHONY_SHIFTS",
+  "ANIMALS",
+  "ANIMAL_INFO",
+  "ANIMAL_TRIGRAM",
+  "ASPECTS",
+  "ASPECT_MEANINGS",
+  "ASP_ADJ",
+  "ASP_EXPLAIN",
+  "ASP_SHORT",
+  "AXIS_INFO",
+  "BIRTHDAY_MEANING",
+  "BRANCHES",
+  "BRANCH_PINYIN",
+  "CHALDEAN",
+  "CHINESE_ASTRO_INTRO",
+  "CHINESE_SOLAR_ZODIAC",
+  "CHINESE_TRANSLATION_NOTES",
+  "CHINESE_ZODIAC_EXTENDED",
+  "CHINESE_ZODIAC_HEBREW",
+  "CNY_DATES",
+  "CN_EL",
+  "CN_EL_INFO",
+  "CN_MONTH_NAMES",
+  "CROSS_SCRIPTS",
+  "DIGRAPH_MAP",
+  "EGYPTIAN_MONTHS",
+  "EGYPTIAN_UNILITERALS",
+  "EL_COL",
+  "EXPRESSION_MEANING",
+  "FINAL_FORMS",
+  "GREEK_24_CYCLE",
+  "HEBREW_22_CYCLE",
+  "HEBREW_27_CYCLE",
+  "HEBREW_28_CYCLE",
+  "HEBREW_CHAR_MAP",
+  "HEBREW_LUNAR_MONTHS",
+  "HERMETIC_PLANET",
+  "HOUSE_AREA",
+  "HOUSE_INFO",
+  "ICHING_HEX",
+  "INDIGENOUS_ZODIAC",
+  "IPA_QUICK",
+  "JUPITER_DEEP",
+  "KANGXI_INFO",
+  "KANGXI_MOST_USED",
+  "KANGXI_RADICALS",
+  "KANGXI_STANDALONE",
+  "KANGXI_TOP_10_BY_FREQUENCY",
+  "KNOWN_HEBREW",
+  "LATIN_TO_LETTER",
+  "LETTER_DB",
+  "LIFE_PATH_MEANING",
+  "LUNAR_DEEP",
+  "MAJOR_ARCANA",
+  "MARS_SHADOW",
+  "MASTER_NUMBERS",
+  "MASTER_TEACHER_DAYS",
+  "MERCURY_SHADOW",
+  "MOD_COL",
+  "MONTH_DAY_TAROT",
+  "MUSICAL_SCALE_OCCULT",
+  "NAMES_72",
+  "NAMES_99",
+  "NEPTUNE_DEEP",
+  "NUM_PLANET",
+  "NUM_SEQ_DEFS",
+  "OGHAM_FULL",
+  "OGHAM_TREES",
+  "PAIR_INSIGHT",
+  "PATHS_32",
+  "PERSONALITY_MEANING",
+  "PL",
+  "PLANET_INFO",
+  "PLANET_IN_HOUSE",
+  "PLANET_IN_SIGN",
+  "PLANET_LETTER",
+  "PLUTO_DEEP",
+  "POLARITY_INFO",
+  "PYTHAGOREAN",
+  "P_COL",
+  "P_ROLE",
+  "P_SYM",
+  "REFLECTIVE_FESTIVALS",
+  "RISING_SHADOW",
+  "RUNIC_HALF_MONTHS",
+  "SAMB_CUSP_DAYS",
+  "SAMB_MONTHS",
+  "SAMB_SUBDIVISIONS",
+  "SAMB_WEEKDAYS",
+  "SAMB_ZODIAC_RANGES",
+  "SATURN_DEEP",
+  "SCRIPT_ATLAS",
+  "SIGNS",
+  "SIGN_COL",
+  "SIGN_INFO",
+  "SIGN_SYM",
+  "SOLAR_DEEP",
+  "SOUL_URGE_MEANING",
+  "STEMS",
+  "STEM_PINYIN",
+  "TAIXUANJING",
+  "TAIXUANJING_INFO",
+  "TWELVE_HEAVENLY_GENERALS",
+  "TWENTY_TWO_NOTE",
+  "TXJ_DIGRAMS",
+  "TXJ_MONOGRAMS",
+  "TXJ_TERNARY_MATH",
+  "TXJ_TETRAGRAMS",
+  "URANUS_DEEP",
+  "VENUS_SHADOW",
+  "VOWELS_SET",
+  "WRITING_SYSTEM_TYPES",
+  "WUXING_CONTROLLING",
+  "WUXING_GENERATING",
+  "WUXING_PROFILES",
+  "YEAR_END_STEM_POLARITY",
+  "YETZIRAH_ELEMENT",
+  "YETZIRAH_PLANET",
+  "YETZIRAH_SIGN",
+  "ZI_WEI_INFO",
+  "ZI_WEI_MAJOR_STARS",
+  "ZI_WEI_PALACES_SEQUENCES",
+  "ZODIAC_CHINESE_MAP",
+  "ZODIAC_TRINES",
+  "getPlanetInHouse",
+  "getPlanetInSign",
+  "hermeticPlanetToLetter",
+  "planetToLetter",
+  "signToLetter"
+ ],
+ "numerology/index.js": [
+  "BIRTHDAY_MEANING",
+  "CHALDEAN",
+  "EXPRESSION_MEANING",
+  "LIFE_PATH_MEANING",
+  "MASTER_NUMBERS",
+  "NUM_PLANET",
+  "PERSONALITY_MEANING",
+  "PYTHAGOREAN",
+  "SOUL_URGE_MEANING",
+  "VOWELS_SET"
+ ],
+ "numerology/meanings.js": [
+  "BIRTHDAY_MEANING",
+  "EXPRESSION_MEANING",
+  "LIFE_PATH_MEANING",
+  "PERSONALITY_MEANING",
+  "SOUL_URGE_MEANING"
+ ],
+ "numerology/tables.js": [
+  "CHALDEAN",
+  "MASTER_NUMBERS",
+  "NUM_PLANET",
+  "PYTHAGOREAN",
+  "VOWELS_SET"
+ ],
+ "symbolism/aspectSymbolism.js": [
+  "ASPECT_SYMBOLISM",
+  "AXIS_SYMBOLISM",
+  "getAspectSymbolism",
+  "getAxisSymbolism"
+ ],
+ "symbolism/chineseSymbolism.js": [
+  "ANIMAL_SYMBOLISM",
+  "CN_ELEMENT_SYMBOLISM",
+  "getAnimalSymbolism",
+  "getChineseElementSymbolism"
+ ],
+ "symbolism/cycleSymbolism.js": [
+  "CYCLE_SYMBOLISM",
+  "getCycleSymbolism"
+ ],
+ "symbolism/difficultySymbolism.js": [
+  "DIFFICULTY",
+  "getDifficulty"
+ ],
+ "symbolism/grammatologySymbolism.js": [
+  "LETTER_SYMBOLISM",
+  "getLetterSymbolism"
+ ],
+ "symbolism/houseSymbolism.js": [
+  "HOUSE_SYMBOLISM",
+  "getHouseSymbolism"
+ ],
+ "symbolism/mansionSymbolism.js": [
+  "MANSION_SYMBOLISM",
+  "getMansionSymbolism"
+ ],
+ "symbolism/numerologySymbolism.js": [
+  "NUMBER_SYMBOLISM",
+  "getNumerologySymbolism"
+ ],
+ "symbolism/pairSymbolism.js": [
+  "PAIR_SYMBOLISM",
+  "getPairSymbolism"
+ ],
+ "symbolism/planetInHouse.js": [
+  "PLANET_IN_HOUSE",
+  "getPlanetInHouse"
+ ],
+ "symbolism/planetInSign.js": [
+  "PLANET_IN_SIGN",
+  "getPlanetInSign"
+ ],
+ "symbolism/planetSymbolism.js": [
+  "PLANET_SYMBOLISM",
+  "getPlanetSymbolism"
+ ],
+ "symbolism/signSymbolism.js": [
+  "SIGN_SYMBOLISM",
+  "getSignSymbolism"
+ ],
+ "symbolism/tarotSymbolism.js": [
+  "TAROT_SYMBOLISM",
+  "getTarotSymbolism"
+ ],
+ "symbolism/terse.js": [
+  "terse",
+  "terseList"
+ ],
+ "symbolism/vedicSymbolism.js": [
+  "DASHA_SYMBOLISM",
+  "NAKSHATRA_SYMBOLISM",
+  "getDashaSymbolism",
+  "getNakshatraSymbolism"
+ ]
+}
