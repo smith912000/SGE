@@ -43,6 +43,7 @@ export * from '${process.cwd().replace(/\\/g, '/')}/src/engines/index.js';
 export * from '${process.cwd().replace(/\\/g, '/')}/src/data/index.js';
 export { M3 } from '${process.cwd().replace(/\\/g, '/')}/src/theme/m3.js';
 export { ENTITIES as SYMBOL_ENTITIES } from '${process.cwd().replace(/\\/g, '/')}/src/data/symbolMap.js';
+export { essenceOf as SYMBOL_ESSENCE } from '${process.cwd().replace(/\\/g, '/')}/src/data/symbolEssence.js';
 `);
 
 await build({
@@ -237,7 +238,9 @@ for (const name of TABS) {
   const ents = Object.values(app.SYMBOL_ENTITIES || {});
   const bad = [];
   for (const e of ents) {
-    const texts = [e.essence, ...e.attrs.map(([k, v]) => `${k} ${v}`), ...e.links.map((l) => l.rel)];
+    const es = app.SYMBOL_ESSENCE(e) || {};
+    if (!es.core) bad.push(`${e.id}: no core symbolism`);
+    const texts = [e.essence, ...e.attrs.map(([k, v]) => `${k} ${v}`), ...e.links.map((l) => l.rel), es.core || '', ...(es.keys || []), ...(es.rep || []).map(([k, v]) => `${k} ${v}`), es.myth || ''];
     for (const t of texts) { const m = t.match(SECOND_PERSON) || t.match(FORECAST); if (m) bad.push(`${e.id}: "${m[0]}"`); }
     for (const l of e.links) if (!app.SYMBOL_ENTITIES[l.to]) bad.push(`${e.id}: link to missing ${l.to}`);
   }

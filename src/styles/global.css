@@ -357,6 +357,15 @@ button { font-family: inherit; }
 .sm-link-name { color: #F4F1ED; font-size: .9375rem; }
 .sm-link-ess { color: #C9C4D4; font-size: .8125rem; }
 .sm-back { align-self: flex-start; margin-top: 8px; }
+.sm-modes { display: inline-flex; align-self: flex-start; gap: 2px; padding: 3px; border-radius: 20px; border: 1px solid rgba(244,241,237,.12); margin: 4px 0 2px; }
+.sm-mode { border: 0; background: none; color: #A6A2B0; padding: 6px 14px; border-radius: 16px; font-size: .875rem; cursor: pointer; }
+.sm-mode[aria-pressed="true"] { background: rgba(234,223,196,.12); color: #F4F1ED; }
+.sm-mode:hover { color: #F4F1ED; }
+.sm-symbolism { display: flex; flex-direction: column; gap: 8px; animation: sm-in .35s ease-out both; }
+.sm-core-word { margin: 2px 0 0; font-family: var(--wild-serif, serif); font-size: 2.1rem; line-height: 1.1; color: var(--c, #EADFC4); letter-spacing: .01em; }
+.sm-keys { margin: 0; color: #C9C4D4; font-size: .9375rem; line-height: 1.55; }
+.sm-myth { margin: 0; color: #E4E0EA; font-size: .9375rem; line-height: 1.6; }
+.sm-switch { align-self: flex-start; margin-top: 6px; }
 .sge-reading-link { margin-left: 6px; color: #EADFC4; font-size: .8125rem; }
 @media (max-width: 900px) {
   .sm-grid { grid-template-columns: 1fr; }

@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { essenceOf } from '../data/symbolEssence.js';
 import { ENTITIES, OVERLAYS, KIND_ORDER, NAK_SPAN, XIU, FOUR_SYMBOLS } from '../data/symbolMap.js';
 import { STARS, NAMED_STARS, YOGATARAS, FIGURES, XIU_FIGURES } from '../data/sky/catalogue.js';
 import { SIGNS, SIGN_SYM, SIGN_COL } from '../data/astrology/signs.js';
@@ -310,6 +311,7 @@ export default function SymbolMapTab({ ctx = {} }) {
   const [shown, setShown] = useState({ const: true, sign: true, nak: true, xiu: false });
   const [view, setView] = useState({ alt: 90, az: 180, h: 92 });
   const [hover, setHover] = useState(null);
+  const [mode, setMode] = useState('symbol');
   const [focus, setFocus] = useState(idFromHash);
   const [trail, setTrail] = useState(() => (idFromHash() ? [idFromHash()] : []));
   const cvRef = useRef(null), hitsRef = useRef([]), viewRef = useRef(view), flight = useRef(0), panelRef = useRef(null);
@@ -460,7 +462,7 @@ export default function SymbolMapTab({ ctx = {} }) {
         </div>
 
         <aside className="sm-panel" ref={panelRef} tabIndex={-1} aria-live="polite">
-          {focus ? <FocusPanel id={focus} trail={trail} sky={sky} onOpen={(id) => open(id, false)} onBack={clear} />
+          {focus ? <FocusPanel id={focus} trail={trail} sky={sky} mode={mode} setMode={setMode} onOpen={(id) => open(id, false)} onBack={clear} />
             : <IntroPanel hover={hover} hv={hv} onOpen={(id) => open(id, true)} />}
         </aside>
       </div>
@@ -473,7 +475,7 @@ function IntroPanel({ hover, hv, onOpen }) {
     <>
       {hover ? (
         <div className="sm-hover">
-          {hv ? <><h2><span style={{ color: hv.colour }}>{hv.glyph}</span> {hv.name}</h2><p className="sm-kind">{hv.kindLabel}</p><p className="sm-essence">{hv.essence}</p></>
+          {hv ? <><h2><span style={{ color: hv.colour }}>{hv.glyph}</span> {hv.name}</h2><p className="sm-kind">{hv.kindLabel}</p>{essenceOf(hv)?.core && <p className="sm-core-word" style={{ '--c': hv.colour }}>{essenceOf(hv).core}</p>}<p className="sm-essence">{hv.essence}</p></>
             : <><h2>{hover.name}</h2><p className="sm-kind">Star or figure</p></>}
         </div>
       ) : (
@@ -501,9 +503,10 @@ function IntroPanel({ hover, hv, onOpen }) {
   );
 }
 
-function FocusPanel({ id, trail, sky, onOpen, onBack }) {
+function FocusPanel({ id, trail, sky, mode, setMode, onOpen, onBack }) {
   const e = ENTITIES[id];
   const line = chartLine(e, sky);
+  const es = essenceOf(e);
   return (
     <div className="sm-focus" key={id}>
       <nav className="sm-trail" aria-label="Path through the map">
@@ -519,12 +522,25 @@ function FocusPanel({ id, trail, sky, onOpen, onBack }) {
       </nav>
       <h2><span style={{ color: e.colour }}>{e.glyph}</span> {e.name}</h2>
       <p className="sm-kind">{e.kindLabel}</p>
-      <p className="sm-essence">{e.essence}</p>
-      {e.attrs.length > 0 && (
-        <dl className="sm-attrs">
-          {e.attrs.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
-        </dl>
-      )}
+      <div className="sm-modes" role="group" aria-label="Read it as">
+        <button type="button" className="sm-mode" aria-pressed={mode === 'symbol'} onClick={() => setMode('symbol')}>What it is</button>
+        <button type="button" className="sm-mode" aria-pressed={mode === 'ties'} onClick={() => setMode('ties')}>How it ties in</button>
+      </div>
+      {mode === 'symbol' ? (
+        <div className="sm-symbolism">
+          {es?.core && <p className="sm-core-word" style={{ '--c': e.colour }}>{es.core}</p>}
+          <p className="sm-essence">{es?.core && e.essence.toLowerCase().startsWith(es.core.toLowerCase() + '.') ? e.essence.slice(es.core.length + 1).trim() : e.essence}</p>
+          {es?.keys?.length > 0 && <p className="sm-keys">{es.keys.join(' · ')}</p>}
+          {(es?.rep?.length > 0 || e.attrs.length > 0) && (
+            <dl className="sm-attrs">
+              {[...(es?.rep || []), ...e.attrs.filter(([k]) => !(es?.rep || []).some(([r]) => r === k))].map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
+            </dl>
+          )}
+          {es?.myth && <><h3>The story</h3><p className="sm-myth">{es.myth}</p></>}
+          {e.links.length > 0 && <button type="button" className="sge-chip sm-switch" onClick={() => setMode('ties')}>How it ties in: {e.links.length} correspondences</button>}
+        </div>
+      ) : (
+      <>
       {line && <p className="sm-chartline">{line}</p>}
       <h3>Tied to it</h3>
       <ul className="sm-links">
@@ -541,6 +557,8 @@ function FocusPanel({ id, trail, sky, onOpen, onBack }) {
           );
         })}
       </ul>
+      </>
+      )}
       <button type="button" className="sge-chip sm-back" onClick={onBack}>Back to the whole sky</button>
     </div>
   );
