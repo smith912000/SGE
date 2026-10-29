@@ -87,7 +87,7 @@ export default function EducationTab({ ctx }) {
         />
         <Method
           title="Aspects and orbs"
-          plain="An aspect is an angular distance a tradition treats as significant. Bodies are rarely exact, so each aspect is allowed a margin — the orb."
+          plain="An aspect is an angular distance a tradition treats as significant. Bodies are rarely exact, so each aspect is allowed a margin, the orb."
           detail="SGE applies: conjunction and opposition 8 degrees, trine and square 6, sextile 4, quincunx 3, semisquare and sesquiquadrate 2. The conjunction, sextile, square, trine and opposition are the Ptolemaic core; the minor aspects came later, several from Kepler."
           structure="Orb size is a judgement call, not a measurement. Some schools set orbs by aspect, as here; others by body, or by whether the aspect is applying or separating. Widening an orb creates aspects and narrowing it removes them, so an aspect count is a property of the settings as much as of the chart."
         />
@@ -102,7 +102,7 @@ export default function EducationTab({ ctx }) {
         />
         <Method
           title="Solar and lunar returns"
-          plain="The moment a body regains its natal longitude — the Sun near a birthday, the Moon roughly every 27.3 days. A chart is cast for that instant."
+          plain="The moment a body regains its natal longitude, the Sun near a birthday, the Moon roughly every 27.3 days. A chart is cast for that instant."
           detail="The return moment is a real astronomical event and computable. Where the chart is cast is not settled by the astronomy: birthplace or current location give different houses from identical planetary positions."
           structure="That the Sun regains its natal longitude is a fact. That the chart drawn for that instant governs the year is an interpretive convention. Precession-corrected returns adjust the target longitude and land at a measurably different moment."
         />
@@ -131,7 +131,7 @@ export default function EducationTab({ ctx }) {
           title="Synastry and composite"
           plain="Synastry lays one chart over the other and reports the contacts. A composite instead builds a third chart from the midpoints between paired bodies."
           detail="Synastry keeps both charts intact, so every statement traces back to two named positions. The composite belongs to neither party, and its midpoints can be taken in more than one way."
-          structure="Neither yields a verdict, and a contact count is weighted by whatever orb policy produced it. The Davison chart is a third approach, cast for the midpoint in time and space between two births — unlike the composite, an actual moment with a real sky."
+          structure="Neither yields a verdict, and a contact count is weighted by whatever orb policy produced it. The Davison chart is a third approach, cast for the midpoint in time and space between two births, unlike the composite, an actual moment with a real sky."
         />
       </Card>
 
@@ -139,7 +139,7 @@ export default function EducationTab({ ctx }) {
         <Method
           title="Numerology: Pythagorean and Chaldean"
           plain="Two incompatible letter-to-number systems. Pythagorean maps A–I to 1–9 and repeats; Chaldean uses a different map and assigns no letter the value 9. The same name gives different numbers."
-          detail="Because they disagree at the letter, they disagree at every level built on it — life path, expression, soul urge. Neither can be derived from the other, and no test settles between them."
+          detail="Because they disagree at the letter, they disagree at every level built on it, life path, expression, soul urge. Neither can be derived from the other, and no test settles between them."
           structure="The master numbers 11, 22 and 33 are a further dispute inside both systems: some reduce them, some hold them. Whether a date reduces before or after summing also varies and changes the result."
         />
         <Method
@@ -185,14 +185,14 @@ export default function EducationTab({ ctx }) {
         <Method
           title="The Lahiri ayanamsa is a linear approximation"
           plain="SGE computes the ayanamsa as a straight-line function of time from a fixed epoch. The published Lahiri ayanamsa is not linear."
-          detail="Every sidereal figure inherits it — Vedic positions, nakshatras, dashas and vargas all sit on it."
+          detail="Every sidereal figure inherits it: Vedic positions, nakshatras, dashas and vargas all sit on it."
           structure="An approximate ayanamsa applied to an approximate longitude gives a sidereal position carrying the sum of both errors, and it is that sum which decides which nakshatra or navamsa a body is reported in."
         />
         <Method
           title="Vedic yoga and dosha detection is simplified"
           plain="The source describes this detection as simplified. It tests a reduced set of conditions, so it will miss combinations a complete implementation would find."
           detail="The classical definitions frequently involve aspect conditions, dignity conditions and combinations across divisional charts that are not evaluated here."
-          structure="Sade Sati is a complete gap. The technique needs transiting Saturn against the natal Moon; only natal Saturn is available, and the code records the decision not to infer it from natal data. SGE does not detect Sade Sati at all — an absent result is not evidence of absence."
+          structure="Sade Sati is a complete gap. The technique needs transiting Saturn against the natal Moon; only natal Saturn is available, and the code records the decision not to infer it from natal data. SGE does not detect Sade Sati at all, an absent result is not evidence of absence."
         />
 
         <p style={{ ...prose, marginTop: 2, marginBottom: 0, color: M3.onSurfaceVariant }}>

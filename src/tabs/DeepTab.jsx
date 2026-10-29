@@ -44,7 +44,7 @@ export default function DeepTab({ ctx }) {
 
   const domEl = Object.entries(res.el).sort(([,a],[,b])=>b-a)[0];
   const domMod = Object.entries(res.mod).sort(([,a],[,b])=>b-a)[0];
-  const modLabel = {Cardinal:"Cardinal — the opening term of a season",Fixed:"Fixed — the sustaining term of a season",Mutable:"Mutable — the dissolving term of a season"};
+  const modLabel = {Cardinal:"Cardinal: the opening term of a season",Fixed:"Fixed: the sustaining term of a season",Mutable:"Mutable: the dissolving term of a season"};
 
   const aspects = res.aspects;
   const hardAsp = aspects.filter(a=>["Square","Opposition"].includes(a.name));
@@ -54,7 +54,7 @@ export default function DeepTab({ ctx }) {
   <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
 
     <Card style={{ background:`linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor:M3.outline }}>
-      <div style={{ fontFamily:"'Cormorant Garamond', Georgia, serif", fontSize:"1rem", color:M3.primary, marginBottom:8 }}>Deep Reading — the chart taken factor by factor</div>
+      <div style={{ fontFamily:"'Cormorant Garamond', Georgia, serif", fontSize:"1rem", color:M3.primary, marginBottom:8 }}>Deep Reading: the chart taken factor by factor</div>
       <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.82rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
         Core symbolism. The depth control adds the tradition behind it.
       </p>
@@ -68,7 +68,7 @@ export default function DeepTab({ ctx }) {
         <div>
           <div style={{ color:SIGN_COL[sunSign], fontFamily:"'JetBrains Mono', monospace", fontSize:"0.82rem", fontWeight:"700" }}>Sun in {sunSign}</div>
           <div style={{ color:M3.onSurfaceVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem" }}>{SI[sunSign].element} · {SI[sunSign].mode} · ruled by {SI[sunSign].ruler}</div>
-          {SI[sunSign].hebrew && <div style={{ color:M3.outlineVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", marginTop:2 }}>{SI[sunSign].emoji} ← {SI[sunSign].letterName} ({SI[sunSign].hebrew}) ← {SI[sunSign].phoenician} ← {SI[sunSign].hiero} — {SI[sunSign].letterMeaning.split("—")[1]?.trim()||""}</div>}
+          {SI[sunSign].hebrew && <div style={{ color:M3.outlineVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", marginTop:2 }}>{SI[sunSign].emoji} ← {SI[sunSign].letterName} ({SI[sunSign].hebrew}) ← {SI[sunSign].phoenician} ← {SI[sunSign].hiero}: {SI[sunSign].letterMeaning.split(/: |—/)[1]?.trim()||""}</div>}
         </div>
       </div>
       <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.82rem", lineHeight:1.75, color:M3.onSurface, margin:0 }}>{SOLAR_DEEP[sunSign].plain}</p>
@@ -83,32 +83,32 @@ export default function DeepTab({ ctx }) {
         <div>
           <div style={{ color:SIGN_COL[moonSign], fontFamily:"'JetBrains Mono', monospace", fontSize:"0.82rem", fontWeight:"700" }}>Moon in {moonSign}</div>
           <div style={{ color:M3.onSurfaceVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem" }}>{SI[moonSign].element} · {SI[moonSign].mode} · ruled by {SI[moonSign].ruler}</div>
-          {SI[moonSign].hebrew && <div style={{ color:M3.outlineVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", marginTop:2 }}>{SI[moonSign].emoji} ← {SI[moonSign].letterName} ({SI[moonSign].hebrew}) ← {SI[moonSign].phoenician} ← {SI[moonSign].hiero} — {SI[moonSign].letterMeaning.split("—")[1]?.trim()||""}</div>}
+          {SI[moonSign].hebrew && <div style={{ color:M3.outlineVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", marginTop:2 }}>{SI[moonSign].emoji} ← {SI[moonSign].letterName} ({SI[moonSign].hebrew}) ← {SI[moonSign].phoenician} ← {SI[moonSign].hiero}: {SI[moonSign].letterMeaning.split(/: |—/)[1]?.trim()||""}</div>}
         </div>
       </div>
       <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.82rem", lineHeight:1.75, color:M3.onSurface, margin:0 }}>{LUNAR_DEEP[moonSign].plain}</p>
       
     </Card>
 
-    <Card title="The Ascendant — the sign rising at the horizon">
+    <Card title="The Ascendant: the sign rising at the horizon">
       <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:14 }}>
         <div style={{ width:52, height:52, borderRadius:"50%", background:SIGN_COL[ascSign]+"22", border:`2px solid ${SIGN_COL[ascSign]}`, display:"flex", alignItems:"center", justifyContent:"center" }}>
           <span style={{ fontSize:"1.6rem" }}>{SI[ascSign].emoji}</span>
         </div>
         <div>
           <div style={{ color:SIGN_COL[ascSign], fontFamily:"'JetBrains Mono', monospace", fontSize:"0.82rem", fontWeight:"700" }}>{ascSign} Rising</div>
-          <div style={{ color:M3.onSurfaceVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem" }}>The ascendant — the degree of the ecliptic rising at the eastern horizon for this time and place</div>
-          {SI[ascSign].hebrew && <div style={{ color:M3.outlineVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", marginTop:2 }}>{SI[ascSign].emoji} ← {SI[ascSign].letterName} ({SI[ascSign].hebrew}) ← {SI[ascSign].phoenician} ← {SI[ascSign].hiero} — {SI[ascSign].letterMeaning.split("—")[1]?.trim()||""}</div>}
+          <div style={{ color:M3.onSurfaceVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem" }}>The ascendant: the degree of the ecliptic rising at the eastern horizon for this time and place</div>
+          {SI[ascSign].hebrew && <div style={{ color:M3.outlineVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", marginTop:2 }}>{SI[ascSign].emoji} ← {SI[ascSign].letterName} ({SI[ascSign].hebrew}) ← {SI[ascSign].phoenician} ← {SI[ascSign].hiero}: {SI[ascSign].letterMeaning.split(/: |—/)[1]?.trim()||""}</div>}
         </div>
       </div>
       <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.82rem", lineHeight:1.75, color:M3.onSurface, margin:0 }}>
         The degree rising at the eastern horizon. Its sign rules the figure.
       </p>
       {RISING_SHADOW[ascSign] && (
-        <div style={{ marginTop:14, padding:"12px 16px", borderRadius:10, background:"#ff525208", border:"1px solid #ff525218" }}>
+        <div style={{ marginTop:14, padding:"12px 16px", borderRadius:10, background:"#D0726208", border:"1px solid #D0726218" }}>
           <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#D98E5F", letterSpacing:"0.1em", marginBottom:6 }}>ATTRIBUTED</div>
           <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>{RISING_SHADOW[ascSign].shadow}</p>
-          <div style={{ marginTop:10, padding:"10px 14px", borderRadius:8, background:"#69ff8e08", border:"1px solid #69ff8e18" }}>
+          <div style={{ marginTop:10, padding:"10px 14px", borderRadius:8, background:"#93B89A08", border:"1px solid #93B89A18" }}>
           </div>
         </div>
       )}
@@ -119,7 +119,7 @@ export default function DeepTab({ ctx }) {
       const angerStyle = {Fire:"direct confrontation, quick to ignite and quick to subside",Earth:"slow-burning persistence rather than sudden discharge",Air:"argument and strategic detachment",Water:"indirect expression, withdrawal and long memory"};
       return (
       <div style={grid2}>
-        <Card title="Venus — The Lesser Benefic">
+        <Card title="Venus: The Lesser Benefic">
           <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
             <span style={{ color:P_COL.Venus, fontSize:"1.4rem" }}>♀</span>
             <span style={{ color:SIGN_COL[venSign], fontFamily:"'JetBrains Mono', monospace", fontWeight:"700" }}>Venus in {venSign}</span>
@@ -128,17 +128,17 @@ export default function DeepTab({ ctx }) {
             {terse(getPlanetInSign("Venus", venSign)) || terse(getSignSymbolism(venSign))}
           </p>
           {VENUS_SHADOW[venSign] && (
-            <div style={{ marginTop:10, padding:"10px 14px", borderRadius:8, background:"#ff525208", border:"1px solid #ff525218" }}>
+            <div style={{ marginTop:10, padding:"10px 14px", borderRadius:8, background:"#D0726208", border:"1px solid #D0726218" }}>
               <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#D98E5F", letterSpacing:"0.1em", marginBottom:4 }}>ATTRIBUTED</div>
               <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{VENUS_SHADOW[venSign].shadow}</p>
             </div>
           )}
           {VENUS_SHADOW[venSign] && (
-            <div style={{ marginTop:6, padding:"8px 14px", borderRadius:8, background:"#69ff8e08", border:"1px solid #69ff8e18" }}>
+            <div style={{ marginTop:6, padding:"8px 14px", borderRadius:8, background:"#93B89A08", border:"1px solid #93B89A18" }}>
             </div>
           )}
         </Card>
-        <Card title="Mars — The Lesser Malefic">
+        <Card title="Mars: The Lesser Malefic">
           <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
             <span style={{ color:P_COL.Mars, fontSize:"1.4rem" }}>♂</span>
             <span style={{ color:SIGN_COL[marSign], fontFamily:"'JetBrains Mono', monospace", fontWeight:"700" }}>Mars in {marSign}</span>
@@ -147,13 +147,13 @@ export default function DeepTab({ ctx }) {
             {terse(getPlanetInSign("Mars", marSign)) || terse(getSignSymbolism(marSign))}
           </p>
           {MARS_SHADOW[marSign] && (
-            <div style={{ marginTop:10, padding:"10px 14px", borderRadius:8, background:"#ff525208", border:"1px solid #ff525218" }}>
+            <div style={{ marginTop:10, padding:"10px 14px", borderRadius:8, background:"#D0726208", border:"1px solid #D0726218" }}>
               <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#D98E5F", letterSpacing:"0.1em", marginBottom:4 }}>ATTRIBUTED</div>
               <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{MARS_SHADOW[marSign].shadow}</p>
             </div>
           )}
           {MARS_SHADOW[marSign] && (
-            <div style={{ marginTop:6, padding:"8px 14px", borderRadius:8, background:"#69ff8e08", border:"1px solid #69ff8e18" }}>
+            <div style={{ marginTop:6, padding:"8px 14px", borderRadius:8, background:"#93B89A08", border:"1px solid #93B89A18" }}>
             </div>
           )}
         </Card>
@@ -165,7 +165,7 @@ export default function DeepTab({ ctx }) {
       const learnStyle = {Fire:"doing and experimenting, by intuitive leaps",Earth:"practical application, step by step and evidence-led",Air:"discussion and abstraction, by pattern and analogy",Water:"immersion and association, by feel rather than sequence"};
       const commStyle = {Cardinal:"initiating, coming directly to the point",Fixed:"thorough and persistent, developing an idea fully before releasing it",Mutable:"adaptive, revising in the act of speaking"};
       return (
-      <Card title="Mercury — The Messenger">
+      <Card title="Mercury: The Messenger">
         <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
           <span style={{ color:P_COL.Mercury, fontSize:"1.3rem" }}>☿</span>
           <span style={{ color:SIGN_COL[merSign], fontFamily:"'JetBrains Mono', monospace", fontWeight:"700" }}>Mercury in {merSign}</span>
@@ -174,13 +174,13 @@ export default function DeepTab({ ctx }) {
           {terse(getPlanetInSign("Mercury", merSign)) || terse(getSignSymbolism(merSign))}
         </p>
         {MERCURY_SHADOW[merSign] && (
-          <div style={{ marginTop:12, padding:"10px 14px", borderRadius:8, background:"#ff525208", border:"1px solid #ff525218" }}>
+          <div style={{ marginTop:12, padding:"10px 14px", borderRadius:8, background:"#D0726208", border:"1px solid #D0726218" }}>
             <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#D98E5F", letterSpacing:"0.1em", marginBottom:4 }}>THE MERCURIAL TRAP</div>
             <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>{MERCURY_SHADOW[merSign].shadow}</p>
           </div>
         )}
         {MERCURY_SHADOW[merSign] && (
-          <div style={{ marginTop:6, padding:"8px 14px", borderRadius:8, background:"#69ff8e08", border:"1px solid #69ff8e18" }}>
+          <div style={{ marginTop:6, padding:"8px 14px", borderRadius:8, background:"#93B89A08", border:"1px solid #93B89A18" }}>
           </div>
         )}
       </Card>
@@ -188,7 +188,7 @@ export default function DeepTab({ ctx }) {
     })()}
 
     <div style={grid2}>
-      <Card title="♃ Jupiter — The Greater Benefic">
+      <Card title="♃ Jupiter: The Greater Benefic">
         <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
           <span style={{ color:P_COL.Jupiter, fontSize:"1.4rem" }}>♃</span>
           <span style={{ color:SIGN_COL[jupSign], fontFamily:"'JetBrains Mono', monospace", fontWeight:"700" }}>Jupiter in {jupSign}</span>
@@ -197,7 +197,7 @@ export default function DeepTab({ ctx }) {
           {JUPITER_DEEP[jupSign]?.plain}
         </p>
       </Card>
-      <Card title="♄ Saturn — The Greater Malefic">
+      <Card title="♄ Saturn: The Greater Malefic">
         <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
           <span style={{ color:P_COL.Saturn, fontSize:"1.4rem" }}>♄</span>
           <span style={{ color:SIGN_COL[satSign], fontFamily:"'JetBrains Mono', monospace", fontWeight:"700" }}>Saturn in {satSign}</span>
@@ -208,7 +208,7 @@ export default function DeepTab({ ctx }) {
       </Card>
     </div>
 
-    <Card title="⚖ Soft and Hard Contacts">
+    <Card title="Soft and hard contacts">
       <div style={{ marginBottom:16 }}>
         <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#93B89A", letterSpacing:"0.1em", marginBottom:10 }}>SOFT CONTACTS ({softAsp.length})</div>
         {softAsp.slice(0,5).map((a,i)=>{
@@ -219,14 +219,14 @@ export default function DeepTab({ ctx }) {
             :a.name==="Trine"?`The trine is 120°, a third of the circle, and both signs share an element. Classical practice reads it as the most concordant of the Ptolemaic aspects.`
             :`The sextile is 60°, a sixth of the circle. It is read as concordant but weaker than the trine, and it carries the narrowest orb of the soft aspects here.`;
           return (
-          <div key={i} style={{ padding:"10px 14px", marginBottom:8, borderRadius:10, background:a.col+"0e", borderLeft:`3px solid ${a.col}` }}>
+          <div key={i} style={{ padding:"10px 14px", marginBottom:8, borderRadius:10, background:a.col+"0e", border:"1px solid rgba(244,241,237,.09)" }}>
             <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.onSurface }}>
               <span style={{color:P_COL[a.p1]}}>{P_SYM[a.p1]} {a.p1}</span>
               <span style={{color:a.col, margin:"0 6px"}}>{a.sym} {a.name}</span>
               <span style={{color:P_COL[a.p2]}}>{P_SYM[a.p2]} {a.p2}</span>
             </div>
             <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurface, margin:"6px 0 0" }}>
-              {pi ? `${r0} and ${r1}: ${pi}` : `${a.p1} and ${a.p2} — ${r0 === r1 ? `both ${r0}s` : `${r0} and ${r1}`}.`}
+              {pi ? `${r0} and ${r1}: ${pi}` : `${a.p1} and ${a.p2}: ${r0 === r1 ? `both ${r0}s` : `${r0} and ${r1}`}.`}
             </p>
             <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", lineHeight:1.55, color:"#93B89A", margin:"6px 0 0", fontStyle:"italic" }}>
               {giftAdvice}
@@ -247,14 +247,14 @@ export default function DeepTab({ ctx }) {
             ?`The opposition is 180°, the greatest possible separation. The two signs share a mode and stand in complementary elements; the classical reading is polarity rather than fusion.`
             :`A minor hard aspect. Its orb here is narrow, so whether it registers at all depends on the orb policy in use.`;
           return (
-          <div key={i} style={{ padding:"10px 14px", marginBottom:8, borderRadius:10, background:a.col+"0e", borderLeft:`3px solid ${a.col}` }}>
+          <div key={i} style={{ padding:"10px 14px", marginBottom:8, borderRadius:10, background:a.col+"0e", border:"1px solid rgba(244,241,237,.09)" }}>
             <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.onSurface }}>
               <span style={{color:P_COL[a.p1]}}>{P_SYM[a.p1]} {a.p1}</span>
               <span style={{color:a.col, margin:"0 6px"}}>{a.sym} {a.name}</span>
               <span style={{color:P_COL[a.p2]}}>{P_SYM[a.p2]} {a.p2}</span>
             </div>
             <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurface, margin:"6px 0 0" }}>
-              {pi ? `${r0} and ${r1}: ${pi}` : `${a.p1} and ${a.p2} — ${r0 === r1 ? `both ${r0}s` : `${r0} and ${r1}`}.`}
+              {pi ? `${r0} and ${r1}: ${pi}` : `${a.p1} and ${a.p2}: ${r0 === r1 ? `both ${r0}s` : `${r0} and ${r1}`}.`}
             </p>
             <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", lineHeight:1.55, color:"#D98E5F", margin:"6px 0 0", fontStyle:"italic" }}>
               {growthAdvice}
@@ -303,7 +303,7 @@ export default function DeepTab({ ctx }) {
                 <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, marginBottom:4 }}>TIGHTEST GROUPINGS IN THIS CHART:</div>
                 {tight.map((a,i)=>(
                   <div key={i} style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", color:M3.onSurfaceVariant, padding:"2px 0" }}>
-                    {P_SYM[a.p1]} {a.p1} ({P_ROLE[a.p1]||""}) {a.sym} {P_SYM[a.p2]} {a.p2} ({P_ROLE[a.p2]||""}) — <span style={{color:h.col}}>{a.name}</span> at {(a.strength*100).toFixed(0)}% strength
+                    {P_SYM[a.p1]} {a.p1} ({P_ROLE[a.p1]||""}) {a.sym} {P_SYM[a.p2]} {a.p2} ({P_ROLE[a.p2]||""}): <span style={{color:h.col}}>{a.name}</span> at {(a.strength*100).toFixed(0)}% strength
                   </div>
                 ))}
               </div>
@@ -373,7 +373,7 @@ export default function DeepTab({ ctx }) {
         if (sameEl) {
           bridgeText += `The Western and Chinese schemes name the same element here (${westernEl}/${chineseEl}). The two systems divide the sky differently and the agreement is a coincidence of labels, not a shared measurement. `;
         } else {
-          bridgeText += `The Western scheme gives ${westernEl} here and the Chinese gives ${chineseEl}. The two use different elemental sets — four against five — so they are not directly comparable. `;
+          bridgeText += `The Western scheme gives ${westernEl} here and the Chinese gives ${chineseEl}. The two use different elemental sets, four against five, so they are not directly comparable. `;
         }
         if (cnAnimal.shadow) bridgeText += ` The tradition also attributes ${animalShadow} to the ${res.cn.animal}.`;
         return bridgeText;
@@ -387,7 +387,7 @@ export default function DeepTab({ ctx }) {
 
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))", gap:12, marginBottom:16 }}>
           <div style={{ padding:"14px 16px", borderRadius:12, background:SIGN_COL[sunSign]+"0a", border:`1px solid ${SIGN_COL[sunSign]}22` }}>
-            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>SUN SIGN — THE SOLAR SIGNIFICATOR</div>
+            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>SUN SIGN: THE SOLAR SIGNIFICATOR</div>
             <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
               <span style={{ fontSize:"1.3rem" }}>{SI[sunSign].emoji}</span>
               <span style={{ color:SIGN_COL[sunSign], fontFamily:"'JetBrains Mono', monospace", fontSize:"0.82rem", fontWeight:"700" }}>{sunSign}</span>
@@ -398,7 +398,7 @@ export default function DeepTab({ ctx }) {
           </div>
 
           <div style={{ padding:"14px 16px", borderRadius:12, background:SIGN_COL[moonSign]+"0a", border:`1px solid ${SIGN_COL[moonSign]}22` }}>
-            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>MOON SIGN — THE LUNAR SIGNIFICATOR</div>
+            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>MOON SIGN: THE LUNAR SIGNIFICATOR</div>
             <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
               <span style={{ fontSize:"1.3rem" }}>{SI[moonSign].emoji}</span>
               <span style={{ color:SIGN_COL[moonSign], fontFamily:"'JetBrains Mono', monospace", fontSize:"0.82rem", fontWeight:"700" }}>{moonSign}</span>
@@ -409,7 +409,7 @@ export default function DeepTab({ ctx }) {
           </div>
 
           <div style={{ padding:"14px 16px", borderRadius:12, background:SIGN_COL[ascSign]+"0a", border:`1px solid ${SIGN_COL[ascSign]}22` }}>
-            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>RISING SIGN — THE ASCENDING DEGREE</div>
+            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>RISING SIGN: THE ASCENDING DEGREE</div>
             <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
               <span style={{ fontSize:"1.3rem" }}>{SI[ascSign].emoji}</span>
               <span style={{ color:SIGN_COL[ascSign], fontFamily:"'JetBrains Mono', monospace", fontSize:"0.82rem", fontWeight:"700" }}>{ascSign}</span>
@@ -421,26 +421,26 @@ export default function DeepTab({ ctx }) {
         </div>
 
         <div style={{ padding:"14px 16px", borderRadius:12, background:EL_COL[domEl[0]]+"0a", border:`1px solid ${EL_COL[domEl[0]]}22`, marginBottom:12 }}>
-          <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>MOST REPRESENTED ELEMENT — {domEl[0].toUpperCase()} ({domEl[1]} BODIES)</div>
+          <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>MOST REPRESENTED ELEMENT: {domEl[0].toUpperCase()} ({domEl[1]} BODIES)</div>
           <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>
-            The most represented element here is <strong style={{color:EL_COL[domEl[0]]}}>{domEl[0]}</strong> — {EL_DESC[domEl[0]]}.
+            The most represented element here is <strong style={{color:EL_COL[domEl[0]]}}>{domEl[0]}</strong>: {EL_DESC[domEl[0]]}.
           </p>
         </div>
 
         <div style={{ padding:"14px 16px", borderRadius:12, background:MOD_COL[domMod[0]]+"0a", border:`1px solid ${MOD_COL[domMod[0]]}22`, marginBottom:12 }}>
-          <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>MOST REPRESENTED MODE — {domMod[0].toUpperCase()} ({domMod[1]} BODIES)</div>
+          <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, letterSpacing:"0.1em", marginBottom:6 }}>MOST REPRESENTED MODE: {domMod[0].toUpperCase()} ({domMod[1]} BODIES)</div>
           <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>
-            The most represented mode is <strong style={{color:MOD_COL[domMod[0]]}}>{domMod[0]}</strong> — {MOD_DESC[domMod[0]]}.
+            The most represented mode is <strong style={{color:MOD_COL[domMod[0]]}}>{domMod[0]}</strong>: {MOD_DESC[domMod[0]]}.
           </p>
         </div>
 
         <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12, marginBottom:12 }}>
-          <div style={{ padding:"14px 16px", borderRadius:12, background:"#69ff8e0a", border:"1px solid #69ff8e22" }}>
-            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#93B89A", letterSpacing:"0.1em", marginBottom:6 }}>FLOWING CONNECTIONS — {softCount}</div>
+          <div style={{ padding:"14px 16px", borderRadius:12, background:"#93B89A0a", border:"1px solid #93B89A22" }}>
+            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#93B89A", letterSpacing:"0.1em", marginBottom:6 }}>FLOWING CONNECTIONS: {softCount}</div>
             <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{flowDesc}</p>
           </div>
-          <div style={{ padding:"14px 16px", borderRadius:12, background:"#ff8a500a", border:"1px solid #ff8a5022" }}>
-            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#D98E5F", letterSpacing:"0.1em", marginBottom:6 }}>HARD CONTACTS — {hardCount}</div>
+          <div style={{ padding:"14px 16px", borderRadius:12, background:"#D98E5F0a", border:"1px solid #D98E5F22" }}>
+            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#D98E5F", letterSpacing:"0.1em", marginBottom:6 }}>HARD CONTACTS: {hardCount}</div>
             <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{growthDesc}</p>
           </div>
         </div>
@@ -452,12 +452,12 @@ export default function DeepTab({ ctx }) {
       </Card>
 
       {res.cn && (
-        <Card title={`${cnAnimal.emoji||"☯"} The ${res.cn.animal} — Two Systems Side by Side`}>
+        <Card title={`${cnAnimal.emoji||"☯"} The ${res.cn.animal}: Two Systems Side by Side`}>
           <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.84rem", lineHeight:1.8, color:M3.onSurface, margin:0 }}>{cnBridge}</p>
         </Card>
       )}
 
-      <Card title="Portrait — The Principal Placements in Plain Language">
+      <Card title="Portrait: The Principal Placements in Plain Language">
         {(()=>{
           const rows = [
             { heading: `Sun in ${sunSign}`,   glyph: P_SYM.Sun,    rec: getPlanetInSign("Sun", sunSign)   || getSignSymbolism(sunSign) },
@@ -483,7 +483,7 @@ export default function DeepTab({ ctx }) {
         })()}
       </Card>
 
-      <Card title="Summary — The Principal Placements">
+      <Card title="Summary: The Principal Placements">
         {(()=>{
           const rows = [
             { heading: `Sun in ${sunSign}`,  glyph: P_SYM.Sun,  rec: getPlanetInSign("Sun", sunSign)   || getSignSymbolism(sunSign) },
@@ -508,7 +508,7 @@ export default function DeepTab({ ctx }) {
                 </p>
               )}
               <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.62, color:M3.onSurfaceVariant, fontStyle:"italic", margin:"14px 0 0" }}>
-                Where else in this figure do these four placements meet — by rulership, by aspect, or by house?
+                Where else in this figure do these four placements meet, by rulership, by aspect, or by house?
               </p>
             </div>
           );

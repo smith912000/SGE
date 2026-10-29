@@ -172,7 +172,7 @@ export default function WheelTab({ ctx }) {
           <div style={{ display: "flex", justifyContent: "center" }}>
             <ChineseWheelWithTooltip cn={res.cn} size={Math.min(500, window.innerWidth - 64)} />
           </div>
-          <div style={{ marginTop: 12, padding: "12px 14px", borderRadius: 10, background: M3.surfaceContainerHighest + "44", borderLeft: `4px solid ${M3.primary}` }}>
+          <div style={{ marginTop: 12, padding: "12px 14px", borderRadius: 10, background: M3.surfaceContainerHighest + "44", border:"1px solid rgba(244,241,237,.09)" }}>
             <div style={{ fontFamily: M3.fontBody, fontSize: "0.75rem", color: M3.primary, fontWeight: "700", marginBottom: 4 }}>
               ARCHETYPE: "{ctx.ANIMAL_INFO[res.cn.animal]?.archetype || "Explorer"}"
             </div>
@@ -203,7 +203,7 @@ export default function WheelTab({ ctx }) {
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {calendarModel.nativeRings.map((ring) => (
-              <div key={ring.id} style={{ padding: "8px 12px", borderRadius: 8, background: M3.surfaceContainerHighest + "44", borderLeft: `4px solid ${M3.primary}` }}>
+              <div key={ring.id} style={{ padding: "8px 12px", borderRadius: 8, background: M3.surfaceContainerHighest + "44", border:"1px solid rgba(244,241,237,.09)" }}>
                 <div style={{ fontFamily: M3.fontBody, fontSize: "0.75rem", color: M3.primary, textTransform: "uppercase", marginBottom: 2 }}>{ring.label}</div>
                 <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.45, color: M3.onSurface }}>
                   {ring.plain}

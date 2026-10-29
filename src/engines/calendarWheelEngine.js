@@ -161,7 +161,7 @@ function buildIslamicModel(ctx = {}) {
     label: "Hijri month cycle",
     segments,
     activeIndex: monthNum ? monthNum - 1 : 0,
-    plain: monthNum ? `Hijri: ${monthData.name} — ${monthData.theme}. ${monthData.advice}` : `Hijri date ${dayNum || "?"}/${monthNum || "?"}/${yearNum || "?"}.`,
+    plain: monthNum ? `Hijri: ${monthData.name}: ${monthData.theme}. ${monthData.advice}` : `Hijri date ${dayNum || "?"}/${monthNum || "?"}/${yearNum || "?"}.`,
   });
   return model;
 }
@@ -180,7 +180,7 @@ function buildJewishModel(ctx = {}) {
     label: "Hebrew month cycle",
     segments,
     activeIndex: monthNum ? Math.min(12, Math.max(0, monthNum - 1)) : 0,
-    plain: monthNum ? `Hebrew: ${monthData.name} — ${monthData.theme}. ${monthData.advice}` : `Hebrew date ${dayNum || "?"}/${monthNum || "?"}/${yearNum || "?"}.`,
+    plain: monthNum ? `Hebrew: ${monthData.name}: ${monthData.theme}. ${monthData.advice}` : `Hebrew date ${dayNum || "?"}/${monthNum || "?"}/${yearNum || "?"}.`,
   });
   return model;
 }
@@ -202,7 +202,7 @@ function buildEgyptianSolarModel(ctx = {}) {
     segments,
     activeIndex: segmentIndex,
     plain: segmentIndex === 12
-      ? "Intercallary Epagomenal Days — A time of sacred threshold."
+      ? "Intercallary Epagomenal Days: A time of sacred threshold."
       : `Egyptian: ${seasonData.name} Month ${(segmentIndex % 4) + 1}. ${seasonData.theme}: ${seasonData.advice}`,
   });
   return model;
@@ -362,9 +362,9 @@ function buildSambraielicModel(ctx = {}) {
       const txPart = hourDef.taiXuan ? ` | ${hourDef.taiXuan}` : "";
       const bpmfPart = hourDef.bopomofo ? ` [${hourDef.bopomofo}]` : "";
       const kxPart = hourDef.kangxi ? ` ⿻${hourDef.kangxi}` : "";
-      detail = `${String(hour).padStart(2, "0")}:00 ${hourDef.hebrew} ${hourDef.westGlyph || ""} ${hourDef.west} / ${hourDef.east}${cnPart}${triPart}${iChingPart}${txPart}${bpmfPart}${kxPart} — ${hourDef.note}`;
+      detail = `${String(hour).padStart(2, "0")}:00 ${hourDef.hebrew} ${hourDef.westGlyph || ""} ${hourDef.west} / ${hourDef.east}${cnPart}${triPart}${iChingPart}${txPart}${bpmfPart}${kxPart}: ${hourDef.note}`;
     } else if (!isHourMark && runeDef) {
-      detail = `${String(hour).padStart(2, "0")}:30 ${runeDef.rune} — ${runeDef.note}`;
+      detail = `${String(hour).padStart(2, "0")}:30 ${runeDef.rune}: ${runeDef.note}`;
     } else {
       detail = isHourMark
         ? `${String(hour).padStart(2, "0")}:00 Gate`
@@ -403,7 +403,7 @@ function buildSambraielicModel(ctx = {}) {
       end,
       label: `${cp.hebrew} ${cp.westGlyph || ""}`,
       color: cp.westGlyph ? "hsla(265, 70%, 62%, 0.18)" : "hsla(45, 92%, 66%, 0.18)",
-      detail: `${String(cp.hour).padStart(2, "0")}:00 ${cp.west} / ${cp.east}${cnPart}${triPart}${iChingPart}${txPart}${blotPart} — ${cp.note}`,
+      detail: `${String(cp.hour).padStart(2, "0")}:00 ${cp.west} / ${cp.east}${cnPart}${triPart}${iChingPart}${txPart}${blotPart}: ${cp.note}`,
     };
   });
   const activeCheckpointIdx = Math.max(0, checkpoints.findIndex((cp) => cp.hour === active.hour));

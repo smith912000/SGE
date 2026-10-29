@@ -65,57 +65,25 @@ export default function TodayTab({ ctx }) {
       ? [...slowHits].sort((x, y) => (y.strength || 0) - (x.strength || 0))[0]
       : null;
 
+  const cls = (id, label, planets, names) => ({
+    id, label, planets,
+    desc: {
+      today: `Contacts involving ${names} for this date.`,
+      week: `Contacts involving ${names} that hold across the week.`,
+      month: `Contacts involving ${names} that hold across the month.`,
+    },
+  });
   const themedCategories = [
-    {
-      id: "love",
-      label: "Love & Relationships",
-      desc: {
-        today: "Contacts involving Venus, Mars and the Moon for this date.",
-        week: "Contacts involving Venus, Mars and the Moon across the week.",
-        month: "Contacts involving Venus, Mars and the Moon across the month."
-      },
-      planets: ["Venus", "Mars", "Moon"],
-    },
-    {
-      id: "work",
-      label: "Work, Career & Money",
-      desc: {
-        today: "Contacts involving the Sun, Saturn and Jupiter for this date.",
-        week: "Contacts involving the Sun, Saturn and Jupiter across the week.",
-        month: "Contacts involving the Sun, Saturn and Jupiter across the month."
-      },
-      planets: ["Sun", "Saturn", "Jupiter"],
-    },
-    {
-      id: "growth",
-      label: "Inner Growth & Destiny",
-      desc: {
-        today: "Contacts involving the social and outer bodies for this date.",
-        week: "Contacts involving the social and outer bodies across the week.",
-        month: "Contacts involving the social and outer bodies across the month."
-      },
-      planets: ["Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"],
-    },
-    {
-      id: "body",
-      label: "Body, Mood & Energy",
-      desc: {
-        today: "Contacts involving the Sun, Moon and Mars for this date.",
-        week: "Contacts involving the Sun, Moon and Mars across the week.",
-        month: "Contacts involving the Sun, Moon and Mars across the month."
-      },
-      planets: ["Sun", "Moon", "Mars"],
-    },
+    cls("lights", "The lights", ["Sun", "Moon"], "the Sun or the Moon"),
+    cls("personal", "Personal planets", ["Mercury", "Venus", "Mars"], "Mercury, Venus or Mars"),
+    cls("social", "Social planets", ["Jupiter", "Saturn"], "Jupiter or Saturn"),
+    cls("outer", "Outer planets", ["Uranus", "Neptune", "Pluto"], "Uranus, Neptune or Pluto"),
   ];
 
-  // Reorder based on focus preference
-  const FOCUS_ORDER = {
-    love: ["love", "body", "growth", "work"],
-    career: ["work", "growth", "body", "love"],
-    spiritual: ["growth", "love", "body", "work"],
-    body: ["body", "love", "work", "growth"],
-    all: ["love", "work", "growth", "body"],
-  };
+  // The chosen class leads; the rest keep their traditional order.
+  const BASE_ORDER = ["lights", "personal", "social", "outer"];
+  const FOCUS_ORDER = Object.fromEntries(BASE_ORDER.map((id) => [id, [id, ...BASE_ORDER.filter((x) => x !== id)]]));
+  FOCUS_ORDER.all = BASE_ORDER;
   const catOrder = FOCUS_ORDER[focus] || FOCUS_ORDER.all;
   const sortedCategories = [...themedCategories].sort(
     (a, b) => catOrder.indexOf(a.id) - catOrder.indexOf(b.id)
@@ -157,7 +125,7 @@ export default function TodayTab({ ctx }) {
 
         <div style={{ padding: "12px 16px", borderRadius: 12, background: M3.surfaceContainer, border: `1px solid ${M3.outlineVariant}` }}>
           <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.secondary, letterSpacing: "0.12em", marginBottom: 8 }}>
-            FILTER
+            LEAD WITH
           </div>
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
             {FOCUS_OPTIONS.map(opt => (
@@ -189,7 +157,7 @@ export default function TodayTab({ ctx }) {
             marginBottom: 8,
           }}
         >
-          Today&apos;s Sky — Guided Themes
+          Transits to the natal figure
         </div>
         <p
           style={{
@@ -200,12 +168,11 @@ export default function TodayTab({ ctx }) {
             margin: 0,
           }}
         >
-          This page translates the transits tab into four simple lenses:{" "}
-          <strong>love</strong>, <strong>work</strong>,{" "}
-          <strong>inner growth</strong>, and <strong>body/mood</strong>. It
-          starts with the <strong>slow-planet background chapter</strong> that
-          colours this week, then shows where today&apos;s sky most strongly
-          contacts the natal positions. A count is not a significance: the number found is a function of the orb policy in use.
+          The bodies in the sky now, measured against the natal positions. The
+          slowest contact in orb comes first, since it holds longest; then the
+          tightest contact in each class of body: the lights, the personal,
+          social and outer planets. A count is not a significance: the number
+          found is a function of the orb policy in use.
         </p>
         <p
           style={{
@@ -216,7 +183,7 @@ export default function TodayTab({ ctx }) {
             letterSpacing: "0.12em",
           }}
         >
-          {todayStr.toUpperCase()} — {res.trAsp?.length || 0} transit
+          {todayStr.toUpperCase()}: {res.trAsp?.length || 0} transit
           contacts to the natal chart at the orbs in use
         </p>
         {weekAnchor && (
@@ -238,7 +205,7 @@ export default function TodayTab({ ctx }) {
                 marginBottom: 4,
               }}
             >
-              THIS WEEK&apos;S BIG BACKGROUND TRANSIT
+              SLOWEST CONTACT IN ORB
             </div>
             {(() => {
               const n1 = cleanName(weekAnchor.p1);
@@ -338,7 +305,7 @@ export default function TodayTab({ ctx }) {
             const role2 = P_ROLE[n2] || "";
             const short = ASP_SHORT[top.name] || top.name.toLowerCase();
             const expl = ASP_EXPLAIN[top.name] || short;
-            body = `Transiting ${n1} ${ASP_ADJ[top.name] || top.name.toLowerCase()} natal ${n2} — ${expl}.`;
+            body = `Transiting ${n1} ${ASP_ADJ[top.name] || top.name.toLowerCase()} natal ${n2}: ${expl}.`;
           }
           const isPriority = focus !== "all" && sortedCategories.indexOf(cat) === 0;
           return (

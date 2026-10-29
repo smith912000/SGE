@@ -15,9 +15,7 @@ import { HOUSE_INFO, HOUSE_AREA } from './data/astrology/houses.js';
 import { ASPECTS, ASP_EXPLAIN } from "./data/astrology/aspects.js";
 import { ANIMAL_INFO, CN_EL_INFO, POLARITY_INFO } from "./data/astrology/chinese.js";
 
-// Data - Grammatology
 
-// Data - Numerology
 
 // Data - Deep Analysis
 import { moonPhase } from './engines/astronomy.js';
@@ -104,14 +102,7 @@ export default function App() {
   }, []);
   const [res, setRes] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [gemaName, setGemaName] = useState("");
-  const [expandedLetter, setExpandedLetter] = useState(null);
-  const [gramTab, setGramTab] = useState("phonetics");
-  const [gramScriptFilter, setGramScriptFilter] = useState("core");
   const [wheelMode, setWheelMode] = useState("western");
-  const [calDate, setCalDate] = useState({ y: new Date().getFullYear(), m: new Date().getMonth() + 1, d: new Date().getDate() });
-  const [calHolFilter, setCalHolFilter] = useState("all");
-  const [calShowMonth, setCalShowMonth] = useState(false);
 
   useEffect(() => {
     const now = new Date();
@@ -171,9 +162,6 @@ export default function App() {
     gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))",
     gap: 16,
   };
-
-  const [cwInput, setCwInput] = useState("");
-  const [cwResult, setCwResult] = useState(null);
 
   return (
     <div style={{ minHeight: "100vh", color: M3.onSurface, position: "relative", overflowX: "hidden" }}>

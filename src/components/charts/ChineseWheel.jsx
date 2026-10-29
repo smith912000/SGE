@@ -30,14 +30,14 @@ export default function ChineseWheel({ cn, size = 460, onTooltip }) {
   const rYY        = R * 0.24;
 
   const TRIGRAMS = [
-    { name:"☰", label:"Qián",  hanzi:"乾", lines:[1,1,1], meaning:"Heaven / Creative Force", nature:"Pure yang — the origin of all things, unceasing creative power. Qián is the initiator, the father principle, the force that begins all action.", assoc:"Father, sky, strength, the head, NW direction", animals:"Dog, Pig" },
-    { name:"☱", label:"Duì",   hanzi:"兌", lines:[1,1,0], meaning:"Lake / Joyfulness", nature:"Openness above, strength below — joy that comes from inner confidence. Duì represents speech, pleasure, and the youngest daughter's playful wisdom.", assoc:"Youngest daughter, mouth, autumn, the west", animals:"Rooster" },
-    { name:"☲", label:"Lí",    hanzi:"離", lines:[1,0,1], meaning:"Fire / Clarity", nature:"Brightness clinging to what it illuminates — awareness that depends on what it perceives. Lí is intelligence, beauty, and the flame of consciousness.", assoc:"Middle daughter, eyes, summer, the south", animals:"Horse" },
-    { name:"☳", label:"Zhèn",  hanzi:"震", lines:[1,0,0], meaning:"Thunder / Arousing", nature:"Sudden movement from stillness — the shock that initiates change. Zhèn is the eldest son's decisive first step, the crack of new beginnings.", assoc:"Eldest son, feet, spring, the east", animals:"Rabbit" },
-    { name:"☴", label:"Xùn",   hanzi:"巽", lines:[0,1,1], meaning:"Wind / Gentle Penetrating", nature:"Gentle persistence that enters everywhere — influence through subtlety rather than force. Xùn is the eldest daughter's patient wisdom.", assoc:"Eldest daughter, thighs, early summer, the SE", animals:"Dragon, Snake" },
-    { name:"☵", label:"Kǎn",   hanzi:"坎", lines:[0,1,0], meaning:"Water / The Abyss", nature:"Danger and depth — yang truth hidden within yin darkness. Kǎn is the middle son's courage to enter the unknown and find meaning in the deep.", assoc:"Middle son, ears, winter, the north", animals:"Rat" },
-    { name:"☶", label:"Gèn",   hanzi:"艮", lines:[0,0,1], meaning:"Mountain / Stillness", nature:"Keeping still — knowing when to stop is the beginning of wisdom. Gèn is the youngest son's gift of meditation and grounded presence.", assoc:"Youngest son, hands, early spring, the NE", animals:"Ox, Tiger" },
-    { name:"☷", label:"Kūn",   hanzi:"坤", lines:[0,0,0], meaning:"Earth / Receptive", nature:"Pure yin — the power that receives, nurtures, and brings all things to completion. Kūn is the mother principle, the ground from which everything grows.", assoc:"Mother, belly, late summer, the SW", animals:"Goat, Monkey" },
+    { name:"☰", label:"Qián",  hanzi:"乾", lines:[1,1,1], meaning:"Heaven / Creative Force", nature:"Pure yang: the origin of all things, unceasing creative power. Qián is the initiator, the father principle, the force that begins all action.", assoc:"Father, sky, strength, the head, NW direction", animals:"Dog, Pig" },
+    { name:"☱", label:"Duì",   hanzi:"兌", lines:[1,1,0], meaning:"Lake / Joyfulness", nature:"Openness above, strength below, joy that comes from inner confidence. Duì represents speech, pleasure, and the youngest daughter's playful wisdom.", assoc:"Youngest daughter, mouth, autumn, the west", animals:"Rooster" },
+    { name:"☲", label:"Lí",    hanzi:"離", lines:[1,0,1], meaning:"Fire / Clarity", nature:"Brightness clinging to what it illuminates, awareness that depends on what it perceives. Lí is intelligence, beauty, and the flame of consciousness.", assoc:"Middle daughter, eyes, summer, the south", animals:"Horse" },
+    { name:"☳", label:"Zhèn",  hanzi:"震", lines:[1,0,0], meaning:"Thunder / Arousing", nature:"Sudden movement from stillness: the shock that initiates change. Zhèn is the eldest son's decisive first step, the crack of new beginnings.", assoc:"Eldest son, feet, spring, the east", animals:"Rabbit" },
+    { name:"☴", label:"Xùn",   hanzi:"巽", lines:[0,1,1], meaning:"Wind / Gentle Penetrating", nature:"Gentle persistence that enters everywhere: influence through subtlety rather than force. Xùn is the eldest daughter's patient wisdom.", assoc:"Eldest daughter, thighs, early summer, the SE", animals:"Dragon, Snake" },
+    { name:"☵", label:"Kǎn",   hanzi:"坎", lines:[0,1,0], meaning:"Water / The Abyss", nature:"Danger and depth: yang truth hidden within yin darkness. Kǎn is the middle son's courage to enter the unknown and find meaning in the deep.", assoc:"Middle son, ears, winter, the north", animals:"Rat" },
+    { name:"☶", label:"Gèn",   hanzi:"艮", lines:[0,0,1], meaning:"Mountain / Stillness", nature:"Keeping still: knowing when to stop is the beginning of wisdom. Gèn is the youngest son's gift of meditation and grounded presence.", assoc:"Youngest son, hands, early spring, the NE", animals:"Ox, Tiger" },
+    { name:"☷", label:"Kūn",   hanzi:"坤", lines:[0,0,0], meaning:"Earth / Receptive", nature:"Pure yin: the power that receives, nurtures, and brings all things to completion. Kūn is the mother principle, the ground from which everything grows.", assoc:"Mother, belly, late summer, the SW", animals:"Goat, Monkey" },
   ];
 
   const CN_EL_LIST = ["Wood","Fire","Earth","Metal","Water"];
@@ -118,9 +118,9 @@ export default function ChineseWheel({ cn, size = 460, onTooltip }) {
         const ai = ANIMAL_INFO[animal]||{};
         const triName = TRIGRAMS[ANIMAL_TRIGRAM[i]]?.label || "";
         const tipInfo = {
-          title:`${ai.emoji||ANIMAL_SYMS[i]} ${animal} — ${BRANCHES[i]}`,
+          title:`${ai.emoji||ANIMAL_SYMS[i]} ${animal}: ${BRANCHES[i]}`,
           emoji:ai.emoji||ANIMAL_SYMS[i],
-          plain:`${ai.archetype ? `"${ai.archetype}" — ` : ""}${ai.desc || ""}\n\nHours: ${ANIMAL_HOURS[i]}\nDirection: ${ANIMAL_DIRECTION[i]}\nSeason: ${ANIMAL_SEASON[i]}\nFixed Element: ${ANIMAL_EL[i]}\nTrigram: ${TRIGRAMS[ANIMAL_TRIGRAM[i]]?.name} ${triName} (${TRIGRAMS[ANIMAL_TRIGRAM[i]]?.meaning})`,
+          plain:`${ai.archetype ? `"${ai.archetype}": ` : ""}${ai.desc || ""}\n\nHours: ${ANIMAL_HOURS[i]}\nDirection: ${ANIMAL_DIRECTION[i]}\nSeason: ${ANIMAL_SEASON[i]}\nFixed Element: ${ANIMAL_EL[i]}\nTrigram: ${TRIGRAMS[ANIMAL_TRIGRAM[i]]?.name} ${triName} (${TRIGRAMS[ANIMAL_TRIGRAM[i]]?.meaning})`,
           tags:[ai.trait||"", ANIMAL_HOURS[i], ANIMAL_DIRECTION[i], ANIMAL_EL[i], `${TRIGRAMS[ANIMAL_TRIGRAM[i]]?.name} ${triName}`, isActive?"★ THIS CHART'S BRANCH":""],
         };
         return (
@@ -162,7 +162,7 @@ export default function ChineseWheel({ cn, size = 460, onTooltip }) {
         const col = CN_EL_COL_MAP[el];
         const elInfo = CN_EL_INFO[el]||{};
         const tipInfo = {
-          title:`${el} Element — 五行 (Wǔ Xíng)`,
+          title:`${el} Element: 五行 (Wǔ Xíng)`,
           emoji: el==="Wood"?"木":el==="Fire"?"火":el==="Earth"?"土":el==="Metal"?"金":"水",
           plain: elInfo.desc || "",
           tags:[elInfo.trait||"", isActive?"★ THIS CHART'S ELEMENT":"", `Creates: ${CN_EL_LIST[(i+1)%5]}`, `Controls: ${CN_EL_LIST[(i+2)%5]}`],
@@ -190,7 +190,7 @@ export default function ChineseWheel({ cn, size = 460, onTooltip }) {
         const [hx,hy] = pt(rLabelOuter, aMid);
         const [lx,ly] = pt(rLabelInner, aMid);
         const tipInfo = {
-          title:`${tri.name} ${tri.hanzi} ${tri.label} — ${tri.meaning}`,
+          title:`${tri.name} ${tri.hanzi} ${tri.label}: ${tri.meaning}`,
           emoji:tri.name,
           plain:`${tri.nature}\n\nAssociated animals: ${tri.animals}\nAssociations: ${tri.assoc}${isActive ? "\n\n★ The trigram this scheme assigns to the branch animal of this chart ("+cn.animal+")." : ""}`,
           tags:[tri.meaning.split("/")[0]?.trim(), tri.label, tri.hanzi, tri.animals, isActive?"★ THIS CHART'S TRIGRAM":""],
@@ -232,9 +232,9 @@ export default function ChineseWheel({ cn, size = 460, onTooltip }) {
 
       <g style={{cursor:"pointer"}}
         onMouseMove={e=>showTip(e,{
-          title:"☯ Tàijí — The Supreme Ultimate",
+          title:"☯ Tàijí: The Supreme Ultimate",
           emoji:"☯",
-          plain:`The Taijitu represents the fundamental duality underlying all of existence. Yang (white) and Yin (black) are not opposites but complementary forces — each contains the seed of the other.\n\nYour year is ${cn.polarity}: ${cn.polarity==="Yang" ? "outward, assertive, initiating energy" : "inward, receptive, completing energy"}.\n\nYour trigram is ${TRIGRAMS[activeTrigramIdx]?.name} ${TRIGRAMS[activeTrigramIdx]?.hanzi} ${TRIGRAMS[activeTrigramIdx]?.label} — ${TRIGRAMS[activeTrigramIdx]?.meaning}.`,
+          plain:`The Taijitu represents the fundamental duality underlying all of existence. Yang (white) and Yin (black) are not opposites but complementary forces, each contains the seed of the other.\n\nYour year is ${cn.polarity}: ${cn.polarity==="Yang" ? "outward, assertive, initiating energy" : "inward, receptive, completing energy"}.\n\nYour trigram is ${TRIGRAMS[activeTrigramIdx]?.name} ${TRIGRAMS[activeTrigramIdx]?.hanzi} ${TRIGRAMS[activeTrigramIdx]?.label}: ${TRIGRAMS[activeTrigramIdx]?.meaning}.`,
           tags:[cn.polarity, cn.polarity==="Yang"?"Active":"Receptive", TRIGRAMS[activeTrigramIdx]?.label||"", "Duality"],
         })}
         onMouseLeave={hideTip}>

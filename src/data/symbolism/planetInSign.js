@@ -143,7 +143,7 @@ export const PLANET_IN_SIGN = {
     Cancer: {
       plain: "The Moon stands in its own house.",
       reading: "Cancer is the Moon's single domicile, the counterpart to the Sun's single rulership of Leo. The tidal body is read here at full strength in its own terms.",
-      principle: "Domicile grants a body the use of its own nature without translation, so the functions the tradition assigned the Moon — nourishment, memory, the body, the immediate surround — operate here without borrowing. Jupiter's exaltation at fifteen Cancer gives the sign a second strong classical claim.",
+      principle: "Domicile grants a body the use of its own nature without translation, so the functions the tradition assigned the Moon, nourishment, memory, the body, the immediate surround, operate here without borrowing. Jupiter's exaltation at fifteen Cancer gives the sign a second strong classical claim.",
       energies: ["tide", "enclosure", "the remembered"],
     },
     Leo: {
@@ -173,7 +173,7 @@ export const PLANET_IN_SIGN = {
     Sagittarius: {
       plain: "The Moon stands in mutable fire, the day sign of Jupiter.",
       reading: "Reception that keeps moving: the lunar function attached to journey and to meaning rather than to place. No dignity applies.",
-      principle: "Five signs hold no exaltation in the standard tables — Gemini, Leo, Scorpio, Sagittarius and Aquarius — and Sagittarius is one of them, so Jupiter's rulership is the only essential testimony the sign supplies. Where the sign is thin, the condition of the ruler carries the reading.",
+      principle: "Five signs hold no exaltation in the standard tables, Gemini, Leo, Scorpio, Sagittarius and Aquarius, and Sagittarius is one of them, so Jupiter's rulership is the only essential testimony the sign supplies. Where the sign is thin, the condition of the ruler carries the reading.",
     },
     Capricorn: {
       plain: "The Moon stands in cardinal earth, in a sign of Saturn, opposite its own domicile.",
@@ -189,7 +189,7 @@ export const PLANET_IN_SIGN = {
     Pisces: {
       plain: "The Moon stands in mutable water, Jupiter's night sign and the sign of Venus's exaltation.",
       reading: "Water in water: the lunar function without a containing edge, which the older writers connect to sleep, dream and the porous boundary. No dignity applies to the Moon here.",
-      principle: "Pisces holds Venus's exaltation at twenty-seven degrees and Mercury's fall, which makes it a sign favouring the relational faculty over the analytic one in the classical scheme. The Moon's own condition — phase, speed and distance from the Sun — was weighed alongside the sign.",
+      principle: "Pisces holds Venus's exaltation at twenty-seven degrees and Mercury's fall, which makes it a sign favouring the relational faculty over the analytic one in the classical scheme. The Moon's own condition, phase, speed and distance from the Sun, was weighed alongside the sign.",
       prompts: ["What phase was the Moon at, and does this practice weigh phase alongside sign?"],
     },
   },
@@ -411,7 +411,7 @@ export const PLANET_IN_SIGN = {
     Aquarius: {
       plain: "Mars stands in fixed air, in Saturn's other sign.",
       reading: "Force in fixed air: action taken on behalf of a principle or a group rather than a person. No dignity applies.",
-      principle: "Both Saturnian signs receive Mars, but not on the same terms — Capricorn exalts it and Aquarius grants it nothing. That two signs of one ruler treat a single planet so differently is an argument for reading the sign alongside its rulership rather than only through it.",
+      principle: "Both Saturnian signs receive Mars, but not on the same terms, Capricorn exalts it and Aquarius grants it nothing. That two signs of one ruler treat a single planet so differently is an argument for reading the sign alongside its rulership rather than only through it.",
     },
     Pisces: {
       plain: "Mars stands in mutable water, Jupiter's night sign and the sign of Venus's exaltation.",

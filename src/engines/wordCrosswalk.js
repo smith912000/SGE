@@ -105,7 +105,7 @@ export function analyzeWord(text) {
   }
   if (gematria.total) {
     narrative += `Gematria ${gematria.total} reduces to ${gematria.reduced}`;
-    if (gematria.planetRes) narrative += ` — the number of ${gematria.planetRes}`;
+    if (gematria.planetRes) narrative += `: the number of ${gematria.planetRes}`;
     narrative += '.';
   }
 

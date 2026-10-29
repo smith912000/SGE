@@ -16,30 +16,30 @@ function transliterateToHebrew(text) {
   ];
 
   const SINGLE = {
-    A:{ heb:"א", name:"Aleph", val:1,   note:"A → Aleph (א) — glottal stop / silent carrier", isVowel:true },
+    A:{ heb:"א", name:"Aleph", val:1,   note:"A → Aleph (א): glottal stop / silent carrier", isVowel:true },
     B:{ heb:"ב", name:"Bet",   val:2,   note:"B → Bet (ב)" },
-    C:{ heb:"כ", name:"Kaph",  val:20,  note:"C → Kaph (כ) — hard C sound", altNote:"C before E/I could also be Samekh (ס)" },
+    C:{ heb:"כ", name:"Kaph",  val:20,  note:"C → Kaph (כ): hard C sound", altNote:"C before E/I could also be Samekh (ס)" },
     D:{ heb:"ד", name:"Dalet", val:4,   note:"D → Dalet (ד)" },
-    E:{ heb:"ה", name:"He",    val:5,   note:"E → He (ה) — breath/aspiration", isVowel:true },
-    F:{ heb:"פ", name:"Pe",    val:80,  note:"F → Pe (פ) — soft pronunciation" },
+    E:{ heb:"ה", name:"He",    val:5,   note:"E → He (ה): breath/aspiration", isVowel:true },
+    F:{ heb:"פ", name:"Pe",    val:80,  note:"F → Pe (פ): soft pronunciation" },
     G:{ heb:"ג", name:"Gimel", val:3,   note:"G → Gimel (ג)" },
     H:{ heb:"ה", name:"He",    val:5,   note:"H → He (ה)" },
-    I:{ heb:"י", name:"Yod",   val:10,  note:"I → Yod (י) — smallest letter, creative spark", isVowel:true },
-    J:{ heb:"י", name:"Yod",   val:10,  note:"J → Yod (י) — J evolved from I/Yod" },
+    I:{ heb:"י", name:"Yod",   val:10,  note:"I → Yod (י): smallest letter, creative spark", isVowel:true },
+    J:{ heb:"י", name:"Yod",   val:10,  note:"J → Yod (י): J evolved from I/Yod" },
     K:{ heb:"כ", name:"Kaph",  val:20,  note:"K → Kaph (כ)" },
     L:{ heb:"ל", name:"Lamed", val:30,  note:"L → Lamed (ל)" },
     M:{ heb:"מ", name:"Mem",   val:40,  note:"M → Mem (מ)" },
     N:{ heb:"נ", name:"Nun",   val:50,  note:"N → Nun (נ)" },
-    O:{ heb:"ו", name:"Vav",   val:6,   note:"O → Vav (ו) — vowel marker for O/U sounds", isVowel:true, altHeb:"ע", altName:"Ayin", altVal:70, altNote:"O can also map to Ayin (ע) when representing the guttural sound" },
+    O:{ heb:"ו", name:"Vav",   val:6,   note:"O → Vav (ו): vowel marker for O/U sounds", isVowel:true, altHeb:"ע", altName:"Ayin", altVal:70, altNote:"O can also map to Ayin (ע) when representing the guttural sound" },
     P:{ heb:"פ", name:"Pe",    val:80,  note:"P → Pe (פ)" },
     Q:{ heb:"ק", name:"Qoph",  val:100, note:"Q → Qoph (ק)" },
     R:{ heb:"ר", name:"Resh",  val:200, note:"R → Resh (ר)" },
-    S:{ heb:"ש", name:"Shin",  val:300, note:"S → Shin (ש) — the most common S-sound letter in Hebrew names", altHeb:"ס", altName:"Samekh", altVal:60, altNote:"S can also map to Samekh (ס) — a softer S used in loanwords" },
+    S:{ heb:"ש", name:"Shin",  val:300, note:"S → Shin (ש): the most common S-sound letter in Hebrew names", altHeb:"ס", altName:"Samekh", altVal:60, altNote:"S can also map to Samekh (ס), a softer S used in loanwords" },
     T:{ heb:"ת", name:"Tav",   val:400, note:"T → Tav (ת)" },
-    U:{ heb:"ו", name:"Vav",   val:6,   note:"U → Vav (ו) — the hook/connector", isVowel:true },
+    U:{ heb:"ו", name:"Vav",   val:6,   note:"U → Vav (ו): the hook/connector", isVowel:true },
     V:{ heb:"ו", name:"Vav",   val:6,   note:"V → Vav (ו)" },
-    W:{ heb:"ו", name:"Vav",   val:6,   note:"W → Vav (ו) — double-V, from Vav" },
-    X:{ heb:"כס",name:"Kaph+Samekh", val:80, note:"X → Kaph (כ) + Samekh (ס) — /ks/ sound", multi:true, parts:[{heb:"כ",name:"Kaph",val:20},{heb:"ס",name:"Samekh",val:60}] },
+    W:{ heb:"ו", name:"Vav",   val:6,   note:"W → Vav (ו): double-V, from Vav" },
+    X:{ heb:"כס",name:"Kaph+Samekh", val:80, note:"X → Kaph (כ) + Samekh (ס), /ks/ sound", multi:true, parts:[{heb:"כ",name:"Kaph",val:20},{heb:"ס",name:"Samekh",val:60}] },
     Y:{ heb:"י", name:"Yod",   val:10,  note:"Y → Yod (י)" },
     Z:{ heb:"ז", name:"Zayin", val:7,   note:"Z → Zayin (ז)" },
   };
@@ -78,7 +78,7 @@ function transliterateToHebrew(text) {
                 alt:s.altHeb ? { heb:s.altHeb, name:s.altName, val:s.altVal, note:s.altNote } : null });
               if (s.altNote && s.altHeb) notes.push(s.altNote);
             } else {
-              wordLetters.push({ chars:ch, heb:s.heb, name:s.name, val:s.val, note:s.note + " (medial vowel — often silent in Hebrew, included at reduced weight)",
+              wordLetters.push({ chars:ch, heb:s.heb, name:s.name, val:s.val, note:s.note + " (medial vowel: often silent in Hebrew, included at reduced weight)",
                 isVowelDrop:true,
                 alt:s.altHeb ? { heb:s.altHeb, name:s.altName, val:s.altVal, note:s.altNote } : null });
             }

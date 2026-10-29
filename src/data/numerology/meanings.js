@@ -13,19 +13,21 @@ import { terse } from '../symbolism/terse.js';
 
 const NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22, 33];
 
+// Title: the Pythagorean name of the number. Archetype: the label modern
+// numerology gives it, named as such so the two lineages stay distinct.
 const TITLES = {
-  1:  { title: "The Leader",         archetype: "Pioneer / Initiator" },
-  2:  { title: "The Diplomat",       archetype: "Peacemaker / Partner" },
-  3:  { title: "The Communicator",   archetype: "Artist / Expresser" },
-  4:  { title: "The Builder",        archetype: "Worker / Foundation" },
-  5:  { title: "The Seeker",         archetype: "Traveller / Changer" },
-  6:  { title: "The Nurturer",       archetype: "Carer / Harmoniser" },
-  7:  { title: "The Analyst",        archetype: "Mystic / Investigator" },
-  8:  { title: "The Executive",      archetype: "Steward / Power" },
-  9:  { title: "The Humanitarian",   archetype: "Completer / Giver" },
-  11: { title: "The Illuminator",    archetype: "Master number — visionary" },
-  22: { title: "The Master Builder", archetype: "Master number — architect" },
-  33: { title: "The Teacher",        archetype: "Master number — carer" },
+  1:  { title: "The Monad",   archetype: "Modern numerology: the Leader" },
+  2:  { title: "The Dyad",    archetype: "Modern numerology: the Diplomat" },
+  3:  { title: "The Triad",   archetype: "Modern numerology: the Communicator" },
+  4:  { title: "The Tetrad",  archetype: "Modern numerology: the Builder" },
+  5:  { title: "The Pentad",  archetype: "Modern numerology: the Seeker" },
+  6:  { title: "The Hexad",   archetype: "Modern numerology: the Nurturer" },
+  7:  { title: "The Heptad",  archetype: "Modern numerology: the Analyst" },
+  8:  { title: "The Ogdoad",  archetype: "Modern numerology: the Executive" },
+  9:  { title: "The Ennead",  archetype: "Modern numerology: the Humanitarian" },
+  11: { title: "Master number 11", archetype: "Modern numerology: the Illuminator" },
+  22: { title: "Master number 22", archetype: "Modern numerology: the Master Builder" },
+  33: { title: "Master number 33", archetype: "Modern numerology: the Teacher" },
 };
 
 export const LIFE_PATH_MEANING = Object.fromEntries(

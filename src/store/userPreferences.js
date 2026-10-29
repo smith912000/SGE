@@ -1,14 +1,18 @@
+// Transit groupings by the transiting or natal body, in the classes a
+// practitioner already uses: the lights, the personal, social and outer planets.
 export const FOCUS_OPTIONS = [
-  { id: "all", label: "✦ All Themes", desc: "Show every life area equally" },
-  { id: "love", label: "♡ Love & Relationships", desc: "Heart, connection, partnership" },
-  { id: "career", label: "⊕ Career & Purpose", desc: "Goals, money, achievement" },
-  { id: "spiritual", label: "☽ Spiritual Growth", desc: "Inner life, soul, transformation" },
-  { id: "body", label: "◎ Body & Energy", desc: "Vitality, mood, physical rhythms" },
+  { id: "all", label: "All bodies", desc: "Every class in its usual order" },
+  { id: "lights", label: "Lights", desc: "Sun and Moon" },
+  { id: "personal", label: "Personal planets", desc: "Mercury, Venus, Mars" },
+  { id: "social", label: "Social planets", desc: "Jupiter, Saturn" },
+  { id: "outer", label: "Outer planets", desc: "Uranus, Neptune, Pluto" },
 ];
+const FOCUS_IDS = FOCUS_OPTIONS.map((o) => o.id);
 
 export function getPreferenceFocus() {
   try {
-    return localStorage.getItem("sge_focus") || "all";
+    const v = localStorage.getItem("sge_focus");
+    return FOCUS_IDS.includes(v) ? v : "all";
   } catch {
     return "all";
   }

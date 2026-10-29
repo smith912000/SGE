@@ -56,7 +56,7 @@ export default function ChineseTab({ ctx }) {
       {cnSubTab==="overview" && (<>
         <Card style={{ background:`linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor:M3.outline }}>
           <div style={{ fontFamily:"'Cormorant Garamond', Georgia, serif", fontSize:"1rem", color:M3.primary, marginBottom:4 }}>
-            {CHINESE_ASTRO_INTRO?.titleEn || "Chinese Astrology — The Sexagenary Cycle"}
+            {CHINESE_ASTRO_INTRO?.titleEn || "Chinese Astrology: The Sexagenary Cycle"}
           </div>
           {CHINESE_ASTRO_INTRO?.titleZh && (
             <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, marginBottom:8 }}>
@@ -77,7 +77,7 @@ export default function ChineseTab({ ctx }) {
         </Card>
 
         {/* Year summary card */}
-        <Card title={`☯ Year of the ${res.cn.animal} — ${res.cn.element} ${res.cn.polarity}`}>
+        <Card title={`☯ Year of the ${res.cn.animal}: ${res.cn.element} ${res.cn.polarity}`}>
           <div style={{ textAlign:"center", marginBottom:16 }}>
             <div style={{ fontSize:"4rem", lineHeight:1 }}>{ai.emoji||"☯"}</div>
             <div style={{ fontSize:"2.4rem", color:M3.primary, marginTop:4 }}>{res.cn.stem}{res.cn.branch}</div>
@@ -106,7 +106,7 @@ export default function ChineseTab({ ctx }) {
             </div>
             {res.cn.effectiveYear && res.cn.effectiveYear !== A.year && (
               <div style={{ color:M3.tertiary, fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", fontStyle:"italic", marginTop:6 }}>
-                Note: the sexagenary year turns at the lunar new year — in some reckonings at the solar term Lìchūn, around 4 February — and not on 1 January. This date falls before that boundary, so the sexagenary year read here is {res.cn.effectiveYear} rather than the Gregorian {A.year}.
+                Note: the sexagenary year turns at the lunar new year, in some reckonings at the solar term Lìchūn, around 4 February, and not on 1 January. This date falls before that boundary, so the sexagenary year read here is {res.cn.effectiveYear} rather than the Gregorian {A.year}.
               </div>
             )}
           </div>
@@ -120,7 +120,7 @@ export default function ChineseTab({ ctx }) {
         </Card>
 
         {/* Animal archetype card */}
-        <Card title={`${ai.emoji} The ${res.cn.animal} — "${ai.archetype}"`}>
+        <Card title={`${ai.emoji} The ${res.cn.animal}, ${ai.archetype}`}>
           <div style={{ display:"flex", gap:10, flexWrap:"wrap", marginBottom:12 }}>
             {(ai.trait||"").split(", ").map(t=>(
               <span key={t} style={{ padding:"3px 12px", borderRadius:16, background:M3.primaryContainer, color:M3.onPrimaryContainer, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem" }}>{t}</span>
@@ -128,7 +128,7 @@ export default function ChineseTab({ ctx }) {
           </div>
           <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.82rem", lineHeight:1.7, color:M3.onSurface, margin:0 }}>{ai.desc}</p>
           {ai.shadow && (
-            <div style={{ marginTop:12, padding:"10px 14px", borderRadius:10, background:"#ff525211", border:"1px solid #ff525233" }}>
+            <div style={{ marginTop:12, padding:"10px 14px", borderRadius:10, background:"#D0726211", border:"1px solid #D0726233" }}>
               <span style={{ color:"#DDA095", fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", fontWeight:"700" }}>ALSO ATTRIBUTED: </span>
               <span style={{ color:M3.onSurfaceVariant, fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem" }}>{ai.shadow}</span>
             </div>
@@ -137,7 +137,7 @@ export default function ChineseTab({ ctx }) {
 
         {/* Extended profile from corpus */}
         {ext && (
-          <Card title={`Extended Shēngxiào Profile — ${res.cn.animal}`}>
+          <Card title={`Extended Shēngxiào Profile: ${res.cn.animal}`}>
             <div style={{ display:"flex", flexWrap:"wrap", gap:8, marginBottom:12 }}>
               <span style={{ padding:"4px 10px", borderRadius:14, background:M3.surfaceVariant+"55", color:M3.onSurface, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem" }}>
                 {ext.zh} ({ext.pinyin})
@@ -198,7 +198,7 @@ export default function ChineseTab({ ctx }) {
 
         {/* Element + Polarity side-by-side */}
         <div style={grid2}>
-          <Card title={`☯ Element of the Year Stem: ${res.cn.element}`}>
+          <Card title={`Phase of the year stem: ${res.cn.element}`}>
             <div style={{ textAlign:"center", marginBottom:10 }}>
               <div style={{ width:56, height:56, borderRadius:"50%", background:ei.color+"22", border:`2px solid ${ei.color}`, display:"inline-flex", alignItems:"center", justifyContent:"center" }}>
                 <span style={{ color:ei.color, fontFamily:"'JetBrains Mono', monospace", fontSize:"1.4rem", fontWeight:"700" }}>{res.cn.element[0]}</span>
@@ -208,23 +208,19 @@ export default function ChineseTab({ ctx }) {
             <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>{ei.desc}</p>
             {eb && (
               <div style={{ marginTop:14 }}>
-                <div style={{ padding:"10px 14px", borderRadius:10, background:"#69ff8e08", border:"1px solid #69ff8e18", marginBottom:8 }}>
+                <div style={{ padding:"10px 14px", borderRadius:10, background:"#93B89A08", border:"1px solid #93B89A18", marginBottom:8 }}>
                   <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#93B89A", letterSpacing:"0.1em", marginBottom:4 }}>WHEN BALANCED</div>
                   <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{eb.balanced}</p>
                 </div>
-                <div style={{ padding:"10px 14px", borderRadius:10, background:"#ff525208", border:"1px solid #ff525218", marginBottom:8 }}>
+                <div style={{ padding:"10px 14px", borderRadius:10, background:"#D0726208", border:"1px solid #D0726218", marginBottom:8 }}>
                   <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#D98E5F", letterSpacing:"0.1em", marginBottom:4 }}>WHEN OUT OF BALANCE</div>
                   <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{eb.imbalanced}</p>
-                </div>
-                <div style={{ padding:"10px 14px", borderRadius:10, background:ei.color+"08", border:`1px solid ${ei.color}18` }}>
-                  <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:ei.color, letterSpacing:"0.1em", marginBottom:4 }}>HOW TO CULTIVATE HEALTHY {res.cn.element.toUpperCase()}</div>
-                  <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{eb.cultivate}</p>
                 </div>
               </div>
             )}
           </Card>
 
-          <Card title={`${pi.symbol} Energy: ${pi.label}`}>
+          <Card title={`Polarity: ${pi.label}`}>
             <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>{pi.desc}</p>
             <div style={{ marginTop:14, padding:"10px 14px", borderRadius:10, background:M3.surfaceDim }}>
               <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, marginBottom:4 }}>COMBINED READING</div>
@@ -236,10 +232,10 @@ export default function ChineseTab({ ctx }) {
         </div>
 
         {/* Compatibility */}
-        <Card title="♡ Compatibility">
+        <Card title="Branch relations: harmony and clash">
           <div style={grid2}>
             <div>
-              <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#93B89A", letterSpacing:"0.1em", marginBottom:8 }}>BEST ALLIES</div>
+              <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#93B89A", letterSpacing:"0.1em", marginBottom:8 }}>HARMONISED BRANCHES</div>
               {(ai.compat||[]).map(a=>{
                 const inf=ANIMAL_INFO[a]||{};
                 return (
@@ -254,7 +250,7 @@ export default function ChineseTab({ ctx }) {
               })}
             </div>
             <div>
-              <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#D07262", letterSpacing:"0.1em", marginBottom:8 }}>CHALLENGING MATCHES</div>
+              <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#D07262", letterSpacing:"0.1em", marginBottom:8 }}>CLASHING BRANCHES</div>
               {(ai.clash||[]).map(a=>{
                 const inf=ANIMAL_INFO[a]||{};
                 return (
@@ -289,7 +285,7 @@ export default function ChineseTab({ ctx }) {
         )}
 
         {/* 12 Animals Full Cycle */}
-        <Card title="☯ The 12 Animals — Full Cycle">
+        <Card title="☯ The 12 Animals: Full Cycle">
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"2px 14px" }}>
             {Array.from({length:12},(_,i)=>{
               const yr=A.year - ((A.year-1924)%12) + i;
@@ -322,9 +318,9 @@ export default function ChineseTab({ ctx }) {
 
       {/* ═══════════════════ WUXING ═══════════════════ */}
       {cnSubTab==="wuxing" && (<>
-        <Card title="☯ Five Phases (Wǔxíng 五行) — Profiles">
+        <Card title="☯ Five Phases (Wǔxíng 五行): Profiles">
           <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 14px" }}>
-            The Chinese word <em>xíng</em> means &quot;changing states of being&quot; or &quot;metamorphoses&quot; — these are not static building blocks but dynamic transformations.
+            The Chinese word <em>xíng</em> means &quot;changing states of being&quot; or &quot;metamorphoses&quot;, these are not static building blocks but dynamic transformations.
           </p>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))", gap:10 }}>
             {Object.entries(WUXING_PROFILES||{}).map(([name, p])=>{
@@ -368,7 +364,7 @@ export default function ChineseTab({ ctx }) {
           </Card>
         </div>
 
-        <Card title="☯ Five Elements — Element Selector">
+        <Card title="☯ Five Elements: Element Selector">
           <div style={{ display:"flex", flexWrap:"wrap", gap:8, justifyContent:"center" }}>
             {Object.entries(CN_EL_INFO).map(([el,inf])=>{
               const active=res.cn.element===el;
@@ -444,7 +440,7 @@ export default function ChineseTab({ ctx }) {
               <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, marginBottom:6 }}>HOUSE-STYLE SEQUENCE</div>
               {(ZI_WEI_PALACES_SEQUENCES?.houseStyle||[]).map((h,i)=>(
                 <div key={i} style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", color:M3.onSurfaceVariant, lineHeight:1.6 }}>
-                  <strong style={{color:M3.primary}}>{h.house}</strong> {h.hanzi} — {h.title}
+                  <strong style={{color:M3.primary}}>{h.house}</strong> {h.hanzi}: {h.title}
                 </div>
               ))}
             </div>
@@ -456,7 +452,7 @@ export default function ChineseTab({ ctx }) {
             {(ZI_WEI_MAJOR_STARS||[]).map((star)=>(
               <div key={star.id} style={{ padding:"10px 12px", borderRadius:10, border:`1px solid ${M3.outlineVariant}55`, background:M3.surfaceContainer }}>
                 <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.primary, fontWeight:"700" }}>
-                  {star.hanzi} — {star.title}
+                  {star.hanzi}: {star.title}
                 </div>
                 <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, marginTop:2 }}>{star.element}</div>
                 <div style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", color:M3.onSurfaceVariant, lineHeight:1.5, marginTop:6 }}>

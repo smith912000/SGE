@@ -308,3 +308,9 @@ button { font-family: inherit; }
 .sge-manual summary:focus-visible { outline: 2px solid var(--wild-indigo-2); outline-offset: 2px; border-radius: 4px; }
 .sge-check { display: flex; align-items: center; gap: 10px; font-size: .875rem; color: var(--wild-dim); cursor: pointer; }
 .sge-check input { width: 16px; height: 16px; accent-color: var(--wild-gold); }
+
+/* Wheel parts are focusable: show focus as a brighter stroke, not a box. */
+.sw:focus, .hc:focus, .al:focus { outline: none; }
+.sw:focus-visible path { stroke-width: 1.6; }
+.hc:focus-visible text { opacity: 1; }
+.al:focus-visible { stroke-width: 4; opacity: 1; }
