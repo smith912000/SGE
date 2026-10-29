@@ -13,10 +13,10 @@ const ord = (n) => n + (n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th')
 
 // ── Overlays: the rings drawn round the ecliptic ─────────────────────────
 export const OVERLAYS = [
-  { id: 'const', label: 'Constellations', note: 'The star figures on the ecliptic, at their IAU spans. Unequal, and thirteen with Ophiuchus.' },
-  { id: 'sign', label: 'Tropical signs', note: 'Twelve equal 30° signs measured from the vernal equinox.' },
-  { id: 'nak', label: 'Nakshatras', note: 'The 27 lunar mansions of 13°20′, measured in the sidereal zodiac (Lahiri).' },
-  { id: 'branch', label: 'Chinese months', note: 'The twelve earthly branches as solar months, each opening on a jié solar term.' },
+  { id: 'const', label: 'Greek figures', note: 'The 88 IAU constellations; the thirteen on the ecliptic stand out.' },
+  { id: 'sign', label: 'Tropical zodiac', note: 'The ecliptic and the zodiac belt, cut into twelve equal signs from the vernal equinox.' },
+  { id: 'nak', label: 'Nakshatras', note: 'The 27 lunar mansions of 13°20′ in the sidereal zodiac (Lahiri), with the junction star of each.' },
+  { id: 'xiu', label: 'Chinese mansions', note: 'The 28 xiù, the lunar lodges of Chinese astronomy, drawn as their own asterisms.' },
 ];
 
 // ── Planets ──────────────────────────────────────────────────────────────
@@ -64,35 +64,22 @@ const MODES = {
   Mutable:  { essence: 'The waning of a season. Turns.', glyph: '◆' },
 };
 
-// ── Constellations: IAU ecliptic spans (J2000 longitudes) and a schematic
-// figure from the brightest stars, as [longitude, latitude] in degrees.
+// ── Constellations on the ecliptic: IAU spans (J2000 longitudes); the figures
+// themselves come from the star catalogue in data/sky.
 const CONSTELLATIONS = [
-  { id: 'Pisces', latin: 'Pisces', from: 351.6, to: 28.7, sign: 'Pisces', star: 'Alrescha, "the cord"', essence: 'Two fishes tied at the tail by a cord.',
-    stars: [[29.4,-9.1],[25,-4],[20,-1],[14,1],[8,2],[2,4],[357,6],[352,7],[349,9],[351,4],[355,4],[26.8,5.4],[24,11]], lines: [[0,1,2,3,4,5,6,7,8,9,10,7],[0,11,12]] },
-  { id: 'Aries', latin: 'Aries', from: 28.7, to: 53.4, sign: 'Aries', star: 'Hamal, "the lamb"', essence: 'The golden ram whose fleece Jason sought.',
-    stars: [[33.2,7.2],[34.0,8.5],[37.7,10.0],[41.9,10.4]], lines: [[0,1,2,3]] },
-  { id: 'Taurus', latin: 'Taurus', from: 53.4, to: 90.1, sign: 'Taurus', star: 'Aldebaran, "the follower"', essence: 'The bull, with the Pleiades on its shoulder and the Hyades at its face.',
-    stars: [[60.0,4.1],[65.7,-5.7],[66.9,-3.9],[68.5,2.6],[69.8,-5.5],[82.6,5.4],[84.8,-2.2]], lines: [[1,4,6],[1,2,3,5]] },
-  { id: 'Gemini', latin: 'Gemini', from: 90.1, to: 118.0, sign: 'Gemini', star: 'Castor and Pollux', essence: 'The twins, one mortal and one divine.',
-    stars: [[110.2,10.1],[113.2,6.7],[108.5,-0.2],[99.9,2.1],[95.3,-0.8],[93.3,-0.9],[99.1,-6.7]], lines: [[0,3,4,5],[1,2,6],[0,1]] },
-  { id: 'Cancer', latin: 'Cancer', from: 118.0, to: 138.0, sign: 'Cancer', star: 'Praesepe, "the manger"', essence: 'The crab sent against Heracles; the dimmest of the twelve.',
-    stars: [[127.5,3.2],[128.7,0.1],[133.6,-5.1],[124.3,-10.2],[127.2,1.5]], lines: [[0,1,2],[1,3]] },
-  { id: 'Leo', latin: 'Leo', from: 138.0, to: 173.9, sign: 'Leo', star: 'Regulus, "the little king"', essence: 'The Nemean lion, its hide proof against any blade.',
-    stars: [[149.8,0.5],[147.6,4.9],[149.6,8.8],[147.6,11.8],[141.5,12.4],[140.7,9.7],[161.3,14.3],[163.4,9.7],[171.6,12.3]], lines: [[0,1,2,3,4,5],[2,6,8,7,0]] },
-  { id: 'Virgo', latin: 'Virgo', from: 173.9, to: 218.0, sign: 'Virgo', star: 'Spica, "the ear of wheat"', essence: 'The maiden holding the ear of wheat: Astraea, Demeter, Ishtar.',
-    stars: [[176.9,0.7],[184.7,1.4],[190.1,2.8],[191.4,8.6],[189.9,16.2],[203.8,-2.1],[201.3,8.7],[214.0,2.9]], lines: [[0,1,2,5],[2,3,4],[3,6,7]] },
-  { id: 'Libra', latin: 'Libra', from: 218.0, to: 241.0, sign: 'Libra', star: 'Zubenelgenubi, "the southern claw"', essence: 'The scales, once the scorpion\'s claws.',
-    stars: [[225.1,0.3],[229.4,8.5],[235.2,4.4],[220.5,-8.5]], lines: [[3,0,1,2,0]] },
-  { id: 'Scorpius', latin: 'Scorpius', from: 241.0, to: 247.7, sign: 'Scorpio', star: 'Antares, "rival of Mars"', essence: 'The scorpion that killed Orion; they never share the sky.',
-    stars: [[243.2,1.0],[242.6,-2.0],[242.2,-5.5],[249.8,-4.6],[251.7,-6.1],[255.2,-15.0],[256.5,-18.5],[265.6,-19.7],[264.6,-13.8]], lines: [[0,1,2],[1,3,4,5,6,7,8]] },
-  { id: 'Ophiuchus', latin: 'Ophiuchus', from: 247.7, to: 266.3, sign: null, star: 'Rasalhague, "head of the serpent-bearer"', essence: 'The serpent-bearer, Asclepius the healer. On the ecliptic but in no zodiac of signs.',
-    stars: [[262.4,35.8],[265.8,27.9],[257.9,7.2],[249.6,11.4],[242.2,17.3],[253.4,32.5]], lines: [[0,1,2,3,4,5,0]] },
-  { id: 'Sagittarius', latin: 'Sagittarius', from: 266.3, to: 299.7, sign: 'Sagittarius', star: 'Kaus Australis, "southern bow"', essence: 'The archer, a centaur drawing on the heart of the scorpion.',
-    stars: [[271.3,-7.0],[274.6,-6.5],[275.1,-11.1],[276.3,-2.1],[278.6,-3.9],[282.4,-3.4],[285.0,-4.8],[283.6,-7.2]], lines: [[0,1,2,7],[1,3,4,5,6,7],[1,4],[4,7]] },
-  { id: 'Capricornus', latin: 'Capricornus', from: 299.7, to: 327.5, sign: 'Capricorn', star: 'Deneb Algedi, "tail of the goat"', essence: 'The goat-fish: Enki\'s creature, Pan leaping into the Nile.',
-    stars: [[303.8,6.9],[304.1,4.6],[306.0,-5.0],[308.5,-9.0],[318.4,-6.5],[323.5,-2.6],[321.7,-2.3],[313.4,0.6]], lines: [[0,1,2,3,4,5,6,7,0]] },
-  { id: 'Aquarius', latin: 'Aquarius', from: 327.5, to: 351.6, sign: 'Aquarius', star: 'Sadalsuud, "luck of lucks"', essence: 'The water-bearer pouring a stream into the mouth of the southern fish.',
-    stars: [[311.6,8.1],[323.4,8.4],[333.4,10.7],[336.8,8.0],[338.6,8.9],[341.6,-0.4],[339.0,-8.2]], lines: [[0,1,2,3,4],[2,5,6]] },
+  { id: 'Pisces', fig: 'Psc', latin: 'Pisces', from: 351.6, to: 28.7, sign: 'Pisces', star: 'Alrescha, "the cord"', essence: 'Two fishes tied at the tail by a cord.' },
+  { id: 'Aries', fig: 'Ari', latin: 'Aries', from: 28.7, to: 53.4, sign: 'Aries', star: 'Hamal, "the lamb"', essence: 'The golden ram whose fleece Jason sought.' },
+  { id: 'Taurus', fig: 'Tau', latin: 'Taurus', from: 53.4, to: 90.1, sign: 'Taurus', star: 'Aldebaran, "the follower"', essence: 'The bull, with the Pleiades on its shoulder and the Hyades at its face.' },
+  { id: 'Gemini', fig: 'Gem', latin: 'Gemini', from: 90.1, to: 118.0, sign: 'Gemini', star: 'Castor and Pollux', essence: 'The twins, one mortal and one divine.' },
+  { id: 'Cancer', fig: 'Cnc', latin: 'Cancer', from: 118.0, to: 138.0, sign: 'Cancer', star: 'Praesepe, "the manger"', essence: 'The crab sent against Heracles; the dimmest of the twelve.' },
+  { id: 'Leo', fig: 'Leo', latin: 'Leo', from: 138.0, to: 173.9, sign: 'Leo', star: 'Regulus, "the little king"', essence: 'The Nemean lion, its hide proof against any blade.' },
+  { id: 'Virgo', fig: 'Vir', latin: 'Virgo', from: 173.9, to: 218.0, sign: 'Virgo', star: 'Spica, "the ear of wheat"', essence: 'The maiden holding the ear of wheat: Astraea, Demeter, Ishtar.' },
+  { id: 'Libra', fig: 'Lib', latin: 'Libra', from: 218.0, to: 241.0, sign: 'Libra', star: 'Zubenelgenubi, "the southern claw"', essence: 'The scales, once the scorpion\'s claws.' },
+  { id: 'Scorpius', fig: 'Sco', latin: 'Scorpius', from: 241.0, to: 247.7, sign: 'Scorpio', star: 'Antares, "rival of Mars"', essence: 'The scorpion that killed Orion; they never share the sky.' },
+  { id: 'Ophiuchus', fig: 'Oph', latin: 'Ophiuchus', from: 247.7, to: 266.3, sign: null, star: 'Rasalhague, "head of the serpent-bearer"', essence: 'The serpent-bearer, Asclepius the healer. On the ecliptic but in no zodiac of signs.' },
+  { id: 'Sagittarius', fig: 'Sgr', latin: 'Sagittarius', from: 266.3, to: 299.7, sign: 'Sagittarius', star: 'Kaus Australis, "southern bow"', essence: 'The archer, a centaur drawing on the heart of the scorpion.' },
+  { id: 'Capricornus', fig: 'Cap', latin: 'Capricornus', from: 299.7, to: 327.5, sign: 'Capricorn', star: 'Deneb Algedi, "tail of the goat"', essence: 'The goat-fish: Enki\'s creature, Pan leaping into the Nile.' },
+  { id: 'Aquarius', fig: 'Aqr', latin: 'Aquarius', from: 327.5, to: 351.6, sign: 'Aquarius', star: 'Sadalsuud, "luck of lucks"', essence: 'The water-bearer pouring a stream into the mouth of the southern fish.' },
 ];
 
 // ── Chinese phases (Wuxing) ─────────────────────────────────────────────
@@ -159,7 +146,7 @@ SIGNS.forEach((s, i) => {
 });
 for (const [el, e] of Object.entries(ELEMENTS)) add(`el:${el}`, { kind: 'element', kindLabel: 'Element', name: el, glyph: { Fire: '△', Earth: '▽\u0336', Air: '△\u0336', Water: '▽' }[el], colour: ELEMENT_HUE[el], essence: e.essence, attrs: [] });
 for (const [m, e] of Object.entries(MODES)) add(`mode:${m}`, { kind: 'mode', kindLabel: 'Mode', name: m, glyph: e.glyph, colour: '#C9C4D4', essence: e.essence, attrs: [] });
-for (const c of CONSTELLATIONS) add(`const:${c.id}`, { kind: 'const', kindLabel: 'Constellation', name: c.latin, glyph: '✦', colour: '#EADFC4', essence: c.essence, start: c.from, end: c.to, stars: c.stars, lines: c.lines,
+for (const c of CONSTELLATIONS) add(`const:${c.id}`, { kind: 'const', kindLabel: 'Constellation', name: c.latin, glyph: '✦', colour: '#EADFC4', essence: c.essence, start: c.from, end: c.to, fig: c.fig,
   attrs: [['Ecliptic span', `${c.from}° to ${c.to}° (${Math.round((c.to - c.from + 360) % 360)}°)`], ['Brightest', c.star]] });
 NAKSHATRA_INFO.forEach((n, i) => {
   const lord = n.lord;
@@ -231,9 +218,60 @@ link('asp:Opposition', 'asp:Conjunction', 'Its counterpart', 'Its counterpart');
 link('asp:Square', 'asp:Semisquare', 'Halved', 'Doubled'); link('asp:Square', 'asp:Sesquiquadrate', 'Half again', 'Two thirds');
 link('asp:Trine', 'asp:Sextile', 'Halved', 'Doubled');
 
+// ── The 28 Chinese mansions (xiù) and the four symbols that hold them ────
+export const FOUR_SYMBOLS = {
+  'Azure Dragon':   { hanzi: '青龍', direction: 'East', season: 'Spring', phase: 'Wood', essence: 'The dragon of the east, rising with spring.', colour: '#93B89A' },
+  'Black Tortoise': { hanzi: '玄武', direction: 'North', season: 'Winter', phase: 'Water', essence: 'The tortoise and serpent of the north, the winter dark.', colour: '#7FA8C9' },
+  'White Tiger':    { hanzi: '白虎', direction: 'West', season: 'Autumn', phase: 'Metal', essence: 'The tiger of the west, the autumn cut.', colour: '#C9C4D4' },
+  'Vermilion Bird': { hanzi: '朱雀', direction: 'South', season: 'Summer', phase: 'Fire', essence: 'The bird of the south, summer heat on the wing.', colour: '#D07262' },
+};
+export const XIU = [
+  ['角宿', '角', 'Jiǎo', 'Horn', 'Azure Dragon', 'The dragon\'s horn; the opening of the eastern sky.'],
+  ['亢宿', '亢', 'Kàng', 'Neck', 'Azure Dragon', 'The dragon\'s neck; the stiff and upright.'],
+  ['氐宿', '氐', 'Dǐ', 'Root', 'Azure Dragon', 'The root on which the dragon stands.'],
+  ['房宿', '房', 'Fáng', 'Room', 'Azure Dragon', 'The chamber; the four horses of the sky.'],
+  ['心宿', '心', 'Xīn', 'Heart', 'Azure Dragon', 'The heart, with Antares, the Great Fire.'],
+  ['尾宿', '尾', 'Wěi', 'Tail', 'Azure Dragon', 'The dragon\'s tail; the nine sons.'],
+  ['箕宿', '箕', 'Jī', 'Winnowing Basket', 'Azure Dragon', 'The basket that stirs the wind.'],
+  ['斗宿', '斗', 'Dǒu', 'Dipper', 'Black Tortoise', 'The southern dipper, keeper of the span of life.'],
+  ['牛宿', '牛', 'Niú', 'Ox', 'Black Tortoise', 'The ox led by the herd boy.'],
+  ['女宿', '女', 'Nǚ', 'Girl', 'Black Tortoise', 'The girl; the weaver\'s attendants.'],
+  ['虚宿', '虛', 'Xū', 'Emptiness', 'Black Tortoise', 'The void at the heart of winter.'],
+  ['危宿', '危', 'Wēi', 'Rooftop', 'Black Tortoise', 'The rooftop; height and peril.'],
+  ['室宿', '室', 'Shì', 'Encampment', 'Black Tortoise', 'The dwelling raised before winter.'],
+  ['壁宿', '壁', 'Bì', 'Wall', 'Black Tortoise', 'The wall; the library of heaven.'],
+  ['奎宿', '奎', 'Kuí', 'Legs', 'White Tiger', 'The striding legs; patron of letters.'],
+  ['娄宿', '婁', 'Lóu', 'Bond', 'White Tiger', 'The tether of the herds.'],
+  ['胃宿', '胃', 'Wèi', 'Stomach', 'White Tiger', 'The granary of heaven.'],
+  ['昴宿', '昴', 'Mǎo', 'Hairy Head', 'White Tiger', 'The Pleiades; the tiger\'s mane.'],
+  ['毕宿', '畢', 'Bì', 'Net', 'White Tiger', 'The hunting net, the Hyades; rain.'],
+  ['觜宿', '觜', 'Zī', 'Turtle Beak', 'White Tiger', 'The beak; the smallest of the lodges.'],
+  ['参宿', '參', 'Shēn', 'Three Stars', 'White Tiger', 'Orion\'s belt; the warrior, the tiger\'s body.'],
+  ['井宿', '井', 'Jǐng', 'Well', 'Vermilion Bird', 'The well; water and law.'],
+  ['鬼宿', '鬼', 'Guǐ', 'Ghost', 'Vermilion Bird', 'The ghosts, round the hazy cluster of the dead.'],
+  ['柳宿', '柳', 'Liǔ', 'Willow', 'Vermilion Bird', 'The willow; the bird\'s beak.'],
+  ['星宿', '星', 'Xīng', 'Star', 'Vermilion Bird', 'The bird\'s neck, with Alphard.'],
+  ['张宿', '張', 'Zhāng', 'Extended Net', 'Vermilion Bird', 'The spread wings; the crop.'],
+  ['翼宿', '翼', 'Yì', 'Wings', 'Vermilion Bird', 'The wings; music and travel.'],
+  ['轸宿', '軫', 'Zhěn', 'Chariot', 'Vermilion Bird', 'The chariot; death and burial.'],
+];
+for (const [name, p] of Object.entries(FOUR_SYMBOLS)) {
+  add(`sym:${name}`, { kind: 'sym', kindLabel: 'Chinese symbol of a quarter', name, glyph: p.hanzi, colour: p.colour, essence: p.essence, attrs: [['Direction', p.direction], ['Season', p.season]] });
+  link(`sym:${name}`, `phase:${p.phase}`, 'Its phase', 'Symbol of the quarter');
+}
+XIU.forEach(([key, han, pin, en, sym], i) => {
+  const id = `xiu:${en}`;
+  add(id, { kind: 'xiu', kindLabel: `Chinese mansion ${i + 1}`, name: en, glyph: han, colour: FOUR_SYMBOLS[sym].colour, essence: XIU[i][5], key,
+    attrs: [['Name', `${han}宿 ${pin}`], ['Quarter', `${sym} ${FOUR_SYMBOLS[sym].hanzi}`]] });
+  link(id, `sym:${sym}`, 'Its quarter', 'Mansion of the quarter');
+});
+// Where a Chinese and an Indian mansion are drawn round the same stars.
+[['Hairy Head', 'Krittika'], ['Net', 'Rohini'], ['Three Stars', 'Ardra'], ['Ghost', 'Pushya'], ['Heart', 'Jyeshtha'], ['Room', 'Anuradha'], ['Tail', 'Mula'], ['Horn', 'Chitra'], ['Wall', 'Uttara Bhadrapada'], ['Encampment', 'Purva Bhadrapada'], ['Dipper', 'Uttara Ashadha'], ['Winnowing Basket', 'Purva Ashadha']]
+  .forEach(([x, n]) => link(`xiu:${x}`, `nak:${n}`, 'Indian mansion on the same stars', 'Chinese mansion on the same stars'));
+
 export const ENTITIES = E;
 export const KIND_ORDER = [
   ['planet', 'Planets and nodes'], ['sign', 'Tropical signs'], ['const', 'Constellations'], ['nak', 'Nakshatras'],
-  ['branch', 'Earthly branches'], ['phase', 'Chinese phases'], ['el', 'Elements'], ['mode', 'Modes'], ['house', 'Houses'], ['asp', 'Aspects'],
+  ['xiu', 'Chinese mansions'], ['sym', 'Chinese quarters'], ['branch', 'Earthly branches'], ['phase', 'Chinese phases'], ['el', 'Elements'], ['mode', 'Modes'], ['house', 'Houses'], ['asp', 'Aspects'],
 ].map(([k, label]) => ({ kind: k === 'el' ? 'element' : k === 'mode' ? 'mode' : k, label }));
 export const AYANAMSA_J2000 = AYAN_J2000;
