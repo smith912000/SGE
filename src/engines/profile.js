@@ -40,15 +40,15 @@ function generateProfile(trop, houses) {
 
   const sections = [
     {
-      icon:"☉", title:"The Solar Placement — Sun in "+sunSign,
+      icon:"☉", title:"The Solar Placement: Sun in "+sunSign,
       text: `The Sun stands in ${sunSign}, in the ${sunHouse}${['st','nd','rd'][sunHouse-1]||'th'} house. ${SOLAR_DEEP[sunSign]?.shadow || SI[sunSign].plain} Hellenistic practice counts the Sun as one of the two lights and gives it the diurnal sect; modern practice reads the same placement as identity. The degree is the same in both readings; the register is not.`,
     },
     {
-      icon:"☽", title:"The Lunar Placement — Moon in "+moonSign,
+      icon:"☽", title:"The Lunar Placement: Moon in "+moonSign,
       text: `The Moon stands in ${moonSign}, in the ${moonHouse}${['st','nd','rd'][moonHouse-1]||'th'} house. ${LUNAR_DEEP[moonSign]?.shadow || SI[moonSign].plain} The older sources read the Moon for the body, for nourishment and for the course of the month, and assign it the nocturnal sect; the modern recasting names it the affective register instead. The Moon moves about thirteen degrees a day, so this is the placement most sensitive to an imprecise recorded time.`,
     },
     {
-      icon:"AC", title:"The Rising Degree — "+ascSign+" Ascendant",
+      icon:"AC", title:"The Rising Degree: "+ascSign+" Ascendant",
       text: `${ascSign} rises. The tradition names this degree the horoskopos, the hour marker, and in most schemes the twelve places are counted from it. ${SI[ascSign].plain} \n\nAttributed: ${RISING_SHADOW[ascSign]?.shadow || ""}\nStructure: ${RISING_SHADOW[ascSign]?.growth || ""}\n\nThis point is a function of the recorded time rather than of planetary position: roughly four minutes of clock error moves it about one degree. How firm is the recorded time behind this chart?`,
     },
     {
@@ -60,12 +60,12 @@ function generateProfile(trop, houses) {
       text: `Venus stands in ${venSign}. ${VENUS_SHADOW[venSign] ? `\nAttributed: ${VENUS_SHADOW[venSign].shadow}` : ""} \n\nMars stands in ${marSign}. ${MARS_SHADOW[marSign] ? `\nAttributed: ${MARS_SHADOW[marSign].shadow}` : ""} \n\n${venMars ? `Venus and Mars stand in a ${venMars.name.toLowerCase()}, at an orb of ${venMars.orb}°. The figure is counted because that separation falls inside the orb this instrument applies; a different orb policy counts a different set.` : "Venus and Mars form none of the aspects this instrument counts, within the orbs it applies."}`,
     },
     {
-      icon:"MC", title:"The Midheaven — MC in "+mcSign,
-      text: `The Midheaven falls in ${mcSign}. ${SI[mcSign].plain} Hellenistic sources name the culminating degree the Mesouranema and read the 10th place for praxis — what is done in the open — for rank, and for the judgement of others; modern practice keeps the subject matter and renames it vocation. Under whole-sign houses the Midheaven can fall in the 9th or the 11th rather than the 10th, and the two conventions then part company on the same chart.`,
+      icon:"MC", title:"The Midheaven: MC in "+mcSign,
+      text: `The Midheaven falls in ${mcSign}. ${SI[mcSign].plain} Hellenistic sources name the culminating degree the Mesouranema and read the 10th place for praxis, what is done in the open, for rank, and for the judgement of others; modern practice keeps the subject matter and renames it vocation. Under whole-sign houses the Midheaven can fall in the 9th or the 11th rather than the 10th, and the two conventions then part company on the same chart.`,
     },
     {
       icon:"♄", title:"Saturn in "+satSign,
-      text: `Saturn stands in ${satSign}. ${SATURN_DEEP[satSign]?.shadow || ""} Saturn is the outermost of the seven visible bodies and completes its circuit in close to twenty-nine and a half years, so it holds one sign for something over two years. The Hellenistic sources class it as the greater malefic — a statement about the nature assigned to the body, not about an outcome; the modern register names the same ground limit, structure and time.`,
+      text: `Saturn stands in ${satSign}. ${SATURN_DEEP[satSign]?.shadow || ""} Saturn is the outermost of the seven visible bodies and completes its circuit in close to twenty-nine and a half years, so it holds one sign for something over two years. The Hellenistic sources class it as the greater malefic, a statement about the nature assigned to the body, not about an outcome; the modern register names the same ground limit, structure and time.`,
     },
     {
       icon:"♃", title:"Jupiter in "+jupSign,
@@ -75,8 +75,8 @@ function generateProfile(trop, houses) {
 
   if (sunMoon) {
     sections.push({
-      icon:"☉ ☽", title:`The Two Lights — Sun ${sunMoon.sym} Moon (${sunMoon.name})`,
-      text:`The Sun and the Moon stand in a ${sunMoon.name.toLowerCase()}, at an orb of ${sunMoon.orb}°. ${ASPECT_MEANINGS[sunMoon.name]} The tradition names these two the lights and reads the figure between them as the relation of the chart's two governing bodies. The figure appears here because the separation falls inside the orb this instrument applies — widening the orb creates figures, narrowing it removes them.`,
+      icon:"☉ ☽", title:`The Two Lights: Sun ${sunMoon.sym} Moon (${sunMoon.name})`,
+      text:`The Sun and the Moon stand in a ${sunMoon.name.toLowerCase()}, at an orb of ${sunMoon.orb}°. ${ASPECT_MEANINGS[sunMoon.name]} The tradition names these two the lights and reads the figure between them as the relation of the chart's two governing bodies. The figure appears here because the separation falls inside the orb this instrument applies, widening the orb creates figures, narrowing it removes them.`,
     });
   }
 

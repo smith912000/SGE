@@ -132,12 +132,12 @@ export default function NatalTab({ ctx }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
-        <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>The Natal Chart — the Sky at the Moment Named</div>
+        <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>The Natal Chart: the Sky at the Moment Named</div>
         <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
           At the moment entered, every body held a definite position in the zodiac.
         </p>
         <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, marginTop: 8 }}>
-          <strong>How it is read:</strong> each body carries a field of signification — ☉ the Sun light, rank and honour; ☽ the Moon the changing and the nocturnal; ☿ Mercury exchange and speech; ♀ Venus attraction and value; ♂ Mars division and force.
+          <strong>How it is read:</strong> each body carries a field of signification, ☉ the Sun light, rank and honour; ☽ the Moon the changing and the nocturnal; ☿ Mercury exchange and speech; ♀ Venus attraction and value; ♂ Mars division and force.
         </p>
       </Card>
 
@@ -145,13 +145,13 @@ export default function NatalTab({ ctx }) {
         const strong = res.trAsp.filter(a => (a.strength || 0) >= 0.7).length;
         const total = res.trAsp.length;
         const focus = getPreferenceFocus();
-        const focusLabel = focus === "all" ? "balanced" : focus === "love" ? "love & connection" : focus === "career" ? "work & purpose" : focus === "spiritual" ? "spiritual growth" : "body & energy";
+        const focusLabel = { all: "all bodies", lights: "lights", personal: "personal planets", social: "social planets", outer: "outer planets" }[focus] || "all bodies";
         return (
-          <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}66,${M3.surfaceContainer})`, borderLeft: `3px solid ${M3.primary}` }}>
+          <Card>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
-              <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "0.95rem", color: M3.primary }}>Today&apos;s Guided Theme</div>
+              <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "0.95rem", color: M3.primary }}>Transits now</div>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.tertiary, letterSpacing: "0.08em", padding: "2px 8px", borderRadius: 12, border: `1px solid ${M3.tertiary}44` }}>
-                FOCUS: {focusLabel.toUpperCase()}
+                LEADING WITH {focusLabel.toUpperCase()}
               </div>
             </div>
             <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.8rem", lineHeight: 1.6, color: M3.onSurface, margin: "0 0 10px" }}>
@@ -178,7 +178,7 @@ export default function NatalTab({ ctx }) {
               </div>
               {rulerSign && (
                 <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", color: M3.onSurfaceVariant }}>
-                  in {SIGN_SYM?.[rulerSign]} {rulerSign} {fmtDeg(rulerLon)}{rulerHouse ? ` — House ${rulerHouse}` : ""}
+                  in {SIGN_SYM?.[rulerSign]} {rulerSign} {fmtDeg(rulerLon)}{rulerHouse ? `: House ${rulerHouse}` : ""}
                 </div>
               )}
               {tradRuler && <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", color: M3.outlineVariant, fontStyle: "italic" }}>Traditional ruler: {tradRuler}</div>}
@@ -233,7 +233,7 @@ export default function NatalTab({ ctx }) {
       </div>
 
       <div style={grid2}>
-        <Card title="☉ Where Each Planet Was — Western &amp; Vedic">
+        <Card title="☉ Where Each Planet Was: Western &amp; Vedic">
           <PlanetTable positions={res.trop} siderealPositions={res.sid} jd={res.jd} />
         </Card>
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -242,7 +242,7 @@ export default function NatalTab({ ctx }) {
               <WheelWithTooltip positions={res.trop} houses={res.houses} size={340} id="natal" theme="western" />
             </div>
           </Card>
-          <Card title="⌂ House Cusps — Exact Positions">
+          <Card title="⌂ House Cusps: Exact Positions">
             <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 10px" }}>
               Each house cusp marks where a life domain begins. The degree and sign show the exact zodiacal position. Equal House system (30° per house from the Ascendant).
             </p>
@@ -276,9 +276,9 @@ export default function NatalTab({ ctx }) {
               </table>
             </div>
           </Card>
-          <Card title="⌂ Life Areas (Houses) — The Twelve Fields">
+          <Card title="⌂ Life Areas (Houses): The Twelve Fields">
             <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 12px" }}>
-              Houses are life domains — each one governs a specific area. The sign on the house sets the style; planets inside bring activity and focus to that area.
+              Houses are life domains: each one governs a specific area. The sign on the house sets the style; planets inside bring activity and focus to that area.
             </p>
             {Array.from({ length: 12 }, (_, i) => {
               const h = res.houses[i + 1];
@@ -287,7 +287,7 @@ export default function NatalTab({ ctx }) {
               const axis = AXIS_LABELS[i + 1];
               const hi = HOUSE_INFO?.[i];
               return (
-                <div key={i} style={{ padding: "10px 14px", marginBottom: 6, borderRadius: 10, background: SIGN_COL[sign] + "08", borderLeft: `3px solid ${SIGN_COL[sign]}33` }}>
+                <div key={i} style={{ padding: "10px 14px", marginBottom: 6, borderRadius: 10, background: SIGN_COL[sign] + "08", border: "1px solid rgba(244,241,237,.09)" }}>
                   <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: pls.length ? 4 : 0 }}>
                     <span style={{ color: M3.secondary, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", fontWeight: "700", minWidth: 22 }}>{i + 1}.</span>
                     <span style={{ color: SIGN_COL[sign], fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", fontWeight: "700" }}>{SIGN_SYM?.[sign] || ""} {sign}</span>
@@ -303,7 +303,7 @@ export default function NatalTab({ ctx }) {
                     return (
                       <div key={p} style={{ margin: "6px 0 0", paddingLeft: 10, borderLeft: `2px solid ${P_COL[p] || M3.primary}44` }}>
                         <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", lineHeight: 1.5, color: M3.onSurface, margin: 0 }}>
-                          <strong style={{ color: P_COL[p] || M3.primary }}>{P_SYM[p]} {p} in {sign}, {hi?.name?.split(' — ')[1] || `H${i+1}`}</strong> — {pihText(p, i+1)}.
+                          <strong style={{ color: P_COL[p] || M3.primary }}>{P_SYM[p]} {p} in {sign}, {hi?.name?.split(': ')[1] || `H${i+1}`}</strong>: {pihText(p, i+1)}.
                         </p>
                         {signRead && (
                           <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "3px 0 0", fontStyle: "italic" }}>
@@ -313,7 +313,7 @@ export default function NatalTab({ ctx }) {
                       </div>
                     );
                   })}
-                  {pls.length === 0 && <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", lineHeight: 1.4, color: M3.outlineVariant, margin: "4px 0 0", fontStyle: "italic" }}>No planets here — this area runs on {sign} autopilot, governed by the sign on the cusp rather than a planet's direct attention.</p>}
+                  {pls.length === 0 && <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", lineHeight: 1.4, color: M3.outlineVariant, margin: "4px 0 0", fontStyle: "italic" }}>No planets here: this area runs on {sign} autopilot, governed by the sign on the cusp rather than a planet's direct attention.</p>}
                 </div>
               );
             })}

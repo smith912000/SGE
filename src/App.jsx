@@ -15,9 +15,7 @@ import { HOUSE_INFO, HOUSE_AREA } from './data/astrology/houses.js';
 import { ASPECTS, ASP_EXPLAIN } from "./data/astrology/aspects.js";
 import { ANIMAL_INFO, CN_EL_INFO, POLARITY_INFO } from "./data/astrology/chinese.js";
 
-// Data - Grammatology
 
-// Data - Numerology
 
 // Data - Deep Analysis
 import { moonPhase } from './engines/astronomy.js';
@@ -61,6 +59,7 @@ const NumerologyTab = lazy(() => import('./tabs/NumerologyTab.jsx'));
 const DeepTab = lazy(() => import('./tabs/DeepTab.jsx'));
 const VedicTab = lazy(() => import('./tabs/VedicTab.jsx'));
 const SynthesisTab = lazy(() => import('./tabs/SynthesisTab.jsx'));
+const SymbolMapTab = lazy(() => import('./tabs/SymbolMapTab.jsx'));
 
 import ErrorBoundary from './components/ui/ErrorBoundary.jsx';
 
@@ -89,13 +88,14 @@ export default function App() {
   // The open view lives in the URL hash (#wheel, #vedic...) so a view can be
   // bookmarked or shared.
   const tabFromHash = () => {
-    const h = typeof window !== "undefined" ? window.location.hash.slice(1) : "";
+    // A view may carry a sub-path, as #symbols/planet:Mars does.
+    const h = typeof window !== "undefined" ? window.location.hash.slice(1).split("/")[0] : "";
     return TAB_IDS.includes(h) ? h : "synthesis";
   };
   const [tab, setTabState] = useState(tabFromHash);
   const setTab = useCallback((id) => {
     setTabState(id);
-    if (window.location.hash.slice(1) !== id) history.replaceState(null, "", `#${id}`);
+    if (window.location.hash.slice(1).split("/")[0] !== id) history.replaceState(null, "", `#${id}`);
   }, []);
   useEffect(() => {
     const onHash = () => setTabState(tabFromHash());
@@ -104,14 +104,7 @@ export default function App() {
   }, []);
   const [res, setRes] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [gemaName, setGemaName] = useState("");
-  const [expandedLetter, setExpandedLetter] = useState(null);
-  const [gramTab, setGramTab] = useState("phonetics");
-  const [gramScriptFilter, setGramScriptFilter] = useState("core");
   const [wheelMode, setWheelMode] = useState("western");
-  const [calDate, setCalDate] = useState({ y: new Date().getFullYear(), m: new Date().getMonth() + 1, d: new Date().getDate() });
-  const [calHolFilter, setCalHolFilter] = useState("all");
-  const [calShowMonth, setCalShowMonth] = useState(false);
 
   useEffect(() => {
     const now = new Date();
@@ -172,9 +165,6 @@ export default function App() {
     gap: 16,
   };
 
-  const [cwInput, setCwInput] = useState("");
-  const [cwResult, setCwResult] = useState(null);
-
   return (
     <div style={{ minHeight: "100vh", color: M3.onSurface, position: "relative", overflowX: "hidden" }}>
 
@@ -191,12 +181,19 @@ export default function App() {
           </aside>
 
           <div className="sge-main">
-          {!res && (
+          {!res && tab !== "symbols" && (
             <div className="sge-empty">
               <EclipticRing size={220} className="sge-empty-ring" />
               <h2>Begin with a birth moment</h2>
               <p>Enter the date, time and place, then compute. The natal figure, its transits and progressions, and the Vedic, Chinese and numerological readings of the same moment all open from it.</p>
+              <p><button type="button" className="sge-chip" onClick={() => setTab("symbols")}>Open the symbol map</button> to explore the symbols on their own, with the sky as it stands now.</p>
             </div>
+          )}
+          {!res && tab === "symbols" && (
+            <Suspense fallback={null}>
+              <p className="sm-nochart"><button type="button" className="sge-chip" onClick={() => setTab("synthesis")}>Back</button> No chart is cast, so the bodies shown are the sky now.</p>
+              <ErrorBoundary><SymbolMapTab ctx={{}} /></ErrorBoundary>
+            </Suspense>
           )}
           {res && (
             <>
@@ -266,6 +263,9 @@ export default function App() {
 
                                 {tab === "numerology" && (
                   <ErrorBoundary><NumerologyTab ctx={{ M3, birthParts: A, res, Card }} /></ErrorBoundary>
+                )}
+                {tab === "symbols" && (
+                  <ErrorBoundary><SymbolMapTab ctx={{ res }} /></ErrorBoundary>
                 )}
                 {tab === "education" && (
                   <ErrorBoundary><EducationTab ctx={{ M3, EL_COL, MOD_COL, Card }} /></ErrorBoundary>

@@ -53,7 +53,7 @@ export default function ProgressionsTab({ ctx }) {
         const nSun = zodSign(res.trop.Sun), pSun = zodSign(res.prog.Sun), nMoon = zodSign(res.trop.Moon), pMoon = zodSign(res.prog.Moon);
         const sunChanged = nSun !== pSun, moonChanged = nMoon !== pMoon;
         return (
-          <Card title="📖 The Progressed Lights - Sun and Moon Against Their Natal Signs">
+          <Card title="The progressed lights against their natal signs">
             <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.7, color: M3.onSurface, margin: "0 0 14px" }}>
               What follows names where the progressed Sun and Moon stand, whether either has crossed out of its natal sign under the day-for-a-year convention, and what the tradition has attributed to the signs involved.
             </p>

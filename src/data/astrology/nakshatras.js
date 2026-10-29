@@ -76,7 +76,7 @@ export const RASHI_INFO = [
 //  BHAVAS — 12 houses with significations (karakas)
 // ──────────────────────────────────────────────────────────────────────
 export const BHAVA_INFO = [
-  { n: 1,  name: "Tanu",     theme: "Self · Body",          desc: "Body, appearance, vitality, personality. The self projected outward — the physical container.",                      group: "Kendra" },
+  { n: 1,  name: "Tanu",     theme: "Self · Body",          desc: "Body, appearance, vitality, personality. The self projected outward, the physical container.",                      group: "Kendra" },
   { n: 2,  name: "Dhana",    theme: "Wealth · Speech",      desc: "Money, possessions, family, food, voice. What is accumulated, and what issues from the mouth.",                       group: "—" },
   { n: 3,  name: "Sahaja",   theme: "Courage · Siblings",   desc: "Younger siblings, courage, communication, short journeys, hands-on skill. The push to act.",                            group: "Upachaya" },
   { n: 4,  name: "Sukha",    theme: "Home · Mother",        desc: "Home, mother, comfort, emotional foundation, vehicles, real estate. The place of settling.",                                 group: "Kendra" },
@@ -145,7 +145,7 @@ export const YOGA_DEFS = [
 //  KEY DOSHAS — afflictions
 // ──────────────────────────────────────────────────────────────────────
 export const DOSHA_DEFS = [
-  { id: "mangal", name: "Mangal Dosha", desc: "Mars in 1st, 4th, 7th, 8th or 12th house. Considered difficult for marriage in classical Vedic — though many cancellations exist (Mangal in own/exaltation, partner with same dosha, age over 28)." },
+  { id: "mangal", name: "Mangal Dosha", desc: "Mars in 1st, 4th, 7th, 8th or 12th house. Considered difficult for marriage in classical Vedic, though many cancellations exist (Mangal in own/exaltation, partner with same dosha, age over 28)." },
   { id: "kalaSarpa", name: "Kala Sarpa Dosha", desc: "All 7 visible planets sit between Rahu and Ketu on one side of the axis. Karmic pressure; intense life themes around control and surrender." },
   { id: "sadeSati", name: "Sade Sati", desc: "Transiting Saturn through the sign before, of, and after the natal Moon, lasting about 7.5 years. Not detected by this build: the check requires transiting Saturn, and only natal Saturn is available." },
   { id: "kemadruma", name: "Kemadruma", desc: "Moon isolated (no planets in adjacent signs and not joined). Emotional self-reliance is mandatory; later in life often resolves." },

@@ -139,7 +139,7 @@ const SCRIPT_SAMPLES = {
   Sharada:               { sample:"𑆃 𑆄 𑆅 𑆆 𑆇 𑆈 𑆉 𑆊 𑆋 𑆌 𑆍 𑆎 𑆏 𑆐 𑆑 𑆒 𑆓 𑆔 𑆕 𑆖 𑆗 𑆘 𑆙 𑆚 𑆛 𑆜 𑆝 𑆞 𑆟 𑆠 𑆡 𑆢 𑆣 𑆤 𑆥 𑆦 𑆧 𑆨 𑆩 𑆪 𑆫 𑆬 𑆭 𑆮 𑆯 𑆰 𑆱 𑆲", lang:"Sharada (Kashmir Sanskrit)", dir:"LTR" },
   Shavian:               { sample:"𐑐 𐑑 𐑒 𐑓 𐑔 𐑕 𐑖 𐑗 𐑘 𐑙 𐑚 𐑛 𐑜 𐑝 𐑞 𐑟 𐑠 𐑡 𐑢 𐑣 𐑤 𐑥 𐑦 𐑧 𐑨 𐑩 𐑪 𐑫 𐑬 𐑭 𐑮 𐑯 𐑰 𐑱 𐑲 𐑳 𐑴 𐑵 𐑶 𐑷 𐑸 𐑹 𐑺 𐑻 𐑼 𐑽 𐑾 𐑿", lang:"Shavian (George Bernard Shaw phonetic)", dir:"LTR" },
   Siddham:               { sample:"𑖀 𑖁 𑖂 𑖃 𑖄 𑖅 𑖆 𑖇 𑖈 𑖉 𑖊 𑖋 𑖌 𑖍 𑖎 𑖏 𑖐 𑖑 𑖒 𑖓 𑖔 𑖕 𑖖 𑖗 𑖘 𑖙 𑖚 𑖛 𑖜 𑖝 𑖞 𑖟 𑖠 𑖡 𑖢 𑖣 𑖤 𑖥 𑖦 𑖧 𑖨 𑖩 𑖪 𑖫 𑖬 𑖭 𑖮 𑖯", lang:"Siddham (Sanskrit Buddhism, Japan)", dir:"LTR" },
-  Sidetic:               { sample:"— (limited Unicode support) — ancient Pamphylia (Anatolian)", lang:"Sidetic (ancient Anatolia)", dir:"LTR" },
+  Sidetic:               { sample:"— (limited Unicode support), ancient Pamphylia (Anatolian)", lang:"Sidetic (ancient Anatolia)", dir:"LTR" },
   SignWriting:            { sample:"𝠀 𝠁 𝠂 𝠃 𝠄 𝠅 𝠆 𝠇 𝠈 𝠉 𝠊 𝠋 𝠌 𝠍 𝠎 𝠏 𝠐 𝠑 𝠒 𝠓 𝠔 𝠕 𝠖 𝠗 𝠘 𝠙 𝠚 𝠛 𝠜 𝠝 𝠞 𝠟 𝠠 𝠡 𝠢", lang:"SignWriting (signed languages)", dir:"TOP-DOWN" },
   Sinhala:               { sample:"අ ආ ඇ ඈ ඉ ඊ උ ඌ ඍ ඎ ඏ ඐ එ ඒ ඓ ඔ ඕ ඖ ක ඛ ග ඝ ඞ ඟ ච ඡ ජ ඣ ඤ ඥ ට ඨ ඩ ඪ ණ ඬ ත ථ ද ධ න ඳ ප ඵ බ භ ම ඹ ය ර ල ව ශ ෂ ස හ ළ ෆ", lang:"Sinhala (Sri Lanka)", dir:"LTR" },
   Sogdian:               { sample:"𐼰 𐼱 𐼲 𐼳 𐼴 𐼵 𐼶 𐼷 𐼸 𐼹 𐼺 𐼻 𐼼 𐼽 𐼾 𐼿 𐽀 𐽁 𐽂 𐽃 𐽄 𐽅 𐽆 𐽇 𐽈 𐽉 𐽊 𐽋 𐽌 𐽍 𐽎 𐽏 𐽐 𐽑 𐽒 𐽓 𐽔 𐽕 𐽖 𐽗", lang:"Sogdian (Central Asia, Silk Road)", dir:"RTL" },

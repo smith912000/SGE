@@ -1,11 +1,10 @@
+import { LIFE_PATH_MEANING } from '../data/numerology/meanings.js';
 import { useState } from "react";
 import { P_SYM, P_COL, PLANET_INFO } from '../data/astrology/planets.js';
-import { getNumerologySymbolism } from '../data/symbolism/numerologySymbolism.js';
 import { NUM_PLANET, MASTER_NUMBERS } from '../data/numerology/tables.js';
 import { EXPRESSION_MEANING, SOUL_URGE_MEANING, PERSONALITY_MEANING, BIRTHDAY_MEANING } from '../data/numerology/meanings.js';
 import { computeNumerology, reduceToRoot } from '../engines/numerology.js';
 import { calcGematria } from '../engines/gematria.js';
-import SymbolPanel from '../components/ui/SymbolPanel.jsx';
 import DepthControl from '../components/ui/DepthControl.jsx';
 import { useDepth } from '../store/depthStore.js';
 export default function NumerologyTab({ ctx }) {
@@ -16,13 +15,14 @@ export default function NumerologyTab({ ctx }) {
   const A = birthParts || {};
   const nuData = computeNumerology(A.year, A.month, A.day, A.name || "");
   const hasName = nuData.letterBreakdown.length > 0;
-  const lp = getNumerologySymbolism(nuData.lifePath) || getNumerologySymbolism(reduceToRoot(nuData.lifePath));
+  // The record layer carries the reading; LIFE_PATH_MEANING adds the names.
+  const lp = LIFE_PATH_MEANING[nuData.lifePath] || LIFE_PATH_MEANING[reduceToRoot(nuData.lifePath)] || {};
 
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
       <Card style={{ background:`linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor:M3.outline }}>
         <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", gap:12, flexWrap:"wrap", marginBottom:8 }}>
-          <div style={{ fontFamily:"'Cormorant Garamond', Georgia, serif", fontSize:"1.1rem", color:M3.primary }}>Numerology — Figures and the Maps That Produce Them</div>
+          <div style={{ fontFamily:"'Cormorant Garamond', Georgia, serif", fontSize:"1.1rem", color:M3.primary }}>Numerology: Figures and the Maps That Produce Them</div>
           <DepthControl depth={depth} onChange={setDepth} compact />
         </div>
         <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.82rem", lineHeight:1.7, color:M3.onSurface, margin:0 }}>
@@ -31,7 +31,7 @@ export default function NumerologyTab({ ctx }) {
       </Card>
 
       {/* ── Core Numbers ── */}
-      <Card title="Core Numbers — Each Figure and Its Derivation">
+      <Card title="Core Numbers: Each Figure and Its Derivation">
         <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 14px" }}>
           Eight figures stand below.
         </p>
@@ -61,17 +61,17 @@ export default function NumerologyTab({ ctx }) {
       </Card>
 
       {/* ── Life Path Deep Dive ── */}
-      <Card title={`Life Path ${nuData.lifePath} — ${lp.title||"Unnamed"}`}>
+      <Card title={`Life path ${nuData.lifePath}: ${lp.title||String(nuData.lifePath)}`}>
         {lp.archetype && <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.tertiary, letterSpacing:"0.08em", marginBottom:8 }}>{lp.archetype}</div>}
         <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.82rem", lineHeight:1.7, color:M3.onSurface, margin:"0 0 12px" }}>{lp.desc||"No record is held for this number."}</p>
         {lp.shadow && (
-          <div style={{ padding:"10px 14px", borderRadius:10, background:"#ff525211", border:"1px solid #ff525222", marginBottom:10 }}>
+          <div style={{ padding:"10px 14px", borderRadius:10, background:"#D0726211", border:"1px solid #D0726222", marginBottom:10 }}>
             <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#D07262", letterSpacing:"0.08em", marginBottom:4 }}>SHADOW SIDE</div>
             <div style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", color:M3.onSurface, lineHeight:1.5 }}>{lp.shadow}</div>
           </div>
         )}
         {lp.growth && (
-          <div style={{ padding:"10px 14px", borderRadius:10, background:"#69ff8e11", border:"1px solid #69ff8e22" }}>
+          <div style={{ padding:"10px 14px", borderRadius:10, background:"#93B89A11", border:"1px solid #93B89A22" }}>
             <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#93B89A", letterSpacing:"0.08em", marginBottom:4 }}>GROWTH PATH</div>
             <div style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", color:M3.onSurface, lineHeight:1.5 }}>{lp.growth}</div>
           </div>
@@ -102,7 +102,7 @@ export default function NumerologyTab({ ctx }) {
 
       {/* ── Name Letter Breakdown ── */}
       {hasName && (
-      <Card title="Name Letter Breakdown — Pythagorean & Chaldean Values">
+      <Card title="Name Letter Breakdown: Pythagorean & Chaldean Values">
         <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
           Each letter is assigned a number.
         </p>
@@ -129,13 +129,13 @@ export default function NumerologyTab({ ctx }) {
 
       {/* ── Missing Numbers ── */}
       {hasName && nuData.missingNums.length > 0 && (
-      <Card title="Karmic Lessons — Numbers Absent From the Name">
+      <Card title="Karmic Lessons: Numbers Absent From the Name">
         <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
           Numbers that do not appear among the letter values of the name.
         </p>
         <div style={{ display:"flex", flexWrap:"wrap", gap:8 }}>
           {nuData.missingNums.map(n=>(
-            <div key={n} style={{ padding:"8px 14px", borderRadius:10, background:"#ff525211", border:"1px solid #ff525222", textAlign:"center" }}>
+            <div key={n} style={{ padding:"8px 14px", borderRadius:10, background:"#D0726211", border:"1px solid #D0726222", textAlign:"center" }}>
               <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"1.4rem", color:"#D07262", fontWeight:"700" }}>{n}</div>
               <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.onSurfaceVariant }}>{NUM_PLANET[n]||""}</div>
             </div>
@@ -145,7 +145,7 @@ export default function NumerologyTab({ ctx }) {
       )}
 
       {/* ── Pinnacles & Challenges ── */}
-      <Card title="Life Pinnacles & Challenges — The Four Periods">
+      <Card title="Life Pinnacles & Challenges: The Four Periods">
         <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 12px" }}>
           The scheme divides a life into four periods, each carrying a <strong>pinnacle</strong> number and a <strong>challenge</strong> number derived arithmetically from the birth date.
         </p>
@@ -169,7 +169,7 @@ export default function NumerologyTab({ ctx }) {
       </Card>
 
       {/* ── Hebrew Gematria Calculator ── */}
-      <Card title="Hebrew Gematria Calculator — The Number in a Name">
+      <Card title="Hebrew Gematria Calculator: The Number in a Name">
         <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 14px" }}>
           Each Hebrew letter carries a numerical value.
         </p>
@@ -228,7 +228,7 @@ export default function NumerologyTab({ ctx }) {
                 )}
                 {!g.isHebrew && !g.hasKnown && (
                   <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", lineHeight:1.5, color:M3.onSurfaceVariant, margin:"8px 0 0", fontStyle:"italic", textAlign:"center" }}>
-                    Phonetic approximation — Hebrew is consonantal, so medial vowels are omitted from the primary value.
+                    Phonetic approximation: Hebrew is consonantal, so medial vowels are omitted from the primary value.
                   </p>
                 )}
               </div>
@@ -256,7 +256,7 @@ export default function NumerologyTab({ ctx }) {
                   <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"1.6rem", color:M3.onPrimaryContainer, fontWeight:"700" }}>{g.total}</div>
                 </div>
                 {g.hasAlt && g.altTotal !== null && g.altTotal !== g.total && (
-                  <div style={{ padding:"12px 20px", borderRadius:12, background:M3.surfaceVariant, textAlign:"center", borderLeft:`3px solid ${M3.tertiary}44` }}>
+                  <div style={{ padding:"12px 20px", borderRadius:12, background:M3.surfaceVariant, textAlign:"center", border:"1px solid rgba(244,241,237,.09)" }}>
                     <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.tertiary, letterSpacing:"0.1em" }}>ALT TOTAL</div>
                     <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"1.6rem", color:M3.tertiary, fontWeight:"700" }}>{g.altTotal}</div>
                   </div>
@@ -287,7 +287,7 @@ export default function NumerologyTab({ ctx }) {
 
       {/* ── Planetary Gematria ── */}
       {res && (
-      <Card title="Planetary Gematria — Double-Letter Values">
+      <Card title="Planetary Gematria: Double-Letter Values">
         <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
           In the Sefer Yetzirah tradition, each planet is assigned a Hebrew "double letter" with its own gematria value. This table lists those values. The Sepher Yetzirah assignment and the Golden Dawn path attributions are not the same scheme, and sources differ on which letter belongs to which body.
         </p>
@@ -331,7 +331,7 @@ export default function NumerologyTab({ ctx }) {
       )}
 
       {/* ── Birth Day Number Sequences ── */}
-      <Card title="Birth Day Number Sequences — Mathematical Resonance">
+      <Card title="Birth Day Number Sequences: Mathematical Resonance">
         <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 12px" }}>
           The birth day-of-year is checked against a set of mathematical sequences.
         </p>
@@ -355,7 +355,7 @@ export default function NumerologyTab({ ctx }) {
               <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.tertiary, marginBottom:4 }}>THE BIRTH DAY-OF-YEAR BELONGS TO:</div>
               {active.map(s=>(
                 <div key={s.key} style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.onSurface, padding:"2px 0" }}>
-                  {s.sym} <strong>{s.name}</strong> — the day-of-year is a {s.name.toLowerCase()} number
+                  {s.sym} <strong>{s.name}</strong>: the day-of-year is a {s.name.toLowerCase()} number
                 </div>
               ))}
             </div>
@@ -365,7 +365,7 @@ export default function NumerologyTab({ ctx }) {
 
       {/* ── Pythagorean Grid ── */}
       {hasName && (
-      <Card title="The Pythagorean Grid — Number Frequency in the Name">
+      <Card title="The Pythagorean Grid: Number Frequency in the Name">
         <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurfaceVariant, margin:"0 0 10px" }}>
           This 3×3 grid counts how often each root number (1-9) appears among the letters of the name. The tradition reads heavy cells as emphasis and empty cells as absence.
         </p>
@@ -376,8 +376,8 @@ export default function NumerologyTab({ ctx }) {
             const isMissing = nuData.missingNums.includes(n);
             return (
               <div key={n} style={{ padding:"10px", borderRadius:10, textAlign:"center",
-                background:isMissing ? "#ff525211" : count > 2 ? M3.primaryContainer+"44" : M3.surfaceVariant+"44",
-                border:`1px solid ${isMissing ? "#ff525233" : count > 2 ? M3.primary+"44" : M3.outlineVariant}` }}>
+                background:isMissing ? "#D0726211" : count > 2 ? M3.primaryContainer+"44" : M3.surfaceVariant+"44",
+                border:`1px solid ${isMissing ? "#D0726233" : count > 2 ? M3.primary+"44" : M3.outlineVariant}` }}>
                 <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"1.2rem", color:isMissing ? "#D07262" : M3.primary, fontWeight:"700" }}>{n}</div>
                 <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.onSurface }}>{count > 0 ? "●".repeat(Math.min(count,5)) : "—"}</div>
                 <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.onSurfaceVariant }}>{count}× {g.letters.length>0 ? g.letters.join(" ") : ""}</div>

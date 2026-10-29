@@ -68,7 +68,7 @@ export function VedicTab({ ctx }) {
     { id: "nakshatras",label: "★ Nakshatras"      },
     { id: "vargas",    label: "◇ Vargas"          },
     { id: "dasha",     label: "⏳ Dasha"          },
-    { id: "yogas",     label: "⚡ Yogas & Doshas"  },
+    { id: "yogas",     label: "Yogas & doshas"  },
   ];
 
   // Sub-tab nav (pill bar)
@@ -142,7 +142,7 @@ function OverviewSub({ ctx, c }) {
           </div>
           <div style={{ fontSize:13.5, color:M3.onSurface, lineHeight:1.7 }}>
             <p style={{ margin:"4px 0 12px" }}>
-              <strong style={{ color:M3.primary }}>{moonNakInfo.name}</strong> — the <em>Janma Nakshatra</em>, the mansion the Moon occupies in this chart.
+              <strong style={{ color:M3.primary }}>{moonNakInfo.name}</strong>: the <em>Janma Nakshatra</em>, the mansion the Moon occupies in this chart.
               {" "}{moonNakInfo.nature}
             </p>
             <p style={{ margin:"4px 0 12px" }}>
@@ -151,10 +151,10 @@ function OverviewSub({ ctx, c }) {
             </p>
             <p style={{ margin:"4px 0 12px" }}>
               <strong style={{ color:M3.primary }}>Dasha lord at birth</strong>: {P_SYM[moonNakInfo.lord]} {moonNakInfo.lord}.
-              The Vimshottari sequence opens on the {moonNakInfo.lord} Mahadasha — {DASHA_THEME[moonNakInfo.lord]?.theme.toLowerCase()}
+              The Vimshottari sequence opens on the {moonNakInfo.lord} Mahadasha: {DASHA_THEME[moonNakInfo.lord]?.theme.toLowerCase()}
             </p>
             <p style={{ margin:"4px 0", color:M3.onSurfaceVariant, fontSize:12.5 }}>
-              The wheel above is a <strong>South Indian style chart</strong> — fixed sign positions, bodies placed in the cell of the rashi they occupy.
+              The wheel above is a <strong>South Indian style chart</strong>: fixed sign positions, bodies placed in the cell of the rashi they occupy.
             </p>
           </div>
         </div>
@@ -162,7 +162,7 @@ function OverviewSub({ ctx, c }) {
 
       <Card title="ℹ Vedic in one paragraph">
         <p style={{ color:M3.onSurface, lineHeight:1.7, fontSize:13.5, margin:0 }}>
-          Vedic practice (Jyotish) reads the sky from the <strong>sidereal zodiac</strong> — anchored to the fixed stars rather than to the seasons, and separated from the tropical frame by the ayanamsa.
+          Vedic practice (Jyotish) reads the sky from the <strong>sidereal zodiac</strong>: anchored to the fixed stars rather than to the seasons, and separated from the tropical frame by the ayanamsa.
         </p>
       </Card>
     </div>
@@ -179,7 +179,7 @@ function GrahasSub({ ctx, c }) {
 
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-      <Card title="☿ Grahas (9 Planets) — full Vedic detail">
+      <Card title="☿ Grahas (9 Planets): full Vedic detail">
         <div style={{ overflowX:"auto" }}>
           <table style={tblStyle(M3)}>
             <thead>
@@ -258,16 +258,16 @@ function BhavasSub({ ctx, c }) {
 
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-      <Card title="Bhavas — The 12 Houses">
+      <Card title="Bhavas: The 12 Houses">
         <p style={{ fontSize:12.5, color:M3.onSurfaceVariant, lineHeight:1.6, marginBottom:12 }}>
-          Each Bhava is one whole rashi counted from the Lagna ({RASHI_NAMES[ascRashi]}) — whole-sign houses, the Vedic default, so no cusp falls inside a sign here. The classical groupings: <strong style={{ color:"#8FC1C9" }}>Kendra</strong> (1/4/7/10 — the angles, read for structural strength), <strong style={{ color:"#93B89A" }}>Trikona</strong> (1/5/9 — dharma and fortune), <strong style={{ color:"#D07262" }}>Trika</strong> (6/8/12 — the houses named as difficult, and read by some schools as the houses of transformation), <strong style={{ color:"#E2B48A" }}>Upachaya</strong> (3/6/10/11 — the houses the tradition holds to strengthen over time).
+          Each Bhava is one whole rashi counted from the Lagna ({RASHI_NAMES[ascRashi]}): whole-sign houses, the Vedic default, so no cusp falls inside a sign here. The classical groupings: <strong style={{ color:"#8FC1C9" }}>Kendra</strong> (1/4/7/10: the angles, read for structural strength), <strong style={{ color:"#93B89A" }}>Trikona</strong> (1/5/9: dharma and fortune), <strong style={{ color:"#D07262" }}>Trika</strong> (6/8/12: the houses named as difficult, and read by some schools as the houses of transformation), <strong style={{ color:"#E2B48A" }}>Upachaya</strong> (3/6/10/11: the houses the tradition holds to strengthen over time).
         </p>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(min(100%, 280px), 1fr))", gap:10 }}>
           {BHAVA_INFO.map(b => {
             const houseRashi = (ascRashi + b.n - 1) % 12;
             const planets = planetsInHouse(b.n);
             return (
-              <div key={b.n} style={{...cardBoxStyle(M3), borderLeft:`3px solid ${RASHI_COL[houseRashi]}`}}>
+              <div key={b.n} style={{...cardBoxStyle(M3), border:"1px solid rgba(244,241,237,.09)"}}>
                 <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:4 }}>
                   <span style={{ fontSize:12, fontWeight:700, letterSpacing:".1em", color:M3.onSurfaceVariant }}>H{b.n} · {b.name}</span>
                   <span style={{ fontSize:12, color:groupCol(b.group), fontWeight:700 }}>{b.group}</span>
@@ -305,10 +305,10 @@ function NakshatrasSub({ ctx, c }) {
 
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-      <NakshatraDeepCard ctx={ctx} title={`☽ Janma Nakshatra — ${moonNakInfo.name}`} subtitle="The mansion the Moon occupies — the first thing Jyotish reads, and the anchor of the whole Vimshottari sequence." nak={moonNak} info={moonNakInfo} />
-      <NakshatraDeepCard ctx={ctx} title={`↑ Lagna Nakshatra — ${ascNakInfo.name}`} subtitle="The mansion rising at the Ascendant degree — attributed in the tradition to body and instinct rather than to mind. It depends on the birth time in a way the Moon's mansion does not." nak={ascNak} info={ascNakInfo} />
+      <NakshatraDeepCard ctx={ctx} title={`☽ Janma Nakshatra: ${moonNakInfo.name}`} subtitle="The mansion the Moon occupies: the first thing Jyotish reads, and the anchor of the whole Vimshottari sequence." nak={moonNak} info={moonNakInfo} />
+      <NakshatraDeepCard ctx={ctx} title={`↑ Lagna Nakshatra: ${ascNakInfo.name}`} subtitle="The mansion rising at the Ascendant degree, attributed in the tradition to body and instinct rather than to mind. It depends on the birth time in a way the Moon's mansion does not." nak={ascNak} info={ascNakInfo} />
 
-      <Card title="All Bodies — Nakshatra Map">
+      <Card title="All Bodies: Nakshatra Map">
         <div style={{ overflowX:"auto" }}>
           <table style={tblStyle(M3)}>
             <thead>
@@ -345,7 +345,7 @@ function NakshatrasSub({ ctx, c }) {
 
       <Card title="ℹ How nakshatras work">
         <p style={{ color:M3.onSurface, lineHeight:1.7, fontSize:13.5, margin:0 }}>
-          The sidereal zodiac is divided into <strong>27 nakshatras</strong> of 13°20' each. Each carries one of the 9 Vimshottari lords, a presiding deity, a symbol, a <em>gana</em> (temperament: Deva/divine, Manushya/human, Rakshasa/fierce), and a <em>yoni</em> (animal). The <strong>yoni</strong> scheme pairs the 27 mansions with 14 animals, and is used in the Vedic compatibility calculation (Yoni Kuta). Each nakshatra divides further into <strong>4 padas</strong> of 3°20', which the tradition colours in a repeating Aries/Taurus/Gemini/Cancer order. Note where the arithmetic meets the ephemeris: a pada is 3°20' wide and a mansion boundary falls every 13°20', while the sidereal longitude behind both rests on an ayanamsa SGE computes as a linear approximation of Lahiri — so a body sitting within a few arcminutes of a boundary may be reported in the neighbouring mansion or pada.
+          The sidereal zodiac is divided into <strong>27 nakshatras</strong> of 13°20' each. Each carries one of the 9 Vimshottari lords, a presiding deity, a symbol, a <em>gana</em> (temperament: Deva/divine, Manushya/human, Rakshasa/fierce), and a <em>yoni</em> (animal). The <strong>yoni</strong> scheme pairs the 27 mansions with 14 animals, and is used in the Vedic compatibility calculation (Yoni Kuta). Each nakshatra divides further into <strong>4 padas</strong> of 3°20', which the tradition colours in a repeating Aries/Taurus/Gemini/Cancer order. Note where the arithmetic meets the ephemeris: a pada is 3°20' wide and a mansion boundary falls every 13°20', while the sidereal longitude behind both rests on an ayanamsa SGE computes as a linear approximation of Lahiri, so a body sitting within a few arcminutes of a boundary may be reported in the neighbouring mansion or pada.
         </p>
       </Card>
     </div>
@@ -398,14 +398,14 @@ function VargasSub({ ctx, c }) {
         </p>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(min(100%, 320px), 1fr))", gap:20 }}>
           <div>
-            <div style={{ fontSize:12, fontWeight:700, letterSpacing:".12em", textTransform:"uppercase", color:M3.onSurfaceVariant, marginBottom:10 }}>D1 — Rashi Chart</div>
+            <div style={{ fontSize:12, fontWeight:700, letterSpacing:".12em", textTransform:"uppercase", color:M3.onSurfaceVariant, marginBottom:10 }}>D1: Rashi Chart</div>
             <SouthIndianChart positions={sid} ascSidereal={ascSid} size={340} title="Rashi (D1)" theme={chartTheme} />
             <p style={{ fontSize:12.5, color:M3.onSurfaceVariant, marginTop:10, lineHeight:1.6 }}>
               The birth chart itself, sign by sign. The tradition assigns it body, circumstance and the general condition of a life.
             </p>
           </div>
           <div>
-            <div style={{ fontSize:12, fontWeight:700, letterSpacing:".12em", textTransform:"uppercase", color:M3.onSurfaceVariant, marginBottom:10 }}>D9 — Navamsa</div>
+            <div style={{ fontSize:12, fontWeight:700, letterSpacing:".12em", textTransform:"uppercase", color:M3.onSurfaceVariant, marginBottom:10 }}>D9: Navamsa</div>
             <SouthIndianChart positions={d9Positions} ascSidereal={ascD9} size={340} title="Navamsa (D9)" theme={chartTheme} />
             <p style={{ fontSize:12.5, color:M3.onSurfaceVariant, marginTop:10, lineHeight:1.6 }}>
               The ninefold division, 3°20' to a segment. Marriage, dharma, and what the sources call the sustaining ground of the chart. Where D1 and D9 place a graha differently the classical reading holds both rather than letting either overrule. A segment this narrow is sensitive to the ayanamsa and to positional error alike: near a boundary, this build cannot settle which side a graha falls on.
@@ -441,7 +441,7 @@ function DashaSub({ ctx, c }) {
 
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-      <Card title="⏳ Vimshottari Dasha — 120-Year Planetary Cycle">
+      <Card title="⏳ Vimshottari Dasha: 120-Year Planetary Cycle">
         <p style={{ fontSize:13, color:M3.onSurfaceVariant, lineHeight:1.6, marginBottom:14 }}>
           The sequence is keyed to the nakshatra of the Moon at birth: that mansion fixes which lord holds the first period and how far through it the birth falls.
         </p>
@@ -519,7 +519,7 @@ function YogasSub({ ctx, c }) {
 
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-      <Card title={`⚡ Detected Yogas (${yogas.length})`}>
+      <Card title={`Yogas found (${yogas.length})`}>
         <p style={{ fontSize:12.5, color:M3.onSurfaceVariant, lineHeight:1.6, marginBottom:14 }}>
           A yoga is a named combination of placements that the classical texts single out and attach a specific significance to.
         </p>
@@ -529,7 +529,7 @@ function YogasSub({ ctx, c }) {
               {yogas.map(yId => {
                 const y = YOGA_DEFS.find(d => d.id === yId); if (!y) return null;
                 return (
-                  <div key={yId} style={{...cardBoxStyle(M3), borderLeft:`3px solid ${M3.primary}`}}>
+                  <div key={yId} style={{...cardBoxStyle(M3), border:"1px solid rgba(244,241,237,.09)"}}>
                     <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:4 }}>
                       <span style={{ fontWeight:700, fontSize:14 }}>{y.name}</span>
                       <span style={pillStyle(M3.tertiary || "#B9A9F0", M3)}>{y.tag}</span>
@@ -545,7 +545,7 @@ function YogasSub({ ctx, c }) {
         </p>
       </Card>
 
-      <Card title={`⚠ Detected Doshas (${doshas.length})`}>
+      <Card title={`Doshas found (${doshas.length})`}>
         <p style={{ fontSize:12.5, color:M3.onSurfaceVariant, lineHeight:1.6, marginBottom:14 }}>
           A dosha is a placement the classical texts mark as afflicted.
         </p>
@@ -555,7 +555,7 @@ function YogasSub({ ctx, c }) {
               {doshas.map(dId => {
                 const d = DOSHA_DEFS.find(x => x.id === dId); if (!d) return null;
                 return (
-                  <div key={dId} style={{...cardBoxStyle(M3), borderLeft:"3px solid #D07262"}}>
+                  <div key={dId} style={{...cardBoxStyle(M3), border:"1px solid rgba(244,241,237,.09)"}}>
                     <div style={{ fontWeight:700, fontSize:14, marginBottom:4, color:"#DDA095" }}>{d.name}</div>
                     <div style={{ fontSize:13, color:M3.onSurfaceVariant, lineHeight:1.6 }}>{d.desc}</div>
                   </div>

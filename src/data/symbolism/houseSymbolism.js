@@ -64,11 +64,11 @@ export const HOUSE_SYMBOLISM = {
 
   2: {
     plain:
-      "The 2nd house is the ground of holdings — what is owned, carried and counted. It follows immediately on the place of the body.",
+      "The 2nd house is the ground of holdings, what is owned, carried and counted. It follows immediately on the place of the body.",
     reading:
       "Tradition assigns it substance, movable goods and the means of livelihood. Hellenistic sources tie it to how life is sustained; later practice extends it to earned income and to the sense of worth attached to possession. Planets here are read as bearing on how substance gathers or disperses.",
     principle:
-      "Hellenistic texts count the 2nd among the places of livelihood, and some name it the Gate of Hades, since it stands averse to the ascendant and cannot see the place of life. The modern psychological reading shifts the emphasis from goods to values: not what is held, but what is held to be worth holding. The older sense is concrete and the newer interior, and the single word 'worth' quietly carries both — which is reason enough to separate them at the table.",
+      "Hellenistic texts count the 2nd among the places of livelihood, and some name it the Gate of Hades, since it stands averse to the ascendant and cannot see the place of life. The modern psychological reading shifts the emphasis from goods to values: not what is held, but what is held to be worth holding. The older sense is concrete and the newer interior, and the single word 'worth' quietly carries both, which is reason enough to separate them at the table.",
     energies: ["substance", "sustenance", "accumulation", "valuation"],
     tensions: ["holding against releasing", "worth measured against worth felt"],
     attributions: [
@@ -103,7 +103,7 @@ export const HOUSE_SYMBOLISM = {
       "Whether speech belongs to the 2nd is a point of difference: Vedic practice includes it, most Western lineages do not."
     ],
     prompts: [
-      "Is the matter here movable goods, income, or valuation — and does the reading hold once those three are separated?"
+      "Is the matter here movable goods, income, or valuation, and does the reading hold once those three are separated?"
     ]
   },
 
@@ -157,7 +157,7 @@ export const HOUSE_SYMBOLISM = {
     reading:
       "Tradition assigns it parents, ancestry, property in land, and the hidden or private end of a matter. Older sources also read it for the close of life and for what is buried, literally and otherwise. Planets here are read as bearing on the base a life is set upon.",
     principle:
-      "In Hellenistic practice the 4th is the Hypogeion, the subterranean angle: strong in effect yet turned away from sight. Much traditional Western practice reads the father here, while Vedic practice and many modern texts read the mother, and that disagreement is settled by lineage rather than by argument. Modern psychological astrology treats the same ground as the interior foundation — early conditioning and the felt sense of home — which keeps the subject matter and drops the older concern with land and burial.",
+      "In Hellenistic practice the 4th is the Hypogeion, the subterranean angle: strong in effect yet turned away from sight. Much traditional Western practice reads the father here, while Vedic practice and many modern texts read the mother, and that disagreement is settled by lineage rather than by argument. Modern psychological astrology treats the same ground as the interior foundation, early conditioning and the felt sense of home, which keeps the subject matter and drops the older concern with land and burial.",
     energies: ["foundation", "lineage", "shelter", "interiority"],
     tensions: [
       "private ground against public standing",
@@ -247,7 +247,7 @@ export const HOUSE_SYMBOLISM = {
     reading:
       "Tradition assigns it sickness, servants, small animals and unglamorous toil. Hellenistic sources count it among the difficult places. Modern practice softens the same ground into routine, health regimen and craft. Planets here are read as bearing on the conditions of daily maintenance.",
     principle:
-      "Hellenistic practice names the 6th Kake Tyche, Bad Fortune, and gives it as the joy of Mars; it is cadent and averse to the ascendant, and that structural fact — not a moral judgement about work — is why the old texts read it hard. The modern reading of service, habit and wellness keeps the subject matter and drops the verdict. Whether the softening is a correction of an unjust tradition or the loss of a real distinction is a live question in the craft.",
+      "Hellenistic practice names the 6th Kake Tyche, Bad Fortune, and gives it as the joy of Mars; it is cadent and averse to the ascendant, and that structural fact, not a moral judgement about work, is why the old texts read it hard. The modern reading of service, habit and wellness keeps the subject matter and drops the verdict. Whether the softening is a correction of an unjust tradition or the loss of a real distinction is a live question in the craft.",
     energies: ["maintenance", "labour", "regimen", "subordination"],
     tensions: ["duty against health", "service against servitude"],
     attributions: [
@@ -289,9 +289,9 @@ export const HOUSE_SYMBOLISM = {
     plain:
       "The 7th house is the ground of the one-to-one relation. It sits opposite the 1st, at the western horizon where the degrees set.",
     reading:
-      "Tradition assigns it marriage, partnership, contracts and the open adversary — the named other, whether ally or opponent. Hellenistic sources read it as the place of setting, given to whatever is met face to face. Planets here are read as bearing on the terms of encounter.",
+      "Tradition assigns it marriage, partnership, contracts and the open adversary, the named other, whether ally or opponent. Hellenistic sources read it as the place of setting, given to whatever is met face to face. Planets here are read as bearing on the terms of encounter.",
     principle:
-      "Among the Hellenistic places the 7th is Dysis, the descending angle, defined by position rather than by psychology: it is simply what stands opposite the helm. Modern psychological astrology adds projection — the notion that what goes unowned at the ascendant appears in the 7th — which is a twentieth-century addition and not an old attribution. Both readings can be worked; they should not be blended without naming which one is bearing the weight.",
+      "Among the Hellenistic places the 7th is Dysis, the descending angle, defined by position rather than by psychology: it is simply what stands opposite the helm. Modern psychological astrology adds projection, the notion that what goes unowned at the ascendant appears in the 7th, which is a twentieth-century addition and not an old attribution. Both readings can be worked; they should not be blended without naming which one is bearing the weight.",
     energies: ["encounter", "contract", "symmetry", "opposition"],
     tensions: [
       "union against autonomy",
@@ -329,7 +329,7 @@ export const HOUSE_SYMBOLISM = {
       "That open enemies share a house with marriage troubles many modern readers; the older texts hold both together without apology."
     ],
     prompts: [
-      "Is the other in question a partner, a counterparty, or an opponent — and does the chart distinguish them?",
+      "Is the other in question a partner, a counterparty, or an opponent, and does the chart distinguish them?",
       "Which of these two lineages does the working follow?"
     ]
   },
@@ -340,7 +340,7 @@ export const HOUSE_SYMBOLISM = {
     reading:
       "Tradition assigns it dying, legacies, and the substance held in common with another. Hellenistic sources count it idle and difficult. Modern practice reads the same ground as shared resources, intimacy and psychological depth, an emphasis with very little traditional warrant. Planets here are read as bearing on what is transferred rather than on what is earned.",
     principle:
-      "Among the Hellenistic places the 8th is Argos, the idle place: averse to the ascendant, unable to see the place of life, and therefore weak in effect. Its subject matter is death and whatever death sets in motion. The depth-psychological 8th — merging, taboo, transformation — grew through the twentieth century alongside the assignment of Pluto to Scorpio and to this house. The traditional and the modern 8th share a border and little else, and a reading should declare which one it is standing on.",
+      "Among the Hellenistic places the 8th is Argos, the idle place: averse to the ascendant, unable to see the place of life, and therefore weak in effect. Its subject matter is death and whatever death sets in motion. The depth-psychological 8th, merging, taboo, transformation, grew through the twentieth century alongside the assignment of Pluto to Scorpio and to this house. The traditional and the modern 8th share a border and little else, and a reading should declare which one it is standing on.",
     energies: ["transfer", "inheritance", "dissolution", "the held-in-common"],
     tensions: [
       "what is given against what is owed",
@@ -425,7 +425,7 @@ export const HOUSE_SYMBOLISM = {
       "Vedic practice reads the father from the 9th; most traditional Western practice reads the father from the 4th or from the Sun."
     ],
     prompts: [
-      "Is the far thing here a place, a doctrine, or a teacher — and does the chart hold those apart?"
+      "Is the far thing here a place, a doctrine, or a teacher, and does the chart hold those apart?"
     ]
   },
 
@@ -531,7 +531,7 @@ export const HOUSE_SYMBOLISM = {
     reading:
       "Tradition assigns it prisons, hospitals, enemies who are never named, large animals, and sorrow. Hellenistic sources count it the worst of the places. Modern practice reads the same ground as the unconscious, retreat, dissolution and whatever precedes the formed self. Planets here are read as bearing on what does not appear openly.",
     principle:
-      "Hellenistic practice names the 12th Kakos Daimon, the Bad Spirit, gives it as the joy of Saturn, and marks it averse to the ascendant — unable to see the place of life, which is the structural ground of the old judgement rather than a moral one. The reading of the 12th as the unconscious is a twentieth-century transposition of depth psychology onto the same field, and it moves the register from external affliction to interior material. Both are workable; they are not the same claim, and a chart read as though they were will produce a confusion the symbol is not answerable for.",
+      "Hellenistic practice names the 12th Kakos Daimon, the Bad Spirit, gives it as the joy of Saturn, and marks it averse to the ascendant, unable to see the place of life, which is the structural ground of the old judgement rather than a moral one. The reading of the 12th as the unconscious is a twentieth-century transposition of depth psychology onto the same field, and it moves the register from external affliction to interior material. Both are workable; they are not the same claim, and a chart read as though they were will produce a confusion the symbol is not answerable for.",
     energies: ["concealment", "withdrawal", "dissolution", "undoing"],
     tensions: [
       "retreat against confinement",
@@ -572,7 +572,7 @@ export const HOUSE_SYMBOLISM = {
     ],
     prompts: [
       "Is the concealment here imposed from outside, or chosen?",
-      "Which lineage is doing the work in this reading — the place of hidden enemies, or the place of the unconscious?"
+      "Which lineage is doing the work in this reading, the place of hidden enemies, or the place of the unconscious?"
     ]
   }
 };

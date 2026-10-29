@@ -192,3 +192,6 @@ moment and sets the answers side by side:
 Agreement is marked ☌ and stated; difference is marked ☍ and left standing,
 never reconciled, in line with docs/VOICE.md. New methods belong here when a
 tradition answers one of the same questions.
+
+## Symbol map (29 Oct 2026)
+A reference view, reachable with or without a cast chart (without one, the bodies are the sky now). One ring per tradition round the ecliptic: IAU constellations with schematic star figures, tropical signs, the 27 nakshatras (sidereal, Lahiri) and the Chinese solar months by branch. Any ring can be hidden; each keeps its own band, so every symbol stays reachable with all rings on. Hover lights the symbol and its correspondences; selecting zooms to a focus view with what the traditions tie to it, each with a hint in the traditions' own words. Correspondences live in src/data/symbolMap.js; the smoke test checks every record for voice and broken links.

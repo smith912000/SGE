@@ -68,9 +68,23 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
   const [hoveredPlanet, setHoveredPlanet] = useState(null);
 
   const showTip = (e, info) => {
-    if (onTooltip) onTooltip({ info, x: e.clientX, y: e.clientY, visible:true });
+    if (!onTooltip) return;
+    // Focus and taps carry no pointer position: anchor on the element instead.
+    let x = e.clientX, y = e.clientY;
+    if (!x && !y && e.currentTarget?.getBoundingClientRect) {
+      const r = e.currentTarget.getBoundingClientRect();
+      x = r.left + r.width / 2; y = r.top + r.height / 2;
+    }
+    onTooltip({ info, x, y, visible:true });
   };
   const hideTip = () => { if (onTooltip) onTooltip({ visible:false }); };
+  // Hover, keyboard focus and tap all open the same reading.
+  const tipProps = (info, label) => ({
+    tabIndex: 0, role: "button", "aria-label": label,
+    onMouseMove: e => showTip(e, info), onMouseLeave: hideTip,
+    onFocus: e => showTip(e, info), onBlur: hideTip,
+    onClick: e => showTip(e, info),
+  });
 
   const S  = size;
   const cx = S / 2, cy = S / 2;
@@ -268,7 +282,7 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
       {signWedges.map(({ sign, path, gx, gy, idx }) => {
         const si = SIGN_INFO[sign];
         const tipInfo = { title:sign,
-          plain:si.plain + (si.hebrew ? `\n\nLetter: ${si.letterName} (${si.hebrew}) ${si.hiero} ${si.phoenician} — ${si.letterMeaning.split("—")[1]?.trim()||""}` : ""),
+          plain:si.plain + (si.hebrew ? `\n\nLetter: ${si.letterName} (${si.hebrew}) ${si.hiero} ${si.phoenician}: ${si.letterMeaning.split(/: |—/)[1]?.trim()||""}` : ""),
           tags:[si.element, si.mode, "Ruler: "+si.ruler, ...(si.hebrew?[`${si.hebrew} ${si.letterName}`]:[]) ] };
         const bndA = lon2a(idx * 30);
         const [bx1,by1] = pt(rSignOuter, bndA);
@@ -289,7 +303,7 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
 
         return (
           <g key={sign} className="sw" data-sign={idx} style={{cursor:"pointer"}}
-            onMouseMove={e=>showTip(e,tipInfo)} onMouseLeave={hideTip}>
+            {...tipProps(tipInfo, sign)}>
             <path d={path} fill={SIGN_COL[sign]+(focus?.sign === sign ? "2e" : "0c")}
               stroke={SIGN_COL[sign]+(focus?.sign === sign ? "88" : "28")} strokeWidth="0.5"
               style={{ transition:"fill .25s, stroke .25s" }}/>
@@ -316,7 +330,7 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
         const [lx,ly] = pt((rHouseInner + rHouseOuter) * 0.5, aMid);
         return (
           <g key={n} className="hc" style={{cursor:"pointer"}}
-            onMouseMove={e=>showTip(e,tipInfo)} onMouseLeave={hideTip}>
+            {...tipProps(tipInfo, hi.name)}>
             <line x1={x1} y1={y1} x2={x2} y2={y2}
               stroke={TH.ring} strokeWidth={axis ? 0.7 : 0.35}
               opacity={axis ? 0.18 : 0.08}/>
@@ -378,7 +392,7 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
         const o = isActive ? activeO : (isFaded ? baseO * 0.3 : baseO);
         const tipInfo = {
           title:`${asp.sym} ${asp.p1} ${asp.name} ${asp.p2}`,
-          emoji: asp.name==="Trine"?"✨":asp.name==="Square"?"⚡":asp.name==="Opposition"?"⚖️":asp.name==="Conjunction"?"🔗":"🔀",
+          emoji: asp.sym,
           plain: ASPECT_MEANINGS[asp.name]||"A planetary relationship shaping how these two energies interact.",
           tags: [asp.name, `Orb ${asp.orb}°`, `${(asp.strength*100).toFixed(0)}% strength`],
         };
@@ -387,7 +401,7 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
             <line className="al" x1={x1} y1={y1} x2={x2} y2={y2}
               stroke={asp.col} strokeWidth={w} opacity={o} strokeLinecap="round"
               style={{cursor:"pointer", transition:"opacity 0.3s ease, stroke-width 0.3s ease"}}
-              onMouseMove={e=>showTip(e,tipInfo)} onMouseLeave={hideTip}/>
+              {...tipProps(tipInfo, `${asp.p1} ${asp.name} ${asp.p2}, orb ${asp.orb}°`)}/>
             {(isActive || (isAspectsMode && asp.strength > 0.72)) && (()=>{
               const mx = (x1+x2)/2, my = (y1+y2)/2;
               return <text x={mx} y={my} textAnchor="middle" dominantBaseline="middle"

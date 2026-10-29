@@ -25,7 +25,8 @@ export const TAB_GROUPS = [
   { label: 'Comparison', tabs: [
     { id: 'synastry', label: 'Synastry' },
   ] },
-  { label: 'Method', tabs: [
+  { label: 'Reference', tabs: [
+    { id: 'symbols', label: 'Symbol map' },
     { id: 'education', label: 'How SGE computes' },
   ] },
 ];
