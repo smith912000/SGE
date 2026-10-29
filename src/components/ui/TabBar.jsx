@@ -1,10 +1,12 @@
 import { useRef, useEffect } from 'react';
 
-// The views, grouped the way a practitioner works through a chart: the figure
-// itself, its motion through time, the other traditions read from the same
-// moment, then comparison and method. Labels use the technical names.
+// The views, grouped the way a practitioner works through a chart: the
+// synthesis across traditions first, then the figure itself, its motion
+// through time, the other traditions read from the same moment, then
+// comparison and method. Labels use the technical names.
 export const TAB_GROUPS = [
   { label: 'Chart', tabs: [
+    { id: 'synthesis', label: 'Synthesis' },
     { id: 'natal', label: 'Overview' },
     { id: 'deep', label: 'Placements' },
     { id: 'wheel', label: 'Wheels' },

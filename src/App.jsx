@@ -60,6 +60,7 @@ const HarmonicsTab = lazy(() => import('./tabs/HarmonicsTab.jsx'));
 const NumerologyTab = lazy(() => import('./tabs/NumerologyTab.jsx'));
 const DeepTab = lazy(() => import('./tabs/DeepTab.jsx'));
 const VedicTab = lazy(() => import('./tabs/VedicTab.jsx'));
+const SynthesisTab = lazy(() => import('./tabs/SynthesisTab.jsx'));
 
 import ErrorBoundary from './components/ui/ErrorBoundary.jsx';
 
@@ -87,7 +88,7 @@ export default function App() {
   // bookmarked or shared.
   const tabFromHash = () => {
     const h = typeof window !== "undefined" ? window.location.hash.slice(1) : "";
-    return TAB_IDS.includes(h) ? h : "natal";
+    return TAB_IDS.includes(h) ? h : "synthesis";
   };
   const [tab, setTabState] = useState(tabFromHash);
   const setTab = useCallback((id) => {
@@ -208,6 +209,9 @@ export default function App() {
               <TabContent id={tab}>
                 <Suspense fallback={<div style={{padding:"40px",textAlign:"center",color:M3.onSurfaceVariant,opacity:.7}}>Loading…</div>}>
 
+                {tab === "synthesis" && (
+                  <ErrorBoundary><SynthesisTab ctx={{ res, A }} /></ErrorBoundary>
+                )}
                 {tab === "wheel" && (
                   <ErrorBoundary><WheelTab ctx={{ M3, A, res, Card, wheelMode, setWheelMode, WheelWithTooltip, ChineseWheelWithTooltip, ayanamsa, zodSign, P_COL, P_SYM, SIGN_COL, ANIMAL_INFO }} /></ErrorBoundary>
                 )}
