@@ -115,6 +115,70 @@ const NAK_MEANING = [
   'The latter invincible', 'The ear that hears', 'The wealthiest', 'A hundred healers', 'The former blessed feet',
   'The latter blessed feet', 'The wealthy',
 ];
+// The 27 nakshatras in order: the words kept for each, its nature in the
+// muhurta tradition, and the story of its deity.
+const NAK = [
+  [['swiftness', 'healing', 'the first light', 'rescue', 'the horse'], 'Swift (kshipra)', 'The Ashvin twins, horse-headed physicians of the gods, ride ahead of the dawn to rescue those in distress; they gave the old sage Chyavana back his youth.'],
+  [['bearing', 'birth and death', 'restraint', 'the threshold', 'the burden'], 'Fierce (ugra)', 'Yama, the first mortal to die, found the road to the other world and became lord and judge of the dead.'],
+  [['cutting', 'fire', 'purification', 'the blade', 'the nurse'], 'Mixed (mishra)', 'The six Krittikas nursed the infant Skanda, who grew six heads to drink from them all and became general of the gods.'],
+  [['growth', 'fertility', 'beauty', 'the favourite', 'the red earth'], 'Fixed (dhruva)', 'The Moon loved Rohini above his other wives; their father Daksha cursed him to waste away, and so the Moon wanes and waxes.'],
+  [['seeking', 'the hunt', 'curiosity', 'softness', 'the forest'], 'Soft (mridu)', 'Soma, the nectar of the gods, is sought through the forest like a startled deer that never quite lets itself be caught.'],
+  [['the storm', 'tears', 'rawness', 'destruction that clears', 'the howl'], 'Sharp (tikshna)', 'Rudra, the howling one, roars through the storm; his tears fall as the rain that breaks the drought.'],
+  [['return', 'renewal', 'home', 'the boundless', 'the bow'], 'Movable (chara)', 'Aditi, the boundless mother of the gods, brings the light back after the storm; Rama was born under these stars.'],
+  [['nourishment', 'prayer', 'protection', 'the udder', 'the auspicious'], 'Swift (kshipra)', 'Brihaspati, priest and teacher of the gods, nourishes heaven by his prayers; no star is held more auspicious.'],
+  [['the coil', 'the embrace', 'poison and remedy', 'the spell', 'hidden wisdom'], 'Sharp (tikshna)', 'The serpent kin of Kadru guard treasure and secret knowledge in the coils beneath the earth.'],
+  [['the throne', 'lineage', 'the ancestors', 'honour', 'rank'], 'Fierce (ugra)', 'The Pitris, fathers of the line, receive the offerings of their descendants and confer the right to rule.'],
+  [['pleasure', 'rest', 'marriage', 'delight', 'the share of fortune'], 'Fierce (ugra)', 'Bhaga, the god of the allotted share, gives each their portion of luck and of married bliss.'],
+  [['contracts', 'friendship', 'patronage', 'the vow', 'hospitality'], 'Fixed (dhruva)', 'Aryaman keeps the customs of hospitality and the vows of marriage, and makes the paths between friends.'],
+  [['skill', 'craft', 'the grasp', 'cleverness', 'the healing hand'], 'Swift (kshipra)', 'Savitar, the golden-handed sun of the dawn, lost his hands at the sacrifice and was given hands of gold.'],
+  [['brilliance', 'design', 'the jewel', 'beauty of form', 'the forge'], 'Soft (mridu)', 'Tvashtar, smith of the gods, shapes every form in the womb and forged the thunderbolt of Indra.'],
+  [['the wind', 'independence', 'movement', 'trade', 'the young shoot'], 'Movable (chara)', 'Vayu, the wind and breath of the world, goes where he will and bends every shoot without breaking it.'],
+  [['purpose', 'ambition', 'the goal', 'triumph', 'the fork'], 'Mixed (mishra)', 'Indra and Agni, power and fire, are joined to a single aim; the branch forks but the purpose does not.'],
+  [['friendship', 'devotion', 'success after struggle', 'the lotus in the mud', 'the bond'], 'Soft (mridu)', 'Mitra, god of friendship and the sworn bond, keeps faith between people as the Sun keeps faith with the day.'],
+  [['seniority', 'protection', 'power', 'the eldest', 'pride'], 'Sharp (tikshna)', 'Indra, king of the gods, slew the serpent Vritra and released the imprisoned waters.'],
+  [['the root', 'uprooting', 'the depths', 'dissolution', 'investigation'], 'Sharp (tikshna)', 'Nirriti, goddess of dissolution, undoes what has outgrown itself; these stars lie towards the centre of the galaxy.'],
+  [['invincibility', 'the waters', 'purification', 'conviction', 'the fan'], 'Fierce (ugra)', 'Apas, the waters, cleanse and cannot be defeated: they flow round every obstacle and in time wear it away.'],
+  [['final victory', 'the universal', 'righteousness', 'endurance', 'the tusk'], 'Fixed (dhruva)', 'The Vishvadevas, the universal gods and sons of Dharma, grant the victory that lasts.'],
+  [['listening', 'learning', 'the oral teaching', 'connection', 'the three steps'], 'Movable (chara)', 'Vishnu crossed the three worlds in three strides and won them back from the demon king Bali.'],
+  [['wealth', 'rhythm', 'music', 'fame', 'the drum'], 'Movable (chara)', 'The eight Vasus, gods of the elements and of bright wealth, keep the beat of the world.'],
+  [['healing', 'the veil', 'secrecy', 'the cosmic waters', 'solitude'], 'Movable (chara)', 'Varuna, lord of the waters and of cosmic law, binds wrongdoers in his noose and frees the penitent.'],
+  [['fire', 'austerity', 'transformation', 'intensity', 'the funeral cot'], 'Fierce (ugra)', 'Aja Ekapada, the one-footed goat, is a fire-form of Rudra that stands at the pillar of the world.'],
+  [['depth', 'wisdom', 'calm', 'restraint', 'the serpent of the deep'], 'Fixed (dhruva)', 'Ahir Budhnya, the serpent of the deep waters, lies coiled at the foundation of the world.'],
+  [['nourishment', 'safe travel', 'the journey\'s end', 'guardianship', 'the flock'], 'Soft (mridu)', 'Pushan, guardian of roads and herds, finds lost cattle and leads souls safely home.'],
+];
+
+// The 28 xiu in order: the words kept for each, its animal and luminary in
+// the almanac cycle of 28 animals, and what the old star books say of it.
+const XIU_LORE = [
+  [['the gate of heaven', 'beginnings', 'spring rain', 'the dragon rising'], 'Wood jiao-dragon 木蛟', 'Thursday (wood)', 'Its two stars are the Gate of Heaven, through which the Sun and planets pass on the Yellow Road.'],
+  [['the upright', 'the temple', 'judgement', 'the throat'], 'Metal dragon 金龍', 'Friday (metal)', 'The star books set the ancestral temple here, and the fevers of the season.'],
+  [['the foundation', 'rest', 'the inner chamber'], 'Earth badger 土貉', 'Saturday (earth)', 'The resting chamber of the Son of Heaven, where the dragon sets its feet.'],
+  [['the bright hall', 'the heavenly team', 'the chamber'], 'Sun hare 日兔', 'Sunday (Sun)', 'The four horses that draw the sky, and the Bright Hall where the ruler gives audience.'],
+  [['the Great Fire', 'the ruler', 'the heart', 'high summer'], 'Moon fox 月狐', 'Monday (Moon)', 'When the Great Fire, Antares, sinks to the west at dusk, the heat breaks: "In the seventh month the Fire flows down."'],
+  [['the nine sons', 'the inner palace', 'lineage'], 'Fire tiger 火虎', 'Tuesday (fire)', 'The dragon\'s tail holds the inner palace and its nine sons, the line of descent.'],
+  [['wind', 'winnowing', 'the tongue', 'chaff from grain'], 'Water leopard 水豹', 'Wednesday (water)', 'The Basket loves the wind: when the Moon lodges here, the wind rises.'],
+  [['the span of life', 'the measure', 'longevity'], 'Wood xiezhi 木獬', 'Thursday (wood)', 'The Southern Dipper keeps the register of life, as the Northern Dipper keeps the register of death.'],
+  [['the herd boy', 'sacrifice', 'the river crossing'], 'Metal ox 金牛', 'Friday (metal)', 'The Herd Boy and the Weaver Girl are parted by the Silver River and meet once a year on the seventh night of the seventh month, over a bridge of magpies.'],
+  [['weaving', 'silk and cloth', 'women\'s work', 'the attendant'], 'Earth bat 土蝠', 'Saturday (earth)', 'The girl who serves the weaver: the work of thread, silk and cloth.'],
+  [['the void', 'mourning', 'the depth of winter', 'the hollow'], 'Sun rat 日鼠', 'Sunday (Sun)', 'The empty heart of the north, at the midwinter of the old sky; the star books give it weeping and the rites of the dead.'],
+  [['height', 'peril', 'the roof-ridge', 'building'], 'Moon swallow 月燕', 'Monday (Moon)', 'The roof-ridge raised high, where the danger is in the height itself.'],
+  [['the dwelling', 'the palace', 'shelter before winter'], 'Fire pig 火豬', 'Tuesday (fire)', '"When Ding stands at the zenith, build the palace": the farmers built when these stars culminated at dusk.'],
+  [['learning', 'the archive', 'letters', 'the wall'], 'Water yu-beast 水貐', 'Wednesday (water)', 'The eastern wall of heaven\'s secret library, where the books and charts are kept.'],
+  [['letters', 'examinations', 'the striding foot', 'the arsenal'], 'Wood wolf 木狼', 'Thursday (wood)', 'Kui Xing, refused his honours for his ugly face, threw himself into the sea; a great turtle bore him up to become the god of examinations.'],
+  [['the herds', 'the tether', 'gathering', 'the offering'], 'Metal dog 金狗', 'Friday (metal)', 'The pastures and the tethered beasts kept for the sacrifice.'],
+  [['the granary', 'the storehouse', 'the harvest kept'], 'Earth pheasant 土雉', 'Saturday (earth)', 'The granary of heaven, where the harvest is stored against the winter.'],
+  [['the Pleiades', 'the frontier', 'the mane', 'the solstice'], 'Sun rooster 日雞', 'Sunday (Sun)', '"The day is shortest and the star is Mao: so midwinter is fixed." The Pleiades at dusk marked the solstice for the ancient sage-kings.'],
+  [['rain', 'the hunt', 'the border', 'the net'], 'Moon crow 月烏', 'Monday (Moon)', '"The Moon lodges in the Net; there will be heavy rain."'],
+  [['the beak', 'the smallest', 'provisions'], 'Fire monkey 火猴', 'Tuesday (fire)', 'The smallest of the lodges, held in the tiger\'s mouth: the stores taken on campaign.'],
+  [['the warrior', 'the three', 'justice', 'the tiger\'s body'], 'Water ape 水猿', 'Wednesday (water)', 'Shen and Shang were brothers who fought without end, so their father set them at opposite ends of the sky: one rises as the other sets.'],
+  [['water', 'the law', 'fairness', 'the well'], 'Wood hound 木犴', 'Thursday (wood)', 'The well of heaven, whose water is level: the law that treats all alike.'],
+  [['the dead', 'the ancestors', 'the rites', 'the hazy heap'], 'Metal goat 金羊', 'Friday (metal)', 'At its heart is a faint cloud, the Heap of Corpses, the gathered spirits of the dead.'],
+  [['the willow', 'the bird\'s beak', 'feasting', 'plants and trees'], 'Earth roe 土獐', 'Saturday (earth)', 'The willow bends where the Vermilion Bird stoops to feed; the star books give it the cook and the feast.'],
+  [['the throat', 'robes and embroidery', 'the urgent'], 'Sun horse 日馬', 'Sunday (Sun)', 'The bird\'s neck, with Alphard the solitary; the star books give it fine robes and embroidery.'],
+  [['the spread', 'treasure', 'hospitality', 'the crop'], 'Moon deer 月鹿', 'Monday (Moon)', 'The bird\'s crop, full and spread wide: the treasures of the temple and the welcome of guests.'],
+  [['wings', 'music', 'the distant guest', 'travel'], 'Fire snake 火蛇', 'Tuesday (fire)', 'The wings of the bird and the music hall of heaven, where guests arrive from far away.'],
+  [['the chariot', 'the wind', 'the journey', 'endings'], 'Water worm 水蚓', 'Wednesday (water)', 'The chariot that closes the circle of the lodges: the wind, the carriage, and the last journey.'],
+];
 const QUARTER = {
   'Azure Dragon': { core: 'The Rising East', keys: ['spring', 'wood', 'dawn', 'growth', 'the emperor'] },
   'Black Tortoise': { core: 'The Dark North', keys: ['winter', 'water', 'midnight', 'longevity', 'stillness'] },
@@ -135,9 +199,11 @@ export function essenceOf(ent) {
     case 'mode': return MODE[n] || null;
     case 'phase': return PH[n] || null;
     case 'asp': return ASP[n] || null;
-    case 'nak': { const i = parseInt(ent.kindLabel.replace(/\D/g, ''), 10) - 1; return { core: NAK_MEANING[i], keys: [], rep: [] }; }
+    case 'nak': { const i = parseInt(ent.kindLabel.replace(/\D/g, ''), 10) - 1; const [keys, nature, myth] = NAK[i];
+      return { core: NAK_MEANING[i], keys, rep: [['Nature', nature]], myth }; }
     case 'sym': return QUARTER[n] || null;
-    case 'xiu': return { core: n, keys: [], rep: [] };
+    case 'xiu': { const i = parseInt(ent.kindLabel.replace(/\D/g, ''), 10) - 1; const [keys, animal, day, myth] = XIU_LORE[i];
+      return { core: n, keys, rep: [['Animal', animal], ['Day', day]], myth }; }
     case 'branch': return { core: ent.essence.split(',')[0], keys: [], rep: [] };
     default: return null;
   }

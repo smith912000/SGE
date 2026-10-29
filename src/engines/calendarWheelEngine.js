@@ -154,33 +154,51 @@ function buildIslamicModel(ctx = {}) {
   const monthNum = parseNumericPart(parts, "month");
   const dayNum = parseNumericPart(parts, "day");
   const yearNum = parseNumericPart(parts, "year");
-  const segments = buildSegments(12, (idx) => `Hijri ${idx + 1}`);
+  const segments = buildSegments(12, (idx) => ISLAMIC_MONTH_DATA[idx + 1]?.name || `Hijri ${idx + 1}`);
   const monthData = ISLAMIC_MONTH_DATA[monthNum] || { name: `Month ${monthNum}`, theme: "Cycle of Faith", advice: "Observe the lunar rhythms with gratitude." };
   model.nativeRings.push({
     id: "hijriMonth",
     label: "Hijri month cycle",
     segments,
     activeIndex: monthNum ? monthNum - 1 : 0,
-    plain: monthNum ? `Hijri: ${monthData.name}: ${monthData.theme}. ${monthData.advice}` : `Hijri date ${dayNum || "?"}/${monthNum || "?"}/${yearNum || "?"}.`,
+    plain: monthNum ? `Hijri date ${dayNum} ${monthData.name} ${yearNum}. ${monthData.theme}: ${monthData.attributed || monthData.advice}` : `Hijri date ${dayNum || "?"}/${monthNum || "?"}/${yearNum || "?"}.`,
   });
   return model;
 }
+
+// Intl gives the Hebrew month as a name (Tishri, Heshvan, Adar I...), not a
+// number, so map the name to the ecclesiastical count used by the month data
+// (Nisan = 1) and lay the ring out in civil order from Tishri.
+const HEBREW_MONTH_BY_NAME = {
+  tishri: 7, tishrei: 7, heshvan: 8, cheshvan: 8, kislev: 9, tevet: 10, shevat: 11,
+  "adar i": 12, adar: 12, "adar ii": 13, nisan: 1, iyar: 2, sivan: 3, tamuz: 4, tammuz: 4, av: 5, elul: 6,
+};
+const isHebrewLeapYear = (y) => ((7 * y + 1) % 19) < 7;
 
 function buildJewishModel(ctx = {}) {
   const model = baseModel("jewish", ctx);
   const date = new Date(`${model.dateISO}T00:00:00Z`);
   const parts = intlCalendarParts(date, "hebrew");
-  const monthNum = parseNumericPart(parts, "month");
+  const monthName = (parts.find((p) => p.type === "month")?.value || "").toLowerCase().trim();
+  const monthNum = HEBREW_MONTH_BY_NAME[monthName] ?? parseNumericPart(parts, "month");
   const dayNum = parseNumericPart(parts, "day");
   const yearNum = parseNumericPart(parts, "year");
-  const segments = buildSegments(13, (idx) => `Hebrew ${idx + 1}`);
-  const monthData = HEBREW_MONTH_DATA[monthNum] || { name: `Month ${monthNum}`, theme: "Covenant Path", advice: "Follow the sacred rhythms of the heart." };
+  const leap = yearNum ? isHebrewLeapYear(yearNum) : false;
+  // Civil order from Tishri; in a leap year Adar I and Adar II replace Adar.
+  const order = [7, 8, 9, 10, 11, ...(leap ? [12, 13] : [12]), 1, 2, 3, 4, 5, 6];
+  const nameOf = (n) => (n === 12 && leap ? "Adar I" : HEBREW_MONTH_DATA[n]?.name || `Month ${n}`);
+  const segments = buildSegments(order.length, (idx) => nameOf(order[idx]));
+  // In a leap year Purim falls in Adar II and Adar I is the added month.
+  const monthData = HEBREW_MONTH_DATA[leap && monthNum === 12 ? 13 : leap && monthNum === 13 ? 12 : monthNum];
+  const activeIndex = Math.max(0, order.indexOf(monthNum));
   model.nativeRings.push({
     id: "hebrewMonth",
     label: "Hebrew month cycle",
     segments,
-    activeIndex: monthNum ? Math.min(12, Math.max(0, monthNum - 1)) : 0,
-    plain: monthNum ? `Hebrew: ${monthData.name}: ${monthData.theme}. ${monthData.advice}` : `Hebrew date ${dayNum || "?"}/${monthNum || "?"}/${yearNum || "?"}.`,
+    activeIndex,
+    plain: monthData
+      ? `Hebrew date ${dayNum} ${nameOf(monthNum)} ${yearNum}${leap ? " (a leap year of thirteen months)" : ""}. ${monthData.theme}: ${monthData.attributed}`
+      : `Hebrew date ${dayNum || "?"} ${monthName || "?"} ${yearNum || "?"}.`,
   });
   return model;
 }
