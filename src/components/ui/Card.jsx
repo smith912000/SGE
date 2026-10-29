@@ -1,4 +1,5 @@
 import { M3 } from '../../theme/m3.js';
+import { plainTitle } from './Tooltip.jsx';
 
 const VARIANTS = {
   default: {
@@ -28,12 +29,12 @@ export default function Card({ children, title, style = {}, variant = 'default' 
         <h3 style={{
           fontFamily: M3.fontBody,
           fontWeight: 600,
-          fontSize: '0.68rem',
+          fontSize: '0.75rem',
           letterSpacing: '0.16em',
           color: M3.tertiary,
           marginBottom: 14,
           textTransform: 'uppercase',
-        }}>{title}</h3>
+        }}>{typeof title === 'string' ? plainTitle(title) : title}</h3>
       )}
       {children}
     </section>

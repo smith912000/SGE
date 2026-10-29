@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { M3 } from "../../theme/m3.js";
 import { useAnime } from "../../hooks/useAnime.js";
 import CalendarWheel from "./CalendarWheel.jsx";
+import { plainTitle } from "../ui/Tooltip.jsx";
 
 const TOOLTIP_OFFSET_X = 10;
 const TOOLTIP_OFFSET_Y = 10;
@@ -70,7 +71,6 @@ function CalendarTooltip({ info, x, y, visible }) {
           borderBottom: "1px solid rgba(155,135,200,0.15)",
         }}
       >
-        <span style={{ fontSize: "1.2rem" }}>{info.emoji || "✦"}</span>
         <span
           style={{
             color: M3.primary,
@@ -80,7 +80,7 @@ function CalendarTooltip({ info, x, y, visible }) {
             letterSpacing: "0.04em",
           }}
         >
-          {info.title}
+          {plainTitle(info.title)}
         </span>
       </div>
       <div style={{ padding: "14px 16px" }}>
@@ -102,7 +102,7 @@ function CalendarTooltip({ info, x, y, visible }) {
                   background: "rgba(155,135,200,0.18)",
                   color: M3.onPrimaryContainer,
                   fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.62rem",
+                  fontSize: "0.75rem",
                   letterSpacing: "0.05em",
                   border: "1px solid rgba(155,135,200,0.25)",
                 }}
@@ -116,7 +116,7 @@ function CalendarTooltip({ info, x, y, visible }) {
           style={{
             color: M3.onSurface,
             fontFamily: "'DM Sans', system-ui, sans-serif",
-            fontSize: "0.74rem",
+            fontSize: "0.75rem",
             lineHeight: 1.55,
             margin: 0,
           }}
@@ -129,7 +129,7 @@ function CalendarTooltip({ info, x, y, visible }) {
               color: M3.onSurfaceVariant,
               fontFamily: "'DM Sans', system-ui, sans-serif",
               fontStyle: "italic",
-              fontSize: "0.68rem",
+              fontSize: "0.75rem",
               lineHeight: 1.55,
               marginTop: 10,
               paddingTop: 10,
@@ -169,7 +169,7 @@ export default function CalendarWheelWithTooltip({ model, size = 500, showOverla
             textAlign: "center",
             marginTop: 8,
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: "0.6rem",
+            fontSize: "0.75rem",
             color: M3.outlineVariant,
             letterSpacing: "0.1em",
           }}

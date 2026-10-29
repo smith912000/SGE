@@ -18,18 +18,11 @@ export default function Header() {
             letterSpacing: '0.14em', lineHeight: 1, color: M3.onSurface,
           }}>SGE</div>
           <div style={{
-            fontFamily: M3.fontBody, fontWeight: 600, fontSize: '0.66rem',
+            fontFamily: M3.fontBody, fontWeight: 600, fontSize: '0.75rem',
             letterSpacing: '0.18em', textTransform: 'uppercase', color: M3.tertiary, marginTop: 4,
-          }}>Astrology engine</div>
+          }}>Astrological synthesis</div>
         </div>
       </a>
-      <div style={{
-        fontFamily: M3.fontBody, fontSize: '0.8rem', color: M3.outlineVariant,
-        display: 'flex', gap: 14, alignItems: 'center', flexWrap: 'wrap',
-      }}>
-        <span>Deterministic. Astronomically rigorous. No machine learning.</span>
-        <span className="badge">v5.0</span>
-      </div>
     </header>
   );
 }

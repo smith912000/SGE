@@ -6,6 +6,7 @@ import Tooltip from '../ui/Tooltip.jsx';
 export default function WheelWithTooltip(props) {
   const [tip, setTip] = useState({ visible:false, info:null, x:0, y:0 });
   const [aspMode, setAspMode] = useState(props.mode || "default");
+  const [reading, setReading] = useState(null);
   const wrapRef = useRef(null);
   const wheelSize = props?.size ?? 480;
   
@@ -18,48 +19,55 @@ export default function WheelWithTooltip(props) {
   const wheelId = props.id || "chart-main";
 
   return (
-    <div ref={wrapRef} style={{ position:"relative", width:"100%", overflowX:"auto" }}>
-      <div style={{
-        display:"grid",
-        gridTemplateColumns:"290px minmax(320px, 1fr)",
-        alignItems:"flex-start",
-        gap:16,
-        minWidth:290 + 16 + Math.max(320, Math.min(640, wheelSize)),
-      }}>
-        <div style={{ width:290, minWidth:220, flexShrink:0, position:"relative", minHeight:tip.visible?180:0, transition:"min-height 0.2s" }}>
+    <div ref={wrapRef} style={{ position:"relative", width:"100%" }}>
+      {/* Side panel for the attribution on wide screens; on phones the wheel
+          comes first at full width and the panel follows beneath it. */}
+      <div className="sge-wheelwrap">
+        <div className="sge-wheeltip" style={{ minHeight:tip.visible?180:0 }}>
           <Tooltip {...tip} pinLeft/>
         </div>
-        <div style={{ display:"flex", flexDirection:"column", alignItems:"center", minWidth:320 }}>
-          <WheelChart {...props} mode={aspMode} id={wheelId} onTooltip={handleTip} theme={theme}/>
+        <div className="sge-wheelcol">
+          <WheelChart {...props} mode={aspMode} id={wheelId} onTooltip={handleTip} onReading={setReading} theme={theme}/>
+          <WheelReading reading={reading} />
           
-          <div style={{ display:"flex", gap:20, marginTop:12, alignItems:"center" }}>
-            <button 
-              onClick={() => exportWheelAsSvg(wheelId)}
-              style={{
-                background:"transparent", border:`1px solid ${M3.primary}44`, borderRadius:6, padding:"4px 12px",
-                color:M3.primary, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.65rem", cursor:"pointer",
-                transition:"all 0.2s", letterSpacing:"0.05em"
-              }}>
-              ⎙ SAVE CHART (.SVG)
+          <div style={{ display:"flex", gap:8, marginTop:12, alignItems:"center", flexWrap:"wrap", justifyContent:"center" }}>
+            <button type="button" className="sge-chip" aria-pressed={aspMode === "aspects"}
+              onClick={() => setAspMode(aspMode === "default" ? "aspects" : "default")}>
+              {aspMode === "default" ? "Show all aspects" : "Show main aspects"}
             </button>
-
-            <button 
-              onClick={() => setAspMode(aspMode === "default" ? "aspects" : "default")}
-              style={{
-                background:"transparent", border:`1px solid ${M3.secondary}44`, borderRadius:6, padding:"4px 12px",
-                color:M3.secondary, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.65rem", cursor:"pointer",
-                transition:"all 0.2s", letterSpacing:"0.05em"
-              }}>
-              ⌥ {aspMode === "default" ? "VIEW ALL ASPECTS" : "SIMPLIFIED VIEW"}
+            <button type="button" className="sge-chip" onClick={() => exportWheelAsSvg(wheelId)}>
+              Save as SVG
             </button>
           </div>
 
-          <div style={{ textAlign:"center", marginTop:10, fontFamily:"'JetBrains Mono', monospace",
-            fontSize:"0.6rem", color:M3.outlineVariant, letterSpacing:"0.1em", opacity: 0.6 }}>
-            HOVER PLANETS · SIGNS · HOUSES · ASPECTS FOR INFO
-          </div>
+          <p style={{ textAlign:"center", margin:"10px 0 0", fontSize:"0.8125rem", color:M3.onSurfaceVariant }}>
+            Hover, tap or tab to a body to light its sign, house and aspects.
+          </p>
         </div>
       </div>
     </div>
+  );
+}
+
+const ordinal = n => n + (["th","st","nd","rd"][((n % 100) - 20) % 10] || ["th","st","nd","rd"][n % 100] || "th");
+
+const ASPECT_ADJ = { Conjunction: "conjunct", Opposition: "opposite" };
+
+// One line that reads the body in focus the way a practitioner would say it:
+// the body, its degree and sign, its house, then its aspects, tightest first.
+function WheelReading({ reading }) {
+  const asps = reading ? [...reading.aspects].sort((a, b) => a.orb - b.orb) : [];
+  return (
+    <p className="sge-reading" aria-live="polite">
+      {reading ? (
+        <>
+          <b>{reading.planet}</b> at {reading.deg}° {reading.sign}
+          {reading.house ? <>, {ordinal(reading.house)} house</> : null}
+          {asps.length ? <>: {asps.slice(0, 4).map((a, i) => (
+            <span key={i}>{i ? ", " : ""}<span style={{ color: a.col }}>{ASPECT_ADJ[a.name] || a.name.toLowerCase()}</span> {a.other} ({Number(a.orb).toFixed(1)}°)</span>
+          ))}{asps.length > 4 ? `, and ${asps.length - 4} more` : ""}</> : <>, with no aspect inside the orbs in use</>}
+        </>
+      ) : <span className="sge-reading-idle">Select a body to read it in place.</span>}
+    </p>
   );
 }

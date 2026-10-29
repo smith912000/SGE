@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useAnime } from '../../hooks/useAnime.js';
 import { M3 } from '../../theme/m3.js';
 import { norm, RAD } from '../../utils/helpers.js';
 import { SIGNS, SIGN_SYM, SIGN_COL, SIGN_INFO } from '../../data/astrology/signs.js';
@@ -8,25 +7,6 @@ import { ASPECTS, ASP_SHORT, ASPECT_MEANINGS } from '../../data/astrology/aspect
 import { HOUSE_INFO } from '../../data/astrology/houses.js';
 import { AXIS_INFO } from '../../data/astrology/axes.js';
 import Tooltip from '../ui/Tooltip.jsx';
-
-function waveAxisPath(a1, a2, R, cx, cy, amp, freq, phase) {
-  const [x1,y1] = [cx + R*Math.cos(a1), cy + R*Math.sin(a1)];
-  const [x2,y2] = [cx + R*Math.cos(a2), cy + R*Math.sin(a2)];
-  const dx = x2-x1, dy = y2-y1;
-  const len = Math.hypot(dx, dy);
-  if (len === 0) return `M${x1},${y1}`;
-  const nx = -dy/len, ny = dx/len;
-  const steps = 40;
-  let d = `M${x1},${y1}`;
-  for (let i = 1; i <= steps; i++) {
-    const t = i / steps;
-    const bx = x1 + dx*t, by = y1 + dy*t;
-    const envelope = Math.sin(t * Math.PI);
-    const offset = amp * envelope * Math.sin(freq * t * Math.PI * 2 + phase);
-    d += ` L${(bx + nx*offset).toFixed(2)},${(by + ny*offset).toFixed(2)}`;
-  }
-  return d;
-}
 
 function calcAspects(pos) {
   const ks  = Object.keys(pos);
@@ -45,70 +25,22 @@ function calcAspects(pos) {
 const zodSign = lon => SIGNS[Math.floor(((lon%360+360)%360)/30)];
 const zodDeg = lon => (((lon%360+360)%360)%30).toFixed(1);
 
-/* ── Wheel theme definitions ── */
-const WHEEL_THEMES = {
-  western: {
-    bg0: "#0a0620", bg1: "#04020e",
-    ci0: "#120e28", ci1: "#04020e",
-    ring: "#bb86fc",
-    glow: "rgba(187,134,252,0.14)",
-    center0: "#0a0620", center1: "#bb86fc",
-    axisAccent: "#bb86fc",
-    decorRings: false,
-    showSpokes: false,
-  },
-  solar: {
-    bg0: "#1a0f00", bg1: "#050300",
-    ci0: "#2d1b00", ci1: "#080400",
-    ring: "#FFB347",
-    glow: "rgba(255,179,71,0.22)",
-    center0: "#1a0f00", center1: "#FFD700",
-    axisAccent: "#FFD700",
-    decorRings: true,
-    decorCol: "#FFD70033",
-    showSpokes: true,
-    spokeCol: "#FFB34722",
-  },
-  lunar: {
-    bg0: "#000814", bg1: "#000205",
-    ci0: "#001b3a", ci1: "#00050a",
-    ring: "#90caf9",
-    glow: "rgba(144,202,249,0.18)",
-    center0: "#000814", center1: "#90caf9",
-    axisAccent: "#B0C4DE",
-    decorRings: true,
-    decorCol: "#90caf922",
-    showSpokes: false,
-    shimmer: true,
-  },
-  vedic: {
-    bg0: "#0d0221", bg1: "#05010a",
-    ci0: "#1a064d", ci1: "#070214",
-    ring: "#9c6bff",
-    glow: "rgba(156,107,255,0.25)",
-    center0: "#0d0221", center1: "#9c6bff",
-    axisAccent: "#cc99ff",
-    decorRings: true,
-    decorCol: "#9c6bff44",
-    mandala: true,
-  },
-  transit: {
-    bg0: "#001a14", bg1: "#000d0a",
-    ci0: "#012218", ci1: "#000d0a",
-    ring: "#4dd0a4",
-    glow: "rgba(77,208,164,0.14)",
-    center0: "#001a14", center1: "#4dd0a4",
-    axisAccent: "#7fffd4",
-  },
-  chinese: {
-    bg0: "#1a0000", bg1: "#080000",
-    ci0: "#2d0000", ci1: "#0a0000",
-    ring: "#ff5252",
-    glow: "rgba(255,82,82,0.18)",
-    center0: "#1a0000", center1: "#ff5252",
-    axisAccent: "#ff1744",
-  },
+/* ── Wheel themes ──
+   One instrument for every frame: night ground, gold rules, element-coloured
+   signs. Each frame changes only its accent, which marks the MC-IC axis and
+   the centre, so a glance tells which zodiac is on screen. */
+const BASE_THEME = {
+  bg0: "#0F0A1A", bg1: "#050309",
+  ci0: "#0A0612", ci1: "#050309",
+  ring: "#C9A84C",
+  center0: "#0A0612",
 };
+const ACCENT = {
+  western: "#B9A9F0", solar: "#E9C766", lunar: "#A9C3DA",
+  vedic: "#E2B48A", transit: "#93B89A", chinese: "#D07262",
+};
+const WHEEL_THEMES = Object.fromEntries(Object.entries(ACCENT).map(([k, a]) =>
+  [k, { ...BASE_THEME, center1: a, axisAccent: a }]));
 
 export const exportWheelAsSvg = (id) => {
   const svg = document.getElementById(id);
@@ -130,14 +62,9 @@ export const exportWheelAsSvg = (id) => {
   document.body.removeChild(link);
 };
 
-export default function WheelChart({ positions, houses, size = 480, id = "w", onTooltip, mode = "default", theme = "western" }) {
+export default function WheelChart({ positions, houses, size = 480, id = "w", onTooltip, onReading, mode = "default", theme = "western" }) {
   const TH = WHEEL_THEMES[theme] || WHEEL_THEMES.western;
   const svgRef = useRef(null);
-  const waveRefs = useRef([null,null,null,null,null,null]);
-  const anime  = useAnime();
-  const phaseRef = useRef(0);
-  const rafRef = useRef(null);
-  const lastFrameTsRef = useRef(0);
   const [hoveredPlanet, setHoveredPlanet] = useState(null);
 
   const showTip = (e, info) => {
@@ -159,7 +86,6 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
   const rHouseOuter = R * 0.66;
   const rHouseInner = R * 0.56;
   const rAspectRing = R * 0.54;
-  const waveAmp     = R * 0.018;
 
   const ascLon = houses?.ASC ?? 0;
   const lon2a  = lon => Math.PI - norm(lon - ascLon) * RAD;
@@ -173,7 +99,8 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
     const [ox1,oy1] = pt(rSignOuter, a1);
     const [ix1,iy1] = pt(rSignInner, a1);
     const [ix0,iy0] = pt(rSignInner, a0);
-    const path = `M${ox0},${oy0} A${rSignOuter},${rSignOuter} 0 0,1 ${ox1},${oy1} L${ix1},${iy1} A${rSignInner},${rSignInner} 0 0,0 ${ix0},${iy0} Z`;
+    // Longitude runs counter-clockwise on screen, so the outer arc sweeps with flag 0.
+    const path = `M${ox0},${oy0} A${rSignOuter},${rSignOuter} 0 0,0 ${ox1},${oy1} L${ix1},${iy1} A${rSignInner},${rSignInner} 0 0,1 ${ix0},${iy0} Z`;
     const [gx,gy] = pt((rSignInner+rSignOuter)/2, lon2a(i*30+15));
     return { sign, path, gx, gy, idx:i };
   });
@@ -187,7 +114,11 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
   /* ── Aspects ── */
   const aspects = calcAspects(positions);
   const isAspectsMode = mode === "aspects";
-  const visibleAspects = isAspectsMode ? aspects.slice(0, 30) : aspects.slice(0, 12);
+  const baseAspects = isAspectsMode ? aspects.slice(0, 30) : aspects.slice(0, 12);
+  // A body in focus shows every aspect it makes, not only the strongest dozen.
+  const visibleAspects = hoveredPlanet
+    ? [...baseAspects, ...aspects.filter(x => !baseAspects.includes(x) && (x.p1 === hoveredPlanet || x.p2 === hoveredPlanet))]
+    : baseAspects;
 
   /* ── Planet placement: circumferential collision avoidance on tiered rings ── */
   const PLANET_WEIGHT = { Sun:10, Moon:9, Mercury:5, Venus:6, Mars:7, Jupiter:8, Saturn:7, Uranus:4, Neptune:3, Pluto:3, Chiron:2, Node:2, Lilith:2 };
@@ -234,68 +165,79 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
     && window.matchMedia
     && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ── Animated wave RAF loop ── */
-  useEffect(() => {
-    if (reduceMotion) return;
-    let running = true;
-    const targetFrameMs = 1000 / 30;
-    const tick = (ts) => {
-      if (!running) return;
-      if (document.visibilityState === "hidden") {
-        rafRef.current = requestAnimationFrame(tick);
-        return;
-      }
-      if (ts - lastFrameTsRef.current < targetFrameMs) {
-        rafRef.current = requestAnimationFrame(tick);
-        return;
-      }
-      lastFrameTsRef.current = ts;
-      phaseRef.current += 0.025;
-      const ph = phaseRef.current;
-      axisPairs.forEach((pair, pi) => {
-        const d = waveAxisPath(pair.a1, pair.a2, rSignInner, cx, cy, waveAmp, 5, ph + pi * 1.5);
-        const glowEl = waveRefs.current[pi*3];
-        const midEl  = waveRefs.current[pi*3+1];
-        const coreEl = waveRefs.current[pi*3+2];
-        if (glowEl) glowEl.setAttribute("d", d);
-        if (midEl)  midEl.setAttribute("d", d);
-        if (coreEl) coreEl.setAttribute("d", d);
-      });
-      rafRef.current = requestAnimationFrame(tick);
-    };
-    rafRef.current = requestAnimationFrame(tick);
-    return () => { running = false; if (rafRef.current) cancelAnimationFrame(rafRef.current); };
-  }, [houses, reduceMotion]);
+  /* ── The body in focus: its sign, its house and its aspects ──
+     Hover, tap or keyboard focus on a body lights the sign it stands in and
+     the house it falls in, and names them under the wheel. */
+  const houseOf = (lon) => {
+    if (!houses) return null;
+    for (let n = 1; n <= 12; n++) {
+      const a = houses[n], b = houses[(n % 12) + 1];
+      if (a == null || b == null) return null;
+      if (norm(lon - a) < norm(b - a)) return n;
+    }
+    return null;
+  };
+  const focus = hoveredPlanet && positions[hoveredPlanet] != null ? (() => {
+    const lon = positions[hoveredPlanet];
+    const house = houseOf(lon);
+    const asps = aspects.filter(a => a.p1 === hoveredPlanet || a.p2 === hoveredPlanet)
+      .map(a => ({ name: a.name, other: a.p1 === hoveredPlanet ? a.p2 : a.p1, orb: a.orb, col: a.col, sym: a.sym }));
+    return { planet: hoveredPlanet, lon, sign: zodSign(lon), deg: zodDeg(lon), house, aspects: asps };
+  })() : null;
 
-  /* ── Entrance animations ── */
+  useEffect(() => { if (onReading) onReading(focus); },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [hoveredPlanet, positions]);
+
+  const houseSector = focus?.house ? (() => {
+    const n = focus.house;
+    const l0 = houses[n], l1 = houses[(n % 12) + 1];
+    const a0 = lon2a(l0), a1 = lon2a(l1);
+    const big = norm(l1 - l0) > 180 ? 1 : 0;
+    const [o0x,o0y] = pt(rHouseOuter, a0), [o1x,o1y] = pt(rHouseOuter, a1);
+    const [i1x,i1y] = pt(rHouseInner, a1), [i0x,i0y] = pt(rHouseInner, a0);
+    return `M${o0x},${o0y} A${rHouseOuter},${rHouseOuter} 0 ${big},0 ${o1x},${o1y} L${i1x},${i1y} A${rHouseInner},${rHouseInner} 0 ${big},1 ${i0x},${i0y} Z`;
+  })() : null;
+
+  /* ── Casting: the figure assembles in the order it is read ──
+     Rings, then the signs from 0° Aries round the zodiac, then the cusps,
+     then each body travels from 0° Aries to its longitude, so the arc it
+     covers is its place in the zodiac. Aspects draw last. About two seconds,
+     once per chart, and skipped under prefers-reduced-motion. */
   useEffect(() => {
-    if (!anime || !svgRef.current) return;
     const el = svgRef.current;
-    anime({ targets: el.querySelectorAll(".wh-ring"),
-      opacity:[0,1], duration:350, easing:"easeOutQuad" });
-    anime({ targets: el.querySelectorAll(".sw"),
-      opacity:[0,1], delay:anime.stagger(25, {start:100}), duration:400, easing:"easeOutCubic" });
-    anime({ targets: el.querySelectorAll(".hc"),
-      opacity:[0,1], delay:anime.stagger(20, {start:400}), duration:300, easing:"easeOutQuad" });
-    anime({ targets: el.querySelectorAll(".ax-wave"),
-      opacity:[0,1], delay:500, duration:600, easing:"easeInOutSine" });
-    anime({ targets: el.querySelectorAll(".al"),
-      strokeDashoffset:[anime.setDashoffset,0], opacity:[0,null],
-      delay:anime.stagger(18,{start:600}), duration:500, easing:"easeInOutQuad" });
-    anime({ targets: el.querySelectorAll(".pg"),
-      opacity:[0,1], scale:[0.3,1],
-      delay:anime.stagger(55,{start:700}), duration:550, easing:"easeOutBack" });
-  }, [positions, anime]);
-
-  /* ── Initial wave path for SSR / first paint ── */
-  const initWavePaths = axisPairs.map((pair, pi) =>
-    waveAxisPath(pair.a1, pair.a2, rSignInner, cx, cy, waveAmp, 5, pi * 1.5)
-  );
+    if (!el || reduceMotion || typeof el.animate !== "function") return;
+    const ease = "cubic-bezier(.16,1,.3,1)";
+    const anims = [];
+    const fade = (nodes, start, step, duration = 380) => nodes.forEach((n, i) =>
+      anims.push(n.animate([{ opacity: 0 }, { opacity: 1 }], { duration, delay: start + i * step, easing: ease, fill: "backwards" })));
+    fade([...el.querySelectorAll(".wh-ring")], 0, 40);
+    fade([...el.querySelectorAll(".sw[data-sign]")].sort((a, b) => a.dataset.sign - b.dataset.sign), 80, 35);
+    fade([...el.querySelectorAll(".hc")], 480, 25);
+    fade([...el.querySelectorAll(".ax-wave, .sw[data-axis]")], 560, 0, 500);
+    const bodies = [...el.querySelectorAll(".pg")].sort((a, b) => a.dataset.lon - b.dataset.lon);
+    bodies.forEach((g, i) => {
+      const lon = Number(g.dataset.lon);
+      const timing = { duration: 700 + lon * 2, delay: 700 + i * 70, easing: ease, fill: "backwards" };
+      anims.push(g.animate([{ transform: `rotate(${lon}deg)`, opacity: 0 }, { transform: `rotate(${lon * 0.15}deg)`, opacity: 1, offset: 0.85 }, { transform: "rotate(0deg)", opacity: 1 }], timing));
+      // keep the glyph and its degree upright while the body travels
+      g.querySelectorAll("text").forEach(t =>
+        anims.push(t.animate([{ transform: `rotate(${-lon}deg)` }, { transform: `rotate(${-lon * 0.15}deg)`, offset: 0.85 }, { transform: "rotate(0deg)" }], timing)));
+    });
+    const asp0 = 700 + bodies.length * 70 + 600;
+    el.querySelectorAll(".al").forEach((l, i) => {
+      const L = Math.hypot(l.x2.baseVal.value - l.x1.baseVal.value, l.y2.baseVal.value - l.y1.baseVal.value);
+      anims.push(l.animate([{ strokeDasharray: `${L}`, strokeDashoffset: L }, { strokeDasharray: `${L}`, strokeDashoffset: 0 }],
+        { duration: 500, delay: asp0 + i * 30, easing: ease, fill: "backwards" }));
+    });
+    return () => anims.forEach(a => a.cancel());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [positions, houses]);
 
   return (
     <svg ref={svgRef} id={id} viewBox={`0 0 ${S} ${S}`}
       style={{ display:"block", width:"100%", maxWidth: S, height: "auto", aspectRatio: "1 / 1",
-        filter:`drop-shadow(0 0 24px ${TH.glow})` }}>
+      }}>
       <defs>
         <radialGradient id={`bg${id}`} cx="50%" cy="50%" r="50%">
           <stop offset="0%"  stopColor={TH.bg0}/>
@@ -305,49 +247,10 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
           <stop offset="0%"  stopColor={TH.ci0} stopOpacity="0.7"/>
           <stop offset="100%" stopColor={TH.ci1} stopOpacity="0.95"/>
         </radialGradient>
-        {/* Solar: sunburst radial lines */}
-        {theme === "solar" && (
-          <radialGradient id={`sb${id}`} cx="50%" cy="50%" r="50%">
-            <stop offset="60%" stopColor="#FFD700" stopOpacity="0"/>
-            <stop offset="100%" stopColor="#FFD700" stopOpacity="0.06"/>
-          </radialGradient>
-        )}
-        {/* Vedic: mandala gradient */}
-        {theme === "vedic" && (
-          <radialGradient id={`vd${id}`} cx="50%" cy="50%" r="50%">
-            <stop offset="50%" stopColor="#9c6bff" stopOpacity="0"/>
-            <stop offset="100%" stopColor="#9c6bff" stopOpacity="0.08"/>
-          </radialGradient>
-        )}
-        <filter id={`glo${id}`}><feGaussianBlur stdDeviation="3"/></filter>
-        <filter id={`gl2${id}`}><feGaussianBlur stdDeviation="1.5"/></filter>
       </defs>
 
       {/* ── BACKGROUND ── */}
       <circle cx={cx} cy={cy} r={rBezel+2} fill={`url(#bg${id})`}/>
-      {/* Solar sunburst overlay */}
-      {theme === "solar" && <circle cx={cx} cy={cy} r={rBezel+2} fill={`url(#sb${id})`}/>}
-      {/* Solar: decorative sunburst spokes */}
-      {theme === "solar" && Array.from({length:24},(_,i)=>{
-        const a = (i/24)*Math.PI*2;
-        const [x1,y1]=pt(rSignInner*0.7,a);
-        const [x2,y2]=pt(rBezel*0.98,a);
-        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#FFD700" strokeWidth="0.3" opacity="0.08"/>;
-      })}
-      {/* Vedic: mandala inner ring decoration */}
-      {theme === "vedic" && <circle cx={cx} cy={cy} r={rBezel+2} fill={`url(#vd${id})`}/>}
-      {theme === "vedic" && Array.from({length:8},(_,i)=>{
-        const a = (i/8)*Math.PI*2;
-        const [x1,y1]=pt(rHouseInner*0.5,a);
-        const [x2,y2]=pt(rHouseInner*0.95,a);
-        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#9c6bff" strokeWidth="0.5" opacity="0.2"/>;
-      })}
-      {/* Lunar: subtle silver shimmer rings */}
-      {theme === "lunar" && <>
-        <circle cx={cx} cy={cy} r={rSignOuter*0.98} fill="none" stroke="#90caf9" strokeWidth="0.4" opacity="0.07" strokeDasharray="4 8"/>
-        <circle cx={cx} cy={cy} r={rHouseOuter*1.02} fill="none" stroke="#B0C4DE" strokeWidth="0.3" opacity="0.06" strokeDasharray="2 10"/>
-      </>}
-
       {/* ── STRUCTURAL RINGS ── */}
       <circle className="wh-ring" cx={cx} cy={cy} r={rBezel} fill="none"
         stroke={TH.ring} strokeWidth="1.5" opacity="0.2"/>
@@ -364,7 +267,7 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
       {/* ── SIGN WEDGES with 12 boundary ticks ── */}
       {signWedges.map(({ sign, path, gx, gy, idx }) => {
         const si = SIGN_INFO[sign];
-        const tipInfo = { title:`${si.emoji} ${sign}`, emoji:si.emoji,
+        const tipInfo = { title:sign,
           plain:si.plain + (si.hebrew ? `\n\nLetter: ${si.letterName} (${si.hebrew}) ${si.hiero} ${si.phoenician} — ${si.letterMeaning.split("—")[1]?.trim()||""}` : ""),
           tags:[si.element, si.mode, "Ruler: "+si.ruler, ...(si.hebrew?[`${si.hebrew} ${si.letterName}`]:[]) ] };
         const bndA = lon2a(idx * 30);
@@ -385,15 +288,17 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
         }
 
         return (
-          <g key={sign} className="sw" style={{cursor:"pointer"}}
+          <g key={sign} className="sw" data-sign={idx} style={{cursor:"pointer"}}
             onMouseMove={e=>showTip(e,tipInfo)} onMouseLeave={hideTip}>
-            <path d={path} fill={SIGN_COL[sign]+"0c"} stroke={SIGN_COL[sign]+"28"} strokeWidth="0.5"/>
+            <path d={path} fill={SIGN_COL[sign]+(focus?.sign === sign ? "2e" : "0c")}
+              stroke={SIGN_COL[sign]+(focus?.sign === sign ? "88" : "28")} strokeWidth="0.5"
+              style={{ transition:"fill .25s, stroke .25s" }}/>
             <line x1={bx1} y1={by1} x2={bx2} y2={by2}
               stroke={SIGN_COL[sign]} strokeWidth="0.6" opacity="0.25"/>
             {ticks}
             <text x={gx} y={gy} textAnchor="middle" dominantBaseline="middle"
               fill={SIGN_COL[sign]} fontSize={R*0.082} fontFamily="serif"
-              style={{userSelect:"none", filter:`drop-shadow(0 0 6px ${SIGN_COL[sign]}55)`}}>{SIGN_SYM[idx]}</text>
+              style={{userSelect:"none"}}>{SIGN_SYM[idx]}</text>
           </g>
         );
       })}
@@ -424,23 +329,16 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
         );
       })}
 
-      {/* ── AXIS WAVES (animated sine-wave AC-DC & MC-IC) ── */}
-      {axisPairs.map((pair, pi) => (
-        <g key={pi} className="ax-wave">
-          <path ref={el => waveRefs.current[pi*3] = el}
-            d={initWavePaths[pi]}
-            fill="none" stroke={pair.col} strokeWidth="7" opacity="0.08"
-            strokeLinecap="round" filter={`url(#glo${id})`}/>
-          <path ref={el => waveRefs.current[pi*3+1] = el}
-            d={initWavePaths[pi]}
-            fill="none" stroke={pair.col} strokeWidth="3" opacity="0.35"
-            strokeLinecap="round" filter={`url(#gl2${id})`}/>
-          <path ref={el => waveRefs.current[pi*3+2] = el}
-            d={initWavePaths[pi]}
-            fill="none" stroke={pair.col} strokeWidth="1.2" opacity="0.85"
-            strokeLinecap="round"/>
-        </g>
-      ))}
+      {/* ── HOUSE OF THE BODY IN FOCUS ── */}
+      {houseSector && <path d={houseSector} fill="#E9C766" opacity="0.09" stroke="#E9C766" strokeOpacity="0.35" strokeWidth="0.6" style={{pointerEvents:"none"}}/>}
+
+      {/* ── AXES: AC-DC in gold, MC-IC in the frame's accent ── */}
+      {axisPairs.map((pair, pi) => {
+        const [x1, y1] = pt(rSignInner, pair.a1);
+        const [x2, y2] = pt(rSignInner, pair.a2);
+        return <line key={pi} className="ax-wave" x1={x1} y1={y1} x2={x2} y2={y2}
+          stroke={pair.col} strokeWidth="1" opacity="0.7"/>;
+      })}
 
       {/* ── AXIS LABELS ── */}
       {axisLabels.map(({ lon, lbl, col }) => {
@@ -449,7 +347,7 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
         const [labX,labY] = pt(rSignOuter + R*0.055, a);
         const [dotX,dotY] = pt(rSignInner, a);
         return (
-          <g key={lbl} className="sw" style={{cursor:"pointer"}}
+          <g key={lbl} className="sw" data-axis={lbl} style={{cursor:"pointer"}}
             onMouseMove={e=>showTip(e,{title:ai.title,emoji:ai.emoji,plain:ai.plain})}
             onMouseLeave={hideTip}>
             <circle cx={dotX} cy={dotY} r={R*0.014} fill={col} opacity="0.7"/>
@@ -458,7 +356,7 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
               textAnchor="middle" dominantBaseline="middle"
               fill={col} fontSize={R*0.054} fontFamily="'JetBrains Mono', monospace"
               fontWeight="700" opacity="0.95"
-              style={{userSelect:"none", filter:`drop-shadow(0 0 8px ${col}66)`}}>{lbl}</text>
+              style={{userSelect:"none"}}>{lbl}</text>
           </g>
         );
       })}
@@ -486,9 +384,6 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
         };
         return (
           <g key={`asp-${i}`} style={{ transition:"opacity 0.3s, stroke-width 0.3s" }}>
-            {isActive && <line x1={x1} y1={y1} x2={x2} y2={y2}
-              stroke={asp.col} strokeWidth={activeW+4} opacity={activeO*0.15}
-              strokeLinecap="round" filter={`url(#glo${id})`}/>}
             <line className="al" x1={x1} y1={y1} x2={x2} y2={y2}
               stroke={asp.col} strokeWidth={w} opacity={o} strokeLinecap="round"
               style={{cursor:"pointer", transition:"opacity 0.3s ease, stroke-width 0.3s ease"}}
@@ -497,8 +392,7 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
               const mx = (x1+x2)/2, my = (y1+y2)/2;
               return <text x={mx} y={my} textAnchor="middle" dominantBaseline="middle"
                 fill={asp.col} fontSize={R*0.04} fontFamily="serif" opacity="0.8"
-                style={{userSelect:"none", pointerEvents:"none",
-                  filter:`drop-shadow(0 0 4px ${asp.col}88)`}}>{asp.sym}</text>;
+                style={{userSelect:"none", pointerEvents:"none"}}>{asp.sym}</text>;
             })()}
           </g>
         );
@@ -529,27 +423,28 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
           (asp.p1===hoveredPlanet||asp.p2===hoveredPlanet) && (asp.p1===planet||asp.p2===planet));
         const dimmed = hoveredPlanet && !isHovered && !isConnected;
         return (
-          <g key={planet} className="pg"
-            style={{ transformOrigin:`${px}px ${py}px`, cursor:"pointer",
+          <g key={planet} className="pg" data-lon={norm(lon)}
+            tabIndex={0} role="button" aria-label={`${planet}, ${zodDeg(lon)}° ${sign}`}
+            style={{ transformOrigin:`${cx}px ${cy}px`, cursor:"pointer", outline:"none",
               transition:"opacity 0.3s ease" , opacity: dimmed ? 0.3 : 1 }}
             onMouseEnter={() => setHoveredPlanet(planet)}
             onMouseLeave={() => { setHoveredPlanet(null); hideTip(); }}
+            onFocus={() => setHoveredPlanet(planet)}
+            onBlur={() => setHoveredPlanet(null)}
+            onClick={() => setHoveredPlanet(planet)}
             onMouseMove={e=>tipInfo&&showTip(e,tipInfo)}>
             <line x1={edgeX} y1={edgeY} x2={px} y2={py}
               stroke={col} strokeWidth="0.7" opacity="0.25" strokeDasharray="2 3"/>
-            {isHovered && <circle cx={px} cy={py} r={bubbleR+6} fill={col} opacity="0.08"
-              filter={`url(#glo${id})`}/>}
-            <circle cx={px} cy={py} r={bubbleR+2} fill={col} opacity="0.06"
-              filter={`url(#gl2${id})`}/>
+            {isHovered && <circle cx={px} cy={py} r={bubbleR + 4} fill="none" stroke={col} strokeWidth="0.8" opacity="0.6"/>}
             <circle cx={px} cy={py} r={bubbleR}
               fill={TH.center0} stroke={col}
               strokeWidth={isHovered ? 2 : 1.2} opacity="0.9"/>
             <text x={px} y={py+0.5} textAnchor="middle" dominantBaseline="central"
               fill={col} fontSize={symSize} fontFamily="serif"
-              style={{userSelect:"none", filter:`drop-shadow(0 0 4px ${col}66)`}}>{P_SYM[planet]}</text>
+              style={{userSelect:"none", transformBox:"fill-box", transformOrigin:"center"}}>{P_SYM[planet]}</text>
             <text x={px} y={py + bubbleR + degSize*0.9} textAnchor="middle"
               fill={col} fontSize={degSize} opacity={isHovered ? 0.8 : 0.5}
-              fontFamily="'JetBrains Mono', monospace" style={{userSelect:"none"}}>
+              fontFamily="'JetBrains Mono', monospace" style={{userSelect:"none", transformBox:"fill-box", transformOrigin:"center"}}>
               {zodDeg(lon)}°
             </text>
           </g>

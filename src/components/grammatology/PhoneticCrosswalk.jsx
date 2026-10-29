@@ -76,14 +76,14 @@ const PhoneticCrosswalk = () => {
     const rootMapping = getLetterMapping(selectedIpa?.ipa_symbol);
 
     if (loading) return <div style={{ color: M3.onSurfaceVariant, padding: 20, fontFamily: "'JetBrains Mono', monospace" }}>Loading phonetic matrix...</div>;
-    if (error) return <div style={{ color: '#ff5252', padding: 20 }}>Error: {error}</div>;
+    if (error) return <div style={{ color: '#D07262', padding: 20 }}>Error: {error}</div>;
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <Card title="Phonetic Feature Matrix">
                 <div style={{ display: 'flex', gap: 12, marginBottom: 16, flexWrap: 'wrap' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                        <label style={{ fontSize: '0.7rem', color: M3.secondary }}>Manner</label>
+                        <label style={{ fontSize: '0.75rem', color: M3.secondary }}>Manner</label>
                         <select 
                             value={mannerFilter} 
                             onChange={(e) => setMannerFilter(e.target.value)}
@@ -94,7 +94,7 @@ const PhoneticCrosswalk = () => {
                         </select>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                        <label style={{ fontSize: '0.7rem', color: M3.secondary }}>Place</label>
+                        <label style={{ fontSize: '0.75rem', color: M3.secondary }}>Place</label>
                         <select 
                             value={placeFilter} 
                             onChange={(e) => setPlaceFilter(e.target.value)}
@@ -152,14 +152,14 @@ const PhoneticCrosswalk = () => {
                                         <div style={{ fontSize:'2.5rem', color:M3.primary }}>{rootMapping.hebrew}</div>
                                         <div>
                                             <div style={{ fontSize:'1rem', fontWeight:'bold', color:M3.onSurface }}>{rootMapping.hebrewName}</div>
-                                            <div style={{ fontSize:'0.65rem', color:M3.onSurfaceVariant }}>Root Letter Correspondence</div>
+                                            <div style={{ fontSize:'0.75rem', color:M3.onSurfaceVariant }}>Root Letter Correspondence</div>
                                         </div>
                                     </div>
                                     <FeatureItem label="Symbolism" value={rootMapping.yetzirah.element || rootMapping.yetzirah.planet || rootMapping.yetzirah.sign || "—"} />
                                     <FeatureItem label="Gematria" value={rootMapping.gematria} />
                                     <FeatureItem label="Pictogram" value={rootMapping.acrophony?.split('/')[0] || "—"} />
                                     <div style={{ marginTop:8, padding:10, borderRadius:8, background:M3.surfaceContainerHigh, fontSize:'0.75rem', color:M3.onSurface, border:`1px solid ${M3.outlineVariant}`, textAlign:'center' }}>
-                                        <div style={{ fontSize:'0.6rem', color:M3.secondary, marginBottom:4 }}>PHOENICIAN ORIGIN</div>
+                                        <div style={{ fontSize:'0.75rem', color:M3.secondary, marginBottom:4 }}>PHOENICIAN ORIGIN</div>
                                         <div style={{ fontSize:'1.8rem', color:M3.primary }}>{rootMapping.phoenician}</div>
                                     </div>
                                 </div>
@@ -185,16 +185,16 @@ const PhoneticCrosswalk = () => {
                             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                                 <thead style={{ position: 'sticky', top: 0, background: M3.surfaceContainerHigh, zIndex: 1 }}>
                                     <tr style={{ textAlign: 'left' }}>
-                                        <th style={{ padding: '10px 12px', fontSize: '0.7rem', color: M3.secondary, borderBottom: `1px solid ${M3.outlineVariant}` }}>Language</th>
-                                        <th style={{ padding: '10px 12px', fontSize: '0.7rem', color: M3.secondary, borderBottom: `1px solid ${M3.outlineVariant}` }}>Grapheme</th>
-                                        <th style={{ padding: '10px 12px', fontSize: '0.7rem', color: M3.secondary, borderBottom: `1px solid ${M3.outlineVariant}` }}>Example</th>
+                                        <th style={{ padding: '10px 12px', fontSize: '0.75rem', color: M3.secondary, borderBottom: `1px solid ${M3.outlineVariant}` }}>Language</th>
+                                        <th style={{ padding: '10px 12px', fontSize: '0.75rem', color: M3.secondary, borderBottom: `1px solid ${M3.outlineVariant}` }}>Grapheme</th>
+                                        <th style={{ padding: '10px 12px', fontSize: '0.75rem', color: M3.secondary, borderBottom: `1px solid ${M3.outlineVariant}` }}>Example</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {Object.entries(getGroupedCrosswalks(selectedIpa.crosswalks || [])).map(([family, cws]) => (
                                         <React.Fragment key={family}>
                                             <tr style={{ background: M3.surfaceContainerLow }}>
-                                                <td colSpan="3" style={{ padding: '6px 12px', fontSize: '0.65rem', fontWeight: 'bold', color: M3.primary, textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: `1px solid ${M3.outlineVariant}44` }}>
+                                                <td colSpan="3" style={{ padding: '6px 12px', fontSize: '0.75rem', fontWeight: 'bold', color: M3.primary, textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: `1px solid ${M3.outlineVariant}44` }}>
                                                     {family} ({cws.length})
                                                 </td>
                                             </tr>
@@ -202,7 +202,7 @@ const PhoneticCrosswalk = () => {
                                                 <tr key={i} style={{ borderBottom: `1px solid ${M3.surfaceContainerHighest}44` }}>
                                                     <td style={{ padding: '8px 12px', fontSize: '0.8rem' }}>
                                                         <div style={{ color: M3.onSurface }}>{cw.language}</div>
-                                                        <div style={{ fontSize: '0.65rem', color: M3.onSurfaceVariant }}>{cw.iso.toUpperCase()}</div>
+                                                        <div style={{ fontSize: '0.75rem', color: M3.onSurfaceVariant }}>{cw.iso.toUpperCase()}</div>
                                                     </td>
                                                     <td style={{ padding: '8px 12px', fontSize: '1.1rem', fontWeight: 'bold', color: M3.primary }}>{cw.grapheme}</td>
                                                     <td style={{ padding: '8px 12px', fontSize: '0.75rem', fontStyle: 'italic', color: M3.onSurfaceVariant }}>{cw.example}</td>

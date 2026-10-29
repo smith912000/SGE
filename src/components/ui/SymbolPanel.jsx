@@ -20,7 +20,7 @@ const prose = {
 
 const microLabel = {
   fontFamily: M3.fontMono,
-  fontSize: '0.55rem',
+  fontSize: '0.75rem',
   letterSpacing: '0.18em',
   textTransform: 'uppercase',
   color: M3.secondary,
@@ -38,7 +38,7 @@ function Chips({ label, items, colour }) {
             key={i}
             style={{
               fontFamily: M3.fontBody,
-              fontSize: '0.68rem',
+              fontSize: '0.75rem',
               padding: '3px 9px',
               borderRadius: 999,
               background: `${colour}18`,
@@ -65,7 +65,7 @@ function Attributions({ items }) {
             <span
               style={{
                 fontFamily: M3.fontMono,
-                fontSize: '0.58rem',
+                fontSize: '0.75rem',
                 letterSpacing: '0.08em',
                 color: M3.tertiary,
                 whiteSpace: 'nowrap',

@@ -23,7 +23,7 @@ export default function ProgressionsTab({ ctx }) {
       <Card style={{ background: `linear-gradient(135deg,${M3.secondaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
         <div style={{ display: "flex", gap: 20, flexWrap: "wrap", alignItems: "flex-start" }}>
           <div style={{ flex: 1, minWidth: 220 }}>
-            <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.secondary, marginBottom: 8 }}>Secondary Progressions - the day-for-a-year convention</div>
+            <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1rem", color: M3.secondary, marginBottom: 8 }}>Secondary Progressions - the day-for-a-year convention</div>
             <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: "0 0 10px" }}>
               A symbolic timing method rather than an observation. One day of ephemeris time after a birth is read as standing for one year of life: <strong style={{ color: M3.primary }}>one day after birth = one year of life</strong>. The positions below are therefore those of the sky {age} days after the birth moment, read for the {age}th year. Nothing in the present sky corresponds to them.
             </p>
@@ -59,7 +59,7 @@ export default function ProgressionsTab({ ctx }) {
             </p>
             {sunChanged ? (
               <div style={{ padding: "14px 16px", borderRadius: 12, background: P_COL.Sun + "12", border: `1px solid ${P_COL.Sun}33`, marginBottom: 12 }}>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: P_COL.Sun, letterSpacing: "0.1em", marginBottom: 6 }}>☉ SOLAR SIGN CROSSING - {nSun} {"->"} {pSun}</div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: P_COL.Sun, letterSpacing: "0.1em", marginBottom: 6 }}>☉ SOLAR SIGN CROSSING - {nSun} {"->"} {pSun}</div>
                 <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
                   The natal Sun stands in <strong style={{ color: SIGN_COL[nSun] }}>{nSun}</strong>: {PLANET_IN_SIGN.Sun?.[nSun] || SIGN_INFO[nSun].plain} The progressed Sun has since crossed into <strong style={{ color: SIGN_COL[pSun] }}>{pSun}</strong>. {PLANET_IN_SIGN.Sun?.[pSun] || SIGN_INFO[pSun].plain} The progressed placement does not displace the natal one - both stand in the record, and most schools read the natal sign as the ground and the progressed sign as a second register laid over it. Sources differ on how much weight the progressed sign should carry against the natal, and the disagreement is unresolved. Where else in this chart does {pSun} appear?
                 </p>
@@ -73,7 +73,7 @@ export default function ProgressionsTab({ ctx }) {
             )}
             {moonChanged ? (
               <div style={{ padding: "14px 16px", borderRadius: 12, background: P_COL.Moon + "12", border: `1px solid ${P_COL.Moon}33`, marginBottom: 12 }}>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: P_COL.Moon, letterSpacing: "0.1em", marginBottom: 6 }}>☽ LUNAR SIGN CROSSING - {nMoon} {"->"} {pMoon}</div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: P_COL.Moon, letterSpacing: "0.1em", marginBottom: 6 }}>☽ LUNAR SIGN CROSSING - {nMoon} {"->"} {pMoon}</div>
                 <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.8rem", lineHeight: 1.7, color: M3.onSurface, margin: 0 }}>
                   The natal Moon stands in <strong style={{ color: SIGN_COL[nMoon] }}>{nMoon}</strong>: {PLANET_IN_SIGN.Moon?.[nMoon] || SIGN_INFO[nMoon].plain} The progressed Moon now stands in <strong style={{ color: SIGN_COL[pMoon] }}>{pMoon}</strong>. {PLANET_IN_SIGN.Moon?.[pMoon] || SIGN_INFO[pMoon].plain} The progressed Moon crosses a sign about every two and a half years, so this placement is the shortest-lived of the progressed factors and the one most often consulted for timing. Which natal degrees does it approach next, and at what orb?
                 </p>
@@ -105,16 +105,16 @@ export default function ProgressionsTab({ ctx }) {
               <div key={planet} style={{ padding: "10px 14px", borderRadius: 10, background: changed ? P_COL[planet] + "18" : M3.surfaceDim, border: `1px solid ${changed ? P_COL[planet] + "55" : M3.outlineVariant}` }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5 }}>
                   <span style={{ color: P_COL[planet], fontSize: "1rem" }}>{P_SYM[planet]}</span>
-                  <span style={{ color: P_COL[planet], fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: "700" }}>{planet}</span>
-                  {changed && <span style={{ marginLeft: "auto", background: M3.tertiary, color: M3.onPrimary, fontSize: "0.58rem", padding: "1px 6px", borderRadius: 10, fontFamily: "'JetBrains Mono', monospace" }}>SHIFTED</span>}
+                  <span style={{ color: P_COL[planet], fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", fontWeight: "700" }}>{planet}</span>
+                  {changed && <span style={{ marginLeft: "auto", background: M3.tertiary, color: M3.onPrimary, fontSize: "0.75rem", padding: "1px 6px", borderRadius: 10, fontFamily: "'JetBrains Mono', monospace" }}>SHIFTED</span>}
                 </div>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: M3.onSurfaceVariant }}>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.onSurfaceVariant }}>
                   <span style={{ color: SIGN_COL[natalSign] }}>Born: {natalSign}</span>
                   {changed && <span style={{ color: M3.secondary }}> → </span>}
                   {changed && <span style={{ color: SIGN_COL[progSign] }}>Now: {progSign}</span>}
                 </div>
                 {changed && (
-                  <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.71rem", color: M3.onSurface, lineHeight: 1.5, margin: "6px 0 0" }}>
+                  <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", color: M3.onSurface, lineHeight: 1.5, margin: "6px 0 0" }}>
                     {`The progressed ${planet} has crossed from ${natalSign} into ${progSign}. `}
                     {PLANET_IN_SIGN[planet]?.[progSign] || SIGN_INFO[progSign]?.plain || ""}
                     {" Under the day-for-a-year convention this is a symbolic ingress, not a change in where the body physically stands."}

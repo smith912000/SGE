@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { M3 } from '../../theme/m3.js';
+import { useState, useEffect, useId } from 'react';
 import Card from '../ui/Card.jsx';
 import Field from '../ui/Field.jsx';
 import ComputeButton from '../ui/ComputeButton.jsx';
@@ -49,230 +48,142 @@ function deriveUtcOffsetHoursFromLocalBirth(birth, timeZone) {
   return offsetMin / 60;
 }
 
-export default function InputPanel({ A, setA, B, setB, syn, setSyn, compute, loading }) {
-  const [locQuery, setLocQuery] = useState(A.place || '');
-  const [locResults, setLocResults] = useState([]);
-  const [locLoading, setLocLoading] = useState(false);
-  const [locError, setLocError] = useState('');
+const pad = (n) => String(n).padStart(2, '0');
+const dateValue = (b) => `${String(b.year).padStart(4, '0')}-${pad(b.month)}-${pad(b.day)}`;
+const timeValue = (b) => `${pad(to24Hour(b.hour, b.meridiem))}:${pad(b.min)}`;
+const fmtOffset = (h) => {
+  const m = Math.round(Math.abs(h) * 60);
+  return `UTC${h < 0 ? '−' : '+'}${Math.floor(m / 60)}${m % 60 ? ':' + pad(m % 60) : ''}`;
+};
+const fmtCoord = (v, pos, neg) => `${Math.abs(v).toFixed(2)}°${v >= 0 ? pos : neg}`;
 
-  const searchLocation = async () => {
-    const q = locQuery.trim();
-    if (!q) {
-      setLocResults([]);
-      setLocError('Enter a city/town and country to search.');
-      return;
-    }
-    setLocLoading(true);
-    setLocError('');
+// One person's birth moment: date, clock time and place. The UTC offset is
+// worked out from the place's time zone for that date and time, so summer
+// time and historical changes in the tz database are applied without the
+// user having to know them. It can still be set by hand.
+function BirthFields({ who, b, setB, withName }) {
+  const uid = useId();
+  const [query, setQuery] = useState(b.place || '');
+  const [results, setResults] = useState([]);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (!b.tzName || b.tzManual) return;
+    let tz;
+    try { tz = Number(deriveUtcOffsetHoursFromLocalBirth(b, b.tzName).toFixed(2)); } catch { return; }
+    if (tz !== b.tz) setB((p) => ({ ...p, tz }));
+  }, [b.year, b.month, b.day, b.hour, b.meridiem, b.min, b.tzName, b.tzManual]);
+
+  const search = async () => {
+    const q = query.trim();
+    if (!q) { setResults([]); setError('Enter a town or city, and a country if the name is common.'); return; }
+    setBusy(true); setError('');
     try {
       const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=6&language=en&format=json`;
-      const res = await fetch(url);
-      const data = await res.json();
+      const data = await (await fetch(url)).json();
       const rows = data?.results || [];
-      setLocResults(rows);
-      if (!rows.length) setLocError('No matching locations found.');
-    } catch (_err) {
-      setLocError('Location lookup failed. The geocoding service could not be reached.');
-      setLocResults([]);
-    } finally {
-      setLocLoading(false);
-    }
+      setResults(rows);
+      if (!rows.length) setError('No matching place found.');
+    } catch {
+      setResults([]);
+      setError('The place search could not be reached. Coordinates and offset can be entered by hand below.');
+    } finally { setBusy(false); }
   };
 
-  const applyLocation = (row) => {
+  const choose = (row) => {
     const place = [row.name, row.admin1, row.country].filter(Boolean).join(', ');
-    const derivedTz = row.timezone ? deriveUtcOffsetHoursFromLocalBirth(A, row.timezone) : A.tz;
-    setA((p) => ({
-      ...p,
-      place,
-      tzName: row.timezone || p.tzName || '',
-      lat: Number(row.latitude.toFixed(5)),
-      lon: Number(row.longitude.toFixed(5)),
-      tz: Number(derivedTz.toFixed(2)),
+    setB((p) => ({
+      ...p, place, tzName: row.timezone || p.tzName, tzManual: false,
+      lat: Number(row.latitude.toFixed(5)), lon: Number(row.longitude.toFixed(5)),
     }));
-    setLocQuery(place);
-    setLocResults([]);
-    setLocError('');
+    setQuery(place); setResults([]); setError('');
   };
 
-  const refreshBirthTz = () => {
-    if (!A.tzName) return;
-    const derivedTz = deriveUtcOffsetHoursFromLocalBirth(A, A.tzName);
-    setA((p) => ({ ...p, tz: Number(derivedTz.toFixed(2)) }));
+  const onDate = (v) => {
+    const m = /^(\d{1,4})-(\d{2})-(\d{2})$/.exec(v);
+    if (m) setB((p) => ({ ...p, year: +m[1], month: +m[2], day: +m[3] }));
+  };
+  const onTime = (v) => {
+    const m = /^(\d{2}):(\d{2})/.exec(v);
+    if (!m) return;
+    const h = +m[1];
+    setB((p) => ({ ...p, hour: ((h + 11) % 12) + 1, meridiem: h >= 12 ? 'PM' : 'AM', min: +m[2] }));
   };
 
   return (
-    <Card title="⬡  Birth Data">
-      <div style={{ marginBottom: 12, padding: '10px 12px', borderRadius: 10, background: M3.surfaceContainer, border: `1px solid ${M3.outlineVariant}` }}>
-        <label style={{ fontFamily: M3.fontMono, fontSize: '0.62rem', color: M3.secondary, letterSpacing: '0.1em' }}>
-          BIRTH LOCATION PICKER
+    <fieldset className="sge-birth">
+      <legend className="sge-eyebrow">{who}</legend>
+      {withName && (
+        <label className="sge-field">
+          <span>Full name <i>for numerology, optional</i></span>
+          <input type="text" value={b.name || ''} autoComplete="off"
+            onChange={(e) => setB((p) => ({ ...p, name: e.target.value }))} />
         </label>
-        <div style={{ display: 'flex', gap: 8, marginTop: 6 }}>
-          <input
-            type="text"
-            value={locQuery}
-            onChange={(e) => setLocQuery(e.target.value)}
-            onKeyDown={(e) => { if (e.key === 'Enter') searchLocation(); }}
-            placeholder="e.g. London, UK"
-            style={{
-              flex: 1, padding: '8px 12px', background: M3.surfaceDim,
-              border: `1px solid ${M3.outline}`, borderRadius: M3.radius.sm,
-              color: M3.onSurface, fontFamily: M3.fontMono, fontSize: '0.76rem',
-              outline: 'none', boxSizing: 'border-box',
-            }}
-          />
-          <button
-            onClick={searchLocation}
-            disabled={locLoading}
-            style={{
-              padding: '8px 12px', borderRadius: 10, border: `1px solid ${M3.primary}55`,
-              background: M3.primaryContainer, color: M3.onPrimaryContainer,
-              fontFamily: M3.fontMono, fontSize: '0.66rem', cursor: 'pointer',
-            }}
-          >
-            {locLoading ? 'Searching…' : 'Find'}
-          </button>
-        </div>
-        {locResults.length > 0 && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 8 }}>
-            {locResults.map((r) => {
-              const label = [r.name, r.admin1, r.country].filter(Boolean).join(', ');
-              return (
-                <button
-                  key={`${r.latitude}-${r.longitude}-${label}`}
-                  onClick={() => applyLocation(r)}
-                  style={{
-                    textAlign: 'left', padding: '7px 10px', borderRadius: 8,
-                    border: `1px solid ${M3.outlineVariant}`, background: M3.surfaceDim,
-                    color: M3.onSurface, fontFamily: M3.fontMono, fontSize: '0.66rem', cursor: 'pointer',
-                  }}
-                >
-                  {label}
-                </button>
-              );
-            })}
-          </div>
-        )}
-        {locError && <div style={{ marginTop: 8, color: '#E07A85', fontFamily: M3.fontMono, fontSize: '0.6rem' }}>{locError}</div>}
-        <div style={{ marginTop: 8, display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
-          <span style={{ fontFamily: M3.fontMono, fontSize: '0.6rem', color: M3.onSurfaceVariant }}>
-            {A.place ? `Selected: ${A.place}` : 'No location selected yet.'}
-          </span>
-          {!!A.tzName && (
-            <button
-              onClick={refreshBirthTz}
-              style={{
-                padding: '4px 10px', borderRadius: 10, border: `1px solid ${M3.tertiary}55`,
-                background: M3.tertiaryContainer || M3.surfaceContainer, color: M3.tertiary,
-                fontFamily: M3.fontMono, fontSize: '0.6rem', cursor: 'pointer',
-              }}
-            >
-              Recompute TZ from {A.tzName}
-            </button>
-          )}
-        </div>
-      </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(108px,1fr))', gap: 12 }}>
-        {[
-          ["Year", "year", 1, 1800, 2100], ["Month", "month", 1, 1, 12], ["Day", "day", 1, 1, 31],
-          ["Hour (1-12)", "hour", 1, 1, 12], ["Min", "min", 1, 0, 59],
-          ["Lat ° (N+/S-)", "lat", 0.01, -90, 90], ["Lon ° (E+/W-)", "lon", 0.01, -180, 180],
-          ["TZ UTC±", "tz", 0.5, -12, 14],
-        ].map(([lbl, fld, stp, mn, mx]) => (
-          <Field key={fld} label={lbl} value={A[fld]} step={stp} min={mn} max={mx}
-            onChange={v => setA(p => ({ ...p, [fld]: v }))} />
-        ))}
-      </div>
-      <div style={{ marginTop: 6, fontFamily: M3.fontMono, fontSize: '0.6rem', color: M3.onSurfaceVariant }}>
-        Use the timezone offset at birth (including DST if active). Example: UK summer time is usually `+1`.
-      </div>
-      <div style={{ marginTop: 8, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-        {["AM", "PM"].map(m => (
-          <button
-            key={m}
-            onClick={() => setA(p => ({ ...p, meridiem: m }))}
-            style={{
-              padding: '6px 12px',
-              borderRadius: 14,
-              border: `1px solid ${A.meridiem === m ? M3.primary : M3.outlineVariant}`,
-              background: A.meridiem === m ? M3.primaryContainer : M3.surfaceContainer,
-              color: A.meridiem === m ? M3.onPrimaryContainer : M3.onSurfaceVariant,
-              fontFamily: M3.fontMono,
-              fontSize: '0.66rem',
-              cursor: 'pointer',
-            }}
-          >
-            {m}
-          </button>
-        ))}
-      </div>
-
-      <div style={{ marginTop: 12 }}>
-        <label style={{ fontFamily: M3.fontMono, fontSize: '0.62rem', color: M3.secondary, letterSpacing: '0.1em' }}>
-          FULL NAME (for numerology)
-        </label>
-        <input type="text" value={A.name} onChange={e => setA(p => ({ ...p, name: e.target.value }))}
-          placeholder="e.g. John Michael Smith"
-          style={{
-            width: '100%', padding: '8px 12px', marginTop: 4, background: M3.surfaceDim,
-            border: `1px solid ${M3.outline}`, borderRadius: M3.radius.sm,
-            color: M3.onSurface, fontFamily: M3.fontMono, fontSize: '0.78rem',
-            outline: 'none', boxSizing: 'border-box',
-          }} />
-      </div>
-
-      <div style={{ marginTop: 16, display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'flex-end' }}>
-        <label style={{
-          display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer',
-          color: M3.onSurfaceVariant, fontFamily: M3.fontMono, fontSize: '0.72rem', paddingBottom: 2,
-        }}>
-          <input type="checkbox" checked={syn} onChange={e => setSyn(e.target.checked)}
-            style={{ accentColor: M3.primary, width: 14, height: 14 }} />
-          Compare with another person
-        </label>
-      </div>
-
-      {syn && (
-        <div style={{ marginTop: 14, paddingTop: 14, borderTop: `1px solid ${M3.glassBorder}` }}>
-          <div style={{
-            color: M3.secondary, fontFamily: M3.fontMono,
-            fontSize: '0.65rem', letterSpacing: '0.18em', marginBottom: 10,
-          }}>PERSON B</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(108px,1fr))', gap: 10 }}>
-            {["year", "month", "day", "hour", "min", "lat", "lon", "tz"].map(f => (
-              <Field key={f} label={f} value={B[f]}
-                step={f === "lat" || f === "lon" ? 0.01 : f === "tz" ? 0.5 : 1}
-                min={f === "hour" ? 1 : f === "min" ? 0 : f === "lat" ? -90 : f === "lon" ? -180 : f === "tz" ? -12 : undefined}
-                max={f === "hour" ? 12 : f === "min" ? 59 : f === "lat" ? 90 : f === "lon" ? 180 : f === "tz" ? 14 : undefined}
-                onChange={v => setB(p => ({ ...p, [f]: v }))} />
-            ))}
-          </div>
-          <div style={{ marginTop: 8, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-            {["AM", "PM"].map(m => (
-              <button
-                key={`B-${m}`}
-                onClick={() => setB(p => ({ ...p, meridiem: m }))}
-                style={{
-                  padding: '6px 12px',
-                  borderRadius: 14,
-                  border: `1px solid ${B.meridiem === m ? M3.primary : M3.outlineVariant}`,
-                  background: B.meridiem === m ? M3.primaryContainer : M3.surfaceContainer,
-                  color: B.meridiem === m ? M3.onPrimaryContainer : M3.onSurfaceVariant,
-                  fontFamily: M3.fontMono,
-                  fontSize: '0.66rem',
-                  cursor: 'pointer',
-                }}
-              >
-                {m}
-              </button>
-            ))}
-          </div>
-        </div>
       )}
-
-      <div style={{ marginTop: 20 }}>
-        <ComputeButton onClick={compute} loading={loading} />
+      <div className="sge-field-row">
+        <label className="sge-field">
+          <span>Date</span>
+          <input type="date" value={dateValue(b)} min="1800-01-01" max="2100-12-31" onChange={(e) => onDate(e.target.value)} />
+        </label>
+        <label className="sge-field">
+          <span>Local time</span>
+          <input type="time" value={timeValue(b)} onChange={(e) => onTime(e.target.value)} />
+        </label>
       </div>
+      <div className="sge-field">
+        <label htmlFor={`${uid}-place`}><span>Place</span></label>
+        <div className="sge-place">
+          <input id={`${uid}-place`} type="search" value={query} placeholder="Town or city" autoComplete="off"
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); search(); } }} />
+          <button type="button" className="sge-chip" onClick={search} disabled={busy}>{busy ? 'Searching…' : 'Find'}</button>
+        </div>
+        {results.length > 0 && (
+          <ul className="sge-place-results" role="listbox" aria-label="Matching places">
+            {results.map((r) => (
+              <li key={`${r.id || r.name}-${r.latitude}`}>
+                <button type="button" role="option" aria-selected="false" onClick={() => choose(r)}>
+                  <b>{r.name}</b>{[r.admin1, r.country].filter(Boolean).length ? `, ${[r.admin1, r.country].filter(Boolean).join(', ')}` : ''}
+                  <small>{fmtCoord(r.latitude, 'N', 'S')} {fmtCoord(r.longitude, 'E', 'W')}{r.timezone ? ` · ${r.timezone}` : ''}</small>
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+        {error && <p className="sge-field-error" role="alert">{error}</p>}
+      </div>
+      <p className="sge-birth-summary">
+        {b.place || 'No place chosen'} · {fmtCoord(b.lat, 'N', 'S')} {fmtCoord(b.lon, 'E', 'W')} · {fmtOffset(b.tz)}
+        {b.tzName && !b.tzManual ? <> from {b.tzName}</> : b.tzManual ? <> set by hand</> : null}
+      </p>
+      <details className="sge-manual">
+        <summary>Coordinates and offset by hand</summary>
+        <div className="sge-field-row sge-field-row-3">
+          <Field label="Latitude (N +)" value={b.lat} step={0.01} min={-90} max={90} onChange={(v) => setB((p) => ({ ...p, lat: v }))} />
+          <Field label="Longitude (E +)" value={b.lon} step={0.01} min={-180} max={180} onChange={(v) => setB((p) => ({ ...p, lon: v }))} />
+          <Field label="UTC offset, hours" value={b.tz} step={0.25} min={-12} max={14} onChange={(v) => setB((p) => ({ ...p, tz: v, tzManual: true }))} />
+        </div>
+        {b.tzManual && b.tzName && (
+          <button type="button" className="sge-chip" onClick={() => setB((p) => ({ ...p, tzManual: false }))}>Use {b.tzName} again</button>
+        )}
+      </details>
+    </fieldset>
+  );
+}
+
+export default function InputPanel({ A, setA, B, setB, syn, setSyn, compute, loading }) {
+  return (
+    <Card title="Birth data">
+      <form className="sge-form" onSubmit={(e) => { e.preventDefault(); compute(); }}>
+        <BirthFields who="The native" b={A} setB={setA} withName />
+        <label className="sge-check">
+          <input type="checkbox" checked={syn} onChange={(e) => setSyn(e.target.checked)} />
+          Compare with a second chart (synastry)
+        </label>
+        {syn && <BirthFields who="Second chart" b={B} setB={setB} />}
+        <ComputeButton onClick={compute} loading={loading} />
+      </form>
     </Card>
   );
 }

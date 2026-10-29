@@ -105,8 +105,7 @@ What was removed is the wiring only: the two entries in the tab list, the two
 lazy imports and the two render blocks in `src/App.jsx`. Remounting either tab
 is a matter of restoring those three things.
 
-Note that `src/data/calendar/tarot.js` is still used by the Tarot tab, and
-`src/engines/gematria.js` is still used by Numerology, so those paths remain
+Note that `src/engines/gematria.js` is still used by Numerology, so those paths remain
 live even though the Calendar and Grammatology tabs do not.
 
 `MANSION_CROSSWALK` is no longer surfaced anywhere, so the note about it has
@@ -151,3 +150,45 @@ Entry 1's reasoning for the AGPL licence rested on Swiss Ephemeris. That
 reason no longer applies, but SGE's own licence (`LICENSE`, `package.json`,
 the footer link) is unchanged by this entry; relicensing is a separate
 decision for the owner.
+
+---
+
+## Tarot tab removed (29 Oct 2026)
+
+**Decided by the owner.** Tarot now has its own app, so SGE no longer has a
+Tarot tab. `src/tabs/TarotTab.jsx` is deleted. The trump attributions to
+planets and signs stay, because they are astrological correspondences: the
+Hermetic column in the planet table and the attribution note in the Method
+view still use them.
+
+## Tab structure (29 Oct 2026)
+
+SGE is a tool that synthesises astrology for practitioners, so the views are
+grouped by how a practitioner works through a chart and use the technical
+names: **Chart** (Synthesis, Overview, Placements, Wheels, Aspects, Harmonics), **Time**
+(Transits, Progressions), **Traditions** (Vedic, Chinese, Numerology),
+**Comparison** (Synastry) and **Method** (How SGE computes). The list lives in
+`TAB_GROUPS` in `src/components/ui/TabBar.jsx`. The open view is kept in the
+URL hash (`#wheel`, `#vedic`), so a view can be bookmarked or linked.
+
+## Synthesis view (29 Oct 2026)
+
+SGE's aim, in the owner's words, is a tool that synthesises astrology: whatever
+astrology as a totality is getting at, from any perspective, the app should
+embody. The Synthesis view (`src/tabs/SynthesisTab.jsx`) is the first view
+after a chart is cast. It asks every tradition the same questions of the same
+moment and sets the answers side by side:
+
+- **The governing body, six ways**: Hellenistic chart ruler, Jyotiṣa lagna lord,
+  Vimśottarī daśā lord at birth, lord of the day (Chaldean order), the Chinese
+  star of the year's phase (五星), and the planet of the life-path number.
+- **The lights and the horizon** in the tropical and sidereal zodiacs, with
+  nakṣatra and pada.
+- **One lunation, three reckonings**: Western phase, Vedic tithi and pakṣa,
+  Chinese lunar day.
+- **Elements and phases**: Western element count, sidereal Moon's element, the
+  Chinese year's phase.
+
+Agreement is marked ☌ and stated; difference is marked ☍ and left standing,
+never reconciled, in line with docs/VOICE.md. New methods belong here when a
+tradition answers one of the same questions.

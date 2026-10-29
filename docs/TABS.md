@@ -1,6 +1,6 @@
 # SGE Tabs
 
-Page-level views in `src/tabs/`. Each tab corresponds to a section in the app.
+Page-level views in `src/tabs/`. The tab bar groups and labels them as set out in `TAB_GROUPS` (`src/components/ui/TabBar.jsx`) and docs/DECISIONS.md, "Tab structure". The tables below are the original file inventory; files no longer mounted are noted in DECISIONS.md.
 
 ---
 

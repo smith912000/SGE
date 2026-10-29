@@ -21,24 +21,24 @@ export default function WheelTab({ ctx }) {
   } = ctx;
 
   const calendarModes = [
-    { id: "cal_sambraielic", datasetId: "sambraielic", label: "Cal Sambraielic", col: "#f48fb1" },
-    { id: "cal_vedic", datasetId: "vedic", label: "Cal Vedic", col: "#ffcc80" },
-    { id: "cal_islamic", datasetId: "islamic", label: "Cal Islamic", col: "#80cbc4" },
-    { id: "cal_jewish", datasetId: "jewish", label: "Cal Jewish", col: "#b39ddb" },
-    { id: "cal_buddhist", datasetId: "buddhist", label: "Cal Buddhist", col: "#ffe082" },
-    { id: "cal_egyptian", datasetId: "egyptian_ancient_solar", label: "Cal Egyptian", col: "#ffab91" },
-    { id: "cal_athenian", datasetId: "athenian_lunar", label: "Cal Athenian", col: "#90caf9" },
-    { id: "cal_mayan", datasetId: "mayan", label: "Cal Mayan", col: "#a5d6a7" },
-    { id: "cal_ogham", datasetId: "ogham", label: "Cal Ogham", col: "#4db6ac" },
-    { id: "cal_indigenous", datasetId: "indigenous", label: "Cal Native", col: "#d4e157" },
+    { id: "cal_sambraielic", datasetId: "sambraielic", label: "Šambraielic", col: "#D7A6A0" },
+    { id: "cal_vedic", datasetId: "vedic", label: "Vedic (Pañcāṅga)", col: "#E2B48A" },
+    { id: "cal_islamic", datasetId: "islamic", label: "Islamic", col: "#8FC1C9" },
+    { id: "cal_jewish", datasetId: "jewish", label: "Hebrew", col: "#B9A9F0" },
+    { id: "cal_buddhist", datasetId: "buddhist", label: "Buddhist", col: "#E9C766" },
+    { id: "cal_egyptian", datasetId: "egyptian_ancient_solar", label: "Egyptian", col: "#DDA095" },
+    { id: "cal_athenian", datasetId: "athenian_lunar", label: "Athenian", col: "#A9C3DA" },
+    { id: "cal_mayan", datasetId: "mayan", label: "Maya", col: "#B5CDB8" },
+    { id: "cal_ogham", datasetId: "ogham", label: "Ogham", col: "#8FC1C9" },
+    { id: "cal_indigenous", datasetId: "indigenous", label: "Indigenous", col: "#A9B27E" },
   ];
 
   const allModes = [
-    { id: "western", label: "Western (Tropical)", col: M3.primary, tip: "Seasonal zodiac, measured from the March equinox. The standard frame in Western practice." },
-    { id: "sidereal", label: "Lunar (Sidereal)", col: "#ce93d8", tip: "Stellar zodiac, measured from the fixed stars. Used in Vedic (Jyotish) practice; carries the precession offset." },
-    { id: "solar", label: "Solar Return", col: "#ffa726", tip: "Chart cast for the moment the Sun regains its natal longitude, once each year." },
-    { id: "transit_now", label: "⟳ Transit Sky", col: "#66bb6a", tip: "Positions of the bodies in the sky at the present moment (transits)." },
-    { id: "chinese", label: "Chinese Astrology", col: "#ffd54f", tip: "The twelve-animal year cycle - earthly branches, five phases, trigrams and yin/yang." },
+    { id: "western", label: "Tropical", col: M3.primary, tip: "Seasonal zodiac, measured from the March equinox. The standard frame in Western practice." },
+    { id: "sidereal", label: "Sidereal", col: "#B9A9F0", tip: "Stellar zodiac, measured from the fixed stars. Used in Vedic (Jyotish) practice; carries the precession offset." },
+    { id: "solar", label: "Solar Return", col: "#D98E5F", tip: "Chart cast for the moment the Sun regains its natal longitude, once each year." },
+    { id: "transit_now", label: "Transits now", col: "#93B89A", tip: "Positions of the bodies in the sky at the present moment (transits)." },
+    { id: "chinese", label: "Chinese", col: "#E9C766", tip: "The twelve-animal year cycle: earthly branches, five phases, trigrams and yin/yang." },
     ...calendarModes.map((m) => ({
       id: m.id,
       label: m.label,
@@ -67,37 +67,25 @@ export default function WheelTab({ ctx }) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline, padding: "14px 18px" }}>
-        <div style={{ fontFamily: "Cinzel,serif", fontSize: "1rem", color: M3.primary, marginBottom: 6 }}>Interactive Wheels - Circular Maps of This Chart</div>
-        <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurface, margin: 0 }}>
-          Each wheel is a circular map of one frame.
-        </p>
-      </Card>
-      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", justifyContent: "center" }}>
-        {allModes.map((m) => (
-          <div key={m.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3 }}>
-            <button
-              onClick={() => setWheelMode(m.id)}
-              style={{
-                padding: "7px 18px",
-                borderRadius: 20,
-                border: `1.5px solid ${wheelMode === m.id ? m.col : M3.outline + "66"}`,
-                background: wheelMode === m.id ? m.col + "22" : "transparent",
-                color: wheelMode === m.id ? m.col : M3.onSurfaceVariant,
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.72rem",
-                fontWeight: wheelMode === m.id ? "700" : "400",
-                cursor: "pointer",
-                transition: "all 0.2s",
-              }}
-            >
-              {m.label}
-            </button>
-            {wheelMode === m.id && (
-              <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.64rem", color: M3.onSurfaceVariant, textAlign: "center", maxWidth: 180 }}>{m.tip}</span>
-            )}
+      <div className="sge-wheel-picker">
+        {[
+          { label: "Zodiac frames", modes: allModes.filter((m) => !m.id.startsWith("cal_")) },
+          { label: "Calendars", modes: allModes.filter((m) => m.id.startsWith("cal_")) },
+        ].map((g) => (
+          <div key={g.label} role="group" aria-label={g.label} className="sge-wheel-group">
+            <span className="sge-wheel-group-label">{g.label}</span>
+            <div className="sge-wheel-group-row">
+              {g.modes.map((m) => (
+                <button key={m.id} type="button" aria-pressed={wheelMode === m.id}
+                  onClick={() => setWheelMode(m.id)} className="sge-chip"
+                  style={{ "--chip": m.col }}>
+                  {m.label}
+                </button>
+              ))}
+            </div>
           </div>
         ))}
+        <p className="sge-wheel-tip">{allModes.find((m) => m.id === wheelMode)?.tip}</p>
       </div>
 
       {wheelMode === "western" && (
@@ -111,8 +99,8 @@ export default function WheelTab({ ctx }) {
           <div style={{ display: "flex", justifyContent: "center", gap: 16, marginTop: 12, flexWrap: "wrap" }}>
             {[{ l: "AC", c: M3.tertiary, d: "Ascendant (left) - the degree rising on the eastern horizon" }, { l: "MC", c: M3.primary, d: "Midheaven (top) - the meridian above; attributed to office and repute" }, { l: "DC", c: M3.tertiary, d: "Descendant (right) - the setting degree; the ground of the one-to-one relation" }, { l: "IC", c: M3.primary, d: "Imum Coeli (bottom) - the meridian below; attributed to origin, land and foundation" }].map((a) => (
               <div key={a.l} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <span style={{ color: a.c, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: "700" }}>{a.l}</span>
-                <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.62rem", color: M3.onSurfaceVariant }}>{a.d}</span>
+                <span style={{ color: a.c, fontFamily: M3.fontBody, fontSize: "0.75rem", fontWeight: "700" }}>{a.l}</span>
+                <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", color: M3.onSurfaceVariant }}>{a.d}</span>
               </div>
             ))}
           </div>
@@ -128,8 +116,8 @@ export default function WheelTab({ ctx }) {
             <WheelWithTooltip positions={res.sid} houses={res.sidHouses || res.houses} size={Math.min(560, window.innerWidth - 64)} id="sidwheel" theme="vedic" />
           </div>
           <div style={{ marginTop: 12, padding: "10px 14px", borderRadius: 10, background: M3.surfaceDim, textAlign: "center" }}>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: "#ce93d8" }}>Ayanamsa offset: {ayanamsa(res.jd).toFixed(2)}°</span>
-            <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.66rem", color: M3.onSurfaceVariant, marginLeft: 8 }}>- a chosen value, not an observed one; it subtracts from every tropical longitude</span>
+            <span style={{ fontFamily: M3.fontBody, fontSize: "0.75rem", color: "#B9A9F0" }}>Ayanamsa offset: {ayanamsa(res.jd).toFixed(2)}°</span>
+            <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", color: M3.onSurfaceVariant, marginLeft: 8 }}>- a chosen value, not an observed one; it subtracts from every tropical longitude</span>
           </div>
         </Card>
       )}
@@ -151,7 +139,7 @@ export default function WheelTab({ ctx }) {
                 return (
                   <div key={p} style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 10px", borderRadius: 8, background: P_COL[p] + "0c", border: `1px solid ${P_COL[p]}22` }}>
                     <span style={{ color: P_COL[p], fontSize: "0.9rem" }}>{P_SYM[p]}</span>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: SIGN_COL[s] }}>{s}</span>
+                    <span style={{ fontFamily: M3.fontBody, fontSize: "0.75rem", color: SIGN_COL[s] }}>{s}</span>
                   </div>
                 );
               })}
@@ -185,7 +173,7 @@ export default function WheelTab({ ctx }) {
             <ChineseWheelWithTooltip cn={res.cn} size={Math.min(500, window.innerWidth - 64)} />
           </div>
           <div style={{ marginTop: 12, padding: "12px 14px", borderRadius: 10, background: M3.surfaceContainerHighest + "44", borderLeft: `4px solid ${M3.primary}` }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: M3.primary, fontWeight: "700", marginBottom: 4 }}>
+            <div style={{ fontFamily: M3.fontBody, fontSize: "0.75rem", color: M3.primary, fontWeight: "700", marginBottom: 4 }}>
               ARCHETYPE: "{ctx.ANIMAL_INFO[res.cn.animal]?.archetype || "Explorer"}"
             </div>
             <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.5, color: M3.onSurface, margin: 0 }}>
@@ -193,12 +181,12 @@ export default function WheelTab({ ctx }) {
             </p>
             <div style={{ marginTop: 8, display: "flex", gap: 6, flexWrap: "wrap" }}>
               {((ctx.ANIMAL_INFO && res.cn && ctx.ANIMAL_INFO[res.cn.animal]?.trait) || "").split(", ").filter(Boolean).map(t => (
-                <span key={t} style={{ padding: "3px 10px", borderRadius: 12, background: M3.primaryContainer, color: M3.onPrimaryContainer, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem" }}>{t}</span>
+                <span key={t} style={{ padding: "3px 10px", borderRadius: 12, background: M3.primaryContainer, color: M3.onPrimaryContainer, fontFamily: M3.fontBody, fontSize: "0.75rem" }}>{t}</span>
               ))}
             </div>
           </div>
           {res.cn.lunar && (
-            <div style={{ textAlign: "center", marginTop: 12, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: M3.secondary }}>
+            <div style={{ textAlign: "center", marginTop: 12, fontFamily: M3.fontBody, fontSize: "0.75rem", color: M3.secondary }}>
               Lunar Date: Day {res.cn.lunar.day} of the {res.cn.lunar.monthName} Month
             </div>
           )}
@@ -216,7 +204,7 @@ export default function WheelTab({ ctx }) {
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {calendarModel.nativeRings.map((ring) => (
               <div key={ring.id} style={{ padding: "8px 12px", borderRadius: 8, background: M3.surfaceContainerHighest + "44", borderLeft: `4px solid ${M3.primary}` }}>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.65rem", color: M3.primary, textTransform: "uppercase", marginBottom: 2 }}>{ring.label}</div>
+                <div style={{ fontFamily: M3.fontBody, fontSize: "0.75rem", color: M3.primary, textTransform: "uppercase", marginBottom: 2 }}>{ring.label}</div>
                 <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.45, color: M3.onSurface }}>
                   {ring.plain}
                 </div>
@@ -224,10 +212,10 @@ export default function WheelTab({ ctx }) {
             ))}
           </div>
           <div style={{ marginTop: 12, padding: "10px 12px", borderRadius: 10, background: M3.surfaceDim, border: `1px solid ${M3.outlineVariant}`, opacity: 0.8 }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: M3.secondary, marginBottom: 4 }}>
+            <div style={{ fontFamily: M3.fontBody, fontSize: "0.75rem", color: M3.secondary, marginBottom: 4 }}>
               SOURCE: {calendarModel.metadata.source}
             </div>
-            <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.68rem", color: M3.onSurfaceVariant }}>
+            <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", color: M3.onSurfaceVariant }}>
               Status: <strong>{calendarModel.metadata.status}</strong> - Confidence: <strong>{calendarModel.confidence}</strong>
               {calendarModel.caveats.length > 0 ? ` - Caveats: ${calendarModel.caveats.join(" | ")}` : ""}
             </div>

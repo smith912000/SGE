@@ -1,19 +1,21 @@
 // SGE theme. Key names are the Material 3 roles the tabs were written against;
 // the values are the WILD design system tokens (see wild-programme/DESIGN.md),
 // so every tab reads the same night ground, indigo and gold as the hub and WILD OS.
+// SGE leans on the starlit end of that range: parchment for headings, gold for
+// labels and the one action, indigo for secondary text and quiet surfaces.
 export const M3 = {
   surfaceDim:        "#050309",
   surface:           "#0A0612",
   surfaceContainer:  "#120C1F",
   surfaceBright:     "#19112B",
   surfaceVariant:    "#19112B",
-  outline:           "#6349B8",
+  outline:           "#4A4160",
   outlineVariant:    "#A6A2B0",
-  primary:           "#B9A9F0",
+  primary:           "#EADFC4",
   onPrimary:         "#0B0714",
-  primaryContainer:  "#2E2160",
+  primaryContainer:  "#1E1734",
   onPrimaryContainer:"#F4F1ED",
-  secondary:         "#8A6FE0",
+  secondary:         "#B9A9F0",
   onSecondary:       "#F4F1ED",
   secondaryContainer:"#231838",
   tertiary:          "#E9C766",
@@ -23,8 +25,8 @@ export const M3 = {
   error:             "#E07A85",
 
   glass:             "rgba(18,12,31,0.82)",
-  glassBorder:       "rgba(99,73,184,0.22)",
-  glassHighlight:    "rgba(185,169,240,0.06)",
+  glassBorder:       "rgba(244,241,237,0.09)",
+  glassHighlight:    "rgba(233,199,102,0.05)",
 
   fontDisplay: "'Cormorant Garamond', Georgia, serif",
   fontBody:    "'DM Sans', system-ui, sans-serif",

@@ -28,10 +28,10 @@ function wedgePath(cx, cy, rOuter, rInner, startDeg, endDeg) {
 }
 
 const RING_PALETTES = [
-  { base: "#bb86fc", active: "#e0b0ff", glow: "rgba(187,134,252,0.25)" },
-  { base: "#80cbc4", active: "#a7f3d0", glow: "rgba(128,203,196,0.22)" },
-  { base: "#E9C766", active: "#ffe082", glow: "rgba(246,200,64,0.22)" },
-  { base: "#f48fb1", active: "#f8bbd0", glow: "rgba(244,143,177,0.22)" },
+  { base: "#B9A9F0", active: "#e0b0ff", glow: "rgba(187,134,252,0.25)" },
+  { base: "#8FC1C9", active: "#a7f3d0", glow: "rgba(128,203,196,0.22)" },
+  { base: "#E9C766", active: "#E9C766", glow: "rgba(246,200,64,0.22)" },
+  { base: "#D7A6A0", active: "#D7A6A0", glow: "rgba(244,143,177,0.22)" },
 ];
 
 export default function CalendarWheel({ model, size = 500, onTooltip, showOverlay = true }) {
@@ -70,7 +70,7 @@ export default function CalendarWheel({ model, size = 500, onTooltip, showOverla
 
   return (
     <svg ref={svgRef} width={S} height={S} viewBox={`0 0 ${S} ${S}`}
-      style={{ display: "block", maxWidth: "100%", filter: "drop-shadow(0 0 20px rgba(187,134,252,0.12))" }}>
+      style={{ display: "block", maxWidth: "100%" }}>
       <defs>
         <radialGradient id={`calBg-${model.id}`} cx="50%" cy="50%" r="55%">
           <stop offset="0%" stopColor="#0a0620" />
@@ -133,18 +133,6 @@ export default function CalendarWheel({ model, size = 500, onTooltip, showOverla
                   onMouseEnter={() => setHovered({ ringIdx, segIdx })}
                   onMouseLeave={() => { setHovered(null); handleLeave(); }}
                   onMouseMove={(e) => handleMove(e, tipInfo)}>
-                  {hovered?.ringIdx === ringIdx && hovered?.segIdx === segIdx && !isActive && (
-                    <path d={path} fill={palette.glow} stroke="none" opacity="0.25"
-                      filter={`url(#calGlow2-${model.id})`} />
-                  )}
-                  {isActive && (
-                    <path d={path} fill={palette.glow} stroke="none"
-                      filter={`url(#calGlow3-${model.id})`} opacity="0.3" />
-                  )}
-                  {isActive && (
-                    <path d={path} fill={palette.glow} stroke="none"
-                      filter={`url(#calGlow-${model.id})`} opacity="0.6" />
-                  )}
                   <path d={path}
                     fill={`${baseFill}${Math.round(fillOpacity * 255).toString(16).padStart(2, "0")}`}
                     stroke={strokeCol}
@@ -153,7 +141,7 @@ export default function CalendarWheel({ model, size = 500, onTooltip, showOverla
                   {isActive && (
                     <path d={arcPath(cx, cy, ringOuter - 1, seg.start + 0.5, seg.end - 0.5)}
                       fill="none" stroke={palette.active} strokeWidth="2"
-                      opacity="0.6" filter={`url(#calGlow2-${model.id})`} />
+                      opacity="0.6" />
                   )}
                   <line
                     x1={polar(cx, cy, ringOuter, seg.start)[0]} y1={polar(cx, cy, ringOuter, seg.start)[1]}
@@ -166,11 +154,11 @@ export default function CalendarWheel({ model, size = 500, onTooltip, showOverla
                       textAnchor="middle" dominantBaseline="middle"
                       fill={isActive ? palette.active : M3.onSurfaceVariant}
                       fontSize={labelFontSize}
-                      fontFamily="Cinzel, serif"
+                      fontFamily="'Cormorant Garamond', Georgia, serif"
                       opacity={isActive ? 0.95 : 0.55}
                       style={{
                         userSelect: "none", pointerEvents: "none",
-                        filter: isActive ? `drop-shadow(0 0 4px ${palette.glow})` : "none",
+                        
                       }}>
                       {seg.label}
                     </text>
@@ -206,24 +194,13 @@ export default function CalendarWheel({ model, size = 500, onTooltip, showOverla
         return (
           <g className="cw-overlay">
             <circle cx={cx} cy={cy} r={R * 0.985} fill="none"
-              stroke="#ffd54f" strokeWidth="0.8" strokeDasharray="3 6" opacity="0.2" />
+              stroke="#E9C766" strokeWidth="0.8" strokeDasharray="3 6" opacity="0.2" />
             <line x1={ix} y1={iy} x2={ox} y2={oy}
-              stroke="#ffd54f" strokeWidth="8" opacity="0.04"
-              strokeLinecap="round" filter={`url(#calGlow3-${model.id})`} />
-            <line x1={ix} y1={iy} x2={ox} y2={oy}
-              stroke="#ffd54f" strokeWidth="5" opacity="0.08"
-              strokeLinecap="round" filter={`url(#calGlow-${model.id})`} />
-            <line x1={ix} y1={iy} x2={ox} y2={oy}
-              stroke="#ffd54f" strokeWidth="2" opacity="0.5"
-              strokeLinecap="round" filter={`url(#calGlow2-${model.id})`} />
-            <line x1={ix} y1={iy} x2={ox} y2={oy}
-              stroke="#ffd54f" strokeWidth="1" opacity="0.85"
+              stroke="#E9C766" strokeWidth="1" opacity="0.85"
               strokeLinecap="round"
               style={{ cursor: "pointer" }}
               onMouseMove={(e) => handleMove(e, tipInfo)} onMouseLeave={handleLeave} />
-            <circle cx={ox} cy={oy} r={S * 0.014} fill="#ffd54f" opacity="0.15"
-              filter={`url(#calGlow-${model.id})`} />
-            <circle cx={ox} cy={oy} r={S * 0.008} fill="#ffd54f" opacity="0.9">
+            <circle cx={ox} cy={oy} r={S * 0.008} fill="#E9C766" opacity="0.9">
               <animate attributeName="r" values={`${S*0.008};${S*0.011};${S*0.008}`} dur="2s" repeatCount="indefinite" />
               <animate attributeName="opacity" values="0.9;0.6;0.9" dur="2s" repeatCount="indefinite" />
             </circle>
@@ -240,7 +217,7 @@ export default function CalendarWheel({ model, size = 500, onTooltip, showOverla
         x={cx} y={cy - S * 0.016}
         textAnchor="middle" fill={M3.primary}
         fontSize={R * 0.035}
-        fontFamily="Cinzel, serif"
+        fontFamily="'Cormorant Garamond', Georgia, serif"
         style={{ filter: `drop-shadow(0 0 6px ${M3.primary}44)` }}>
         {model.title}
       </text>
@@ -256,7 +233,7 @@ export default function CalendarWheel({ model, size = 500, onTooltip, showOverla
           x={cx} y={cy + S * 0.04}
           textAnchor="middle" fill={RING_PALETTES[0].active}
           fontSize={R * 0.018}
-          fontFamily="Cinzel, serif" opacity="0.7"
+          fontFamily="'Cormorant Garamond', Georgia, serif" opacity="0.7"
           style={{ userSelect: "none" }}>
           {model.nativeRings[0].segments[model.nativeRings[0].activeIndex].label}
         </text>

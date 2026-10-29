@@ -10,23 +10,24 @@ import {
 import SouthIndianChart from '../components/charts/SouthIndianChart.jsx';
 
 // ── shared symbols & helpers ─────────────────────────────────────────
-const RASHI_SYM = ["♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓"];
-const RASHI_COL = ["#f44336","#43a047","#fbc02d","#90caf9","#ff9800","#a1887f","#ec407a","#7e57c2","#7986cb","#5d4037","#26c6da","#26a69a"];
+const RASHI_SYM = ["♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓"].map(g => g + "\uFE0E");
+// Element colours, as on the Western wheel.
+const RASHI_COL = ["#D98E5F","#A9B27E","#C9C2E6","#7FA8C9","#D98E5F","#A9B27E","#C9C2E6","#7FA8C9","#D98E5F","#A9B27E","#C9C2E6","#7FA8C9"];
 const RASHI_NAMES = ["Mesha","Vrishabha","Mithuna","Karka","Simha","Kanya","Tula","Vrishchika","Dhanu","Makara","Kumbha","Meena"];
 
-const P_SYM = {
+const P_SYM = Object.fromEntries(Object.entries({
   Sun:"☉", Moon:"☽", Mercury:"☿", Venus:"♀", Mars:"♂", Jupiter:"♃",
   Saturn:"♄", Rahu:"☊", Ketu:"☋", Node:"☊",
-};
+}).map(([k, g]) => [k, g + "\uFE0E"]));
 
 const DIGNITY_COL = {
-  Exalted:    "#66bb6a",
-  Mooltrikona:"#9ccc65",
-  Own:        "#81c784",
-  Friend:     "#90caf9",
+  Exalted:    "#93B89A",
+  Mooltrikona:"#93B89A",
+  Own:        "#93B89A",
+  Friend:     "#A9C3DA",
   Neutral:    "#9e9e9e",
-  Enemy:      "#ffb74d",
-  Debilitated:"#ef5350",
+  Enemy:      "#E2B48A",
+  Debilitated:"#D07262",
 };
 
 function norm(x) { return ((x % 360) + 360) % 360; }
@@ -43,7 +44,7 @@ export function VedicTab({ ctx }) {
   const [sub, setSub] = useState("overview");
 
   if (!res || !res.sid) {
-    return <Card title="🪔 Vedic"><div style={{ padding:16, color:M3.onSurfaceVariant }}>No chart loaded.</div></Card>;
+    return <Card title="Vedic"><div style={{ padding:16, color:M3.onSurfaceVariant }}>No chart loaded.</div></Card>;
   }
 
   // Shared computations
@@ -61,9 +62,9 @@ export function VedicTab({ ctx }) {
   }, [res]);
 
   const SUBS = [
-    { id: "overview",  label: "🪔 Overview"        },
+    { id: "overview",  label: "Overview"        },
     { id: "grahas",    label: "☿ Grahas"          },
-    { id: "bhavas",    label: "🏛 Bhavas"          },
+    { id: "bhavas",    label: "Bhavas"          },
     { id: "nakshatras",label: "★ Nakshatras"      },
     { id: "vargas",    label: "◇ Vargas"          },
     { id: "dasha",     label: "⏳ Dasha"          },
@@ -87,7 +88,7 @@ export function VedicTab({ ctx }) {
               background: active ? M3.primaryContainer : "transparent",
               borderRadius:M3.radius.sm,
               color: active ? M3.onPrimaryContainer : M3.onSurfaceVariant,
-              fontFamily:M3.fontMono, fontSize:"0.74rem",
+              fontFamily:M3.fontMono, fontSize:"0.75rem",
               fontWeight: active ? 700 : 500,
               whiteSpace:"nowrap", flexShrink:0, scrollSnapAlign:"center",
               WebkitTapHighlightColor:"transparent", minHeight:40,
@@ -122,7 +123,7 @@ function OverviewSub({ ctx, c }) {
 
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-      <Card title={`🪔 Vedic Birth Chart (Sidereal · Ayanamsa ${ayanamsa(res.jd).toFixed(2)}°)`}>
+      <Card title={`Vedic Birth Chart (Sidereal · Ayanamsa ${ayanamsa(res.jd).toFixed(2)}°)`}>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(min(100%, 200px), 1fr))", gap:14, marginBottom:14 }}>
           <KeyStat M3={M3} label="Sun Rashi (Surya)"     col={RASHI_COL[rashiIdx(sid.Sun)]}  big={`${RASHI_SYM[rashiIdx(sid.Sun)]} ${RASHI_NAMES[rashiIdx(sid.Sun)]}`}  sub={`${fmtDeg(degWithinSign(sid.Sun))} · ${NAKSHATRA_INFO[nakshatra(sid.Sun).idx].name}`} />
           <KeyStat M3={M3} label="Moon Rashi (Janma)"    col={RASHI_COL[rashiIdx(sid.Moon)]} big={`${RASHI_SYM[rashiIdx(sid.Moon)]} ${RASHI_NAMES[rashiIdx(sid.Moon)]}`} sub={`${fmtDeg(degWithinSign(sid.Moon))} · ${moonNakInfo.name} pada ${moonNak.pada}`} />
@@ -210,7 +211,7 @@ function GrahasSub({ ctx, c }) {
                     <td style={tdStyle(M3)}>{nak.lord}</td>
                     <td style={tdStyle(M3)}>{wholeSignHouse(lon, ascSid)}</td>
                     <td style={tdStyle(M3)}><span style={pillStyle(DIGNITY_COL[dig] || M3.onSurfaceVariant, M3)}>{dig}</span></td>
-                    <td style={tdStyle(M3)}>{combust ? <span style={pillStyle("#ef5350", M3)}>Combust</span> : <span style={{ color:M3.onSurfaceVariant, opacity:.5 }}>—</span>}</td>
+                    <td style={tdStyle(M3)}>{combust ? <span style={pillStyle("#D07262", M3)}>Combust</span> : <span style={{ color:M3.onSurfaceVariant, opacity:.5 }}>—</span>}</td>
                   </tr>
                 );
               })}
@@ -219,7 +220,7 @@ function GrahasSub({ ctx, c }) {
         </div>
       </Card>
 
-      <Card title="🪞 Karakas (natural significators)">
+      <Card title="Karakas (natural significators)">
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(min(100%, 260px), 1fr))", gap:10 }}>
           {Object.entries(KARAKAS).map(([planet, sigs]) => (
             <div key={planet} style={cardBoxStyle(M3)}>
@@ -248,18 +249,18 @@ function BhavasSub({ ctx, c }) {
     .map(([n]) => n);
 
   const groupCol = (g) => {
-    if (g.includes("Trikona")) return "#9ccc65";
-    if (g.includes("Trika"))   return "#ef5350";
-    if (g.includes("Kendra"))  return "#7dd3fc";
-    if (g.includes("Upachaya"))return "#ffb74d";
+    if (g.includes("Trikona")) return "#93B89A";
+    if (g.includes("Trika"))   return "#D07262";
+    if (g.includes("Kendra"))  return "#8FC1C9";
+    if (g.includes("Upachaya"))return "#E2B48A";
     return M3.onSurfaceVariant;
   };
 
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-      <Card title="🏛 Bhavas — The 12 Houses">
+      <Card title="Bhavas — The 12 Houses">
         <p style={{ fontSize:12.5, color:M3.onSurfaceVariant, lineHeight:1.6, marginBottom:12 }}>
-          Each Bhava is one whole rashi counted from the Lagna ({RASHI_NAMES[ascRashi]}) — whole-sign houses, the Vedic default, so no cusp falls inside a sign here. The classical groupings: <strong style={{ color:"#7dd3fc" }}>Kendra</strong> (1/4/7/10 — the angles, read for structural strength), <strong style={{ color:"#9ccc65" }}>Trikona</strong> (1/5/9 — dharma and fortune), <strong style={{ color:"#ef5350" }}>Trika</strong> (6/8/12 — the houses named as difficult, and read by some schools as the houses of transformation), <strong style={{ color:"#ffb74d" }}>Upachaya</strong> (3/6/10/11 — the houses the tradition holds to strengthen over time).
+          Each Bhava is one whole rashi counted from the Lagna ({RASHI_NAMES[ascRashi]}) — whole-sign houses, the Vedic default, so no cusp falls inside a sign here. The classical groupings: <strong style={{ color:"#8FC1C9" }}>Kendra</strong> (1/4/7/10 — the angles, read for structural strength), <strong style={{ color:"#93B89A" }}>Trikona</strong> (1/5/9 — dharma and fortune), <strong style={{ color:"#D07262" }}>Trika</strong> (6/8/12 — the houses named as difficult, and read by some schools as the houses of transformation), <strong style={{ color:"#E2B48A" }}>Upachaya</strong> (3/6/10/11 — the houses the tradition holds to strengthen over time).
         </p>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(min(100%, 280px), 1fr))", gap:10 }}>
           {BHAVA_INFO.map(b => {
@@ -268,17 +269,17 @@ function BhavasSub({ ctx, c }) {
             return (
               <div key={b.n} style={{...cardBoxStyle(M3), borderLeft:`3px solid ${RASHI_COL[houseRashi]}`}}>
                 <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:4 }}>
-                  <span style={{ fontSize:11, fontWeight:700, letterSpacing:".1em", color:M3.onSurfaceVariant }}>H{b.n} · {b.name}</span>
-                  <span style={{ fontSize:11, color:groupCol(b.group), fontWeight:700 }}>{b.group}</span>
+                  <span style={{ fontSize:12, fontWeight:700, letterSpacing:".1em", color:M3.onSurfaceVariant }}>H{b.n} · {b.name}</span>
+                  <span style={{ fontSize:12, color:groupCol(b.group), fontWeight:700 }}>{b.group}</span>
                 </div>
                 <div style={{ fontSize:14, fontWeight:600, marginBottom:6, color:M3.onSurface }}>{b.theme}</div>
                 <div style={{ fontSize:12.5, color:M3.onSurfaceVariant, lineHeight:1.55, marginBottom:8 }}>{b.desc}</div>
                 <div style={{ paddingTop:8, borderTop:`1px solid ${M3.outline}22` }}>
-                  <div style={{ fontSize:11, color:M3.onSurfaceVariant, marginBottom:4 }}>{RASHI_SYM[houseRashi]} {RASHI_NAMES[houseRashi]}</div>
+                  <div style={{ fontSize:12, color:M3.onSurfaceVariant, marginBottom:4 }}>{RASHI_SYM[houseRashi]} {RASHI_NAMES[houseRashi]}</div>
                   <div style={{ minHeight:18 }}>
                     {planets.length === 0
                       ? <span style={{ color:M3.onSurfaceVariant, opacity:.4, fontSize:13 }}>empty</span>
-                      : planets.map(p => <span key={p} style={{ marginRight:8, fontSize:14, fontWeight:600 }}>{P_SYM[p]} <span style={{ fontSize:11, color:M3.onSurfaceVariant, fontWeight:400 }}>{p}</span></span>)
+                      : planets.map(p => <span key={p} style={{ marginRight:8, fontSize:14, fontWeight:600 }}>{P_SYM[p]} <span style={{ fontSize:12, color:M3.onSurfaceVariant, fontWeight:400 }}>{p}</span></span>)
                     }
                   </div>
                 </div>
@@ -307,7 +308,7 @@ function NakshatrasSub({ ctx, c }) {
       <NakshatraDeepCard ctx={ctx} title={`☽ Janma Nakshatra — ${moonNakInfo.name}`} subtitle="The mansion the Moon occupies — the first thing Jyotish reads, and the anchor of the whole Vimshottari sequence." nak={moonNak} info={moonNakInfo} />
       <NakshatraDeepCard ctx={ctx} title={`↑ Lagna Nakshatra — ${ascNakInfo.name}`} subtitle="The mansion rising at the Ascendant degree — attributed in the tradition to body and instinct rather than to mind. It depends on the birth time in a way the Moon's mansion does not." nak={ascNak} info={ascNakInfo} />
 
-      <Card title="🌌 All Bodies — Nakshatra Map">
+      <Card title="All Bodies — Nakshatra Map">
         <div style={{ overflowX:"auto" }}>
           <table style={tblStyle(M3)}>
             <thead>
@@ -332,7 +333,7 @@ function NakshatrasSub({ ctx, c }) {
                     <td style={tdStyle(M3)}>{n.pada}</td>
                     <td style={tdStyle(M3)}>{info.lord}</td>
                     <td style={tdStyle(M3)}>{info.deity}</td>
-                    <td style={tdStyle(M3)}>{info.yoni} <span style={{ color:M3.onSurfaceVariant, fontSize:11 }}>({info.yoniSex[0]})</span></td>
+                    <td style={tdStyle(M3)}>{info.yoni} <span style={{ color:M3.onSurfaceVariant, fontSize:12 }}>({info.yoniSex[0]})</span></td>
                     <td style={tdStyle(M3)}>{info.gana}</td>
                   </tr>
                 );
@@ -397,14 +398,14 @@ function VargasSub({ ctx, c }) {
         </p>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(min(100%, 320px), 1fr))", gap:20 }}>
           <div>
-            <div style={{ fontSize:11, fontWeight:700, letterSpacing:".12em", textTransform:"uppercase", color:M3.onSurfaceVariant, marginBottom:10 }}>D1 — Rashi Chart</div>
+            <div style={{ fontSize:12, fontWeight:700, letterSpacing:".12em", textTransform:"uppercase", color:M3.onSurfaceVariant, marginBottom:10 }}>D1 — Rashi Chart</div>
             <SouthIndianChart positions={sid} ascSidereal={ascSid} size={340} title="Rashi (D1)" theme={chartTheme} />
             <p style={{ fontSize:12.5, color:M3.onSurfaceVariant, marginTop:10, lineHeight:1.6 }}>
               The birth chart itself, sign by sign. The tradition assigns it body, circumstance and the general condition of a life.
             </p>
           </div>
           <div>
-            <div style={{ fontSize:11, fontWeight:700, letterSpacing:".12em", textTransform:"uppercase", color:M3.onSurfaceVariant, marginBottom:10 }}>D9 — Navamsa</div>
+            <div style={{ fontSize:12, fontWeight:700, letterSpacing:".12em", textTransform:"uppercase", color:M3.onSurfaceVariant, marginBottom:10 }}>D9 — Navamsa</div>
             <SouthIndianChart positions={d9Positions} ascSidereal={ascD9} size={340} title="Navamsa (D9)" theme={chartTheme} />
             <p style={{ fontSize:12.5, color:M3.onSurfaceVariant, marginTop:10, lineHeight:1.6 }}>
               The ninefold division, 3°20' to a segment. Marriage, dharma, and what the sources call the sustaining ground of the chart. Where D1 and D9 place a graha differently the classical reading holds both rather than letting either overrule. A segment this narrow is sensitive to the ayanamsa and to positional error alike: near a boundary, this build cannot settle which side a graha falls on.
@@ -447,8 +448,8 @@ function DashaSub({ ctx, c }) {
 
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(min(100%, 240px), 1fr))", gap:12 }}>
           <DashaBox M3={M3} label="Mahadasha" lord={dasha.mahadasha.lord} years={dasha.mahadasha.years} start={dasha.mahadasha.startJD} end={dasha.mahadasha.endJD} colour={M3.primary}/>
-          <DashaBox M3={M3} label="Antardasha" lord={dasha.antardasha.lord} years={dasha.antardasha.years} start={dasha.antardasha.startJD} end={dasha.antardasha.endJD} colour={M3.tertiary || "#a78bfa"}/>
-          <DashaBox M3={M3} label="Pratyantar" lord={currentPratyantar.lord} years={currentPratyantar.years} start={currentPratyantar.startJD} end={currentPratyantar.endJD} colour={"#f48fb1"}/>
+          <DashaBox M3={M3} label="Antardasha" lord={dasha.antardasha.lord} years={dasha.antardasha.years} start={dasha.antardasha.startJD} end={dasha.antardasha.endJD} colour={M3.tertiary || "#B9A9F0"}/>
+          <DashaBox M3={M3} label="Pratyantar" lord={currentPratyantar.lord} years={currentPratyantar.years} start={currentPratyantar.startJD} end={currentPratyantar.endJD} colour={"#D7A6A0"}/>
         </div>
 
         <details style={{ background:`${M3.surface}55`, padding:"10px 14px", borderRadius:8, border:`1px solid ${M3.outline}22`, marginTop:14 }}>
@@ -480,8 +481,8 @@ function DashaSub({ ctx, c }) {
               {dasha.allAntardashas.map((a, i) => {
                 const isCurrent = a === dasha.antardasha;
                 return (
-                  <tr key={i} style={{ background: isCurrent ? `${M3.tertiary || "#a78bfa"}14` : "transparent" }}>
-                    <td style={{...tdStyle(M3), fontWeight:isCurrent?700:500, color:isCurrent?(M3.tertiary || "#ce93d8"):M3.onSurface}}>{P_SYM[a.lord]} {a.lord}{isCurrent?" ← now":""}</td>
+                  <tr key={i} style={{ background: isCurrent ? `${M3.tertiary || "#B9A9F0"}14` : "transparent" }}>
+                    <td style={{...tdStyle(M3), fontWeight:isCurrent?700:500, color:isCurrent?(M3.tertiary || "#B9A9F0"):M3.onSurface}}>{P_SYM[a.lord]} {a.lord}{isCurrent?" ← now":""}</td>
                     <td style={tdStyle(M3)}>{fmtDate(jdToDate(a.startJD))}</td>
                     <td style={tdStyle(M3)}>{fmtDate(jdToDate(a.endJD))}</td>
                     <td style={tdStyle(M3)}>{a.years.toFixed(2)}</td>
@@ -499,7 +500,7 @@ function DashaSub({ ctx, c }) {
 function DashaBox({ M3, label, lord, years, start, end, colour }) {
   return (
     <div style={{ padding:14, background:`${colour}10`, border:`1px solid ${colour}33`, borderRadius:10 }}>
-      <div style={{ fontSize:11, fontWeight:700, letterSpacing:".12em", textTransform:"uppercase", color:M3.onSurfaceVariant, marginBottom:6 }}>{label}</div>
+      <div style={{ fontSize:12, fontWeight:700, letterSpacing:".12em", textTransform:"uppercase", color:M3.onSurfaceVariant, marginBottom:6 }}>{label}</div>
       <div style={{ fontSize:22, fontWeight:700, color:colour, marginBottom:4 }}>{P_SYM[lord]} {lord}</div>
       <div style={{ fontSize:11.5, color:M3.onSurfaceVariant, fontFamily:M3.fontMono, marginBottom:8 }}>
         {fmtDate(jdToDate(start))} → {fmtDate(jdToDate(end))} · {years.toFixed(2)} yr
@@ -531,7 +532,7 @@ function YogasSub({ ctx, c }) {
                   <div key={yId} style={{...cardBoxStyle(M3), borderLeft:`3px solid ${M3.primary}`}}>
                     <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:4 }}>
                       <span style={{ fontWeight:700, fontSize:14 }}>{y.name}</span>
-                      <span style={pillStyle(M3.tertiary || "#a78bfa", M3)}>{y.tag}</span>
+                      <span style={pillStyle(M3.tertiary || "#B9A9F0", M3)}>{y.tag}</span>
                     </div>
                     <div style={{ fontSize:13, color:M3.onSurfaceVariant, lineHeight:1.6 }}>{y.desc}</div>
                   </div>
@@ -554,8 +555,8 @@ function YogasSub({ ctx, c }) {
               {doshas.map(dId => {
                 const d = DOSHA_DEFS.find(x => x.id === dId); if (!d) return null;
                 return (
-                  <div key={dId} style={{...cardBoxStyle(M3), borderLeft:"3px solid #ef5350"}}>
-                    <div style={{ fontWeight:700, fontSize:14, marginBottom:4, color:"#ef9a9a" }}>{d.name}</div>
+                  <div key={dId} style={{...cardBoxStyle(M3), borderLeft:"3px solid #D07262"}}>
+                    <div style={{ fontWeight:700, fontSize:14, marginBottom:4, color:"#DDA095" }}>{d.name}</div>
                     <div style={{ fontSize:13, color:M3.onSurfaceVariant, lineHeight:1.6 }}>{d.desc}</div>
                   </div>
                 );
@@ -573,7 +574,7 @@ function YogasSub({ ctx, c }) {
 function KeyStat({ M3, label, col, big, sub }) {
   return (
     <div>
-      <div style={{ fontSize:11, fontWeight:700, letterSpacing:".14em", textTransform:"uppercase", color:M3.onSurfaceVariant, marginBottom:6 }}>{label}</div>
+      <div style={{ fontSize:12, fontWeight:700, letterSpacing:".14em", textTransform:"uppercase", color:M3.onSurfaceVariant, marginBottom:6 }}>{label}</div>
       <div style={{ fontSize:20, fontWeight:700, color:col }}>{big}</div>
       <div style={{ fontSize:12, color:M3.onSurfaceVariant, marginTop:2, fontFamily:M3.fontMono }}>{sub}</div>
     </div>
@@ -582,18 +583,18 @@ function KeyStat({ M3, label, col, big, sub }) {
 function Detail({ M3, k, v }) {
   return (
     <div style={{ padding:"6px 0", borderBottom:`1px solid ${M3.outline}11` }}>
-      <div style={{ fontSize:11, color:M3.onSurfaceVariant, letterSpacing:".06em", textTransform:"uppercase", marginBottom:2 }}>{k}</div>
+      <div style={{ fontSize:12, color:M3.onSurfaceVariant, letterSpacing:".06em", textTransform:"uppercase", marginBottom:2 }}>{k}</div>
       <div style={{ fontSize:13.5, color:M3.onSurface }}>{v}</div>
     </div>
   );
 }
 const tblStyle = (M3) => ({ width:"100%", borderCollapse:"collapse", fontSize:13, fontFamily:M3.fontMono });
-const thStyle  = (M3) => ({ textAlign:"left", padding:"8px 10px", borderBottom:`1px solid ${M3.outline}33`, color:M3.onSurfaceVariant, fontWeight:600, fontSize:11, letterSpacing:".1em", textTransform:"uppercase" });
+const thStyle  = (M3) => ({ textAlign:"left", padding:"8px 10px", borderBottom:`1px solid ${M3.outline}33`, color:M3.onSurfaceVariant, fontWeight:600, fontSize:12, letterSpacing:".1em", textTransform:"uppercase" });
 const tdStyle  = (M3) => ({ padding:"9px 10px", borderBottom:`1px solid ${M3.outline}1a`, color:M3.onSurface });
 const cardBoxStyle = (M3) => ({ padding:14, background:`${M3.surface}77`, border:`1px solid ${M3.outline}22`, borderRadius:10 });
 const pillStyle = (col, M3) => ({
   display:"inline-flex", alignItems:"center", padding:"2px 9px", borderRadius:999,
-  fontSize:11, fontWeight:700, background:`${col}1a`, color:col, border:`1px solid ${col}55`,
+  fontSize:12, fontWeight:700, background:`${col}1a`, color:col, border:`1px solid ${col}55`,
   fontFamily:M3.fontMono, letterSpacing:".04em",
 });
 

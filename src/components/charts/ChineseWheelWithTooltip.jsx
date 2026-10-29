@@ -12,22 +12,15 @@ export default function ChineseWheelWithTooltip(props) {
     setTip(t);
   },[]);
   return (
-    <div ref={wrapRef} style={{ position:"relative", width:"100%", overflowX:"auto" }}>
-      <div style={{
-        display:"grid",
-        gridTemplateColumns:"290px minmax(320px, 1fr)",
-        alignItems:"flex-start",
-        gap:16,
-        minWidth:290 + 16 + Math.max(320, Math.min(620, wheelSize)),
-      }}>
-        <div style={{ width:290, minWidth:220, flexShrink:0, position:"relative", minHeight:tip.visible?180:0, transition:"min-height 0.2s" }}>
+    <div ref={wrapRef} style={{ position:"relative", width:"100%" }}>
+      <div className="sge-wheelwrap">
+        <div className="sge-wheeltip" style={{ minHeight:tip.visible?180:0 }}>
           <Tooltip {...tip} pinLeft/>
         </div>
-        <div style={{ display:"flex", flexDirection:"column", alignItems:"center", minWidth:320 }}>
+        <div className="sge-wheelcol">
           <ChineseWheel {...props} onTooltip={handleTip}/>
-          <div style={{ textAlign:"center", marginTop:8, fontFamily:"'JetBrains Mono', monospace",
-            fontSize:"0.6rem", color:M3.outlineVariant, letterSpacing:"0.1em" }}>
-            HOVER ANIMALS · ELEMENTS · TRIGRAMS · YIN-YANG FOR INFO
+          <div style={{ textAlign:"center", marginTop:8, fontSize:"0.8125rem", color:M3.onSurfaceVariant }}>
+            Hover or tap an animal, phase, trigram or the yin-yang for its attribution.
           </div>
         </div>
       </div>

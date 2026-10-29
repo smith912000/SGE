@@ -30,7 +30,7 @@ export default function TabSymbolism({ title, blurb, records = [], columns = 1 }
         <div
           style={{
             fontFamily: M3.fontMono,
-            fontSize: '0.65rem',
+            fontSize: '0.75rem',
             letterSpacing: '0.2em',
             color: M3.secondary,
             textTransform: 'uppercase',
