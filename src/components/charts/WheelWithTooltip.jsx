@@ -66,6 +66,7 @@ function WheelReading({ reading }) {
           {asps.length ? <>: {asps.slice(0, 4).map((a, i) => (
             <span key={i}>{i ? ", " : ""}<span style={{ color: a.col }}>{ASPECT_ADJ[a.name] || a.name.toLowerCase()}</span> {a.other} ({Number(a.orb).toFixed(1)}°)</span>
           ))}{asps.length > 4 ? `, and ${asps.length - 4} more` : ""}</> : <>, with no aspect inside the orbs in use</>}
+          {" "}<a className="sge-reading-link" href={`#symbols/${encodeURIComponent(`planet:${reading.planet === "Node" ? "Rahu" : reading.planet}`)}`}>Its symbols</a>
         </>
       ) : <span className="sge-reading-idle">Select a body to read it in place.</span>}
     </p>

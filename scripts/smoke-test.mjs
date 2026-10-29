@@ -27,7 +27,7 @@ const FORECAST =
 const TABS = [
   'WheelTab', 'AspectsTab', 'TodayTab', 'ProgressionsTab', 'SynastryTab',
   'ChineseTab', 'NatalTab', 'EducationTab', 'HarmonicsTab', 'NumerologyTab',
-  'DeepTab', 'VedicTab', 'SynthesisTab',
+  'DeepTab', 'VedicTab', 'SynthesisTab', 'SymbolMapTab',
 ];
 
 // ── bundle the app for node ──────────────────────────────────────────────────
@@ -42,6 +42,7 @@ export { default as Card } from '${process.cwd().replace(/\\/g, '/')}/src/compon
 export * from '${process.cwd().replace(/\\/g, '/')}/src/engines/index.js';
 export * from '${process.cwd().replace(/\\/g, '/')}/src/data/index.js';
 export { M3 } from '${process.cwd().replace(/\\/g, '/')}/src/theme/m3.js';
+export { ENTITIES as SYMBOL_ENTITIES } from '${process.cwd().replace(/\\/g, '/')}/src/data/symbolMap.js';
 `);
 
 await build({
@@ -229,6 +230,19 @@ for (const name of TABS) {
   if (process.env.SMOKE_DUMP === name) console.log(String.fromCharCode(10) + "===== " + name + " =====" + String.fromCharCode(10) + text);
   checked++;
   console.log(`✓ ${name.padEnd(18)} ${String(text.length).padStart(6)} chars rendered, voice clean`);
+}
+
+// The symbol map's focus view shows every record, not only the first screen.
+{
+  const ents = Object.values(app.SYMBOL_ENTITIES || {});
+  const bad = [];
+  for (const e of ents) {
+    const texts = [e.essence, ...e.attrs.map(([k, v]) => `${k} ${v}`), ...e.links.map((l) => l.rel)];
+    for (const t of texts) { const m = t.match(SECOND_PERSON) || t.match(FORECAST); if (m) bad.push(`${e.id}: "${m[0]}"`); }
+    for (const l of e.links) if (!app.SYMBOL_ENTITIES[l.to]) bad.push(`${e.id}: link to missing ${l.to}`);
+  }
+  if (!ents.length || bad.length) { console.error(`✗ symbol map records: ${bad.slice(0, 5).join('; ') || 'none loaded'}`); failures++; }
+  else console.log(`✓ ${'symbol map records'.padEnd(18)} ${String(ents.length).padStart(6)} symbols, voice clean, links resolve`);
 }
 
 fs.rmSync(tmp, { recursive: true, force: true });
