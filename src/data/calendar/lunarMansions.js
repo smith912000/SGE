@@ -56,7 +56,7 @@ export const NAKSHATRAS = [
   { n:19, san:"मूल", en:"Mula", meaning:"The Root", stars:"ε, ζ, η, θ, ι, κ, λ, μ, ν Scorpionis", ruler:"Ketu", symbol:"Bunch of roots, elephant goad", deity:"Nirrti", sidereal:"0°–13°20' Sagittarius", tropical:"26° Sagittarius–9°20' Capricorn", padas:["Ye","Yo","Bha","Bhi"] },
   { n:20, san:"पूर्वाषाढ़ा", en:"Purva Ashadha", meaning:"The Former Unconquered", stars:"δ, ε Sagittarii", ruler:"Venus", symbol:"Elephant tusk, fan, winnowing basket", deity:"Apah", sidereal:"13°20'–26°40' Sagittarius", tropical:"9°20'–22°40' Capricorn", padas:["Bhu","Dha","Bha/Pha","Dha"] },
   { n:21, san:"उत्तराषाढ़ा", en:"Uttara Ashadha", meaning:"The Latter Unconquered", stars:"ζ, σ Sagittarii", ruler:"Sun", symbol:"Elephant tusk, small bed", deity:"Visvedevas", sidereal:"26°40' Sagittarius–10° Capricorn", tropical:"22°40' Capricorn–6° Aquarius", padas:["Bhe","Bho","Ja","Ji"] },
-  { n:22, san:"अभिजित", en:"Abhijit", meaning:"The Invincible", stars:"ζ, σ Lyrae", ruler:"Brahma", symbol:"Vina (lute)", deity:"Brahma", sidereal:"6°40'–10°53' Capricorn", tropical:"2°40'–6°53' Aquarius", padas:[], intercalary:true, note:"Not a standard nakshatra — spans 4th pada of Uttara Ashadha to 1st pada of Shravana" },
+  { n:22, san:"अभिजित", en:"Abhijit", meaning:"The Invincible", stars:"ζ, σ Lyrae", ruler:"Brahma", symbol:"Vina (lute)", deity:"Brahma", sidereal:"6°40'–10°53' Capricorn", tropical:"2°40'–6°53' Aquarius", padas:[], intercalary:true, note:"Not a standard nakshatra: spans 4th pada of Uttara Ashadha to 1st pada of Shravana" },
   { n:23, san:"श्रवण", en:"Shravana", meaning:"To Hear", stars:"α, β, γ Aquilae", ruler:"Moon", symbol:"Ear or Three Footprints", deity:"Vishnu", sidereal:"10°–23°20' Capricorn", tropical:"6°–19°20' Aquarius", padas:["Ju/Khi","Je/Khu","Jo/Khe","Gha/Kho"] },
   { n:24, san:"धनिष्ठा", en:"Dhanishtha", meaning:"Wealthiest", stars:"α, β, γ, δ Delphini", ruler:"Mars", symbol:"Drum or flute", deity:"Vasus", sidereal:"23°20' Capricorn–6°40' Aquarius", tropical:"19°20' Aquarius–2°40' Pisces", padas:["Ga","Gi","Gu","Ge"] },
   { n:25, san:"शतभिषा", en:"Shatabhisha", meaning:"A Hundred Physicians", stars:"γ Aquarii (Sadachbia)", ruler:"Rahu", symbol:"Empty circle, 1000 flowers or stars", deity:"Varuna", sidereal:"6°40'–20° Aquarius", tropical:"2°40'–16° Pisces", padas:["Go","Sa","Si","Su"] },
@@ -66,11 +66,11 @@ export const NAKSHATRAS = [
 ];
 
 export const NAKSHATRA_INFO = {
-  title: "Nakshatra (नक्षत्रम्) — Vedic Lunar Mansions",
+  title: "Nakshatra (नक्षत्रम्): Vedic Lunar Mansions",
   count: "27 standard (28 with intercalary Abhijit)",
   span: "Each nakshatra covers 13°20' of the ecliptic",
   padas: "Each nakshatra has 4 padas (quarters) of 3°20' each",
-  totalPadas: "27 × 4 = 108 — the number of beads in a japa mala",
+  totalPadas: "27 × 4 = 108: the number of beads in a japa mala",
   note: "The 108 padas represent all the elements (ansh) of Vishnu. Each pada has a starting syllable used for naming children born under that nakshatra.",
 };
 
@@ -148,7 +148,7 @@ export const MANSION_CROSSWALK = [
 ];
 
 export const LUNAR_MANSIONS_INFO = {
-  title: "Lunar Mansion Systems — Three Parallel Divisions of the Moon's Path",
+  title: "Lunar Mansion Systems: Three Parallel Divisions of the Moon's Path",
   systems: [
     { name:"Manāzil al-Qamar (منازل القمر)", tradition:"Arabic/Islamic", count:28, letterSystem:"Arabic Abjadi order (28 letters)" },
     { name:"Nakshatra (नक्षत्रम्)", tradition:"Vedic/Hindu", count:"27 standard + Abhijit = 28", letterSystem:"Sanskrit syllabary (108 padas)" },

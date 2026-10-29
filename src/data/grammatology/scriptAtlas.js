@@ -14,7 +14,7 @@ export const SCRIPT_ATLAS = [
     family: "Proto-Sinaitic & Ancient Near East",
     region: "Egypt, Levant, Mesopotamia, Anatolia",
     era: "c. 3200 BCE – 100 CE",
-    desc: "The birthplace of writing. Egyptian hieroglyphs and Sumerian cuneiform evolved independently; Proto-Sinaitic miners in Sinai adapted Egyptian signs into the first 22-letter alphabet (~1800 BCE), which became Phoenician — ancestor of nearly every alphabet on Earth.",
+    desc: "The birthplace of writing. Egyptian hieroglyphs and Sumerian cuneiform evolved independently; Proto-Sinaitic miners in Sinai adapted Egyptian signs into the first 22-letter alphabet (~1800 BCE), which became Phoenician, ancestor of nearly every alphabet on Earth.",
     color: "#d4a017",
     scripts: [
       { name:"Egyptian_Hieroglyphs", letters:"~750 (27 uniliterals)", type:"Logographic + Abjad", status:"Historical", cultures:["Ancient Egypt","Nubia"], mapped:true },
@@ -60,7 +60,7 @@ export const SCRIPT_ATLAS = [
     family: "Classical Mediterranean",
     region: "Greece, Italy, North Africa",
     era: "c. 800 BCE – present",
-    desc: "The Greeks added vowels to the Phoenician 22-letter abjad, creating the first true alphabet (24 letters). Greek begat Coptic, Gothic, and through Etruscan Old Italic begat the Latin alphabet — now the world's most widespread writing system.",
+    desc: "The Greeks added vowels to the Phoenician 22-letter abjad, creating the first true alphabet (24 letters). Greek begat Coptic, Gothic, and through Etruscan Old Italic begat the Latin alphabet, now the world's most widespread writing system.",
     color: "#93B89A",
     scripts: [
       { name:"Greek", letters:"24", type:"Alphabet", status:"Living", cultures:["Greece","Hellenistic world","Byzantium","Cyprus"], mapped:true },
@@ -103,7 +103,7 @@ export const SCRIPT_ATLAS = [
     family: "Indic (Brahmic) Scripts",
     region: "South Asia, Southeast Asia, Central Asia",
     era: "c. 300 BCE – present",
-    desc: "Brahmi (the Indian ancestor) descends from Aramaic, itself from Phoenician. It evolved into 40+ daughter scripts — all abugidas where each consonant carries an inherent vowel. Devanagari has 46+ characters, Tamil 18+12, Thai 44 consonants. These systems dramatically expanded the 22-letter base to capture the rich phonologies of South and Southeast Asian languages.",
+    desc: "Brahmi (the Indian ancestor) descends from Aramaic, itself from Phoenician. It evolved into 40+ daughter scripts, all abugidas where each consonant carries an inherent vowel. Devanagari has 46+ characters, Tamil 18+12, Thai 44 consonants. These systems dramatically expanded the 22-letter base to capture the rich phonologies of South and Southeast Asian languages.",
     color: "#E2B48A",
     scripts: [
       { name:"Brahmi", letters:"46+", type:"Abugida", status:"Extinct", cultures:["Maurya Empire","Ashoka's edicts"], mapped:true },
@@ -276,10 +276,10 @@ export const SCRIPT_ATLAS = [
     desc: "Technical Unicode categories for characters that belong to no single script (Common) or inherit the script of their context (Inherited). Included for completeness.",
     color: "#A6A2B0",
     scripts: [
-      { name:"Common", letters:"n/a", type:"Meta", status:"Technical", cultures:["Unicode standard — punctuation, digits, symbols"] },
-      { name:"Inherited", letters:"n/a", type:"Meta", status:"Technical", cultures:["Unicode standard — combining marks inheriting parent script"] },
+      { name:"Common", letters:"n/a", type:"Meta", status:"Technical", cultures:["Unicode standard: punctuation, digits, symbols"] },
+      { name:"Inherited", letters:"n/a", type:"Meta", status:"Technical", cultures:["Unicode standard: combining marks inheriting parent script"] },
     ]
   },
 ];
 
-export const TWENTY_TWO_NOTE = `The 22-letter Proto-Sinaitic/Phoenician abjad is the ancestral core of this crosswalk. Many descendant scripts expanded beyond 22: Greek added vowels (→ 24), Arabic added consonants (→ 28), Cyrillic (→ 33), Armenian (→ 38), Devanagari (→ 46+), Ge'ez (→ 182 fidels), and logographic systems like Chinese have tens of thousands of characters. The 22 columns below trace each root letter's evolution — not the full inventory of each script. Click any row to see all representations.`;
+export const TWENTY_TWO_NOTE = `The 22-letter Proto-Sinaitic/Phoenician abjad is the ancestral core of this crosswalk. Many descendant scripts expanded beyond 22: Greek added vowels (→ 24), Arabic added consonants (→ 28), Cyrillic (→ 33), Armenian (→ 38), Devanagari (→ 46+), Ge'ez (→ 182 fidels), and logographic systems like Chinese have tens of thousands of characters. The 22 columns below trace each root letter's evolution, not the full inventory of each script. Click any row to see all representations.`;

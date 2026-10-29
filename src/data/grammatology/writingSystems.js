@@ -31,7 +31,7 @@ export const WRITING_SYSTEM_TYPES = [
     {name:"Devanagari (Sanskrit/Hindi)",sample:"क ख ग घ ङ च छ ज झ ञ ट ठ ड ढ ण त थ द ध न प फ ब भ म य र ल व श ष स ह",dir:"LTR"},
     {name:"Tamil",sample:"க ங ச ஞ ட ண த ந ன ப ம ய ர ற ல ள ழ வ",dir:"LTR"},
     {name:"Brahmi",sample:"𑀓 𑀔 𑀕 𑀖 𑀗 𑀘 𑀙 𑀚 𑀛 𑀜 𑀝 𑀞 𑀟 𑀠 𑀡 𑀢 𑀣 𑀤 𑀥 𑀦 𑀧 𑀨 𑀩 𑀪 𑀫 𑀬 𑀭 𑀮 𑀯 𑀰 𑀱 𑀲 𑀳",dir:"LTR"},
-    {name:"Ge'ez (Abugida form)",sample:"ሀ ሁ ሂ ሃ ሄ ህ ሆ — ለ ሉ ሊ ላ ሌ ል ሎ",dir:"LTR"},
+    {name:"Ge'ez (Abugida form)",sample:"ሀ ሁ ሂ ሃ ሄ ህ ሆ, ለ ሉ ሊ ላ ሌ ል ሎ",dir:"LTR"},
     {name:"Bengali",sample:"ক খ গ ঘ ঙ চ ছ জ ঝ ঞ ট ঠ ড ঢ ণ ত থ দ ধ ন প ফ ব ভ ম",dir:"LTR"},
     {name:"Gujarati",sample:"ક ખ ગ ઘ ઙ ચ છ જ ઝ ઞ ટ ઠ ડ ઢ ણ ત થ દ ધ ન પ ફ બ ભ મ",dir:"LTR"},
     {name:"Gurmukhi",sample:"ਕ ਖ ਗ ਘ ਙ ਚ ਛ ਜ ਝ ਞ ਟ ਠ ਡ ਢ ਣ ਤ ਥ ਦ ਧ ਨ ਪ ਫ ਬ ਭ ਮ",dir:"LTR"},

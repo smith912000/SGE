@@ -1,6 +1,7 @@
 import { LIFE_PATH_MEANING } from '../data/numerology/meanings.js';
 import { useState } from "react";
-import { P_SYM, P_COL, PLANET_INFO } from '../data/astrology/planets.js';
+import { P_SYM, P_COL } from '../data/astrology/planets.js';
+import { PLANET_INFO } from '../data/astrology/planetInfo.js';
 import { NUM_PLANET, MASTER_NUMBERS } from '../data/numerology/tables.js';
 import { EXPRESSION_MEANING, SOUL_URGE_MEANING, PERSONALITY_MEANING, BIRTHDAY_MEANING } from '../data/numerology/meanings.js';
 import { computeNumerology, reduceToRoot } from '../engines/numerology.js';

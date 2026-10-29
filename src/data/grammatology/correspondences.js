@@ -37,6 +37,6 @@ export const CHINESE_ZODIAC_HEBREW = [
 export const MUSICAL_SCALE_OCCULT = {
   notes7:["C","D","E","F","G","A","B"],
   accidentals5:["C♯","D♯","F♯","G♯","A♯"],
-  desc:"7 Key Notes = 7 Planets. 5 Accidentals = 5 Elements. Full 12-note chromatic = 12 Zodiac. With the octave: 13 notes — Ophiuchus, the hidden sign.",
+  desc:"7 Key Notes = 7 Planets. 5 Accidentals = 5 Elements. Full 12-note chromatic = 12 Zodiac. With the octave: 13 notes, Ophiuchus, the hidden sign.",
   pentatonic:"The 5 accidentals form a pentatonic chord (Chinese Zhǐ scale = Fire, the colour red, number 8 in feng shui). Also the Japanese Ritsusen/Yō scale and Hindustani Durga.",
 };

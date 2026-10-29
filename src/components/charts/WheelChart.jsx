@@ -2,9 +2,10 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { M3 } from '../../theme/m3.js';
 import { norm, RAD } from '../../utils/helpers.js';
 import { SIGNS, SIGN_SYM, SIGN_COL, SIGN_INFO } from '../../data/astrology/signs.js';
-import { P_SYM, P_COL, P_ROLE, PLANET_INFO } from '../../data/astrology/planets.js';
+import { P_SYM, P_COL, P_ROLE } from '../../data/astrology/planets.js';
+import { PLANET_INFO } from '../../data/astrology/planetInfo.js';
 import { ASPECTS, ASP_SHORT, ASPECT_MEANINGS } from '../../data/astrology/aspects.js';
-import { HOUSE_INFO } from '../../data/astrology/houses.js';
+import { HOUSE_INFO } from '../../data/astrology/houseInfo.js';
 import { AXIS_INFO } from '../../data/astrology/axes.js';
 import Tooltip from '../ui/Tooltip.jsx';
 

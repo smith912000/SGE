@@ -11,9 +11,9 @@
  */
 
 export const EGYPTIAN_SEASONS = [
-    { id: "akhet", name: "Akhet", meaning: "Inundation", hiero: "𓈗", desc: "The flood season — when the Nile overflows, revitalizing the land." },
-    { id: "peret", name: "Peret", meaning: "Emergence / Growing", hiero: "𓇇𓂋", desc: "The season of emergence — when the water recedes and planting begins." },
-    { id: "shemu", name: "Shemu", meaning: "Harvest / Low Water", hiero: "𓈙𓅓𓅱", desc: "The harvest season — the time of heat and gathering the fruits of the labor." }
+    { id: "akhet", name: "Akhet", meaning: "Inundation", hiero: "𓈗", desc: "The flood season: when the Nile overflows, revitalizing the land." },
+    { id: "peret", name: "Peret", meaning: "Emergence / Growing", hiero: "𓇇𓂋", desc: "The season of emergence: when the water recedes and planting begins." },
+    { id: "shemu", name: "Shemu", meaning: "Harvest / Low Water", hiero: "𓈙𓅓𓅱", desc: "The harvest season: the time of heat and gathering the fruits of the labor." }
 ];
 
 export const EGYPTIAN_SOLAR_MONTHS = [

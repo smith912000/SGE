@@ -11,7 +11,7 @@ import { norm } from './utils/helpers.js';
 // Data - Astrology
 import { SIGNS, SIGN_SYM, SIGN_COL, SIGN_INFO, EL_COL, MOD_COL } from './data/astrology/signs.js';
 import { P_SYM, P_COL, P_ROLE } from "./data/astrology/planets.js";
-import { HOUSE_INFO, HOUSE_AREA } from './data/astrology/houses.js';
+import { HOUSE_AREA } from './data/astrology/houses.js';
 import { ASPECTS, ASP_EXPLAIN } from "./data/astrology/aspects.js";
 import { ANIMAL_INFO, CN_EL_INFO, POLARITY_INFO } from "./data/astrology/chinese.js";
 
@@ -30,7 +30,7 @@ import TabBar, { TAB_IDS } from './components/ui/TabBar.jsx';
 import TabContent from './components/ui/TabContent.jsx';
 import EclipticRing from './components/ui/EclipticRing.jsx';
 import StarCanvas from './components/ui/StarCanvas.jsx';
-import ProfilePanel from './components/ui/ProfilePanel.jsx';
+const ProfilePanel = lazy(() => import('./components/ui/ProfilePanel.jsx'));
 
 // Components - Layout
 import Header from './components/layout/Header.jsx';
@@ -38,12 +38,12 @@ import InputPanel from './components/layout/InputPanel.jsx';
 import Footer from './components/layout/Footer.jsx';
 
 // Components - Charts
-import WheelWithTooltip from './components/charts/WheelWithTooltip.jsx';
-import ChineseWheelWithTooltip from './components/charts/ChineseWheelWithTooltip.jsx';
+const WheelWithTooltip = lazy(() => import('./components/charts/WheelWithTooltip.jsx'));
+const ChineseWheelWithTooltip = lazy(() => import('./components/charts/ChineseWheelWithTooltip.jsx'));
 
 // Components - Tables
-import PlanetTable from './components/tables/PlanetTable.jsx';
-import AspectTable from './components/tables/AspectTable.jsx';
+const PlanetTable = lazy(() => import('./components/tables/PlanetTable.jsx'));
+const AspectTable = lazy(() => import('./components/tables/AspectTable.jsx'));
 
 // Components - Tabs
 const WheelTab = lazy(() => import('./tabs/WheelTab.jsx'));
@@ -237,7 +237,7 @@ export default function App() {
                 )}
 
                 {tab === "natal" && (
-                  <ErrorBoundary><NatalTab ctx={{ M3, res, grid2, zodSign, SIGN_COL, SIGN_SYM, HOUSE_AREA, HOUSE_INFO, P_COL, P_SYM, Card, PlanetTable, WheelWithTooltip, ProfilePanel, moonPhase }} /></ErrorBoundary>
+                  <ErrorBoundary><NatalTab ctx={{ M3, res, grid2, zodSign, SIGN_COL, SIGN_SYM, HOUSE_AREA, P_COL, P_SYM, Card, PlanetTable, WheelWithTooltip, ProfilePanel, moonPhase }} /></ErrorBoundary>
                 )}
                 {tab === "vedic" && (
                   <ErrorBoundary><VedicTab ctx={{ M3, res, Card }} /></ErrorBoundary>

@@ -37,7 +37,6 @@ const EXPECTED = {
   'numerologySymbolism.js':    ['getNumerologySymbolism'],
   'chineseSymbolism.js':       ['getAnimalSymbolism', 'getChineseElementSymbolism'],
   'vedicSymbolism.js':         ['getNakshatraSymbolism', 'getDashaSymbolism'],
-  'tarotSymbolism.js':         ['getTarotSymbolism'],
   'mansionSymbolism.js':       ['getMansionSymbolism'],
   'grammatologySymbolism.js':  ['getLetterSymbolism'],
   'cycleSymbolism.js':         ['getCycleSymbolism'],

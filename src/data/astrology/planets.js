@@ -1,5 +1,3 @@
-import { getPlanetSymbolism } from '../symbolism/planetSymbolism.js';
-import { terse } from '../symbolism/terse.js';
 
 // U+FE0E: text glyphs, not emoji (♀ ♂ and others turn into emoji on phones).
 export const P_SYM = Object.fromEntries(Object.entries({ Sun: "☉", Moon: "☽", Mercury: "☿", Venus: "♀", Mars: "♂", Jupiter: "♃", Saturn: "♄", Uranus: "⛢", Neptune: "♆", Pluto: "♇", Chiron: "⚷", Node: "☊", Lilith: "⚸" }).map(([k, g]) => [k, g + "\uFE0E"]));
@@ -130,18 +128,3 @@ export const PLANET_LETTER = {
     "letterName": null
   }
 };
-
-// PLANET_INFO keeps the shape older components expect, but every line of prose
-// now comes from the symbolic record layer. See docs/VOICE.md.
-export const PLANET_INFO = Object.fromEntries(
-  Object.entries(PLANET_LETTER).map(([body, meta]) => {
-    const rec = getPlanetSymbolism(body);
-    return [body, {
-      ...meta,
-      plain: rec ? terse(rec) : "",
-      detail: rec ? rec.reading : "",
-      principle: rec ? rec.principle : "",
-      record: rec || null,
-    }];
-  })
-);
