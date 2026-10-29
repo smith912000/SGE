@@ -55,7 +55,6 @@ input[type=number]::-webkit-inner-spin-button { opacity: 0.2; }
   100% { background-position: 200% 0; }
 }
 
-.anim { opacity: 0; }
 .fade-in { animation: fadeIn 0.4s ease-out forwards; }
 
 .grid-2 {
@@ -113,6 +112,7 @@ button { font-family: inherit; }
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--wild-dim);
 }
 .sge-tabgroup-row { display: flex; gap: 4px; }
+.fade-in { animation-duration: .25s; }
 .sge-tab {
   min-height: 40px; padding: 8px 14px; flex-shrink: 0; cursor: pointer;
   background: transparent; border: 1px solid transparent; border-radius: 999px;
@@ -204,7 +204,6 @@ button { font-family: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  .anim { opacity: 1; }
 }
 
 /* --- shared view chrome --- */
@@ -235,3 +234,10 @@ button { font-family: inherit; }
   .sge-wheelwrap { grid-template-columns: minmax(0, 1fr); }
   .sge-wheeltip { order: 2; }
 }
+.sge-reading {
+  margin: 12px auto 0; max-width: 52ch; min-height: 3.2em; text-align: center;
+  font-size: .875rem; line-height: 1.6; color: var(--wild-text);
+}
+.sge-reading b { color: var(--wild-gold-2); font-weight: 600; }
+.sge-reading-idle { color: var(--wild-faint); }
+.pg:focus-visible > circle:last-of-type { stroke-width: 2.5; }

@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef, useCallback, lazy, Suspense } from "react";
+import { useState, useEffect, useCallback, lazy, Suspense } from "react";
 
 // Hooks
-import { useAnime } from './hooks/useAnime.js';
 
 // Theme
 import { M3 } from './theme/m3.js';
@@ -77,8 +76,6 @@ const to24Hour = (hour12, meridiem) => {
 };
 
 export default function App() {
-  const anime = useAnime();
-  const headerRef = useRef(null);
 
   const _now = new Date();
   const [A, setA] = useState({ year: _now.getFullYear(), month: _now.getMonth() + 1, day: _now.getDate(), hour: ((_now.getHours() + 11) % 12) + 1, meridiem: _now.getHours() >= 12 ? "PM" : "AM", min: _now.getMinutes(), lat: 51.5, lon: -0.1, tz: 0, tzName: "Etc/UTC", place: "", name: "" });
@@ -120,15 +117,6 @@ export default function App() {
     if (now < new Date(now.getFullYear(), A.month - 1, A.day)) a--;
     setAge(Math.max(0, a));
   }, [A.year, A.month, A.day]);
-
-  useEffect(() => {
-    if (!anime || !headerRef.current) return;
-    anime({
-      targets: headerRef.current.querySelectorAll(".anim"),
-      opacity: [0, 1], translateY: [-16, 0],
-      delay: anime.stagger(70), duration: 650, easing: "easeOutQuart"
-    });
-  }, [anime]);
 
   // On a phone the birth form sits above the chart, so bring the chart up once it exists.
   useEffect(() => {
