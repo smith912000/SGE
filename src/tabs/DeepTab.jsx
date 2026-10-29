@@ -4,6 +4,11 @@ import { useDepth } from '../store/depthStore.js';
 import { getPlanetInSign } from '../data/symbolism/planetInSign.js';
 import { getSignSymbolism } from '../data/symbolism/signSymbolism.js';
 import { terse } from '../data/symbolism/terse.js';
+import { SOLAR_DEEP, LUNAR_DEEP } from '../data/deepAnalysis/solarLunar.js';
+import { RISING_SHADOW, VENUS_SHADOW, MARS_SHADOW, MERCURY_SHADOW } from '../data/deepAnalysis/shadows.js';
+import { JUPITER_DEEP, SATURN_DEEP } from '../data/deepAnalysis/outerPlanets.js';
+import { URANUS_DEEP, NEPTUNE_DEEP, PLUTO_DEEP } from '../data/deepAnalysis/transpersonals.js';
+import { PAIR_INSIGHT } from '../data/deepAnalysis/pairInsights.js';
 export default function DeepTab({ ctx }) {
   const {
     M3,
@@ -18,15 +23,6 @@ export default function DeepTab({ ctx }) {
     grid2,
     calcAspects,
     harmonic,
-    SOLAR_DEEP,
-    LUNAR_DEEP,
-    RISING_SHADOW,
-    VENUS_SHADOW,
-    MARS_SHADOW,
-    MERCURY_SHADOW,
-    JUPITER_DEEP,
-    SATURN_DEEP,
-    PAIR_INSIGHT,
     EL_COL,
     MOD_COL,
     ANIMAL_INFO,

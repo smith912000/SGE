@@ -156,16 +156,12 @@ export default function NatalTab({ ctx }) {
             <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.8rem", lineHeight: 1.6, color: M3.onSurface, margin: "0 0 10px" }}>
               {strong >= 4 ? `${strong} of ${total} current contacts fall within a tight orb. A count is not a significance: the number found is a function of the orb policy in use.` 
                : strong >= 2 ? `${strong} of ${total} current contacts fall within a tight orb. Widening the orb would add more; narrowing it would remove these.` 
-               : total > 0 ? `Transits are relatively gentle today with ${total} connections. This is a good day to integrate rather than force rapid change.` 
+               : total > 0 ? `${total} current contacts are found, none within a tight orb. That is a statement about the orb policy and the current positions.` 
                : "Few contacts fall within a tight orb for this date. That is a statement about the orb policy and the current positions, not about the day."}
             </p>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: M3.secondary, cursor: "pointer", display: "inline-block", background: M3.primary+"1a", padding: "4px 12px", borderRadius: 16 }} onClick={() => {
-              // Simulating a tab switch by clicking the "Today" tab button, which would be ideal, but for now we just show text.
-              window.scrollTo({ top: 0, behavior: "smooth" });
-              // The Today tab carries the full transit breakdown.
-            }}>
-              → VIEW FULL DAILY FORECAST
-            </div>
+            <a href="#today" style={{ fontSize: "0.75rem", fontWeight: 600, color: M3.primary, display: "inline-block", background: M3.primary+"1a", padding: "6px 14px", borderRadius: 16, textDecoration: "none" }}>
+              Open the transit breakdown
+            </a>
           </Card>
         );
       })()}

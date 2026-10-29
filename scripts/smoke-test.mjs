@@ -27,7 +27,7 @@ const FORECAST =
 const TABS = [
   'WheelTab', 'AspectsTab', 'TodayTab', 'ProgressionsTab', 'SynastryTab',
   'ChineseTab', 'NatalTab', 'EducationTab', 'HarmonicsTab', 'NumerologyTab',
-  'DeepTab', 'TarotTab', 'VedicTab',
+  'DeepTab', 'VedicTab',
 ];
 
 // ── bundle the app for node ──────────────────────────────────────────────────
