@@ -136,14 +136,14 @@ export default function TodayTab({ ctx }) {
       {/* ── Horizon & Focus Preference ── */}
       <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(280px, 1fr))", gap:12 }}>
         <div style={{ padding: "12px 16px", borderRadius: 12, background: M3.surfaceContainer, border: `1px solid ${M3.outlineVariant}` }}>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: M3.secondary, letterSpacing: "0.12em", marginBottom: 8 }}>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.secondary, letterSpacing: "0.12em", marginBottom: 8 }}>
             TIME HORIZON
           </div>
           <div style={{ display: "flex", gap: 6 }}>
             {["today", "week", "month"].map(h => (
               <button key={h} onClick={() => setHorizon(h)}
                 style={{
-                  flex: 1, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.74rem", cursor: "pointer",
+                  flex: 1, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", cursor: "pointer",
                   padding: "5px 4px", borderRadius: 6, border: `1px solid ${horizon === h ? M3.primary : M3.outlineVariant}`,
                   background: horizon === h ? M3.primary + "22" : "transparent",
                   color: horizon === h ? M3.primary : M3.onSurfaceVariant,
@@ -156,14 +156,14 @@ export default function TodayTab({ ctx }) {
         </div>
 
         <div style={{ padding: "12px 16px", borderRadius: 12, background: M3.surfaceContainer, border: `1px solid ${M3.outlineVariant}` }}>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: M3.secondary, letterSpacing: "0.12em", marginBottom: 8 }}>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.secondary, letterSpacing: "0.12em", marginBottom: 8 }}>
             FILTER
           </div>
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
             {FOCUS_OPTIONS.map(opt => (
               <button key={opt.id} onClick={() => saveFocus(opt.id)}
                 style={{
-                  fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.74rem", cursor: "pointer",
+                  fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", cursor: "pointer",
                   padding: "4px 10px", borderRadius: 20, border: `1px solid ${focus === opt.id ? M3.primary : M3.outlineVariant}`,
                   background: focus === opt.id ? M3.primary + "22" : "transparent",
                   color: focus === opt.id ? M3.primary : M3.onSurfaceVariant,
@@ -183,7 +183,7 @@ export default function TodayTab({ ctx }) {
       >
         <div
           style={{
-            fontFamily: "Cinzel,serif",
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontSize: "1rem",
             color: M3.primary,
             marginBottom: 8,
@@ -210,7 +210,7 @@ export default function TodayTab({ ctx }) {
         <p
           style={{
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: "0.68rem",
+            fontSize: "0.75rem",
             color: M3.secondary,
             marginTop: 8,
             letterSpacing: "0.12em",
@@ -232,7 +232,7 @@ export default function TodayTab({ ctx }) {
             <div
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.66rem",
+                fontSize: "0.75rem",
                 color: weekAnchor.col || M3.primary,
                 letterSpacing: "0.1em",
                 marginBottom: 4,
@@ -285,7 +285,7 @@ export default function TodayTab({ ctx }) {
             <div
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.66rem",
+                fontSize: "0.75rem",
                 color: M3.tertiary,
                 letterSpacing: "0.1em",
                 marginBottom: 4,
@@ -345,14 +345,14 @@ export default function TodayTab({ ctx }) {
             <Card key={cat.id} style={isPriority ? { border: `1.5px solid ${M3.primary}44`, background: `linear-gradient(135deg,${M3.primaryContainer}22,${M3.surfaceContainer})` } : {}}>
               <div
                 style={{
-                  fontFamily: "Cinzel,serif",
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
                   fontSize: isPriority ? "0.9rem" : "0.82rem",
                   color: isPriority ? M3.primary : M3.secondary,
                   marginBottom: 4,
                   display: "flex", alignItems: "center", gap: 6
                 }}
               >
-                {isPriority && <span style={{ fontSize: "0.6rem", background: M3.primary + "22", color: M3.primary, padding: "1px 8px", borderRadius: 20, fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.08em" }}>FOCUS</span>}
+                {isPriority && <span style={{ fontSize: "0.75rem", background: M3.primary + "22", color: M3.primary, padding: "1px 8px", borderRadius: 20, fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.08em" }}>FOCUS</span>}
                 {cat.label}
               </div>
               <p
@@ -382,7 +382,7 @@ export default function TodayTab({ ctx }) {
                   style={{
                     marginTop: 6,
                     fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.64rem",
+                    fontSize: "0.75rem",
                     color: top.col || M3.secondary,
                   }}
                 >

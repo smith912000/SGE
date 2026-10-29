@@ -34,20 +34,19 @@ function Tooltip({ info, x, y, visible, relative, pinLeft }) {
       border:`1px solid ${M3.outline}`,
       borderRadius:14,
       padding:"14px 16px",
-      boxShadow:`0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px ${M3.primary}22`,
+      boxShadow:"0 8px 32px rgba(0,0,0,0.6)",
       pointerEvents:"none",
     }} className="fade-in">
       <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
-        <span style={{ fontSize:"1.3rem" }}>{info.emoji||"✦"}</span>
-        <span style={{ color:M3.primary, fontFamily:"'JetBrains Mono', monospace",
-          fontSize:"0.75rem", fontWeight:"700", letterSpacing:"0.05em" }}>{info.title}</span>
+        <span style={{ color:M3.primary, fontFamily:M3.fontBody,
+          fontSize:"0.875rem", fontWeight:"600" }}>{plainTitle(info.title)}</span>
       </div>
       {info.tags && (
         <div style={{ display:"flex", gap:5, marginBottom:8, flexWrap:"wrap" }}>
           {info.tags.map((t,i)=>(
             <span key={i} style={{ padding:"2px 8px", borderRadius:20,
               background:M3.primaryContainer, color:M3.onPrimaryContainer,
-              fontFamily:"'JetBrains Mono', monospace", fontSize:"0.6rem", letterSpacing:"0.05em" }}>{t}</span>
+              fontFamily:M3.fontBody, fontSize:"0.75rem" }}>{t}</span>
           ))}
         </div>
       )}
@@ -55,11 +54,20 @@ function Tooltip({ info, x, y, visible, relative, pinLeft }) {
         lineHeight:1.55, margin:0 }}>{info.plain}</p>
       {info.detail && (
         <p style={{ color:M3.onSurfaceVariant, fontFamily:"'DM Sans', system-ui, sans-serif",
-          fontSize:"0.65rem", lineHeight:1.5, marginTop:8, paddingTop:8,
+          fontSize:"0.75rem", lineHeight:1.5, marginTop:8, paddingTop:8,
           borderTop:`1px solid ${M3.outlineVariant}` }}>{info.detail}</p>
       )}
     </div>
   );
 }
+
+// Titles arrive with emoji and spaced em dashes in some data sets; headings
+// show the words only, with a colon where the dash stood.
+export const plainTitle = (t = "") =>
+  String(t)
+    .replace(/\p{Extended_Pictographic}\uFE0F?/gu, "")
+    .replace(/\s+[—–-]\s+/g, ": ")
+    .replace(/\s{2,}/g, " ")
+    .trim();
 
 export default Tooltip;

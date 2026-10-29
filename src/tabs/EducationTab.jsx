@@ -38,7 +38,7 @@ export default function EducationTab({ ctx }) {
 
   const label = {
     fontFamily: M3.fontMono,
-    fontSize: '0.55rem',
+    fontSize: '0.75rem',
     letterSpacing: '0.18em',
     textTransform: 'uppercase',
     color: M3.secondary,

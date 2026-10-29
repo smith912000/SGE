@@ -86,7 +86,7 @@
   border-radius: var(--wild-r-lg); box-shadow: var(--wild-shadow-card); }
 
 /* Tag: a tiny uppercase pill */
-.wild-tag { display: inline-block; font-size: .625rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+.wild-tag { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
   padding: 4px 9px; border-radius: var(--wild-r-pill); color: var(--wild-gold-2); border: 1px solid rgba(201,168,76,.3); background: rgba(201,168,76,.1); }
 
 @media (prefers-reduced-motion: reduce) {

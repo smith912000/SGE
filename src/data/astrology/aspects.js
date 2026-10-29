@@ -1,12 +1,12 @@
 export const ASPECTS = [
-  { name:"Conjunction",    angle:0,   orb:8, sym:"☌", col:"#FFD700" },
-  { name:"Opposition",     angle:180, orb:8, sym:"☍", col:"#ff5252" },
-  { name:"Trine",          angle:120, orb:6, sym:"△", col:"#69ff8e" },
-  { name:"Square",         angle:90,  orb:6, sym:"□", col:"#ff8a50" },
-  { name:"Sextile",        angle:60,  orb:4, sym:"⚹", col:"#64b5f6" },
-  { name:"Quincunx",       angle:150, orb:3, sym:"⚻", col:"#ce93d8" },
-  { name:"Semisquare",     angle:45,  orb:2, sym:"∠", col:"#f48fb1" },
-  { name:"Sesquiquadrate", angle:135, orb:2, sym:"⚼", col:"#ffcc80" },
+  { name:"Conjunction",    angle:0,   orb:8, sym:"☌", col:"#E9C766" },
+  { name:"Opposition",     angle:180, orb:8, sym:"☍", col:"#D07262" },
+  { name:"Trine",          angle:120, orb:6, sym:"△", col:"#7FA8C9" },
+  { name:"Square",         angle:90,  orb:6, sym:"□", col:"#D98E5F" },
+  { name:"Sextile",        angle:60,  orb:4, sym:"⚹", col:"#93B89A" },
+  { name:"Quincunx",       angle:150, orb:3, sym:"⚻", col:"#B9A9F0" },
+  { name:"Semisquare",     angle:45,  orb:2, sym:"∠", col:"#C79A8A" },
+  { name:"Sesquiquadrate", angle:135, orb:2, sym:"⚼", col:"#C9A47A" },
 ];
 export const ASP_EXPLAIN = {
   Conjunction:"0°, the same degree", Opposition:"180°, the axis",

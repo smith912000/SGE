@@ -1,11 +1,14 @@
 import { getPlanetSymbolism } from '../symbolism/planetSymbolism.js';
 import { terse } from '../symbolism/terse.js';
 
-export const P_SYM = { Sun: "☉", Moon: "☽", Mercury: "☿", Venus: "♀", Mars: "♂", Jupiter: "♃", Saturn: "♄", Uranus: "⛢", Neptune: "♆", Pluto: "♇", Chiron: "⚷", Node: "☊", Lilith: "⚸" };
+// U+FE0E: text glyphs, not emoji (♀ ♂ and others turn into emoji on phones).
+export const P_SYM = Object.fromEntries(Object.entries({ Sun: "☉", Moon: "☽", Mercury: "☿", Venus: "♀", Mars: "♂", Jupiter: "♃", Saturn: "♄", Uranus: "⛢", Neptune: "♆", Pluto: "♇", Chiron: "⚷", Node: "☊", Lilith: "⚸" }).map(([k, g]) => [k, g + "\uFE0E"]));
+// Muted planetary colours after the traditional metals: gold, silver,
+// quicksilver, copper, iron, tin, lead; the modern bodies in cool tones.
 export const P_COL = {
-  Sun: "#FFD700", Moon: "#d0dce8", Mercury: "#c9a840", Venus: "#ff80ab",
-  Mars: "#ff5252", Jupiter: "#ffa726", Saturn: "#bcaa84", Uranus: "#4dd0e1",
-  Neptune: "#5c6bc0", Pluto: "#ab47bc", Chiron: "#b388ff", Node: "#78909c", Lilith: "#e040fb",
+  Sun: "#E9C766", Moon: "#D8DEE6", Mercury: "#B8C4B0", Venus: "#D7A6A0",
+  Mars: "#D07262", Jupiter: "#A5A9D9", Saturn: "#A89A82", Uranus: "#8FC1C9",
+  Neptune: "#7F95C9", Pluto: "#A27D9A", Chiron: "#B9A9F0", Node: "#A6A2B0", Lilith: "#B88AA8",
 };
 export const P_ROLE = {
   // Classical designations. The seven traditional bodies carry the office the

@@ -27,9 +27,9 @@ const PLANET_SHORT = {
 };
 
 const PLANET_COL = {
-  Sun:"#ffb74d", Moon:"#e1f5fe", Mars:"#ef5350", Mercury:"#aed581",
-  Jupiter:"#ffd54f", Venus:"#f48fb1", Saturn:"#90a4ae",
-  Rahu:"#ce93d8", Ketu:"#ff9800", Node:"#ce93d8",
+  Sun:"#E2B48A", Moon:"#e1f5fe", Mars:"#D07262", Mercury:"#93B89A",
+  Jupiter:"#E9C766", Venus:"#D7A6A0", Saturn:"#A6A2B0",
+  Rahu:"#B9A9F0", Ketu:"#D98E5F", Node:"#B9A9F0",
 };
 
 export default function SouthIndianChart({
@@ -45,7 +45,7 @@ export default function SouthIndianChart({
     border:  theme.border  || "rgba(255,255,255,0.08)",
     text:    theme.text    || "#e9e6f0",
     muted:   theme.muted   || "#948ca8",
-    accent:  theme.accent  || "#a78bfa",
+    accent:  theme.accent  || "#B9A9F0",
   };
 
   const cellSize = size / 4;

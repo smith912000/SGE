@@ -31,7 +31,7 @@ import { chineseCycle } from './engines/chinese.js';
 import Card from './components/ui/Card.jsx';
 import TabBar, { TAB_IDS } from './components/ui/TabBar.jsx';
 import TabContent from './components/ui/TabContent.jsx';
-import Mark from './components/ui/Mark.jsx';
+import EclipticRing from './components/ui/EclipticRing.jsx';
 import StarCanvas from './components/ui/StarCanvas.jsx';
 import ProfilePanel from './components/ui/ProfilePanel.jsx';
 
@@ -202,9 +202,9 @@ export default function App() {
           <div className="sge-main">
           {!res && (
             <div className="sge-empty">
-              <Mark size={44} />
-              <h2>Begin with a <em>birth moment.</em></h2>
-              <p>Enter the date, time and place, then compute. The natal chart, today's transits, progressions and the Vedic, Chinese and symbolic systems all open from it.</p>
+              <EclipticRing size={220} className="sge-empty-ring" />
+              <h2>Begin with a birth moment</h2>
+              <p>Enter the date, time and place, then compute. The natal figure, its transits and progressions, and the Vedic, Chinese and numerological readings of the same moment all open from it.</p>
             </div>
           )}
           {res && (

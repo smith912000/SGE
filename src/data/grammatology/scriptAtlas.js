@@ -44,7 +44,7 @@ export const SCRIPT_ATLAS = [
     region: "Levant, Arabia, Horn of Africa",
     era: "c. 1000 BCE – present",
     desc: "Direct descendants of the Phoenician 22-letter abjad. Hebrew and Aramaic preserve the original 22; Arabic expanded to 28 to capture additional consonants. These scripts write right-to-left, with consonant skeletons and optional vowel pointing.",
-    color: "#4fc3f7",
+    color: "#8FC1C9",
     scripts: [
       { name:"Hebrew", letters:"22 (+5 finals)", type:"Abjad", status:"Living", cultures:["Israel","Jewish diaspora","Samaritans"], mapped:true },
       { name:"Arabic", letters:"28", type:"Abjad", status:"Living", cultures:["Arab world","Islamic civilisation","Persian","Ottoman","Urdu","Malay"], mapped:true },
@@ -61,7 +61,7 @@ export const SCRIPT_ATLAS = [
     region: "Greece, Italy, North Africa",
     era: "c. 800 BCE – present",
     desc: "The Greeks added vowels to the Phoenician 22-letter abjad, creating the first true alphabet (24 letters). Greek begat Coptic, Gothic, and through Etruscan Old Italic begat the Latin alphabet — now the world's most widespread writing system.",
-    color: "#81c784",
+    color: "#93B89A",
     scripts: [
       { name:"Greek", letters:"24", type:"Alphabet", status:"Living", cultures:["Greece","Hellenistic world","Byzantium","Cyprus"], mapped:true },
       { name:"Latin", letters:"23–26", type:"Alphabet", status:"Living", cultures:["Roman Empire","Western Europe","Americas","Oceania","most of Africa"], mapped:true },
@@ -75,7 +75,7 @@ export const SCRIPT_ATLAS = [
     region: "Armenia, Georgia, Slavic lands, Albania, Balkans",
     era: "c. 400 – 900 CE",
     desc: "Missionary linguists created bespoke alphabets to Christianise their nations. Armenian (38 letters) and Georgian (33) were designed from scratch; Glagolitic and Cyrillic (33, Russian) were crafted for Slavic languages from Greek models. Each expanded well beyond 22 to capture unique phonemes.",
-    color: "#ce93d8",
+    color: "#B9A9F0",
     scripts: [
       { name:"Armenian", letters:"38 (originally 36)", type:"Alphabet", status:"Living", cultures:["Armenia","Armenian diaspora"], mapped:true },
       { name:"Georgian", letters:"33", type:"Alphabet", status:"Living", cultures:["Georgia","Kartvelian peoples"], mapped:true },
@@ -93,7 +93,7 @@ export const SCRIPT_ATLAS = [
     region: "Ireland, Britain, Scandinavia, Iceland",
     era: "c. 150 – 1100 CE",
     desc: "Ogham (25 letters) was carved on stone edges in Ireland and Britain, each letter named for a tree. The Elder Futhark runes (24 letters) encoded Germanic sounds with angular strokes suited to wood and stone. Both expanded from the Proto-Sinaitic base to fit Celtic and Germanic phonologies.",
-    color: "#a1887f",
+    color: "#9C8F7A",
     scripts: [
       { name:"Ogham", letters:"20 + 5 forfeda = 25", type:"Alphabet", status:"Historical", cultures:["Ireland","Picts","Wales","Isle of Man"], mapped:true },
       { name:"Runic", letters:"24 (Elder Futhark)", type:"Alphabet", status:"Historical", cultures:["Norse","Anglo-Saxon","Goths","Germanic tribes"], mapped:true },
@@ -104,7 +104,7 @@ export const SCRIPT_ATLAS = [
     region: "South Asia, Southeast Asia, Central Asia",
     era: "c. 300 BCE – present",
     desc: "Brahmi (the Indian ancestor) descends from Aramaic, itself from Phoenician. It evolved into 40+ daughter scripts — all abugidas where each consonant carries an inherent vowel. Devanagari has 46+ characters, Tamil 18+12, Thai 44 consonants. These systems dramatically expanded the 22-letter base to capture the rich phonologies of South and Southeast Asian languages.",
-    color: "#ffb74d",
+    color: "#E2B48A",
     scripts: [
       { name:"Brahmi", letters:"46+", type:"Abugida", status:"Extinct", cultures:["Maurya Empire","Ashoka's edicts"], mapped:true },
       { name:"Devanagari", letters:"14V + 33C = 47+", type:"Abugida", status:"Living", cultures:["Hindi","Sanskrit","Marathi","Nepali","many Indian languages"], mapped:true },
@@ -182,7 +182,7 @@ export const SCRIPT_ATLAS = [
     region: "China, Japan, Korea, Taiwan, Vietnam",
     era: "c. 1200 BCE – present",
     desc: "Chinese Hanzi is a logographic system with 50,000+ characters (though ~3,500 cover 99% of text). Japanese adapted Chinese into Hiragana and Katakana syllabaries (46 each). Korean Hangul (40 jamo) was scientifically designed in 1443. Bopomofo (37 symbols) annotates Chinese pronunciation in Taiwan.",
-    color: "#ef5350",
+    color: "#D07262",
     scripts: [
       { name:"Han", letters:"50,000+ (3,500 common)", type:"Logographic", status:"Living", cultures:["China","Japan (Kanji)","Korea (Hanja)","Vietnam (Chữ Hán)"], mapped:true },
       { name:"Bopomofo", letters:"37", type:"Semi-syllabary", status:"Living", cultures:["Taiwan (Mandarin phonetic)"], mapped:true },
@@ -201,7 +201,7 @@ export const SCRIPT_ATLAS = [
     region: "Horn of Africa, West Africa, Sahara, Nile",
     era: "c. 800 BCE – present",
     desc: "Africa's scripts span millennia: Meroitic hieroglyphs from ancient Nubia, Ge'ez (Ethiopic) with 182+ fidels as a unique abugida, Tifinagh from the Berber Tuareg, and modern creations like N'Ko (1949) for Manding languages and Adlam (1989) for Fulfulde. Many West African scripts were independently invented.",
-    color: "#66bb6a",
+    color: "#93B89A",
     scripts: [
       { name:"Ethiopic", letters:"26 base × 7 orders = 182+", type:"Abugida", status:"Living", cultures:["Ethiopia","Eritrea (Amharic, Tigrinya, Ge'ez liturgy)"], mapped:true },
       { name:"Tifinagh", letters:"33+", type:"Abjad/Alphabet", status:"Living", cultures:["Tuareg","Berber/Amazigh (North Africa)"] },
@@ -225,7 +225,7 @@ export const SCRIPT_ATLAS = [
     region: "Persia, Central Asia, Silk Road",
     era: "c. 500 BCE – 1500 CE",
     desc: "The Silk Road carried scripts eastward. Aramaic spawned Pahlavi (Persian), Sogdian, and eventually Mongolian vertical script. Avestan was created for Zoroastrian scripture. Old Turkic runes carved on Orkhon stele monuments mark the earliest Turkic writing.",
-    color: "#7986cb",
+    color: "#7FA8C9",
     scripts: [
       { name:"Avestan", letters:"53", type:"Alphabet", status:"Historical", cultures:["Zoroastrian scripture (Avesta)"] },
       { name:"Inscriptional_Pahlavi", letters:"19", type:"Abjad", status:"Extinct", cultures:["Parthian/Sassanid Persia"] },
@@ -247,7 +247,7 @@ export const SCRIPT_ATLAS = [
     region: "Americas, Pacific, Global",
     era: "c. 1820 – present",
     desc: "Scripts created by individuals for specific communities: Cherokee syllabary (1821, Sequoyah), Canadian syllabics (1840, James Evans), Deseret (1854, Mormon), Shavian (1962, Shaw), Braille (1824), and numerous modern indigenous scripts. These demonstrate that script creation is an ongoing human endeavour.",
-    color: "#4dd0e1",
+    color: "#8FC1C9",
     scripts: [
       { name:"Cherokee", letters:"85", type:"Syllabary", status:"Living", cultures:["Cherokee Nation (Oklahoma/N.Carolina)"] },
       { name:"Canadian_Aboriginal", letters:"~700", type:"Abugida", status:"Living", cultures:["Cree","Inuktitut","Ojibwe","many First Nations"] },
@@ -274,7 +274,7 @@ export const SCRIPT_ATLAS = [
     region: "n/a",
     era: "1991 – present",
     desc: "Technical Unicode categories for characters that belong to no single script (Common) or inherit the script of their context (Inherited). Included for completeness.",
-    color: "#90a4ae",
+    color: "#A6A2B0",
     scripts: [
       { name:"Common", letters:"n/a", type:"Meta", status:"Technical", cultures:["Unicode standard — punctuation, digits, symbols"] },
       { name:"Inherited", letters:"n/a", type:"Meta", status:"Technical", cultures:["Unicode standard — combining marks inheriting parent script"] },

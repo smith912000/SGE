@@ -27,7 +27,7 @@ class ErrorBoundary extends React.Component {
           margin: 20
         }}>
           <div style={{ fontSize: "3rem", marginBottom: 16 }}>⚠️</div>
-          <h2 style={{ fontFamily: "Cinzel,serif", color: M3.error, marginBottom: 12 }}>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: M3.error, marginBottom: 12 }}>
             Something went wrong in this module.
           </h2>
           <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "1rem", color: M3.onSurfaceVariant, maxWidth: 500, margin: "0 auto 24px" }}>
@@ -55,7 +55,7 @@ class ErrorBoundary extends React.Component {
               padding: 12,
               background: "#00000044",
               color: M3.error,
-              fontSize: "0.6rem",
+              fontSize: "0.75rem",
               textAlign: "left",
               overflowX: "auto",
               borderRadius: 8

@@ -17,12 +17,12 @@ export default function DistBar({ data, colors }) {
     <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
       {Object.entries(data).map(([k,v])=>(
         <div key={k} style={{ display:"flex", alignItems:"center", gap:10 }}>
-          <span style={{ width:72, color:M3.onSurfaceVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.7rem" }}>{k}</span>
+          <span style={{ width:72, color:M3.onSurfaceVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem" }}>{k}</span>
           <div style={{ flex:1, height:5, background:M3.outlineVariant, borderRadius:3, overflow:"hidden" }}>
             <div ref={el=>refs.current[k]=el}
               style={{ width:0, height:"100%", background:colors[k]||M3.primary, borderRadius:3 }}/>
           </div>
-          <span style={{ width:18, textAlign:"right", color:colors[k]||M3.primary, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.7rem" }}>{v}</span>
+          <span style={{ width:18, textAlign:"right", color:colors[k]||M3.primary, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem" }}>{v}</span>
         </div>
       ))}
     </div>

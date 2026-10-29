@@ -104,7 +104,7 @@ export default function InputPanel({ A, setA, B, setB, syn, setSyn, compute, loa
   return (
     <Card title="⬡  Birth Data">
       <div style={{ marginBottom: 12, padding: '10px 12px', borderRadius: 10, background: M3.surfaceContainer, border: `1px solid ${M3.outlineVariant}` }}>
-        <label style={{ fontFamily: M3.fontMono, fontSize: '0.62rem', color: M3.secondary, letterSpacing: '0.1em' }}>
+        <label style={{ fontFamily: M3.fontBody, fontSize: '0.75rem', color: M3.secondary, letterSpacing: '0.1em' }}>
           BIRTH LOCATION PICKER
         </label>
         <div style={{ display: 'flex', gap: 8, marginTop: 6 }}>
@@ -117,7 +117,7 @@ export default function InputPanel({ A, setA, B, setB, syn, setSyn, compute, loa
             style={{
               flex: 1, padding: '8px 12px', background: M3.surfaceDim,
               border: `1px solid ${M3.outline}`, borderRadius: M3.radius.sm,
-              color: M3.onSurface, fontFamily: M3.fontMono, fontSize: '0.76rem',
+              color: M3.onSurface, fontFamily: M3.fontBody, fontSize: '0.76rem',
               outline: 'none', boxSizing: 'border-box',
             }}
           />
@@ -127,7 +127,7 @@ export default function InputPanel({ A, setA, B, setB, syn, setSyn, compute, loa
             style={{
               padding: '8px 12px', borderRadius: 10, border: `1px solid ${M3.primary}55`,
               background: M3.primaryContainer, color: M3.onPrimaryContainer,
-              fontFamily: M3.fontMono, fontSize: '0.66rem', cursor: 'pointer',
+              fontFamily: M3.fontBody, fontSize: '0.75rem', cursor: 'pointer',
             }}
           >
             {locLoading ? 'Searching…' : 'Find'}
@@ -144,7 +144,7 @@ export default function InputPanel({ A, setA, B, setB, syn, setSyn, compute, loa
                   style={{
                     textAlign: 'left', padding: '7px 10px', borderRadius: 8,
                     border: `1px solid ${M3.outlineVariant}`, background: M3.surfaceDim,
-                    color: M3.onSurface, fontFamily: M3.fontMono, fontSize: '0.66rem', cursor: 'pointer',
+                    color: M3.onSurface, fontFamily: M3.fontBody, fontSize: '0.75rem', cursor: 'pointer',
                   }}
                 >
                   {label}
@@ -153,9 +153,9 @@ export default function InputPanel({ A, setA, B, setB, syn, setSyn, compute, loa
             })}
           </div>
         )}
-        {locError && <div style={{ marginTop: 8, color: '#E07A85', fontFamily: M3.fontMono, fontSize: '0.6rem' }}>{locError}</div>}
+        {locError && <div style={{ marginTop: 8, color: '#E07A85', fontFamily: M3.fontBody, fontSize: '0.75rem' }}>{locError}</div>}
         <div style={{ marginTop: 8, display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
-          <span style={{ fontFamily: M3.fontMono, fontSize: '0.6rem', color: M3.onSurfaceVariant }}>
+          <span style={{ fontFamily: M3.fontBody, fontSize: '0.75rem', color: M3.onSurfaceVariant }}>
             {A.place ? `Selected: ${A.place}` : 'No location selected yet.'}
           </span>
           {!!A.tzName && (
@@ -164,7 +164,7 @@ export default function InputPanel({ A, setA, B, setB, syn, setSyn, compute, loa
               style={{
                 padding: '4px 10px', borderRadius: 10, border: `1px solid ${M3.tertiary}55`,
                 background: M3.tertiaryContainer || M3.surfaceContainer, color: M3.tertiary,
-                fontFamily: M3.fontMono, fontSize: '0.6rem', cursor: 'pointer',
+                fontFamily: M3.fontBody, fontSize: '0.75rem', cursor: 'pointer',
               }}
             >
               Recompute TZ from {A.tzName}
@@ -183,7 +183,7 @@ export default function InputPanel({ A, setA, B, setB, syn, setSyn, compute, loa
             onChange={v => setA(p => ({ ...p, [fld]: v }))} />
         ))}
       </div>
-      <div style={{ marginTop: 6, fontFamily: M3.fontMono, fontSize: '0.6rem', color: M3.onSurfaceVariant }}>
+      <div style={{ marginTop: 6, fontFamily: M3.fontBody, fontSize: '0.75rem', color: M3.onSurfaceVariant }}>
         Use the timezone offset at birth (including DST if active). Example: UK summer time is usually `+1`.
       </div>
       <div style={{ marginTop: 8, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -197,8 +197,8 @@ export default function InputPanel({ A, setA, B, setB, syn, setSyn, compute, loa
               border: `1px solid ${A.meridiem === m ? M3.primary : M3.outlineVariant}`,
               background: A.meridiem === m ? M3.primaryContainer : M3.surfaceContainer,
               color: A.meridiem === m ? M3.onPrimaryContainer : M3.onSurfaceVariant,
-              fontFamily: M3.fontMono,
-              fontSize: '0.66rem',
+              fontFamily: M3.fontBody,
+              fontSize: '0.75rem',
               cursor: 'pointer',
             }}
           >
@@ -208,7 +208,7 @@ export default function InputPanel({ A, setA, B, setB, syn, setSyn, compute, loa
       </div>
 
       <div style={{ marginTop: 12 }}>
-        <label style={{ fontFamily: M3.fontMono, fontSize: '0.62rem', color: M3.secondary, letterSpacing: '0.1em' }}>
+        <label style={{ fontFamily: M3.fontBody, fontSize: '0.75rem', color: M3.secondary, letterSpacing: '0.1em' }}>
           FULL NAME (for numerology)
         </label>
         <input type="text" value={A.name} onChange={e => setA(p => ({ ...p, name: e.target.value }))}
@@ -216,7 +216,7 @@ export default function InputPanel({ A, setA, B, setB, syn, setSyn, compute, loa
           style={{
             width: '100%', padding: '8px 12px', marginTop: 4, background: M3.surfaceDim,
             border: `1px solid ${M3.outline}`, borderRadius: M3.radius.sm,
-            color: M3.onSurface, fontFamily: M3.fontMono, fontSize: '0.78rem',
+            color: M3.onSurface, fontFamily: M3.fontBody, fontSize: '0.78rem',
             outline: 'none', boxSizing: 'border-box',
           }} />
       </div>
@@ -224,7 +224,7 @@ export default function InputPanel({ A, setA, B, setB, syn, setSyn, compute, loa
       <div style={{ marginTop: 16, display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'flex-end' }}>
         <label style={{
           display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer',
-          color: M3.onSurfaceVariant, fontFamily: M3.fontMono, fontSize: '0.72rem', paddingBottom: 2,
+          color: M3.onSurfaceVariant, fontFamily: M3.fontBody, fontSize: '0.75rem', paddingBottom: 2,
         }}>
           <input type="checkbox" checked={syn} onChange={e => setSyn(e.target.checked)}
             style={{ accentColor: M3.primary, width: 14, height: 14 }} />
@@ -235,8 +235,8 @@ export default function InputPanel({ A, setA, B, setB, syn, setSyn, compute, loa
       {syn && (
         <div style={{ marginTop: 14, paddingTop: 14, borderTop: `1px solid ${M3.glassBorder}` }}>
           <div style={{
-            color: M3.secondary, fontFamily: M3.fontMono,
-            fontSize: '0.65rem', letterSpacing: '0.18em', marginBottom: 10,
+            color: M3.secondary, fontFamily: M3.fontBody,
+            fontSize: '0.75rem', letterSpacing: '0.18em', marginBottom: 10,
           }}>PERSON B</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(108px,1fr))', gap: 10 }}>
             {["year", "month", "day", "hour", "min", "lat", "lon", "tz"].map(f => (
@@ -258,8 +258,8 @@ export default function InputPanel({ A, setA, B, setB, syn, setSyn, compute, loa
                   border: `1px solid ${B.meridiem === m ? M3.primary : M3.outlineVariant}`,
                   background: B.meridiem === m ? M3.primaryContainer : M3.surfaceContainer,
                   color: B.meridiem === m ? M3.onPrimaryContainer : M3.onSurfaceVariant,
-                  fontFamily: M3.fontMono,
-                  fontSize: '0.66rem',
+                  fontFamily: M3.fontBody,
+                  fontSize: '0.75rem',
                   cursor: 'pointer',
                 }}
               >

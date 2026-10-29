@@ -7,7 +7,7 @@ import Tooltip from '../ui/Tooltip.jsx';
 
 export default function ChineseWheel({ cn, size = 460, onTooltip }) {
   const S = size, cx = S/2, cy = S/2, R = S * 0.46;
-  const ANIMAL_SYMS = ["🐀","🐂","🐅","🐇","🐉","🐍","🐎","🐐","🐒","🐓","🐕","🐖"];
+  const ANIMAL_SYMS = ["鼠","牛","虎","兔","龍","蛇","馬","羊","猴","雞","狗","豬"];
   const ANIMAL_NAMES = ANIMALS;
   const ANIMAL_HOURS = ["11pm–1am","1–3am","3–5am","5–7am","7–9am","9–11am","11am–1pm","1–3pm","3–5pm","5–7pm","7–9pm","9–11pm"];
   const ANIMAL_SEASON = ["Winter","Winter","Spring","Spring","Spring","Summer","Summer","Summer","Autumn","Autumn","Autumn","Winter"];
@@ -41,7 +41,7 @@ export default function ChineseWheel({ cn, size = 460, onTooltip }) {
   ];
 
   const CN_EL_LIST = ["Wood","Fire","Earth","Metal","Water"];
-  const CN_EL_COL_MAP = { Wood:"#8bc34a", Fire:"#ff5252", Earth:"#c9a840", Metal:"#64b5f6", Water:"#5c6bc0" };
+  const CN_EL_COL_MAP = { Wood:"#93B89A", Fire:"#D07262", Earth:"#c9a840", Metal:"#7FA8C9", Water:"#7FA8C9" };
 
   const gold  = "#c9a840";
   const red   = "#c0392b";
@@ -84,7 +84,7 @@ export default function ChineseWheel({ cn, size = 460, onTooltip }) {
   const yinPath = `M ${cx} ${cy + yyR} A ${yyR} ${yyR} 0 0 1 ${cx} ${cy - yyR} A ${yyR/2} ${yyR/2} 0 0 0 ${cx} ${cy} A ${yyR/2} ${yyR/2} 0 0 1 ${cx} ${cy + yyR} Z`;
 
   return (
-    <svg width={S} height={S} viewBox={`0 0 ${S} ${S}`} style={{ display:"block", maxWidth:"100%", filter:"drop-shadow(0 0 22px rgba(200,160,60,0.22))", overflow:"visible" }}>
+    <svg width={S} height={S} viewBox={`0 0 ${S} ${S}`} style={{ display:"block", maxWidth:"100%", overflow:"visible" }}>
       <defs>
         <radialGradient id="cnbg2" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#1c1408"/>
@@ -163,7 +163,7 @@ export default function ChineseWheel({ cn, size = 460, onTooltip }) {
         const elInfo = CN_EL_INFO[el]||{};
         const tipInfo = {
           title:`${el} Element — 五行 (Wǔ Xíng)`,
-          emoji: el==="Wood"?"🌿":el==="Fire"?"🔥":el==="Earth"?"⛰️":el==="Metal"?"⚔️":"💧",
+          emoji: el==="Wood"?"木":el==="Fire"?"火":el==="Earth"?"土":el==="Metal"?"金":"水",
           plain: elInfo.desc || "",
           tags:[elInfo.trait||"", isActive?"★ THIS CHART'S ELEMENT":"", `Creates: ${CN_EL_LIST[(i+1)%5]}`, `Controls: ${CN_EL_LIST[(i+2)%5]}`],
         };

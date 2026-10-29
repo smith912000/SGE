@@ -30,13 +30,13 @@ function ResonanceBadge({ resonance }) {
     <div style={{ display: "inline-flex", gap: 3, marginLeft: 6 }}>
       {is369 && (
         <span title={`Vortex Resonance: ${resonance.vortex.digital_root}`}
-          style={{ fontSize: "0.55rem", background: M3.tertiary + "22", color: M3.tertiary, padding: "0px 4px", borderRadius: 4, border: `1px solid ${M3.tertiary}44` }}>
+          style={{ fontSize: "0.75rem", background: M3.tertiary + "22", color: M3.tertiary, padding: "0px 4px", borderRadius: 4, border: `1px solid ${M3.tertiary}44` }}>
           {resonance.vortex.digital_root}
         </span>
       )}
       {isHighPhi && (
         <span title={`Phi Resonance: ${(resonance.phi_score * 100).toFixed(1)}%`}
-          style={{ fontSize: "0.55rem", background: M3.primary + "22", color: M3.primary, padding: "0px 4px", borderRadius: 4, border: `1px solid ${M3.primary}44` }}>
+          style={{ fontSize: "0.75rem", background: M3.primary + "22", color: M3.primary, padding: "0px 4px", borderRadius: 4, border: `1px solid ${M3.primary}44` }}>
           Φ
         </span>
       )}
@@ -59,10 +59,10 @@ export default function PlanetTable({ positions, jd = null, siderealPositions = 
 
   const TH = {
     padding: "4px 6px", textAlign: "left", color: M3.secondary,
-    fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem",
+    fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem",
     letterSpacing: "0.06em", borderBottom: `1px solid ${M3.outlineVariant}`, whiteSpace: "nowrap"
   };
-  const TD = { padding: "3px 6px", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.7rem", color: M3.onSurface };
+  const TD = { padding: "3px 6px", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.onSurface };
   const SC = { ...TD, fontSize: "0.78rem", letterSpacing: 2 };
 
   return (
@@ -79,8 +79,8 @@ export default function PlanetTable({ positions, jd = null, siderealPositions = 
           </tr>
           <tr>
             {[" ", "Name", "Governs"].map(h => <th key={h} style={{ ...TH, borderRight: h === "Governs" ? `1px solid ${M3.outlineVariant}33` : "none" }}>{h}</th>)}
-            <th style={{ ...TH, color: "#ce93d8" }} title="Tradition 1: The Hermetic Tradition — primary Tarot correspondence">Hermetic</th>
-            <th style={{ ...TH, color: "#80cbc4", borderRight: `1px solid ${M3.outlineVariant}33` }} title="Tradition 2: Sefer Yetzirah planetary attribution">Yetzirah</th>
+            <th style={{ ...TH, color: "#B9A9F0" }} title="Tradition 1: The Hermetic Tradition — primary Tarot correspondence">Hermetic</th>
+            <th style={{ ...TH, color: "#8FC1C9", borderRight: `1px solid ${M3.outlineVariant}33` }} title="Tradition 2: Sefer Yetzirah planetary attribution">Yetzirah</th>
             <th style={TH}>Sign</th>
             <th style={TH} title="Zodiac sign script correspondence">Sign Script</th>
             <th style={TH}>Pos.</th>
@@ -106,7 +106,7 @@ export default function PlanetTable({ positions, jd = null, siderealPositions = 
                   {p}
                   <ResonanceBadge resonance={resonance?.profiles?.[p]} />
                 </td>
-                <td style={{ ...TD, color: M3.onSurfaceVariant, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.64rem", fontStyle: "italic", borderRight: `1px solid ${M3.outlineVariant}33` }}>{P_ROLE[p] || "—"}</td>
+                <td style={{ ...TD, color: M3.onSurfaceVariant, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", fontStyle: "italic", borderRight: `1px solid ${M3.outlineVariant}33` }}>{P_ROLE[p] || "—"}</td>
                 <td style={{ ...SC, background: "#ce93d811" }}>
                   <Glyphs letter={hermetic} title={hermetic ? `Hermetic: ${hermetic.hebrewName} (${hermetic.hebrew}) → ${p}` : undefined} />
                 </td>
@@ -118,7 +118,7 @@ export default function PlanetTable({ positions, jd = null, siderealPositions = 
                   <Glyphs letter={wSignLetter} title={wSignLetter ? `${wSign}: ${wSignLetter.hebrewName} (${wSignLetter.hebrew})` : undefined} />
                 </td>
                 <td style={{ ...TD, color: M3.onSurfaceVariant }}>{zodDeg(lon)}°</td>
-                <td style={{ ...TD, textAlign: "center", fontSize: "0.8rem", color: speeds?.[p] < 0 ? "#f44336" : M3.outlineVariant, borderRight: `1px solid ${M3.outlineVariant}33` }}>{speeds?.[p] < 0 ? "℞" : ""}</td>
+                <td style={{ ...TD, textAlign: "center", fontSize: "0.8rem", color: speeds?.[p] < 0 ? "#D07262" : M3.outlineVariant, borderRight: `1px solid ${M3.outlineVariant}33` }}>{speeds?.[p] < 0 ? "℞" : ""}</td>
                 <td style={{ ...TD, color: SIGN_COL[vSign] }}>{vSign}</td>
                 <td style={SC}>
                   <Glyphs letter={vSignLetter} title={vSignLetter ? `${vSign}: ${vSignLetter.hebrewName} (${vSignLetter.hebrew})` : undefined} />

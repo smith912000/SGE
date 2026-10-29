@@ -202,7 +202,7 @@ export default function ScriptSelector({ onSelect }) {
         placeholder={`Search ${scripts.length} scripts by name or language…`}
         style={{ padding:"8px 10px", borderRadius:8, border:"1px solid rgba(187,134,252,0.3)",
           background:"rgba(0,0,0,0.2)", color:"inherit", outline:"none",
-          fontFamily:"'JetBrains Mono', monospace", fontSize:"0.72rem" }}
+          fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem" }}
       />
       <div style={{ maxHeight:300, overflowY:"auto", borderRadius:8,
         border:"1px solid rgba(187,134,252,0.1)", background:"rgba(0,0,0,0.15)" }}>
@@ -217,12 +217,12 @@ export default function ScriptSelector({ onSelect }) {
                   alignItems:"center", justifyContent:"space-between", gap:8,
                   background: isOpen ? "rgba(187,134,252,0.08)" : "transparent" }}>
                 <div>
-                  <span style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.72rem",
-                    color: isOpen ? "#bb86fc" : "inherit" }}>
+                  <span style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem",
+                    color: isOpen ? "#B9A9F0" : "inherit" }}>
                     {s.replace(/_/g, " ")}
                   </span>
                   {info.lang && (
-                    <span style={{ fontSize:"0.62rem", opacity:0.5, marginLeft:6,
+                    <span style={{ fontSize:"0.75rem", opacity:0.5, marginLeft:6,
                       fontFamily:"'DM Sans', system-ui, sans-serif", fontStyle:"italic" }}>
                       {info.lang}
                     </span>
@@ -230,14 +230,14 @@ export default function ScriptSelector({ onSelect }) {
                 </div>
                 <div style={{ display:"flex", alignItems:"center", gap:6 }}>
                   {info.dir && (
-                    <span style={{ fontSize:"0.54rem", opacity:0.4,
+                    <span style={{ fontSize:"0.75rem", opacity:0.4,
                       fontFamily:"'JetBrains Mono', monospace",
                       border:"1px solid rgba(255,255,255,0.15)", borderRadius:3,
                       padding:"1px 4px" }}>
                       {info.dir}
                     </span>
                   )}
-                  <span style={{ opacity:0.4, fontSize:"0.7rem" }}>{isOpen ? "▲" : "▼"}</span>
+                  <span style={{ opacity:0.4, fontSize:"0.75rem" }}>{isOpen ? "▲" : "▼"}</span>
                 </div>
               </div>
               {isOpen && info.sample && (
@@ -247,7 +247,7 @@ export default function ScriptSelector({ onSelect }) {
                     wordBreak:"break-all", color:"#e8e0ff", marginBottom:4 }}>
                     {info.sample}
                   </div>
-                  <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.58rem",
+                  <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem",
                     opacity:0.45 }}>
                     {info.lang} · {info.dir} · click to use in Cross-Script analysis
                   </div>
@@ -257,7 +257,7 @@ export default function ScriptSelector({ onSelect }) {
           );
         })}
         {filtered.length === 0 && (
-          <div style={{ padding:12, opacity:0.5, fontSize:"0.72rem",
+          <div style={{ padding:12, opacity:0.5, fontSize:"0.75rem",
             fontFamily:"'JetBrains Mono', monospace" }}>
             No matches
           </div>
