@@ -1,5 +1,5 @@
 import { SIGNS, SIGN_INFO } from '../data/astrology/signs.js';
-import { HOUSE_INFO } from '../data/astrology/houses.js';
+import { HOUSE_INFO } from '../data/astrology/houseInfo.js';
 import { ASPECT_MEANINGS } from '../data/astrology/aspects.js';
 import { SOLAR_DEEP, LUNAR_DEEP } from '../data/deepAnalysis/solarLunar.js';
 import { RISING_SHADOW, VENUS_SHADOW, MARS_SHADOW, MERCURY_SHADOW } from '../data/deepAnalysis/shadows.js';

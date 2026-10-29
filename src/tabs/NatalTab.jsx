@@ -2,9 +2,10 @@ import MoonPhase from '../components/ui/MoonPhase.jsx';
 import { getPreferenceFocus } from '../store/userPreferences.js';
 import { PLANET_IN_SIGN } from '../data/astrology/planetInSign.js';
 import { PLANET_IN_HOUSE } from '../data/astrology/planetInHouse.js';
+import { HOUSE_INFO } from '../data/astrology/houseInfo.js';
 
 export default function NatalTab({ ctx }) {
-  const { M3, res, grid2, zodSign, SIGN_COL, SIGN_SYM, HOUSE_AREA, HOUSE_INFO, P_COL, P_SYM, Card, PlanetTable, WheelWithTooltip, ProfilePanel, moonPhase } = ctx;
+  const { M3, res, grid2, zodSign, SIGN_COL, SIGN_SYM, HOUSE_AREA, P_COL, P_SYM, Card, PlanetTable, WheelWithTooltip, ProfilePanel, moonPhase } = ctx;
 
   const fmtDeg = (lon) => {
     const l = ((lon % 360) + 360) % 360;

@@ -79,7 +79,7 @@ export const HEBREW_LUNAR_MONTHS = [
     greg:"October–November", days:"29–30",
     civilMonth:2,
     holidays:[],
-    note:"Also called Marcheshvan. The only month with no holidays or fasts — a 'bitter' month."
+    note:"Also called Marcheshvan. The only month with no holidays or fasts, a 'bitter' month."
   },
   {
     n:9, heb:"כסלו", en:"Kislev", zodiac:"Sagittarius",
@@ -134,10 +134,10 @@ export const HEBREW_LUNAR_MONTHS = [
 export const HEBREW_CALENDAR_INFO = {
   name: "Jewish (Hebrew) Calendar",
   type: "Lunisolar",
-  epoch: "Anno Mundi — years counted from traditional creation (3761 BCE)",
+  epoch: "Anno Mundi: years counted from traditional creation (3761 BCE)",
   newDay: "Sunset (a new Hebrew day begins at sunset, not midnight)",
   religiousNewYear: "1 Nisan (spring)",
-  civilNewYear: "1 Tishrei (autumn — Rosh Hashanah)",
+  civilNewYear: "1 Tishrei (autumn: Rosh Hashanah)",
   leapCycle: "19-year Metonic cycle with 7 leap years (adding Adar II)",
   leapYears: [3, 6, 8, 11, 14, 17, 19],
   monthLength: "Lunar-based, 29–30 days per month",
@@ -311,16 +311,16 @@ export const HINDU_RITUS = [
 export const HINDU_CALENDAR_INFO = {
   name: "Panchāngam (पञ्चाङ्गम्)",
   altNames: ["Panchang", "Panjika (Eastern India)"],
-  meaning: "Five limbs — Tithi, Vaar, Nakshatra, Yoga, Karana",
+  meaning: "Five limbs: Tithi, Vaar, Nakshatra, Yoga, Karana",
   type: "Lunisolar",
   eraCalendars: ["Vikram Samvat", "Shalivahana Shaka"],
   monthStart: "New Moon (Amanta) or Full Moon (Purnimanta), varies by region",
   fiveLimbs: {
-    tithi: "Lunar day — 30 tithis per lunar month (15 Shukla + 15 Krishna)",
-    vara: "Weekday — Ravivara (Sun), Somavara (Mon), Mangalavara (Tue), Buddhavara (Wed), Guruvara (Thu), Shukravara (Fri), Shanivara (Sat)",
-    nakshatra: "Lunar mansion — 27 nakshatras the Moon transits through",
-    yoga: "Sun-Moon angular relationship — 27 yogas",
-    karana: "Half-tithi — 11 karana types cycling through 60 per month",
+    tithi: "Lunar day: 30 tithis per lunar month (15 Shukla + 15 Krishna)",
+    vara: "Weekday: Ravivara (Sun), Somavara (Mon), Mangalavara (Tue), Buddhavara (Wed), Guruvara (Thu), Shukravara (Fri), Shanivara (Sat)",
+    nakshatra: "Lunar mansion: 27 nakshatras the Moon transits through",
+    yoga: "Sun-Moon angular relationship: 27 yogas",
+    karana: "Half-tithi: 11 karana types cycling through 60 per month",
   },
   seasons: 6,
   leapMonth: "Adhika-masa (~every 32.5 months)",
@@ -408,7 +408,7 @@ export const ATHENIAN_MONTHS = [
       { name:"Anthesteria", type:"major" },
       { name:"Diasia", type:"festival" },
     ],
-    note:"Month of flowers. The three-day Anthesteria was Dionysus' oldest festival — Pithoigia (jar opening), Choës (libations), Chytroi (pots for the dead)."
+    note:"Month of flowers. The three-day Anthesteria was Dionysus' oldest festival, Pithoigia (jar opening), Choës (libations), Chytroi (pots for the dead)."
   },
   {
     n:9, gk:"Ἐλαφηβολιών", en:"Elaphēboliōn", greg:"March–April",
@@ -418,7 +418,7 @@ export const ATHENIAN_MONTHS = [
       { name:"Elaphebolia", type:"festival" },
       { name:"Asclepieia", type:"healing" },
     ],
-    note:"Named for the deer-hunt of Artemis. The City Dionysia was Athens' greatest dramatic festival — premieres of tragedies and comedies by Aeschylus, Sophocles, Euripides, Aristophanes."
+    note:"Named for the deer-hunt of Artemis. The City Dionysia was Athens' greatest dramatic festival, premieres of tragedies and comedies by Aeschylus, Sophocles, Euripides, Aristophanes."
   },
   {
     n:10, gk:"Μουνιχιών", en:"Mounichiōn", greg:"April–May",
@@ -438,7 +438,7 @@ export const ATHENIAN_MONTHS = [
       { name:"Kallynteria", type:"purification" },
       { name:"Plynteria", type:"purification" },
     ],
-    note:"Festival of first-fruits for Apollo and Artemis. Plynteria involved washing the ancient wooden statue of Athena — an ill-omened day."
+    note:"Festival of first-fruits for Apollo and Artemis. Plynteria involved washing the ancient wooden statue of Athena, an ill-omened day."
   },
   {
     n:12, gk:"Σκιροφοριών", en:"Skirophoriōn", greg:"June–July",
@@ -457,7 +457,7 @@ export const ATHENIAN_CALENDAR_INFO = {
   type: "Lunisolar",
   yearStart: "First new moon after the summer solstice (approximately July)",
   monthLength: "Alternating 29 and 30 days following the lunar cycle (synodic month ~29.53 days)",
-  leapMechanism: "Intercalary 13th month — usually a second Poseideon (Ποσειδεών I & II) — inserted roughly every 3 years (7 times in 19 years, Metonic cycle)",
+  leapMechanism: "Intercalary 13th month: usually a second Poseideon (Ποσειδεών I & II), inserted roughly every 3 years (7 times in 19 years, Metonic cycle)",
   leapYearLength: "~384 days",
   regularYearLength: "~354 days",
   reference: "https://www.hellenion.org/calendar/",
@@ -504,28 +504,28 @@ export const SIXTEEN_KALAS = [
     prana:"Aether / Spirit", pranaNote:"Space, the container of all",
     krishna1:"Nirapeksha", krishna1En:"Impartiality",
     krishna2:"Anandamaya", krishna2En:"Reborn (joy)",
-    beings:"Akasha — the substratum",
+    beings:"Akasha: the substratum",
   },
   {
     n:6, realm:"Physical",
     prana:"Trees / Plants", pranaNote:"Vegetative life-force",
     krishna1:"Niraskata", krishna1En:"Detachment",
     krishna2:"Atishayini", krishna2En:"Peace",
-    beings:"Flora — rooted consciousness",
+    beings:"Flora: rooted consciousness",
   },
   {
     n:7, realm:"Physical",
     prana:"Animals", pranaNote:"Instinctual consciousness",
     krishna1:"Tapasya", krishna1En:"Meditation & Spiritual Powers",
     krishna2:"Viparinabhini", krishna2En:"Love",
-    beings:"Fauna — sentient creatures",
+    beings:"Fauna: sentient creatures",
   },
   {
     n:8, realm:"Physical",
     prana:"Humans", pranaNote:"Self-aware consciousness",
     krishna1:"Aparchitta", krishna1En:"Invincibility",
     krishna2:"Sankramini", krishna2En:"Creator",
-    beings:"Mankind — capable of moksha",
+    beings:"Mankind: capable of moksha",
   },
   {
     n:9, realm:"Physical",
@@ -539,7 +539,7 @@ export const SIXTEEN_KALAS = [
     prana:"Pitrus (Ancestors)", pranaNote:"Dead humans / Angels",
     krishna1:"Saundarjyamaya", krishna1En:"Beauty Incarnate",
     krishna2:"Kunthini", krishna2En:"Beyond pain, eternal",
-    beings:"Ancestral spirits — Lwa and Djinn may exist here",
+    beings:"Ancestral spirits: Lwa and Djinn may exist here",
   },
   {
     n:11, realm:"Beyond Physical",
@@ -560,18 +560,18 @@ export const SIXTEEN_KALAS = [
     prana:"Yakshas", pranaNote:"Wealth spirits / Tutelary entities of lands",
     krishna1:"Neetibadi", krishna1En:"Embodiment of Honesty",
     krishna2:"Sanhaladini", krishna2En:"Source of happiness",
-    beings:"Nature spirits, guardians of treasures — Lwa and Djinn may exist here",
+    beings:"Nature spirits, guardians of treasures, Lwa and Djinn may exist here",
   },
   {
     n:14, realm:"Beyond Physical",
-    prana:"Devas", pranaNote:"Gods, Goddesses, High Angels — 33 types",
+    prana:"Devas", pranaNote:"Gods, Goddesses, High Angels, 33 types",
     krishna1:"Satyabadi", krishna1En:"Truth Itself",
     krishna2:"Ahladini", krishna2En:"Causing joy",
-    beings:"The 33 types of Devas — Adityas, Vasus, Rudras, Ashvins, etc.",
+    beings:"The 33 types of Devas: Adityas, Vasus, Rudras, Ashvins, etc.",
   },
   {
     n:15, realm:"Beyond Physical",
-    prana:"Asuras / Titans", pranaNote:"High Gods & Goddesses — Trimurti & Tridevi",
+    prana:"Asuras / Titans", pranaNote:"High Gods & Goddesses: Trimurti & Tridevi",
     krishna1:"Sarvagnata", krishna1En:"Perfect master of all arts (poetry, drama, painting)",
     krishna2:"Paripurna", krishna2En:"Complete, perfect, full",
     beings:"Brahma, Vishnu, Shiva (Trimurti) / Saraswati, Lakshmi, Parvati (Tridevi)",
@@ -581,7 +581,7 @@ export const SIXTEEN_KALAS = [
     prana:"Siddha", pranaNote:"Perfected Being / Monad (God)",
     krishna1:"Sarvaniyanta", krishna1En:"Controller of All",
     krishna2:"Swarupavasthitha", krishna2En:"Established in self/form, Independent",
-    beings:"The liberated — beyond all categories",
+    beings:"The liberated: beyond all categories",
   },
 ];
 
@@ -591,9 +591,9 @@ export const KALAS_INFO = {
   beyondPhysicalStart: 10,
   lwaAndDjinnRange: "Lwa and Djinn can exist from Kala 1–14 (predominantly 10–14)",
   threeSystems: [
-    "Units of Prana — cosmic hierarchy from gross matter to perfected being",
-    "Kalas of Krishna (Type 1) — 16 divine qualities embodied by Sri Krishna",
-    "Kalas of Krishna (Type 2) — 16 stages of consciousness from food-sheath to self-established independence",
+    "Units of Prana: cosmic hierarchy from gross matter to perfected being",
+    "Kalas of Krishna (Type 1): 16 divine qualities embodied by Sri Krishna",
+    "Kalas of Krishna (Type 2): 16 stages of consciousness from food-sheath to self-established independence",
   ],
-  connection: "The Kalas map onto the Panchanga through the principle that each tithi and nakshatra carries a specific quality (kala) of cosmic energy. The 16 tithis of the waxing moon (Shukla Paksha) correspond to the 16 Kalas — Purnima (full moon) embodies all 16 simultaneously, which is why Sri Krishna is called 'Purna Avatar' (complete with all 16 Kalas).",
+  connection: "The Kalas map onto the Panchanga through the principle that each tithi and nakshatra carries a specific quality (kala) of cosmic energy. The 16 tithis of the waxing moon (Shukla Paksha) correspond to the 16 Kalas, Purnima (full moon) embodies all 16 simultaneously, which is why Sri Krishna is called 'Purna Avatar' (complete with all 16 Kalas).",
 };
