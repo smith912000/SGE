@@ -79,7 +79,9 @@ const to24Hour = (hour12, meridiem) => {
 export default function App() {
 
   const _now = new Date();
-  const [A, setA] = useState({ year: _now.getFullYear(), month: _now.getMonth() + 1, day: _now.getDate(), hour: ((_now.getHours() + 11) % 12) + 1, meridiem: _now.getHours() >= 12 ? "PM" : "AM", min: _now.getMinutes(), lat: 51.5, lon: -0.1, tz: 0, tzName: "Etc/UTC", place: "", name: "" });
+  // Until a place is chosen, the form assumes the visitor's own time zone.
+  const _localZone = (() => { try { return Intl.DateTimeFormat().resolvedOptions().timeZone || "Etc/UTC"; } catch { return "Etc/UTC"; } })();
+  const [A, setA] = useState({ year: _now.getFullYear(), month: _now.getMonth() + 1, day: _now.getDate(), hour: ((_now.getHours() + 11) % 12) + 1, meridiem: _now.getHours() >= 12 ? "PM" : "AM", min: _now.getMinutes(), lat: 51.5, lon: -0.1, tz: -_now.getTimezoneOffset() / 60, tzName: _localZone, place: "", name: "" });
   const [B, setB] = useState({ year: 1988, month: 3, day: 22, hour: 9, meridiem: "AM", min: 30, lat: 40.7, lon: -74.0, tz: -5, tzName: "America/New_York", place: "" });
   const [age, setAge] = useState(0);
   const [n, setN] = useState(5);
