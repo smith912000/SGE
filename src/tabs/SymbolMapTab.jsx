@@ -1,30 +1,25 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { ENTITIES, OVERLAYS, KIND_ORDER, NAK_SPAN } from '../data/symbolMap.js';
+import { essenceOf } from '../data/symbolEssence.js';
+import { ENTITIES, OVERLAYS, KIND_ORDER, NAK_SPAN, XIU, FOUR_SYMBOLS } from '../data/symbolMap.js';
+import { STARS, NAMED_STARS, YOGATARAS, FIGURES, XIU_FIGURES } from '../data/sky/catalogue.js';
 import { SIGNS, SIGN_SYM, SIGN_COL } from '../data/astrology/signs.js';
 import { NAKSHATRA_INFO } from '../data/astrology/nakshatras.js';
-import { ANIMALS } from '../data/astrology/chinese.js';
 import { julianDay, allPlanets, ayanamsa, houseOf } from '../engines/astronomy.js';
+import { eclToEq, precessionSinceJ2000, observer, altAz, camera, easeInOut, segDist, norm } from '../components/sky/sky.js';
 
-// The symbol map. Zoomed out: the ecliptic with one ring per tradition, any
-// of which can be hidden, and the bodies inside at their degrees. Zoomed in:
-// one symbol at the centre with what the traditions tie to it round it.
-// Works with or without a cast chart; without one, the bodies are the sky now.
+// The symbol map: the sky as it stands over the chart's place at the chart's
+// moment (or over the visitor now), seen from below, with each tradition's
+// way of dividing it laid on as an overlay that can be switched off. Hover
+// lights a symbol and its correspondences; selecting one flies to it and
+// opens what the traditions tie to it.
 
-const S = 600, C = S / 2;
-const R_OUT = 292, R_IN = 122, R_BODY = 98;
-const BAND_WEIGHT = { const: 1.7, sign: 1, nak: 1, branch: 1 };
 const BODIES = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto', 'Rahu', 'Ketu'];
 const posKey = (b) => (b === 'Rahu' ? 'Node' : b);
+const BODY_SIZE = { Sun: 7, Moon: 6, Venus: 3.6, Jupiter: 3.3, Mars: 3, Saturn: 2.9, Mercury: 2.6, Uranus: 1.9, Neptune: 1.7, Pluto: 1.5 };
+const FIG_TO_CONST = Object.fromEntries(Object.values(ENTITIES).filter((e) => e.kind === 'const').map((e) => [e.fig, e.id]));
+const XIU_BY_KEY = Object.fromEntries(XIU.map((x) => [x[0], `xiu:${x[3]}`]));
+const INK = { star: '244,241,237', fig: '234,223,196', gold: '201,168,76', nak: '217,142,95', xiu: '147,184,154' };
 
-const norm = (d) => ((d % 360) + 360) % 360;
-const rad = (d) => (d * Math.PI) / 180;
-// 0° Aries at the left, longitude rising anticlockwise, as on a chart.
-const pt = (r, lon) => [C - r * Math.cos(rad(lon)), C + r * Math.sin(rad(lon))];
-const sector = (r0, r1, a0, a1) => {
-  const sw = norm(a1 - a0) || 360, large = sw > 180 ? 1 : 0;
-  const [x0, y0] = pt(r1, a0), [x1, y1] = pt(r1, a0 + sw), [x2, y2] = pt(r0, a0 + sw), [x3, y3] = pt(r0, a0);
-  return `M${x0},${y0} A${r1},${r1} 0 ${large} 0 ${x1},${y1} L${x2},${y2} A${r0},${r0} 0 ${large} 1 ${x3},${y3} Z`;
-};
 const signOf = (lon) => SIGNS[Math.floor(norm(lon) / 30)];
 const degIn = (lon) => Math.floor(norm(lon) % 30);
 const inSpan = (lon, a, b) => { const L = norm(lon); return b > a ? L >= a && L < b : L >= a || L < b; };
@@ -95,197 +90,400 @@ function chartLine(ent, sky) {
   }
 }
 
-export default function SymbolMapTab({ ctx = {} }) {
-  const { res } = ctx;
+// Everything placed on the sky once per moment and place, as horizontal vectors.
+function buildScene({ jd, lat, lon, pos, ay }) {
+  const hv = observer(jd, lat, lon);
+  const prec = precessionSinceJ2000(jd);
+  const ecl = (l, b = 0) => hv(...eclToEq(l - prec, b));
+  const arc = (l0, l1, b, step = 2) => { const out = []; for (let l = l0; l <= l1 + 1e-6; l += step) out.push(ecl(l, b)); return out; };
+  const scene = {
+    stars: STARS.map(([ra, dec, m]) => [hv(ra, dec), m]),
+    named: NAMED_STARS.map(([ra, dec, m, n]) => ({ v: hv(ra, dec), m, n })),
+    figs: FIGURES.map((f) => ({ id: f.id, name: f.name, ent: FIG_TO_CONST[f.id] || null, at: f.at ? hv(...f.at) : null, lines: f.lines.map((l) => l.map(([ra, dec]) => hv(ra, dec))) })),
+    xiu: Object.entries(XIU_FIGURES).map(([k, f]) => ({ ent: XIU_BY_KEY[k], at: hv(...f.at), lines: f.lines.map((l) => l.map(([ra, dec]) => hv(ra, dec))) })).filter((x) => x.ent),
+    ecliptic: arc(0, 360, 0),
+    beltN: arc(0, 360, 8), beltS: arc(0, 360, -8),
+    signs: SIGNS.map((s, i) => ({ ent: `sign:${s}`, i, label: ecl(i * 30 + 15, 4.2), tick: [ecl(i * 30, 8), ecl(i * 30, -8)], n: arc(i * 30, i * 30 + 30, 8, 1), s: arc(i * 30, i * 30 + 30, -8, 1) })),
+    naks: NAKSHATRA_INFO.map((n, i) => ({ ent: `nak:${n.name}`, i, tick: [ecl(i * NAK_SPAN + ay, -1.5), ecl(i * NAK_SPAN + ay, -11)], star: hv(YOGATARAS[i][0], YOGATARAS[i][1]), m: YOGATARAS[i][2] })),
+    bodies: BODIES.filter((b) => pos[posKey(b)] != null).map((b) => ({ ent: `planet:${b}`, b, v: ecl(pos[posKey(b)]) })),
+    horizon: Array.from({ length: 91 }, (_, i) => { const a = (i * 4 * Math.PI) / 180; return [Math.cos(a), Math.sin(a), 0]; }),
+    cardinals: [['N', [1, 0, 0.004]], ['E', [0, 1, 0.004]], ['S', [-1, 0, 0.004]], ['W', [0, -1, 0.004]]],
+  };
+  // Where each symbol sits on this sky, for flying to it and drawing its ties.
+  const at = {};
+  scene.bodies.forEach((b) => { at[b.ent] = b.v; });
+  scene.figs.forEach((f) => { if (f.ent && f.at) at[f.ent] = f.at; });
+  scene.signs.forEach((s) => { at[s.ent] = s.label; });
+  scene.naks.forEach((n) => { at[n.ent] = n.star; });
+  scene.xiu.forEach((x) => { at[x.ent] = x.at; });
+  for (const name of Object.keys(FOUR_SYMBOLS)) {
+    const vs = scene.xiu.filter((x) => ENTITIES[x.ent].links.some((l) => l.to === `sym:${name}`)).map((x) => x.at);
+    if (vs.length) { const m = [0, 1, 2].map((k) => vs.reduce((s, v) => s + v[k], 0)); const L = Math.hypot(...m) || 1; at[`sym:${name}`] = m.map((c) => c / L); }
+  }
+  scene.at = at;
+  return scene;
+}
 
-  // The bodies: the cast chart's, or the sky at the moment the view opens.
-  const sky = useMemo(() => {
-    if (res) {
-      return { pos: res.trop, ay: ayanamsa(res.jd), houses: res.houses, aspects: res.aspects, cn: res.cn, label: 'In this chart', year: 2000 + (res.jd - 2451545) / 365.25 };
+function drawSky(cv, scene, view, shown, lit, focus, hitsOut) {
+  const dpr = window.devicePixelRatio || 1;
+  const w = cv.clientWidth, h = cv.clientHeight;
+  if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+  const g = cv.getContext('2d');
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  g.fillStyle = '#06050D';
+  g.fillRect(0, 0, w, h);
+  const { project } = camera(view.alt, view.az, view.h, w, h);
+  const s = Math.sqrt(Math.max(0.8, Math.min(3, 90 / view.h)));
+  const dim = (v) => (v[2] < 0 ? 0.32 : 1);
+  const hits = [];
+  const poly = (pts, style, width, glow) => {
+    g.beginPath();
+    let pen = false;
+    for (const v of pts) {
+      const p = project(v);
+      if (!p) { pen = false; continue; }
+      if (pen) g.lineTo(p[0], p[1]); else { g.moveTo(p[0], p[1]); pen = true; }
     }
+    g.strokeStyle = style; g.lineWidth = width;
+    if (glow) { g.shadowColor = style; g.shadowBlur = glow; }
+    g.stroke();
+    g.shadowBlur = 0;
+  };
+  const text = (str, p, colour, size, font = 'serif', align = 'center') => {
+    g.font = `${size}px ${font === 'serif' ? "'Cormorant Garamond', Georgia, serif" : "'DM Sans', system-ui, sans-serif"}`;
+    g.textAlign = align; g.textBaseline = 'middle'; g.fillStyle = colour;
+    g.fillText(str, p[0], p[1]);
+  };
+
+  // A faint glow along the horizon, so up and down read at a glance.
+  const hz = scene.horizon.map(project);
+  if (hz.some(Boolean)) poly(scene.horizon, 'rgba(234,223,196,.28)', 1);
+
+  // Western figures
+  if (shown.const) {
+    for (const f of scene.figs) {
+      const on = f.ent && lit(f.ent);
+      const a = on ? 0.9 : f.ent ? 0.3 : 0.14;
+      for (const ln of f.lines) {
+        poly(ln, `rgba(${INK.fig},${a})`, on ? 1.3 : 0.8, on ? 10 : 0);
+        for (let i = 1; i < ln.length; i++) {
+          const p0 = project(ln[i - 1]), p1 = project(ln[i]);
+          if (p0 && p1) hits.push({ seg: [p0[0], p0[1], p1[0], p1[1]], id: f.ent, name: f.name });
+        }
+      }
+      if (on) for (const ln of f.lines) for (const v of ln) { const p = project(v); if (p) { g.beginPath(); g.arc(p[0], p[1], 2.4 * s, 0, 7); g.fillStyle = '#FFF8E6'; g.shadowColor = '#FFE9B0'; g.shadowBlur = 12; g.fill(); g.shadowBlur = 0; } }
+      const pa = f.at && project(f.at);
+      if (pa && (f.ent || view.h < 45)) {
+        text(f.ent ? f.name.toUpperCase() : f.name, pa, `rgba(${INK.fig},${on ? 0.95 : f.ent ? 0.5 : 0.32})`, (f.ent ? 11 : 10) * Math.min(s, 1.4), 'sans');
+        if (f.ent) hits.push({ x: pa[0], y: pa[1], r: 16, id: f.ent });
+      }
+    }
+  }
+
+  // Chinese mansions
+  if (shown.xiu) {
+    for (const x of scene.xiu) {
+      const on = lit(x.ent);
+      for (const ln of x.lines) poly(ln, `rgba(${INK.xiu},${on ? 0.95 : 0.34})`, on ? 1.3 : 0.8, on ? 10 : 0);
+      const p = project(x.at);
+      if (p) { text(ENTITIES[x.ent].glyph, [p[0], p[1] - 10], `rgba(${INK.xiu},${on ? 1 : 0.6})`, 15 * Math.min(s, 1.4)); hits.push({ x: p[0], y: p[1] - 10, r: 14, id: x.ent }); }
+    }
+  }
+
+  // Stars, brightest last so they sit on top
+  for (let i = scene.stars.length - 1; i >= 0; i--) {
+    const [v, m] = scene.stars[i];
+    const p = project(v);
+    if (!p) continue;
+    const r = Math.max(0.45, (5.6 - m) * 0.48) * s;
+    const a = Math.min(1, 0.28 + (5.4 - m) * 0.17) * dim(v);
+    g.beginPath(); g.arc(p[0], p[1], r, 0, 7);
+    g.fillStyle = `rgba(${INK.star},${a})`;
+    if (m < 1.2) { g.shadowColor = 'rgba(255,248,230,.8)'; g.shadowBlur = 6; }
+    g.fill(); g.shadowBlur = 0;
+  }
+  for (const st of scene.named) { const p = project(st.v); if (p) { hits.push({ x: p[0], y: p[1], r: 6, name: st.n }); if (view.h < 40 && st.m < 1.6) text(st.n, [p[0] + 6, p[1] + 9], 'rgba(244,241,237,.42)', 10, 'sans', 'left'); } }
+
+  // The zodiac: the ecliptic, the belt eight degrees either side, twelve signs
+  if (shown.sign) {
+    poly(scene.beltN, `rgba(${INK.gold},.13)`, 0.7);
+    poly(scene.beltS, `rgba(${INK.gold},.13)`, 0.7);
+    poly(scene.ecliptic, `rgba(${INK.gold},.55)`, 1);
+    for (const sg of scene.signs) {
+      const on = lit(sg.ent);
+      poly(sg.tick, `rgba(${INK.gold},${on ? 0.7 : 0.28})`, 0.8);
+      if (on) { poly(sg.n, `rgba(${INK.gold},.75)`, 1.2, 8); poly(sg.s, `rgba(${INK.gold},.75)`, 1.2, 8); }
+      const p = project(sg.label);
+      if (p) {
+        if (on) { g.shadowColor = SIGN_COL[SIGNS[sg.i]]; g.shadowBlur = 14; }
+        text(SIGN_SYM[sg.i], p, SIGN_COL[SIGNS[sg.i]], 17 * Math.min(s, 1.5));
+        g.shadowBlur = 0;
+        hits.push({ x: p[0], y: p[1], r: 13, id: sg.ent });
+      }
+    }
+  }
+
+  // Nakshatras: their divisions south of the ecliptic and the junction star of each
+  if (shown.nak) {
+    for (const n of scene.naks) {
+      const on = lit(n.ent);
+      poly(n.tick, `rgba(${INK.nak},${on ? 0.8 : 0.3})`, 0.8);
+      const p = project(n.star);
+      if (!p) continue;
+      g.beginPath(); g.arc(p[0], p[1], (on ? 7 : 5) * Math.min(s, 1.5), 0, 7);
+      g.strokeStyle = `rgba(${INK.nak},${on ? 1 : 0.6})`; g.lineWidth = on ? 1.4 : 0.9;
+      if (on) { g.shadowColor = `rgb(${INK.nak})`; g.shadowBlur = 12; }
+      g.stroke(); g.shadowBlur = 0;
+      if (on || view.h < 55) text(on ? NAKSHATRA_INFO[n.i].name : String(n.i + 1), [p[0], p[1] + 13 * Math.min(s, 1.5)], `rgba(${INK.nak},${on ? 1 : 0.7})`, (on ? 12 : 10) * Math.min(s, 1.3), 'sans');
+      hits.push({ x: p[0], y: p[1], r: 10, id: n.ent });
+    }
+  }
+
+  // The bodies
+  for (const b of scene.bodies) {
+    const p = project(b.v);
+    if (!p) continue;
+    const e = ENTITIES[b.ent], on = lit(b.ent), size = BODY_SIZE[b.b];
+    if (size) {
+      g.beginPath(); g.arc(p[0], p[1], size * Math.min(s, 1.6), 0, 7);
+      g.fillStyle = e.colour; g.globalAlpha = dim(b.v);
+      g.shadowColor = e.colour; g.shadowBlur = (b.b === 'Sun' ? 22 : 8) + (on ? 12 : 0);
+      g.fill(); g.shadowBlur = 0; g.globalAlpha = 1;
+    }
+    if (on) { g.beginPath(); g.arc(p[0], p[1], (size || 4) * Math.min(s, 1.6) + 7, 0, 7); g.strokeStyle = e.colour; g.lineWidth = 1; g.stroke(); }
+    text(e.glyph, [p[0] + (size ? 11 : 0), p[1] - (size ? 10 : 0)], e.colour, 15 * Math.min(s, 1.4));
+    hits.push({ x: p[0], y: p[1], r: 13, id: b.ent });
+  }
+
+  // Ties from the symbol in focus to whatever of its correspondences is on the sky
+  if (focus && scene.at[focus]) {
+    const fp = project(scene.at[focus]);
+    if (fp) {
+      g.setLineDash([2, 5]);
+      for (const l of ENTITIES[focus].links) {
+        const v = scene.at[l.to]; const p = v && project(v);
+        if (!p) continue;
+        g.beginPath(); g.moveTo(fp[0], fp[1]); g.lineTo(p[0], p[1]);
+        g.strokeStyle = 'rgba(234,223,196,.42)'; g.lineWidth = 1; g.stroke();
+      }
+      g.setLineDash([]);
+    }
+  }
+
+  // The ground: the horizon projects to a circle, and whichever side of it
+  // the zenith is not on is below the observer.
+  const q = [[1, 0, 0], [0, 1, 0], [-1, 0, 0]].map((v) => project(v, true));
+  const zen = project([0, 0, 1], true);
+  if (q.every(Boolean)) {
+    const [[ax, ay], [bx, by], [cx, cy]] = q;
+    const d = 2 * (ax * (by - cy) + bx * (cy - ay) + cx * (ay - by));
+    if (Math.abs(d) > 1e-6) {
+      const ux = ((ax * ax + ay * ay) * (by - cy) + (bx * bx + by * by) * (cy - ay) + (cx * cx + cy * cy) * (ay - by)) / d;
+      const uy = ((ax * ax + ay * ay) * (cx - bx) + (bx * bx + by * by) * (ax - cx) + (cx * cx + cy * cy) * (bx - ax)) / d;
+      const r = Math.hypot(ax - ux, ay - uy);
+      const zenInside = !zen || Math.hypot(zen[0] - ux, zen[1] - uy) < r;
+      g.beginPath();
+      if (zenInside) g.rect(0, 0, w, h);
+      g.arc(ux, uy, r, 0, Math.PI * 2);
+      g.fillStyle = 'rgba(14,10,8,.42)';
+      g.fill(zenInside ? 'evenodd' : 'nonzero');
+    }
+  }
+
+  for (const [c, v] of scene.cardinals) { const p = project(v); if (p) text(c, [p[0], p[1] + 12], 'rgba(234,223,196,.6)', 12, 'sans'); }
+  hitsOut.current = hits;
+}
+
+export default function SymbolMapTab({ ctx = {} }) {
+  const { res, A } = ctx;
+
+  // The moment and place: the cast chart's, or now over the form's place.
+  const moment = useMemo(() => {
+    const lat = A?.lat ?? 51.5, lon = A?.lon ?? -0.1;
+    if (res) return { jd: res.jd, lat, lon, pos: res.trop, ay: ayanamsa(res.jd), houses: res.houses, aspects: res.aspects, cn: res.cn, label: 'In this chart' };
     const d = new Date();
     const jd = julianDay(d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate(), d.getUTCHours() + d.getUTCMinutes() / 60);
-    return { pos: allPlanets(jd), ay: ayanamsa(jd), label: 'In the sky now', year: d.getUTCFullYear() };
-  }, [res]);
+    return { jd, lat, lon, pos: allPlanets(jd), ay: ayanamsa(jd), label: 'In the sky now' };
+  }, [res, A?.lat, A?.lon]);
+  const sky = { ...moment, year: 2000 + (moment.jd - 2451545) / 365.25 };
+  const scene = useMemo(() => buildScene(moment), [moment]);
 
-  const [shown, setShown] = useState({ const: true, sign: true, nak: true, branch: true });
+  const [shown, setShown] = useState({ const: true, sign: true, nak: true, xiu: false });
+  const [view, setView] = useState({ alt: 90, az: 180, h: 92 });
   const [hover, setHover] = useState(null);
-  const [focus, setFocusState] = useState(idFromHash);
+  const [mode, setMode] = useState('symbol');
+  const [focus, setFocus] = useState(idFromHash);
   const [trail, setTrail] = useState(() => (idFromHash() ? [idFromHash()] : []));
-  const [zoom, setZoom] = useState(null);
-  const zoomTimer = useRef(null);
-  const panelRef = useRef(null);
+  const cvRef = useRef(null), hitsRef = useRef([]), viewRef = useRef(view), flight = useRef(0), panelRef = useRef(null);
+  viewRef.current = view;
+
+  const related = useMemo(() => {
+    const ids = new Set();
+    for (const id of [hover?.id, focus]) if (id && ENTITIES[id]) ENTITIES[id].links.forEach((l) => ids.add(l.to));
+    return ids;
+  }, [hover, focus]);
+  const lit = useCallback((id) => id === hover?.id || id === focus || related.has(id), [hover, focus, related]);
+
+  // Draw on every change, and on resize
+  useEffect(() => {
+    const cv = cvRef.current;
+    if (!cv) return;
+    const paint = () => drawSky(cv, scene, view, shown, lit, focus, hitsRef);
+    paint();
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(paint) : null;
+    ro?.observe(cv);
+    return () => ro?.disconnect();
+  }, [scene, view, shown, lit, focus]);
+
+  const flyTo = useCallback((id) => {
+    const v = scene.at[id];
+    if (!v) return;
+    const [alt, az] = altAz(v);
+    const kind = ENTITIES[id].kind;
+    const target = { alt: Math.max(alt, -15), az, h: kind === 'planet' || kind === 'nak' ? 34 : 46 };
+    const from = viewRef.current;
+    if (reduced()) { setView(target); return; }
+    const dAz = ((target.az - from.az + 540) % 360) - 180;
+    const t0 = performance.now(), id0 = ++flight.current, dur = 750;
+    const step = (t) => {
+      if (id0 !== flight.current) return;
+      const k = easeInOut(Math.min(1, (t - t0) / dur));
+      setView({ alt: from.alt + (target.alt - from.alt) * k, az: norm(from.az + dAz * k), h: from.h + (target.h - from.h) * k });
+      if (k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [scene]);
 
   const syncHash = (id) => {
     const h = id ? `#symbols/${encodeURIComponent(id)}` : '#symbols';
     if (window.location.hash !== h) history.replaceState(null, '', h);
   };
-  const openFocus = useCallback((id, from) => {
+  const open = useCallback((id, fresh) => {
     if (!ENTITIES[id]) return;
-    const go = () => {
-      setZoom(null);
-      setFocusState(id);
-      setTrail((t) => (from === 'map' ? [id] : [...t.slice(0, t.includes(id) ? t.indexOf(id) : t.length), id]));
-      syncHash(id);
-      requestAnimationFrame(() => panelRef.current?.focus({ preventScroll: true }));
-    };
-    clearTimeout(zoomTimer.current);
-    if (from === 'map' && !reduced()) {
-      setZoom(id);
-      zoomTimer.current = setTimeout(go, 420);
-    } else go();
-  }, []);
-  const backToMap = useCallback(() => { setFocusState(null); setTrail([]); syncHash(null); }, []);
+    setFocus(id);
+    setTrail((t) => (fresh ? [id] : [...t.slice(0, t.includes(id) ? t.indexOf(id) : t.length), id]));
+    syncHash(id);
+    flyTo(id);
+  }, [flyTo]);
+  const clear = useCallback(() => { setFocus(null); setTrail([]); syncHash(null); }, []);
 
+  // Open a symbol named in the link once the sky is ready
+  useEffect(() => { if (focus) flyTo(focus); }, []); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
-    const onHash = () => { const id = idFromHash(); if (id && id !== focus) { setFocusState(id); setTrail([id]); } };
+    const onHash = () => { const id = idFromHash(); if (id && id !== focus) open(id, true); };
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
-  }, [focus]);
-  useEffect(() => () => clearTimeout(zoomTimer.current), []);
+  }, [focus, open]);
+
+  // Pointer: drag to turn the sky, pinch or wheel to zoom, tap to choose
+  const ptr = useRef({ pts: new Map(), start: null, moved: false });
+  const pick = (x, y) => {
+    let best = null, bd = Infinity;
+    for (const t of hitsRef.current) {
+      const d = t.seg ? segDist(x, y, ...t.seg) + 4 : Math.hypot(x - t.x, y - t.y) - t.r;
+      if (d < bd && d < (t.seg ? 9 : 6)) { bd = d; best = t; }
+    }
+    return best ? { id: best.id || null, name: best.name || ENTITIES[best.id]?.name } : null;
+  };
+  const local = (e) => { const r = cvRef.current.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  const onDown = (e) => {
+    cvRef.current.setPointerCapture?.(e.pointerId);
+    ptr.current.pts.set(e.pointerId, local(e));
+    ptr.current.start = { p: local(e), view: viewRef.current, dist: null };
+    ptr.current.moved = false;
+    flight.current++;
+  };
+  const onMove = (e) => {
+    const P = ptr.current, xy = local(e);
+    if (!P.pts.has(e.pointerId)) { const hit = pick(...xy); setHover((h) => (h?.id === hit?.id && h?.name === hit?.name ? h : hit)); return; }
+    P.pts.set(e.pointerId, xy);
+    const v0 = P.start.view;
+    if (P.pts.size === 2) {
+      const [a, b] = [...P.pts.values()];
+      const d = Math.hypot(a[0] - b[0], a[1] - b[1]);
+      if (!P.start.dist) P.start.dist = d;
+      setView({ ...viewRef.current, h: Math.max(6, Math.min(110, v0.h * (P.start.dist / d))) });
+      P.moved = true;
+      return;
+    }
+    const dx = xy[0] - P.start.p[0], dy = xy[1] - P.start.p[1];
+    if (!P.moved && Math.hypot(dx, dy) < 4) return;
+    P.moved = true;
+    const cv = cvRef.current;
+    const { dpp } = camera(v0.alt, v0.az, v0.h, cv.clientWidth, cv.clientHeight);
+    const alt = Math.max(-20, Math.min(90, v0.alt + dy * dpp));
+    setView({ ...v0, alt, az: norm(v0.az - (dx * dpp) / Math.max(0.35, Math.cos((alt * Math.PI) / 180))) });
+  };
+  const onUp = (e) => {
+    const P = ptr.current;
+    P.pts.delete(e.pointerId);
+    if (!P.moved && P.pts.size === 0) { const hit = pick(...local(e)); if (hit?.id) open(hit.id, !focus); }
+  };
   useEffect(() => {
-    if (!focus) return;
-    const onKey = (e) => { if (e.key === 'Escape') backToMap(); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [focus, backToMap]);
+    const cv = cvRef.current;
+    if (!cv) return;
+    const onWheel = (e) => { e.preventDefault(); flight.current++; setView((v) => ({ ...v, h: Math.max(6, Math.min(110, v.h * Math.exp(e.deltaY * 0.0012))) })); };
+    cv.addEventListener('wheel', onWheel, { passive: false });
+    return () => cv.removeEventListener('wheel', onWheel);
+  }, []);
+  const onKey = (e) => {
+    const step = { ArrowLeft: [0, -6], ArrowRight: [0, 6], ArrowUp: [6, 0], ArrowDown: [-6, 0] }[e.key];
+    if (step) { e.preventDefault(); setView((v) => ({ ...v, alt: Math.max(-20, Math.min(90, v.alt + step[0])), az: norm(v.az + step[1]) })); }
+    else if (e.key === '+' || e.key === '=') setView((v) => ({ ...v, h: Math.max(6, v.h / 1.25) }));
+    else if (e.key === '-') setView((v) => ({ ...v, h: Math.min(110, v.h * 1.25) }));
+    else if (e.key === 'Escape') clear();
+  };
+
+  const when = new Date((moment.jd - 2440587.5) * 86400000);
+  const place = `${Math.abs(moment.lat).toFixed(1)}°${moment.lat >= 0 ? 'N' : 'S'} ${Math.abs(moment.lon).toFixed(1)}°${moment.lon >= 0 ? 'E' : 'W'}`;
+  const hv = hover?.id ? ENTITIES[hover.id] : null;
 
   return (
     <div className="sm">
-      {focus
-        ? <FocusView id={focus} trail={trail} sky={sky} onOpen={(id) => openFocus(id, 'focus')} onBack={backToMap} panelRef={panelRef} />
-        : <MapView sky={sky} shown={shown} setShown={setShown} hover={hover} setHover={setHover} zoom={zoom} onOpen={(id) => openFocus(id, 'map')} />}
-    </div>
-  );
-}
-
-function MapView({ sky, shown, setShown, hover, setHover, zoom, onOpen }) {
-  const on = OVERLAYS.filter((o) => shown[o.id]);
-  // Share the ring between the overlays that are on; each keeps its own band
-  // so every one stays reachable with all of them showing.
-  const bands = useMemo(() => {
-    const total = on.reduce((s, o) => s + BAND_WEIGHT[o.id], 0) || 1;
-    let r = R_OUT;
-    const out = {};
-    for (const o of on) { const w = ((R_OUT - R_IN) * BAND_WEIGHT[o.id]) / total; out[o.id] = [r - w, r]; r -= w; }
-    return out;
-  }, [on.map((o) => o.id).join()]);
-
-  const related = useMemo(() => new Set(hover ? ENTITIES[hover].links.map((l) => l.to) : []), [hover]);
-  const cls = (id) => `sm-seg${hover === id ? ' on' : ''}${related.has(id) ? ' rel' : ''}${zoom === id ? ' on' : ''}`;
-  const segProps = (id) => {
-    const e = ENTITIES[id];
-    return {
-      className: cls(id), tabIndex: 0, role: 'button', 'aria-label': `${e.name}, ${e.kindLabel}`,
-      onMouseEnter: () => setHover(id), onMouseLeave: () => setHover((h) => (h === id ? null : h)),
-      onFocus: () => setHover(id), onBlur: () => setHover((h) => (h === id ? null : h)),
-      onClick: () => onOpen(id),
-      onKeyDown: (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); onOpen(id); } },
-    };
-  };
-
-  // Zoom toward the chosen symbol before the focus view replaces the map.
-  const zoomStyle = (() => {
-    if (!zoom) return undefined;
-    const e = ENTITIES[zoom];
-    let lon = e.start != null ? e.start + norm(e.end - e.start) / 2 : null;
-    if (e.kind === 'planet') lon = sky.pos[posKey(e.name)];
-    if (e.sidereal && lon != null) lon += sky.ay;
-    const band = bands[e.kind === 'planet' ? null : e.kind] || [R_BODY, R_BODY];
-    const [x, y] = lon == null ? [C, C] : pt((band[0] + band[1]) / 2, lon);
-    return { transform: `translate(${C - x}px, ${C - y}px) scale(2.4)`, transformOrigin: `${x}px ${y}px`, opacity: 0.25 };
-  })();
-
-  const hv = hover ? ENTITIES[hover] : null;
-  const bodyR = BODIES.map((b) => [b, sky.pos[posKey(b)]]).filter(([, l]) => l != null).sort((a, b) => a[1] - b[1]);
-  // Stagger bodies that sit within 7° of each other.
-  let prev = -99, lane = 0;
-  const bodyPts = bodyR.map(([b, l]) => { lane = l - prev < 7 ? (lane + 1) % 3 : 0; prev = l; return [b, l, R_BODY - lane * 20]; });
-
-  return (
-    <>
       <div className="sm-toolbar" role="group" aria-label="Traditions shown">
         {OVERLAYS.map((o) => (
           <button key={o.id} type="button" className="sge-chip" aria-pressed={shown[o.id]} title={o.note}
             onClick={() => setShown((s) => ({ ...s, [o.id]: !s[o.id] }))}>{o.label}</button>
         ))}
-        <span className="sm-sky">{sky.label === 'In this chart' ? 'Bodies: the cast chart' : 'Bodies: the sky now'}</span>
       </div>
 
-      <div className="sm-mapwrap">
-        <svg viewBox={`0 0 ${S} ${S}`} className="sm-map" role="group" aria-label="Symbol map of the ecliptic">
-          <g className="sm-zoom" style={zoomStyle}>
-            <circle cx={C} cy={C} r={R_OUT} className="sm-ring" />
-            <circle cx={C} cy={C} r={R_IN} className="sm-ring" />
-            {on.map((o) => { const [r0] = bands[o.id]; return <circle key={o.id} cx={C} cy={C} r={r0} className="sm-ring sm-ring-in" />; })}
+      <div className="sm-grid">
+        <div className="sm-skywrap">
+          <canvas ref={cvRef} className="sm-sky" tabIndex={0} role="img"
+            aria-label={`The sky over ${place} on ${when.toUTCString().slice(5, 22)} UT. Drag or use the arrow keys to look round, plus and minus to zoom. Choose symbols from the list beside it.`}
+            onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp}
+            onPointerLeave={() => setHover(null)} onKeyDown={onKey} />
+          <div className="sm-controls">
+            <button type="button" className="sm-ctl" onClick={() => { flight.current++; setView({ alt: 90, az: 180, h: 92 }); }}>Look up</button>
+            <button type="button" className="sm-ctl" aria-label="Zoom in" onClick={() => setView((v) => ({ ...v, h: Math.max(6, v.h / 1.3) }))}>+</button>
+            <button type="button" className="sm-ctl" aria-label="Zoom out" onClick={() => setView((v) => ({ ...v, h: Math.min(110, v.h * 1.3) }))}>−</button>
+          </div>
+          <p className="sm-where">{moment.label === 'In this chart' ? 'The chart\'s sky' : 'The sky now'} over {place}, {when.toUTCString().slice(5, 22)} UT</p>
+        </div>
 
-            {shown.const && (() => { const [r0, r1] = bands.const, mid = (r0 + r1) / 2, k = (r1 - r0) / 2 / 24; return Object.values(ENTITIES).filter((e) => e.kind === 'const').map((e) => {
-              const P = e.stars.map(([lon, lat]) => pt(mid + Math.max(-22, Math.min(22, lat)) * k, lon));
-              return (
-                <g key={e.id} {...segProps(e.id)}>
-                  <path d={sector(r0, r1, e.start, e.end)} className="sm-hit" />
-                  <path d={sector(r0, r1, e.start, e.start + 0.01)} className="sm-tick" />
-                  <g className="sm-stars">
-                    {e.lines.map((ln, i) => <polyline key={i} points={ln.map((j) => P[j].join(',')).join(' ')} />)}
-                    {P.map(([x, y], i) => <circle key={i} cx={x} cy={y} r={1.9} />)}
-                  </g>
-                </g>
-              );
-            }); })()}
-
-            {shown.sign && (() => { const [r0, r1] = bands.sign; return SIGNS.map((s, i) => {
-              const id = `sign:${s}`, [x, y] = pt((r0 + r1) / 2, i * 30 + 15);
-              return (
-                <g key={id} {...segProps(id)}>
-                  <path d={sector(r0, r1, i * 30, i * 30 + 30)} className="sm-hit" style={{ '--c': SIGN_COL[s] }} />
-                  <text x={x} y={y} className="sm-glyph" fill={SIGN_COL[s]} fontSize={Math.min(22, (r1 - r0) * 0.6)}>{SIGN_SYM[i]}</text>
-                </g>
-              );
-            }); })()}
-
-            {shown.nak && (() => { const [r0, r1] = bands.nak; return NAKSHATRA_INFO.map((n, i) => {
-              const id = `nak:${n.name}`, e = ENTITIES[id], a0 = i * NAK_SPAN + sky.ay;
-              const [x, y] = pt((r0 + r1) / 2, a0 + NAK_SPAN / 2);
-              return (
-                <g key={id} {...segProps(id)}>
-                  <path d={sector(r0, r1, a0, a0 + NAK_SPAN)} className="sm-hit sm-hit-line" style={{ '--c': e.colour }} />
-                  <text x={x} y={y} className="sm-num" fill={e.colour} fontSize={Math.min(12, (r1 - r0) * 0.45)}>{i + 1}</text>
-                </g>
-              );
-            }); })()}
-
-            {shown.branch && (() => { const [r0, r1] = bands.branch; return ANIMALS.map((a) => {
-              const id = `branch:${a}`, e = ENTITIES[id], [x, y] = pt((r0 + r1) / 2, e.start + 15);
-              return (
-                <g key={id} {...segProps(id)}>
-                  <path d={sector(r0, r1, e.start, e.end)} className="sm-hit sm-hit-line" style={{ '--c': e.colour }} />
-                  <text x={x} y={y} className="sm-han" fill={e.colour} fontSize={Math.min(18, (r1 - r0) * 0.5)}>{e.glyph}</text>
-                </g>
-              );
-            }); })()}
-
-            {bodyPts.map(([b, lon, r]) => {
-              const id = `planet:${b}`, e = ENTITIES[id], [x, y] = pt(r, lon), [x2, y2] = pt(R_IN, lon);
-              return (
-                <g key={id} {...segProps(id)}>
-                  <line x1={x} y1={y} x2={x2} y2={y2} className="sm-spoke" stroke={e.colour} />
-                  <circle cx={x} cy={y} r={12} className="sm-body" stroke={e.colour} />
-                  <text x={x} y={y + 0.5} className="sm-glyph" fill={e.colour} fontSize={14}>{e.glyph}</text>
-                </g>
-              );
-            })}
-
-            <text x={C} y={C - 6} className="sm-centre-glyph" fill={hv?.colour || 'rgba(234,223,196,.35)'}>{hv ? hv.glyph : '⊕'}</text>
-            {hv && <text x={C} y={C + 20} className="sm-centre-name">{hv.name}</text>}
-          </g>
-        </svg>
+        <aside className="sm-panel" ref={panelRef} tabIndex={-1} aria-live="polite">
+          {focus ? <FocusPanel id={focus} trail={trail} sky={sky} mode={mode} setMode={setMode} onOpen={(id) => open(id, false)} onBack={clear} />
+            : <IntroPanel hover={hover} hv={hv} onOpen={(id) => open(id, true)} />}
+        </aside>
       </div>
+    </div>
+  );
+}
 
-      <p className="sm-readout" aria-live="polite">
-        {hv ? <><b style={{ color: hv.colour }}>{hv.name}</b> <span className="sm-kind">{hv.kindLabel}</span> {hv.essence}</>
-          : <span className="sm-idle">Hover or tab to a symbol to read it; select it to open what the traditions tie to it. Lit symbols are its correspondences.</span>}
-      </p>
-
+function IntroPanel({ hover, hv, onOpen }) {
+  return (
+    <>
+      {hover ? (
+        <div className="sm-hover">
+          {hv ? <><h2><span style={{ color: hv.colour }}>{hv.glyph}</span> {hv.name}</h2><p className="sm-kind">{hv.kindLabel}</p>{essenceOf(hv)?.core && <p className="sm-core-word" style={{ '--c': hv.colour }}>{essenceOf(hv).core}</p>}<p className="sm-essence">{hv.essence}</p></>
+            : <><h2>{hover.name}</h2><p className="sm-kind">Star or figure</p></>}
+        </div>
+      ) : (
+        <div className="sm-hover">
+          <h2>The sky, read four ways</h2>
+          <p className="sm-essence">Each tradition divides the same sky differently. Switch them on and off above; touch a figure, sign, mansion or planet to follow what the traditions tie to it.</p>
+        </div>
+      )}
       <details className="sm-index">
         <summary>Every symbol, by kind</summary>
         {KIND_ORDER.map(({ kind, label }) => (
@@ -305,17 +503,14 @@ function MapView({ sky, shown, setShown, hover, setHover, zoom, onOpen }) {
   );
 }
 
-function FocusView({ id, trail, sky, onOpen, onBack, panelRef }) {
+function FocusPanel({ id, trail, sky, mode, setMode, onOpen, onBack }) {
   const e = ENTITIES[id];
-  const links = e.links.slice(0, 14);
-  const n = links.length;
-  const R = n > 9 ? 222 : 200;
   const line = chartLine(e, sky);
-
+  const es = essenceOf(e);
   return (
     <div className="sm-focus" key={id}>
       <nav className="sm-trail" aria-label="Path through the map">
-        <button type="button" className="sm-crumb" onClick={onBack}>Map</button>
+        <button type="button" className="sm-crumb" onClick={onBack}>Sky</button>
         {trail.map((t, i) => (
           <span key={t + i}>
             <span aria-hidden="true" className="sm-sep">›</span>
@@ -325,55 +520,46 @@ function FocusView({ id, trail, sky, onOpen, onBack, panelRef }) {
           </span>
         ))}
       </nav>
-
-      <div className="sm-focus-grid">
-        <svg viewBox={`0 0 ${S} ${S}`} className="sm-map sm-constellate" aria-hidden="true">
-          {links.map((l, i) => {
-            const t = ENTITIES[l.to], a = -90 + (360 / n) * i;
-            const x = C + R * Math.cos(rad(a)), y = C + R * Math.sin(rad(a));
-            return (
-              <g key={l.to + l.rel} className="sm-node" style={{ '--d': `${80 + i * 45}ms` }} onClick={() => onOpen(l.to)}>
-                <line x1={C} y1={C} x2={x} y2={y} className="sm-edge" stroke={t.colour} pathLength="1" />
-                <circle cx={x} cy={y} r={24} className="sm-body" stroke={t.colour} />
-                <text x={x} y={y + 0.5} className="sm-glyph" fill={t.colour} fontSize={t.glyph.length > 2 ? 12 : 18}>{t.glyph}</text>
-                <text x={x} y={y + 42} className="sm-node-name">{t.name}</text>
-                <text x={x} y={y - 34} className="sm-node-rel">{l.rel}</text>
-              </g>
-            );
-          })}
-          <circle cx={C} cy={C} r={66} className="sm-core" stroke={e.colour} />
-          <text x={C} y={C - 4} className="sm-glyph" fill={e.colour} fontSize={e.glyph.length > 2 ? 22 : 46}>{e.glyph}</text>
-          <text x={C} y={C + 40} className="sm-centre-name">{e.name}</text>
-        </svg>
-
-        <section className="sm-panel" ref={panelRef} tabIndex={-1} aria-label={e.name}>
-          <h2><span style={{ color: e.colour }}>{e.glyph}</span> {e.name}</h2>
-          <p className="sm-kind">{e.kindLabel}</p>
-          <p className="sm-essence">{e.essence}</p>
-          {e.attrs.length > 0 && (
+      <h2><span style={{ color: e.colour }}>{e.glyph}</span> {e.name}</h2>
+      <p className="sm-kind">{e.kindLabel}</p>
+      <div className="sm-modes" role="group" aria-label="Read it as">
+        <button type="button" className="sm-mode" aria-pressed={mode === 'symbol'} onClick={() => setMode('symbol')}>What it is</button>
+        <button type="button" className="sm-mode" aria-pressed={mode === 'ties'} onClick={() => setMode('ties')}>How it ties in</button>
+      </div>
+      {mode === 'symbol' ? (
+        <div className="sm-symbolism">
+          {es?.core && <p className="sm-core-word" style={{ '--c': e.colour }}>{es.core}</p>}
+          <p className="sm-essence">{es?.core && e.essence.toLowerCase().startsWith(es.core.toLowerCase() + '.') ? e.essence.slice(es.core.length + 1).trim() : e.essence}</p>
+          {es?.keys?.length > 0 && <p className="sm-keys">{es.keys.join(' · ')}</p>}
+          {(es?.rep?.length > 0 || e.attrs.length > 0) && (
             <dl className="sm-attrs">
-              {e.attrs.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
+              {[...(es?.rep || []), ...e.attrs.filter(([k]) => !(es?.rep || []).some(([r]) => r === k))].map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
             </dl>
           )}
-          {line && <p className="sm-chartline">{line}</p>}
-          <h3>Tied to it</h3>
-          <ul className="sm-links">
-            {e.links.map((l) => {
-              const t = ENTITIES[l.to];
-              return (
-                <li key={l.to + l.rel}>
-                  <button type="button" onClick={() => onOpen(l.to)}>
-                    <span className="sm-rel">{l.rel}</span>
-                    <span className="sm-link-name"><span style={{ color: t.colour }}>{t.glyph}</span> {t.name}</span>
-                    <span className="sm-link-ess">{t.essence}</span>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-          <button type="button" className="sge-chip sm-back" onClick={onBack}>Back to the map</button>
-        </section>
-      </div>
+          {es?.myth && <><h3>The story</h3><p className="sm-myth">{es.myth}</p></>}
+          {e.links.length > 0 && <button type="button" className="sge-chip sm-switch" onClick={() => setMode('ties')}>How it ties in: {e.links.length} correspondences</button>}
+        </div>
+      ) : (
+      <>
+      {line && <p className="sm-chartline">{line}</p>}
+      <h3>Tied to it</h3>
+      <ul className="sm-links">
+        {e.links.map((l, i) => {
+          const t = ENTITIES[l.to];
+          return (
+            <li key={l.to + l.rel} style={{ '--d': `${i * 40}ms` }}>
+              <button type="button" onClick={() => onOpen(l.to)}>
+                <span className="sm-rel">{l.rel}</span>
+                <span className="sm-link-name"><span style={{ color: t.colour }}>{t.glyph}</span> {t.name}</span>
+                <span className="sm-link-ess">{t.essence}</span>
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+      </>
+      )}
+      <button type="button" className="sge-chip sm-back" onClick={onBack}>Back to the whole sky</button>
     </div>
   );
 }

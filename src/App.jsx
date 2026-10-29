@@ -192,7 +192,7 @@ export default function App() {
           {!res && tab === "symbols" && (
             <Suspense fallback={null}>
               <p className="sm-nochart"><button type="button" className="sge-chip" onClick={() => setTab("synthesis")}>Back</button> No chart is cast, so the bodies shown are the sky now.</p>
-              <ErrorBoundary><SymbolMapTab ctx={{}} /></ErrorBoundary>
+              <ErrorBoundary><SymbolMapTab ctx={{ A }} /></ErrorBoundary>
             </Suspense>
           )}
           {res && (
@@ -265,7 +265,7 @@ export default function App() {
                   <ErrorBoundary><NumerologyTab ctx={{ M3, birthParts: A, res, Card }} /></ErrorBoundary>
                 )}
                 {tab === "symbols" && (
-                  <ErrorBoundary><SymbolMapTab ctx={{ res }} /></ErrorBoundary>
+                  <ErrorBoundary><SymbolMapTab ctx={{ res, A }} /></ErrorBoundary>
                 )}
                 {tab === "education" && (
                   <ErrorBoundary><EducationTab ctx={{ M3, EL_COL, MOD_COL, Card }} /></ErrorBoundary>
