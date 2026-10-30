@@ -7,7 +7,7 @@ import { P_SYM, P_COL } from './astrology/planets.js';
 import { NAKSHATRA_INFO, RASHI_INFO, BHAVA_INFO } from './astrology/nakshatras.js';
 import { ANIMALS, BRANCHES, BRANCH_PINYIN, CN_EL_INFO } from './astrology/chinese.js';
 import { ASPECTS } from './astrology/aspects.js';
-import { FIGURE_NOTE, ASTERISMS } from './sky/figureArt.js';
+import { FIGURE_NOTE, ASTERISMS } from './sky/asterisms.js';
 
 const T = '︎';
 const ord = (n) => n + (n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th');
