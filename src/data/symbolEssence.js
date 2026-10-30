@@ -219,6 +219,7 @@ export function essenceOf(ent) {
     case 'sym': return QUARTER[n] || null;
     case 'xiu': { const i = parseInt(ent.kindLabel.replace(/\D/g, ''), 10) - 1; const [keys, animal, day, myth] = XIU_LORE[i];
       return { core: n, keys, rep: [['Animal', animal], ['Day', day]], myth }; }
+    case 'fig': return ent.core ? { core: ent.core, keys: [], rep: [], myth: ent.myth || undefined } : null;
     case 'branch': return { core: ent.essence.split(',')[0], keys: [], rep: [] };
     default: return null;
   }

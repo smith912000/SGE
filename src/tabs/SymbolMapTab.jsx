@@ -21,6 +21,8 @@ const BODIES = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 
 const posKey = (b) => (b === 'Rahu' ? 'Node' : b);
 const BODY_SIZE = { Sun: 7, Moon: 6, Venus: 3.6, Jupiter: 3.3, Mars: 3, Saturn: 2.9, Mercury: 2.6, Uranus: 1.9, Neptune: 1.7, Pluto: 1.5 };
 const FIG_TO_CONST = Object.fromEntries(Object.values(ENTITIES).filter((e) => e.kind === 'const' || e.kind === 'fig').map((e) => [e.fig, e.id]));
+// Figures with an atlas card are the great ones: brighter, and always labelled.
+const MAJOR_FIG = new Set(Object.values(ATLAS_ART).flatMap((a) => a.figs));
 const XIU_BY_KEY = Object.fromEntries(XIU.map((x) => [x[0], `xiu:${x[3]}`]));
 const INK = { star: '244,241,237', fig: '234,223,196', gold: '201,168,76', nak: '217,142,95', xiu: '147,184,154' };
 
@@ -160,7 +162,7 @@ function buildScene({ jd, lat, lon, pos, ay, houses }) {
   const scene = {
     stars: STARS.map(([ra, dec, m]) => [hv(ra, dec), m]),
     named: NAMED_STARS.map(([ra, dec, m, n]) => ({ v: hv(ra, dec), m, n })),
-    figs: FIGURES.map((f) => ({ id: f.id, name: f.name, ent: FIG_TO_CONST[f.id] || null, at: f.at ? hv(...f.at) : null, lines: f.lines.map((l) => l.map(([ra, dec]) => hv(ra, dec))) })),
+    figs: FIGURES.map((f) => ({ id: f.id, name: f.name, ent: FIG_TO_CONST[f.id] || null, major: MAJOR_FIG.has(f.id), at: f.at ? hv(...f.at) : null, lines: f.lines.map((l) => l.map(([ra, dec]) => hv(ra, dec))) })),
     atlas: Object.values(ATLAS_ART).map((a) => ({ img: a.img, figs: a.figs, grid: atlasGrid(a, hv) })),
     beasts: Object.entries(BEASTS).map(([name, a]) => ({ img: a.img, ent: `sym:${name}`, grid: atlasGrid(a, hv) })),
     xiu: Object.entries(XIU_FIGURES).map(([k, f]) => ({ ent: XIU_BY_KEY[k], at: hv(...f.at), lines: f.lines.map((l) => l.map(([ra, dec]) => hv(ra, dec))) })).filter((x) => x.ent),
@@ -254,7 +256,7 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near) {
     for (const f of scene.figs) {
       const on = f.ent && lit(f.ent);
       // The figure itself, drawn over its stars while it is touched or open.
-      const a = on ? 0.9 : f.ent ? 0.3 : 0.14;
+      const a = on ? 0.9 : f.major ? 0.3 : 0.16;
       for (const ln of f.lines) {
         poly(ln, `rgba(${INK.fig},${a})`, on ? 1.3 : 0.8, on ? 10 : 0);
         for (let i = 1; i < ln.length; i++) {
@@ -264,8 +266,8 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near) {
       }
       if (on) for (const ln of f.lines) for (const v of ln) { const p = project(v); if (p) { g.beginPath(); g.arc(p[0], p[1], 2.4 * s, 0, 7); g.fillStyle = '#FFF8E6'; g.shadowColor = '#FFE9B0'; g.shadowBlur = 12; g.fill(); g.shadowBlur = 0; } }
       const pa = f.at && project(f.at);
-      if (pa && (f.ent || view.h < 45)) {
-        text(f.ent ? f.name.toUpperCase() : f.name, pa, `rgba(${INK.fig},${on ? 0.95 : f.ent ? 0.5 : 0.32})`, (f.ent ? 11 : 10) * Math.min(s, 1.4), 'sans');
+      if (pa && (f.major || on || view.h < 45)) {
+        text(f.major || on ? f.name.toUpperCase() : f.name, pa, `rgba(${INK.fig},${on ? 0.95 : f.major ? 0.5 : 0.36})`, (f.major ? 11 : 10) * Math.min(s, 1.4), 'sans');
         if (f.ent) hits.push({ x: pa[0], y: pa[1], r: 16, id: f.ent });
       }
     }
