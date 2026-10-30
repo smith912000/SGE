@@ -1,4 +1,4 @@
-import { plateFor } from '../../data/sky/plates.js';
+import { platesFor } from '../../data/sky/plates.js';
 
 // The planet and sign glyphs as stroked paths on a 24 box, so no symbol depends
 // on a font or falls back to an emoji: <Sigil> in HTML, drawSigil on the canvas.
@@ -71,15 +71,20 @@ export function drawSigil(g, id, x, y, px, colour) {
   return true;
 }
 
-// A historical picture for the symbol, with its source, or nothing.
+// The historical pictures for the symbol, each with its source: the main one
+// alone when compact, otherwise every tradition's side by side.
 export function Plate({ ent, compact = false }) {
-  const p = plateFor(ent);
-  if (!p) return null;
-  const [file, w, h, caption] = p;
+  const all = platesFor(ent);
+  if (!all.length) return null;
+  const shown = compact ? all.slice(0, 1) : all;
   return (
-    <figure className={`sm-plate${compact ? ' sm-plate-compact' : ''}`}>
-      <img src={`${import.meta.env.BASE_URL}sky-art/plates/${file}`} width={w} height={h} alt={caption} loading="lazy" decoding="async" />
-      {!compact && <figcaption>{caption}</figcaption>}
-    </figure>
+    <div className={`sm-plates${shown.length > 1 ? ' sm-plates-many' : ''}`}>
+      {shown.map(([file, w, h, caption]) => (
+        <figure key={file} className={`sm-plate${compact ? ' sm-plate-compact' : ''}`}>
+          <img src={`${import.meta.env.BASE_URL}sky-art/plates/${file}`} width={w} height={h} alt={caption} loading="lazy" decoding="async" />
+          {!compact && <figcaption>{caption}</figcaption>}
+        </figure>
+      ))}
+    </div>
   );
 }

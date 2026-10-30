@@ -1,7 +1,7 @@
 {
   "name": "sge-v6",
   "private": true,
-  "version": "6.3.0",
+  "version": "6.4.0",
   "license": "AGPL-3.0-only",
   "type": "module",
   "scripts": {

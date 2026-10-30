@@ -334,6 +334,11 @@ button { font-family: inherit; }
 .sm-head { display: flex; align-items: center; gap: 14px; margin: 4px 0 10px; }
 .sm-head h2 { margin: 0 0 2px; }
 .sm-plate { margin: 2px 0 6px; }
+.sm-plates-many { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 10px; align-items: start; }
+.sm-plates-many .sm-plate { min-width: 0; }
+.sm-plates-many .sm-plate img { max-height: 200px; }
+.sm-plates-many .sm-plate figcaption { font-size: .7rem; }
+.sm-plate img[src$='.webp'] { background: none; box-shadow: none; }
 .sm-plate img { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; max-height: 300px; object-fit: contain; border-radius: 6px; background: #0E0C16; box-shadow: 0 0 0 1px rgba(201,168,76,.28); }
 .sm-plate figcaption { margin-top: 6px; font-size: .75rem; line-height: 1.4; color: #A6A2B0; font-style: italic; }
 .sm-plate-compact img { max-height: 150px; width: auto; max-width: 100%; }
