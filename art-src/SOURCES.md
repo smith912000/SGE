@@ -1,0 +1,96 @@
+# SGE art references - sources
+
+Downloaded 30 Oct 2026 from Wikimedia Commons. Every file is public domain or CC0 as stated on its Commons page; CC BY-SA and other licences were skipped.
+Repo copy: every image downscaled to at most 1800 px wide and saved as JPEG quality 85 (the Sagittarius card was a PNG on Commons). Full-size copies (up to 2400 px) are on Drive. "Original size" gives the full Commons size.
+
+## Western - Urania's Mirror (all 32 cards) (32 files)
+
+| File | Saved size | Original size | Artist / date | Licence | Source page |
+|---|---|---|---|---|---|
+| western/uranias-mirror-01-aquarius.jpg | 1800x1260 | 3568x2498 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Aquarius,_Piscis_Australis_%26_Ballon_Aerostatique.jpg |
+| western/uranias-mirror-02-aries.jpg | 1800x1259 | 3588x2509 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Aries_and_Musca_Borealis.jpg |
+| western/uranias-mirror-03-auriga.jpg | 1800x2571 | 2509x3584 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Auriga.jpg |
+| western/uranias-mirror-04-bootes.jpg | 1800x1264 | 3580x2514 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Bootes,_Canes_Venatici,_Coma_Berenices,_and_Quadrans_Muralis.jpg |
+| western/uranias-mirror-05-camelopardalis.jpg | 1800x1260 | 3595x2516 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Camelopardalis,_Tarandus_and_Custos_Messium.jpg |
+| western/uranias-mirror-06-cancer.jpg | 1800x2574 | 3280x4690 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Cancer.jpg |
+| western/uranias-mirror-07-canis-major.jpg | 1800x1265 | 3573x2512 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Canis_Major,_Lepus,_Columba_Noachi_%26_Cela_Sculptoris.jpg |
+| western/uranias-mirror-08-capricornus.jpg | 1800x1258 | 3600x2516 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Capricornus.jpg |
+| western/uranias-mirror-09-cassiopeia.jpg | 1800x2586 | 2486x3572 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Cassiopeia_(image_right_side_up).jpg |
+| western/uranias-mirror-10-cepheus.jpg | 1800x2576 | 2493x3568 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Cepheus.jpg |
+| western/uranias-mirror-11-aquila-delphinus.jpg | 1800x2560 | 2514x3576 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Delphinus,_Sagitta,_Aquila,_and_Antinous.jpg |
+| western/uranias-mirror-12-draco-ursa-minor.jpg | 1800x2562 | 2524x3593 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Draco_and_Ursa_Minor.jpg |
+| western/uranias-mirror-13-gemini.jpg | 1800x1258 | 3568x2494 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Gemini.jpg |
+| western/uranias-mirror-14-andromeda.jpg | 1800x2567 | 2515x3587 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Gloria_Frederici,_Andromeda,_and_Triangula.jpg |
+| western/uranias-mirror-15-hercules.jpg | 1800x1268 | 3574x2518 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Hercules_and_Corona_Borealis.jpg |
+| western/uranias-mirror-16-cygnus-lyra.jpg | 1800x1264 | 3566x2504 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Lacerta,_Cygnus,_Lyra,_Vulpecula_and_Anser.jpg |
+| western/uranias-mirror-17-leo.jpg | 1800x2565 | 3305x4709 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Leo_Major_and_Leo_Minor.jpg |
+| western/uranias-mirror-18-libra.jpg | 1800x1258 | 3586x2506 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Libra.jpg |
+| western/uranias-mirror-19-lynx.jpg | 1800x1258 | 3599x2516 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Lynx_and_Telescopium_Herschilii.jpg |
+| western/uranias-mirror-20-monoceros-canis-minor.jpg | 1800x1259 | 3590x2512 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Monoceros,_Canis_Minor,_and_Atelier_Typographique.jpg |
+| western/uranias-mirror-21-hydra-corvus-argo.jpg | 1800x1259 | 3585x2508 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Noctua,_Corvus,_Crater,_Sextans_Urani%C3%A6,_Hydra,_Felis,_Lupus,_Centaurus,_Antlia_Pneumatica,_Argo_Navis,_and_Pyxis_Nautica.jpg |
+| western/uranias-mirror-22-orion.jpg | 1252x1800 | 1252x1800 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Orion_(best_currently_available_version_-_2014).jpg |
+| western/uranias-mirror-23-pegasus.jpg | 1024x715 | 1024x715 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Pegasus_and_Equuleus_(best_currently_available_version_-_2014)_-_original.jpg |
+| western/uranias-mirror-24-perseus.jpg | 1800x1260 | 3571x2500 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Perseus.jpg |
+| western/uranias-mirror-25-pisces.jpg | 1800x1260 | 3567x2497 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Pisces.jpg |
+| western/uranias-mirror-26-cetus-eridanus.jpg | 1800x1247 | 3637x2520 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Psalterium_Georgii,_Fluvius_Eridanus,_Cetus,_Officina_Sculptoris,_Fornax_Chemica,_and_Machina_Electrica.jpg |
+| western/uranias-mirror-27-sagittarius.jpg | 1800x1259 | 3572x2498 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Sagittarius_and_Corona_Australis,_Microscopium,_and_Telescopium.png |
+| western/uranias-mirror-28-scorpio.jpg | 1800x2579 | 2494x3573 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Scorpio.jpg |
+| western/uranias-mirror-29-taurus.jpg | 1800x1266 | 3602x2533 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Taurus.jpg |
+| western/uranias-mirror-30-ophiuchus-serpens.jpg | 1800x1266 | 3592x2527 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Taurus_Poniatowski,_Serpentarius,_Scutum_Sobiesky,_and_Serpens.jpg |
+| western/uranias-mirror-31-ursa-major.jpg | 1800x1265 | 3591x2523 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Ursa_Major.jpg |
+| western/uranias-mirror-32-virgo.jpg | 1800x1264 | 3566x2505 | Sidney Hall (engraver), Urania's Mirror, London, 1824 | Public domain | https://commons.wikimedia.org/wiki/File:Sidney_Hall_-_Urania%27s_Mirror_-_Virgo.jpg |
+
+## Planets - Beham planet gods (7 files)
+
+| File | Saved size | Original size | Artist / date | Licence | Source page |
+|---|---|---|---|---|---|
+| planets/beham-saturn.jpg | 1794x2685 | 1794x2685 | Hans Sebald Beham, The Seven Planets series, c.1530s (National Gallery of Art, Washington) | CC0 | https://commons.wikimedia.org/wiki/File:Sebald_Beham,_Saturn,_NGA_4279.jpg |
+| planets/beham-jupiter.jpg | 1800x2635 | 1850x2708 | Hans Sebald Beham, The Seven Planets series, c.1530s (National Gallery of Art, Washington) | CC0 | https://commons.wikimedia.org/wiki/File:Sebald_Beham,_Jupiter,_NGA_4280.jpg |
+| planets/beham-mars.jpg | 1781x2663 | 1781x2663 | Hans Sebald Beham, The Seven Planets series, c.1530s (National Gallery of Art, Washington) | CC0 | https://commons.wikimedia.org/wiki/File:Sebald_Beham,_Mars,_NGA_4281.jpg |
+| planets/beham-sun-sol.jpg | 1800x2634 | 1827x2674 | Hans Sebald Beham, The Seven Planets series, c.1530s (National Gallery of Art, Washington) | CC0 | https://commons.wikimedia.org/wiki/File:Sebald_Beham,_Sol,_NGA_4282.jpg |
+| planets/beham-venus.jpg | 1800x2634 | 1827x2674 | Hans Sebald Beham, The Seven Planets series, c.1530s (National Gallery of Art, Washington) | CC0 | https://commons.wikimedia.org/wiki/File:Sebald_Beham,_Venus,_NGA_4283.jpg |
+| planets/beham-mercury.jpg | 1800x2613 | 1827x2652 | Hans Sebald Beham, The Seven Planets series, c.1530s (National Gallery of Art, Washington) | CC0 | https://commons.wikimedia.org/wiki/File:Sebald_Beham,_Mercury,_NGA_4284.jpg |
+| planets/beham-moon-luna.jpg | 1800x2690 | 1805x2697 | Hans Sebald Beham, The Seven Planets series, c.1530s (National Gallery of Art, Washington) | CC0 | https://commons.wikimedia.org/wiki/File:Sebald_Beham,_Luna,_NGA_4285.jpg |
+
+## Chinese - Four Symbols, Dunhuang chart, zodiac animals (22 files)
+
+| File | Saved size | Original size | Artist / date | Licence | Source page |
+|---|---|---|---|---|---|
+| chinese/four-symbols-goguryeo-mural-copy-all-four.jpg | 1800x1196 | 4836x3214 | Unknown; 0550/0600 | Public domain | https://commons.wikimedia.org/wiki/File:Copy_of_Tomb_Mural_-_Blue_Dragon_%E2%80%A2_White_Tiger_%E2%80%A2_Red_Phoenix_%E2%80%A2_Black_Tortoise_and_Serpent_-_Google_Art_Project.jpg |
+| chinese/four-symbols-goguryeo-azure-dragon-1915-survey.jpg | 1318x953 | 1318x953 | Joseon Government-General survey (Chōsen koseki zufu), 1915, of Goguryeo tomb murals | Public domain | https://commons.wikimedia.org/wiki/File:%EC%B2%AD%EB%A3%A1_%EC%A1%B0%EC%84%A0%EA%B3%A0%EC%A0%81%EB%8F%84%EB%B3%B4.jpg |
+| chinese/four-symbols-goguryeo-white-tiger-1915-survey.jpg | 1354x1010 | 1354x1010 | Joseon Government-General survey (Chōsen koseki zufu), 1915, of Goguryeo tomb murals | Public domain | https://commons.wikimedia.org/wiki/File:%EB%B0%B1%ED%98%B8_%EC%A1%B0%EC%84%A0%EA%B3%A0%EC%A0%81%EB%8F%84%EB%B3%B4.jpg |
+| chinese/four-symbols-goguryeo-vermilion-bird-1915-survey.jpg | 1140x1445 | 1140x1445 | Joseon Government-General survey (Chōsen koseki zufu), 1915, of Goguryeo tomb murals | Public domain | https://commons.wikimedia.org/wiki/File:%EC%A3%BC%EC%9E%91_%EC%A1%B0%EC%84%A0%EA%B3%A0%EC%A0%81%EB%8F%84%EB%B3%B4.jpg |
+| chinese/four-symbols-goguryeo-black-tortoise-1915-survey.jpg | 1303x1040 | 1303x1040 | Joseon Government-General survey (Chōsen koseki zufu), 1915, of Goguryeo tomb murals | Public domain | https://commons.wikimedia.org/wiki/File:%ED%98%84%EB%AC%B4_%EC%A1%B0%EC%84%A0%EA%B3%A0%EC%A0%81%EB%8F%84%EB%B3%B4.jpg |
+| chinese/four-symbols-gangseo-azure-dragon.jpg | 1142x729 | 1142x729 | (not stated on Commons); (not stated on Commons) | Public domain | https://commons.wikimedia.org/wiki/File:Gangseodaemyo_Blue_Dragon.jpg |
+| chinese/four-symbols-vermilion-bird-relief.jpg | 1797x1258 | 1797x1258 | Shizhao; 200711，魏晋时期 | Public domain | https://commons.wikimedia.org/wiki/File:Vermilion_Bird_relief.JPG |
+| chinese/dunhuang-star-chart-full.jpg | 1800x1807 | 2128x2136 | (not stated on Commons); (not stated on Commons) | Public domain | https://commons.wikimedia.org/wiki/File:Dunhuang_star_map.jpg |
+| chinese/dunhuang-star-chart-panel-BLX273.jpg | 1317x1476 | 1317x1476 | unknown; early 8th century | CC0 | https://commons.wikimedia.org/wiki/File:Dunhuang_Star_Chart_BLX273_OR8210S3326R2_8.jpg |
+| chinese/dunhuang-star-chart-strip.jpg | 1800x240 | 3298x440 | (not stated on Commons); 2010-02-08 | Public domain | https://commons.wikimedia.org/wiki/File:Dunhuang_Star_Atlas_-_complete.jpg |
+| chinese/zodiac-lacma-01-monkey.jpg | 1800x1200 | 2100x1400 | Unknown maker, Yuan dynasty, probably Yunnan (LACMA M.90.80a-l) | Public domain | https://commons.wikimedia.org/wiki/File:Funerary_Sculpture_of_the_Animals_of_the_Twelve-Year_Chinese_Zodiac_(Shengxiao)_LACMA_M.90.80a-l_(1_of_12).jpg |
+| chinese/zodiac-lacma-02-goat.jpg | 1800x1200 | 2100x1400 | Unknown maker, Yuan dynasty, probably Yunnan (LACMA M.90.80a-l) | Public domain | https://commons.wikimedia.org/wiki/File:Funerary_Sculpture_of_the_Animals_of_the_Twelve-Year_Chinese_Zodiac_(Shengxiao)_LACMA_M.90.80a-l_(2_of_12).jpg |
+| chinese/zodiac-lacma-03-rooster.jpg | 1800x1200 | 2100x1400 | Unknown maker, Yuan dynasty, probably Yunnan (LACMA M.90.80a-l) | Public domain | https://commons.wikimedia.org/wiki/File:Funerary_Sculpture_of_the_Animals_of_the_Twelve-Year_Chinese_Zodiac_(Shengxiao)_LACMA_M.90.80a-l_(3_of_12).jpg |
+| chinese/zodiac-lacma-04.jpg (likely dog, by elimination) | 1800x1200 | 2100x1400 | Unknown maker, Yuan dynasty, probably Yunnan (LACMA M.90.80a-l) | Public domain | https://commons.wikimedia.org/wiki/File:Funerary_Sculpture_of_the_Animals_of_the_Twelve-Year_Chinese_Zodiac_(Shengxiao)_LACMA_M.90.80a-l_(4_of_12).jpg |
+| chinese/zodiac-lacma-05-pig.jpg | 1800x1200 | 2100x1400 | Unknown maker, Yuan dynasty, probably Yunnan (LACMA M.90.80a-l) | Public domain | https://commons.wikimedia.org/wiki/File:Funerary_Sculpture_of_the_Animals_of_the_Twelve-Year_Chinese_Zodiac_(Shengxiao)_LACMA_M.90.80a-l_(5_of_12).jpg |
+| chinese/zodiac-lacma-06-horse.jpg | 1800x1200 | 2100x1400 | Unknown maker, Yuan dynasty, probably Yunnan (LACMA M.90.80a-l) | Public domain | https://commons.wikimedia.org/wiki/File:Funerary_Sculpture_of_the_Animals_of_the_Twelve-Year_Chinese_Zodiac_(Shengxiao)_LACMA_M.90.80a-l_(6_of_12).jpg |
+| chinese/zodiac-lacma-07-snake.jpg | 1800x1200 | 2100x1400 | Unknown maker, Yuan dynasty, probably Yunnan (LACMA M.90.80a-l) | Public domain | https://commons.wikimedia.org/wiki/File:Funerary_Sculpture_of_the_Animals_of_the_Twelve-Year_Chinese_Zodiac_(Shengxiao)_LACMA_M.90.80a-l_(7_of_12).jpg |
+| chinese/zodiac-lacma-08-ox.jpg | 1800x1200 | 2100x1400 | Unknown maker, Yuan dynasty, probably Yunnan (LACMA M.90.80a-l) | Public domain | https://commons.wikimedia.org/wiki/File:Funerary_Sculpture_of_the_Animals_of_the_Twelve-Year_Chinese_Zodiac_(Shengxiao)_LACMA_M.90.80a-l_(8_of_12).jpg |
+| chinese/zodiac-lacma-09.jpg (likely tiger) | 1400x2100 | 1400x2100 | Unknown maker, Yuan dynasty, probably Yunnan (LACMA M.90.80a-l) | Public domain | https://commons.wikimedia.org/wiki/File:Funerary_Sculpture_of_the_Animals_of_the_Twelve-Year_Chinese_Zodiac_(Shengxiao)_LACMA_M.90.80a-l_(9_of_12).jpg |
+| chinese/zodiac-lacma-10.jpg (likely rabbit, by elimination) | 1800x1200 | 2100x1400 | Unknown maker, Yuan dynasty, probably Yunnan (LACMA M.90.80a-l) | Public domain | https://commons.wikimedia.org/wiki/File:Funerary_Sculpture_of_the_Animals_of_the_Twelve-Year_Chinese_Zodiac_(Shengxiao)_LACMA_M.90.80a-l_(10_of_12).jpg |
+| chinese/zodiac-lacma-11-dragon.jpg | 1800x1200 | 2100x1400 | Unknown maker, Yuan dynasty, probably Yunnan (LACMA M.90.80a-l) | Public domain | https://commons.wikimedia.org/wiki/File:Funerary_Sculpture_of_the_Animals_of_the_Twelve-Year_Chinese_Zodiac_(Shengxiao)_LACMA_M.90.80a-l_(11_of_12).jpg |
+| chinese/zodiac-lacma-12.jpg (likely rat, by elimination) | 1800x1200 | 2100x1400 | Unknown maker, Yuan dynasty, probably Yunnan (LACMA M.90.80a-l) | Public domain | https://commons.wikimedia.org/wiki/File:Funerary_Sculpture_of_the_Animals_of_the_Twelve-Year_Chinese_Zodiac_(Shengxiao)_LACMA_M.90.80a-l_(12_of_12).jpg |
+
+## Nakshatra / Indian (optional) (2 files)
+
+| File | Saved size | Original size | Artist / date | Licence | Source page |
+|---|---|---|---|---|---|
+| nakshatra/sarvasiddhanta-constellation-figures-1840.jpg | 1440x1440 | 1440x1440 | Unknown; 1840 | Public domain | https://commons.wikimedia.org/wiki/File:Anthropomorphic_images_of_constellations,_painting_from_a_folio_of_the_work_%27Sarvasiddh%C4%81ntatattva-cu%E1%B8%8D%C4%81ma%E1%B9%87i%27_(%E2%80%9CThe_Jewel_of_the_Essence_of_All_Sciences%E2%80%9D),_1840.jpg |
+| nakshatra/sarvasiddhanta-horoscope-chart-1840.jpg | 1270x1270 | 1270x1270 | Unknown; 1840 | Public domain | https://commons.wikimedia.org/wiki/File:Horoscope_of_Lehna_Singh_Majithia,_folio_of_the_work_%27Sarvasiddh%C4%81ntatattva-cu%E1%B8%8D%C4%81ma%E1%B9%87i%27_(%E2%80%9CThe_Jewel_of_the_Essence_of_All_Sciences%E2%80%9D),_1840.jpg |
+
+## Notes
+
+- Urania's Mirror Orion (1252 px wide) and Pegasus (1024 px wide) are the best versions on Commons; the rest are 1800 px wide in this copy.
+- Beham set is the NGA impression series 4279-4285, all CC0.
+- Four Symbols: no public-domain Han eaves-tile rubbings of the four creatures were found on Commons (only unlabelled CC0 photos of tile ends, and one modern 2026 redraw, which was left out). Goguryeo tomb mural material used instead: the full-wall copy plus the 1915 survey plates of each creature.
+- Dunhuang: only one high-resolution panel (north polar region, BLX273) plus a full composite (2128 px) and a low-height strip of the whole scroll are on Commons. The individual month panels were not found as separate high-resolution files.
+- Zodiac animals: the LACMA set is Yuan dynasty (1279-1368) earthenware, photographed in 3D, not Tang figurines or Ming/Qing woodcuts. Commons does not name the animal for each number. Identified by eye: 01 monkey, 02 goat, 03 rooster, 05 pig, 06 horse, 07 snake, 08 ox, 11 dragon (files renamed). Not certain, left unrenamed: 09 likely tiger; 04, 10 and 12 are dog, rabbit and rat by elimination, to confirm.
+- Nakshatra: no dedicated nakshatra or rashi chakra painting was found as public domain at good size; the two 1840 Sarvasiddhantatattva-cudamani folios (constellation figures and a horoscope chart) are included instead.
