@@ -2,6 +2,8 @@ import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { essenceOf } from '../data/symbolEssence.js';
 import { ENTITIES, OVERLAYS, KIND_ORDER, NAK_SPAN, XIU, FOUR_SYMBOLS, ANGLES } from '../data/symbolMap.js';
 import { STARS, NAMED_STARS, YOGATARAS, FIGURES, XIU_FIGURES } from '../data/sky/catalogue.js';
+import { FIGURE_ART, FIGURE_NOTE, ASTERISMS } from '../data/sky/figureArt.js';
+import { RASHI_INFO } from '../data/astrology/nakshatras.js';
 import { SIGNS, SIGN_SYM, SIGN_COL } from '../data/astrology/signs.js';
 import { NAKSHATRA_INFO } from '../data/astrology/nakshatras.js';
 import { julianDay, allPlanets, ayanamsa, houseOf } from '../engines/astronomy.js';
@@ -105,11 +107,13 @@ function buildScene({ jd, lat, lon, pos, ay, houses }) {
   const scene = {
     stars: STARS.map(([ra, dec, m]) => [hv(ra, dec), m]),
     named: NAMED_STARS.map(([ra, dec, m, n]) => ({ v: hv(ra, dec), m, n })),
-    figs: FIGURES.map((f) => ({ id: f.id, name: f.name, ent: FIG_TO_CONST[f.id] || null, at: f.at ? hv(...f.at) : null, lines: f.lines.map((l) => l.map(([ra, dec]) => hv(ra, dec))) })),
+    figs: FIGURES.map((f) => ({ id: f.id, name: f.name, ent: FIG_TO_CONST[f.id] || null, at: f.at ? hv(...f.at) : null, lines: f.lines.map((l) => l.map(([ra, dec]) => hv(ra, dec))), art: (FIGURE_ART[f.id] || []).map((l) => l.map(([ra, dec]) => hv(ra, dec))) })),
     xiu: Object.entries(XIU_FIGURES).map(([k, f]) => ({ ent: XIU_BY_KEY[k], at: hv(...f.at), lines: f.lines.map((l) => l.map(([ra, dec]) => hv(ra, dec))) })).filter((x) => x.ent),
     ecliptic: arc(0, 360, 0),
     beltN: arc(0, 360, 8), beltS: arc(0, 360, -8),
     signs: SIGNS.map((s, i) => ({ ent: `sign:${s}`, i, label: ecl(i * 30 + 15, 4.2), tick: [ecl(i * 30, 8), ecl(i * 30, -8)], n: arc(i * 30, i * 30 + 30, 8, 1), s: arc(i * 30, i * 30 + 30, -8, 1) })),
+    sid: SIGNS.map((sg, i) => ({ ent: `sign:${sg}`, i, label: ecl(i * 30 + 15 + ay, -4.2), tick: [ecl(i * 30 + ay, 8), ecl(i * 30 + ay, -8)] })),
+    asterisms: ASTERISMS.map((a) => ({ ...a, lines: (a.lines || []).map((l) => l.map(([ra, dec]) => hv(ra, dec))), ring: a.ring && Array.from({ length: 25 }, (_, k) => { const t = (k / 24) * 2 * Math.PI; return hv(a.ring[0] + (a.ring[2] * Math.cos(t)) / Math.cos((a.ring[1] * Math.PI) / 180), a.ring[1] + a.ring[2] * Math.sin(t)); }), at: hv(...(a.glow || (a.ring ? a.ring.slice(0, 2) : a.lines[0][Math.floor(a.lines[0].length / 2)]))) })),
     naks: NAKSHATRA_INFO.map((n, i) => ({ ent: `nak:${n.name}`, i, tick: [ecl(i * NAK_SPAN + ay, -1.5), ecl(i * NAK_SPAN + ay, -11)], star: hv(YOGATARAS[i][0], YOGATARAS[i][1]), m: YOGATARAS[i][2] })),
     bodies: [
       ...BODIES.filter((b) => pos[posKey(b)] != null).map((b) => ({ ent: `planet:${b}`, b, v: ecl(pos[posKey(b)]) })),
@@ -133,7 +137,7 @@ function buildScene({ jd, lat, lon, pos, ay, houses }) {
   return scene;
 }
 
-function drawSky(cv, scene, view, shown, lit, focus, hitsOut) {
+function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName) {
   const dpr = window.devicePixelRatio || 1;
   const w = cv.clientWidth, h = cv.clientHeight;
   if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
@@ -172,6 +176,8 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut) {
   if (shown.const) {
     for (const f of scene.figs) {
       const on = f.ent && lit(f.ent);
+      // The figure itself, drawn over its stars while it is touched or open.
+      if (f.art.length && (on || f.name === hoverName)) for (const ln of f.art) poly(ln, `rgba(${INK.gold},0.85)`, 1.4, 8);
       const a = on ? 0.9 : f.ent ? 0.3 : 0.14;
       for (const ln of f.lines) {
         poly(ln, `rgba(${INK.fig},${a})`, on ? 1.3 : 0.8, on ? 10 : 0);
@@ -186,6 +192,29 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut) {
         text(f.ent ? f.name.toUpperCase() : f.name, pa, `rgba(${INK.fig},${on ? 0.95 : f.ent ? 0.5 : 0.32})`, (f.ent ? 11 : 10) * Math.min(s, 1.4), 'sans');
         if (f.ent) hits.push({ x: pa[0], y: pa[1], r: 16, id: f.ent });
       }
+    }
+  }
+
+  // Named asterisms: shown zoomed in, or with their constellation
+  if (shown.const) {
+    const figOn = (id) => scene.figs.some((f) => f.id === id && ((f.ent && lit(f.ent)) || f.name === hoverName));
+    for (const a of scene.asterisms) {
+      const on = a.name === hoverName;
+      if (!(view.h < 40 || on || (a.fig && figOn(a.fig)))) continue;
+      const ink = `rgba(255,236,190,${on ? 0.95 : 0.7})`;
+      for (const ln of a.lines) poly(ln, ink, on ? 2 : 1.5, on ? 12 : 6);
+      if (a.ring) poly(a.ring, ink, 1, on ? 10 : 4);
+      const p = project(a.at);
+      if (!p) continue;
+      if (a.glow) {
+        const r = 14 * Math.min(s, 2);
+        const grd = g.createRadialGradient(p[0], p[1], 0, p[0], p[1], r);
+        grd.addColorStop(0, 'rgba(255,150,170,.55)'); grd.addColorStop(0.5, 'rgba(150,170,255,.22)'); grd.addColorStop(1, 'rgba(150,170,255,0)');
+        g.fillStyle = grd; g.beginPath(); g.arc(p[0], p[1], r, 0, 7); g.fill();
+      }
+      const [dx, dy, al] = a.lab || (a.glow ? [16, 0, 'left'] : [0, a.ring ? -16 : 12, 'center']);
+      text(a.name, [p[0] + dx, p[1] + dy], ink, 10 * Math.min(s, 1.3), 'sans', al);
+      hits.push({ x: p[0], y: p[1], r: 12, name: a.name });
     }
   }
 
@@ -228,6 +257,19 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut) {
         if (!drawSigil(g, sg.ent, p[0], p[1], 15 * Math.min(s, 1.5), SIGN_COL[SIGNS[sg.i]])) text(SIGN_SYM[sg.i], p, SIGN_COL[SIGNS[sg.i]], 17 * Math.min(s, 1.5));
         g.shadowBlur = 0;
         hits.push({ x: p[0], y: p[1], r: 13, id: sg.ent });
+      }
+    }
+  }
+
+  // The sidereal zodiac: the rashis, set back by the ayanamsa, named south of the ecliptic
+  if (shown.sid) {
+    for (const sg of scene.sid) {
+      const on = lit(sg.ent);
+      poly(sg.tick, `rgba(${INK.nak},${on ? 0.8 : 0.35})`, 0.8);
+      const p = project(sg.label);
+      if (p) {
+        text(RASHI_INFO[sg.i].name, p, `rgba(${INK.nak},${on ? 1 : 0.7})`, (on ? 12 : 10.5) * Math.min(s, 1.4), 'sans');
+        hits.push({ x: p[0], y: p[1], r: 14, id: sg.ent });
       }
     }
   }
@@ -318,7 +360,7 @@ export default function SymbolMapTab({ ctx = {} }) {
   const sky = { ...moment, year: 2000 + (moment.jd - 2451545) / 365.25 };
   const scene = useMemo(() => buildScene(moment), [moment]);
 
-  const [shown, setShown] = useState({ const: true, sign: true, nak: true, xiu: false });
+  const [shown, setShown] = useState({ const: true, sign: true, sid: false, nak: true, xiu: false });
   const [view, setView] = useState({ alt: 90, az: 180, h: 92 });
   const [hover, setHover] = useState(null);
   const [mode, setMode] = useState('symbol');
@@ -338,12 +380,12 @@ export default function SymbolMapTab({ ctx = {} }) {
   useEffect(() => {
     const cv = cvRef.current;
     if (!cv) return;
-    const paint = () => drawSky(cv, scene, view, shown, lit, focus, hitsRef);
+    const paint = () => drawSky(cv, scene, view, shown, lit, focus, hitsRef, hover?.id ? null : hover?.name);
     paint();
     const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(paint) : null;
     ro?.observe(cv);
     return () => ro?.disconnect();
-  }, [scene, view, shown, lit, focus]);
+  }, [scene, view, shown, lit, focus, hover]);
 
   const flyTo = useCallback((id) => {
     const v = scene.at[id];
@@ -486,11 +528,11 @@ function IntroPanel({ hover, hv, onOpen }) {
       {hover ? (
         <div className="sm-hover">
           {hv ? <><SymbolPlate ent={hv} size={96} /><h2><Sigil ent={hv} /> {hv.name}</h2><p className="sm-kind">{hv.kindLabel}</p>{essenceOf(hv)?.core && <p className="sm-core-word" style={{ '--c': hv.colour }}>{essenceOf(hv).core}</p>}<p className="sm-essence">{hv.essence}</p></>
-            : <><h2>{hover.name}</h2><p className="sm-kind">Star or figure</p></>}
+            : <><h2>{hover.name}</h2><p className="sm-kind">{FIGURE_NOTE[hover.name]?.[0] || 'Star or figure'}</p>{FIGURE_NOTE[hover.name] && <p className="sm-essence">{FIGURE_NOTE[hover.name][1]}</p>}</>}
         </div>
       ) : (
         <div className="sm-hover">
-          <h2>The sky, read four ways</h2>
+          <h2>The sky, read five ways</h2>
           <p className="sm-essence">Each tradition divides the same sky differently. Switch them on and off above; touch a figure, sign, mansion or planet to follow what the traditions tie to it.</p>
         </div>
       )}

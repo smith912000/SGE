@@ -15,6 +15,7 @@ const ord = (n) => n + (n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th')
 export const OVERLAYS = [
   { id: 'const', label: 'Greek figures', note: 'The 88 IAU constellations; the thirteen on the ecliptic stand out.' },
   { id: 'sign', label: 'Tropical zodiac', note: 'The ecliptic and the zodiac belt, cut into twelve equal signs from the vernal equinox.' },
+  { id: 'sid', label: 'Sidereal zodiac', note: 'The twelve rashis of the Vedic zodiac (Lahiri), set back from the tropical signs by the ayanamsa.' },
   { id: 'nak', label: 'Nakshatras', note: 'The 27 lunar mansions of 13°20′ in the sidereal zodiac (Lahiri), with the junction star of each.' },
   { id: 'xiu', label: 'Chinese mansions', note: 'The 28 xiù, the lunar lodges of Chinese astronomy, drawn as their own asterisms.' },
 ];
