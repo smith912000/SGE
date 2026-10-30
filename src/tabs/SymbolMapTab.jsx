@@ -426,6 +426,7 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near) {
     const p = project(b.v);
     if (!p) continue;
     const e = ENTITIES[b.ent], on = lit(b.ent), size = BODY_SIZE[b.b];
+    if (!shown.planet && !on) continue; // switched off, unless it is the one being looked at
     if (size) {
       g.beginPath(); g.arc(p[0], p[1], size * Math.min(s, 1.6), 0, 7);
       g.fillStyle = e.colour; g.globalAlpha = dim(b.v);
@@ -454,7 +455,7 @@ export default function SymbolMapTab({ ctx = {} }) {
   const sky = { ...moment, year: 2000 + (moment.jd - 2451545) / 365.25 };
   const scene = useMemo(() => buildScene(moment), [moment]);
 
-  const [shown, setShown] = useState({ const: true, sign: true, sid: false, nak: true, xiu: false });
+  const [shown, setShown] = useState({ planet: true, const: true, sign: true, sid: false, nak: true, xiu: false });
   const [view, setView] = useState({ alt: 90, az: 180, h: 92 });
   const [hover, setHover] = useState(null);
   const [mode, setMode] = useState('symbol');
