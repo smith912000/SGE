@@ -14,6 +14,7 @@ const ord = (n) => n + (n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th')
 
 // ── Overlays: the rings drawn round the ecliptic ─────────────────────────
 export const OVERLAYS = [
+  { id: 'planet', label: 'Planets', note: 'The Sun, Moon, planets, Chiron, Lilith and the lunar nodes where they stand at this moment.' },
   { id: 'const', label: 'Greek figures', note: 'The 88 IAU constellations; the thirteen on the ecliptic stand out.' },
   { id: 'sign', label: 'Tropical zodiac', note: 'The ecliptic and the zodiac belt, cut into twelve equal signs from the vernal equinox.' },
   { id: 'sid', label: 'Sidereal zodiac', note: 'The twelve rashis of the Vedic zodiac (Lahiri), set back from the tropical signs by the ayanamsa.' },
