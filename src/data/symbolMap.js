@@ -31,11 +31,22 @@ const PLANETS = {
   Uranus:  { essence: 'Revolution. The sudden, the sky unbound.', gods: 'Ouranos', found: 'Found 1781', dom: ['Aquarius'], modern: true },
   Neptune: { essence: 'Dissolution, the boundless, the dream.', gods: 'Poseidon', found: 'Found 1846', dom: ['Pisces'], modern: true },
   Pluto:   { essence: 'Depth, the underworld, what returns changed.', gods: 'Hades', found: 'Found 1930', dom: ['Scorpio'], modern: true },
+  Chiron:  { essence: 'The wounded healer. The teacher of heroes, the wound that does not close.', gods: 'Chiron the centaur', found: 'Found 1977', claimed: ['Virgo', 'Sagittarius'], modern: true, kindLabel: 'Modern body (centaur)' },
+  Lilith:  { essence: 'The dark moon. The empty far point of the Moon\'s orbit.', gods: 'Lilith of Hebrew legend', found: 'A calculated point, not a body', of: 'Moon', kindLabel: 'Lunar apogee' },
   Rahu:    { essence: 'Hunger, the head without a body, eclipse.', vedic: 'Rahu, north node', chinese: '羅睺 Luóhóu', exalt: 'Taurus', node: 'Ketu' },
   Ketu:    { essence: 'Release, the body without a head, the past.', vedic: 'Ketu, south node', chinese: '計都 Jìdū', exalt: 'Scorpio', node: 'Rahu' },
 };
 const PLANET_GLYPH = { ...P_SYM, Rahu: '☊' + T, Ketu: '☋' + T };
 const PLANET_COLOUR = { ...P_COL, Rahu: P_COL.Node, Ketu: P_COL.Node };
+
+// ── Angles: where the horizon and meridian cross the ecliptic. Placed only
+// when there is a chart, since they need a moment and a place.
+export const ANGLES = {
+  Ascendant:  { glyph: 'AC', key: 'ASC', house: 1, essence: 'The rising degree. The horoscopos, the hour-marker, the body.', latin: 'Horoscopus' },
+  Midheaven:  { glyph: 'MC', key: 'MC', house: 10, essence: 'The culminating degree. The height of the sky, action, rule.', latin: 'Medium Coeli' },
+  Descendant: { glyph: 'DC', key: 'DSC', house: 7, essence: 'The setting degree. The other across the horizon.', latin: 'Occasus' },
+  'Imum Coeli': { glyph: 'IC', key: 'IC', house: 4, essence: 'The lowest point of the sky. The root, the ground, the end of things.', latin: 'Imum Coeli' },
+};
 
 // ── Signs ────────────────────────────────────────────────────────────────
 const SIGN_ESSENCE = {
@@ -137,7 +148,7 @@ for (const [name, p] of Object.entries(PLANETS)) {
   if (p.chinese) attrs.push(['Chinese', p.chinese]);
   if (p.gods) attrs.push(['Gods', p.gods]);
   if (p.found) attrs.push(['Discovery', p.found]);
-  add(`planet:${name}`, { kind: 'planet', kindLabel: p.modern ? 'Modern planet' : (p.node ? 'Lunar node' : 'Classical planet'), name, glyph: PLANET_GLYPH[name], colour: PLANET_COLOUR[name] || '#EADFC4', essence: p.essence, attrs });
+  add(`planet:${name}`, { kind: 'planet', kindLabel: p.kindLabel || (p.modern ? 'Modern planet' : (p.node ? 'Lunar node' : 'Classical planet')), name, glyph: PLANET_GLYPH[name], colour: PLANET_COLOUR[name] || '#EADFC4', essence: p.essence, attrs });
 }
 SIGNS.forEach((s, i) => {
   const si = SIGN_INFO[s];
@@ -160,6 +171,7 @@ ANIMALS.forEach((a, i) => {
     attrs: [['Branch', `${BRANCHES[i]} ${BRANCH_PINYIN[i]}`], ['Double hour', `${String((23 + i * 2) % 24).padStart(2, '0')}:00 to ${String((1 + i * 2) % 24).padStart(2, '0')}:00`], ['Character', `${ai.emoji}`]] });
 });
 for (const [ph, p] of Object.entries(PHASES)) add(`phase:${ph}`, { kind: 'phase', kindLabel: 'Chinese phase', name: ph, glyph: p.hanzi, colour: CN_EL_INFO[ph].color, essence: p.essence, attrs: [['Season', p.season], ['Direction', p.direction], ['Colour', p.colour]] });
+for (const [name, a] of Object.entries(ANGLES)) add(`angle:${name}`, { kind: 'angle', kindLabel: 'Angle', name, glyph: a.glyph, colour: '#E9C766', essence: a.essence, key: a.key, attrs: [['Latin', a.latin], ['Cusp of', `the ${ord(a.house)} house`]] });
 for (let h = 1; h <= 12; h++) add(`house:${h}`, { kind: 'house', kindLabel: `${HOUSE_KIND(h)} house`, name: `${ord(h)} house`, glyph: String(h), colour: '#C9C4D4', essence: HOUSE_ESSENCE[h - 1], attrs: [['Latin', HOUSE_LATIN[h - 1]], ['Vedic', `${BHAVA_INFO[h - 1].name}, ${BHAVA_INFO[h - 1].theme}`]] });
 for (const a of ASPECTS) add(`asp:${a.name}`, { kind: 'asp', kindLabel: 'Aspect', name: a.name, glyph: a.sym, colour: a.col, essence: ASPECT_ESSENCE[a.name], attrs: [['Angle', `${a.angle}°`], ['Orb used', `${a.orb}°`]] });
 
@@ -173,6 +185,8 @@ for (const [name, p] of Object.entries(PLANETS)) {
   if (p.joy) link(id, `house:${p.joy}`, 'Its joy', `Joy of ${name}`);
   if (p.phase) link(id, `phase:${p.phase}`, 'Its Chinese phase', 'Its planet');
   if (p.node) link(id, `planet:${p.node}`, 'The other node');
+  (p.claimed || []).forEach(s => link(id, `sign:${s}`, 'Rulership claimed by some modern authors'));
+  if (p.of) link(id, `planet:${p.of}`, 'A point of its orbit', `Its apogee, ${name}`);
 }
 // Signs: element, mode, opposite, constellation, natural house
 SIGNS.forEach((s, i) => {
@@ -213,6 +227,10 @@ for (const [ph, p] of Object.entries(PHASES)) {
   link(`phase:${ph}`, `phase:${p.controls}`, 'Controls', 'Controlled by');
 }
 for (let h = 1; h <= 12; h++) link(`house:${h}`, `house:${((h + 5) % 12) + 1}`, 'Opposite house');
+for (const [name, a] of Object.entries(ANGLES)) {
+  link(`angle:${name}`, `house:${a.house}`, 'Opens the house', 'Its angle');
+  link(`angle:${name}`, `angle:${Object.keys(ANGLES).find(n => ANGLES[n].house === ((a.house + 5) % 12) + 1)}`, 'The opposite angle');
+}
 // Aspects by the sign relation they rest on
 link('asp:Opposition', 'asp:Conjunction', 'Its counterpart', 'Its counterpart');
 link('asp:Square', 'asp:Semisquare', 'Halved', 'Doubled'); link('asp:Square', 'asp:Sesquiquadrate', 'Half again', 'Two thirds');
@@ -271,7 +289,7 @@ XIU.forEach(([key, han, pin, en, sym], i) => {
 
 export const ENTITIES = E;
 export const KIND_ORDER = [
-  ['planet', 'Planets and nodes'], ['sign', 'Tropical signs'], ['const', 'Constellations'], ['nak', 'Nakshatras'],
+  ['planet', 'Planets, nodes and points'], ['angle', 'Angles'], ['sign', 'Tropical signs'], ['const', 'Constellations'], ['nak', 'Nakshatras'],
   ['xiu', 'Chinese mansions'], ['sym', 'Chinese quarters'], ['branch', 'Earthly branches'], ['phase', 'Chinese phases'], ['el', 'Elements'], ['mode', 'Modes'], ['house', 'Houses'], ['asp', 'Aspects'],
 ].map(([k, label]) => ({ kind: k === 'el' ? 'element' : k === 'mode' ? 'mode' : k, label }));
 export const AYANAMSA_J2000 = AYAN_J2000;

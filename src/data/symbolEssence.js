@@ -36,6 +36,12 @@ const P = {
   Pluto: { core: 'The Underworld', keys: ['death and rebirth', 'hidden wealth', 'power', 'compulsion', 'the depths'],
     rep: [['Rules', 'the underworld, buried wealth, power held unseen, renewal'], ['People', 'undertakers, miners, the powerful in shadow'], ['Emblems', 'the helm of invisibility, the pomegranate, Cerberus'], ['Discovery', '1930']],
     myth: 'Hades carries Persephone below; six pomegranate seeds bind her to return each year, and the seasons turn on her going and coming.' },
+  Chiron: { core: 'The Wounded Healer', keys: ['the wound', 'teaching', 'healing', 'the threshold', 'the bridge between Saturn and Uranus'],
+    rep: [['Readings', 'modern only: the wound that teaches, the healer who cannot heal himself'], ['Emblems', 'the centaur, the key, the herb'], ['Rulership', 'claimed for Virgo by some, Sagittarius by others, none by many'], ['Discovery', 'Kowal, 1977; minor planet and comet both']],
+    myth: 'Chiron, wise among the wild centaurs, raises Asclepius, Achilles and Jason. Struck by a poisoned arrow of Heracles, he cannot die and cannot heal, and gives up his immortality to free Prometheus.' },
+  Lilith: { core: 'The Dark Moon', keys: ['the refused', 'the wild', 'exile', 'desire unbound', 'the empty focus'],
+    rep: [['What it is', 'the Moon\'s apogee, its farthest point from the Earth; a point, not a body'], ['Readings', 'modern only: what is cast out and will not submit'], ['Emblems', 'the black crescent, the owl, the night wind']],
+    myth: 'In the Alphabet of Ben Sira, Lilith is made from the same earth as Adam and will not lie beneath him; she speaks the Name and flies from Eden to the Red Sea.' },
   Rahu: { core: 'Hunger', keys: ['obsession', 'the foreign', 'eclipse', 'ambition', 'smoke', 'the unquenchable'],
     rep: [['Emblems', 'the serpent\'s head, smoke'], ['Colour', 'smoky black'], ['Stone', 'hessonite']],
     myth: 'The demon Svarbhanu drinks the nectar of immortality in disguise. Vishnu\'s discus severs him, and the deathless head swallows the Sun and Moon at each eclipse.' },
@@ -186,6 +192,13 @@ const QUARTER = {
   'Vermilion Bird': { core: 'The Blazing South', keys: ['summer', 'fire', 'noon', 'renewal', 'the phoenix'] },
 };
 
+const ANG = {
+  Ascendant: { core: 'The Rising', keys: ['the body', 'life', 'the hour', 'the east', 'what comes into view'], rep: [['Greek', 'horoskopos, the hour-marker'], ['Point', 'the ecliptic on the eastern horizon']] },
+  Midheaven: { core: 'The Height', keys: ['action', 'rank', 'the deed', 'the south', 'noon'], rep: [['Greek', 'mesouranema, mid-heaven'], ['Point', 'the ecliptic on the meridian above']] },
+  Descendant: { core: 'The Setting', keys: ['the other', 'union', 'open enemies', 'the west', 'dusk'], rep: [['Greek', 'dysis, the setting'], ['Point', 'the ecliptic on the western horizon']] },
+  'Imum Coeli': { core: 'The Root', keys: ['the ground', 'the father', 'the hidden', 'the north', 'midnight'], rep: [['Greek', 'hypogeion, under the earth'], ['Point', 'the ecliptic on the meridian below']] },
+};
+
 // Look up the symbolism for an entity built in symbolMap.js.
 export function essenceOf(ent) {
   const n = ent.name;
@@ -194,6 +207,7 @@ export function essenceOf(ent) {
     case 'sign': return S[n] || null;
     case 'const': { const id = ent.id.slice(6); const sign = S[{ Scorpius: 'Scorpio', Capricornus: 'Capricorn' }[id] || id];
       return { core: CONSTS[id], keys: sign && id !== 'Ophiuchus' ? sign.keys : ['healing', 'the serpent', 'medicine', 'the thirteenth'], rep: [], myth: id === 'Ophiuchus' ? 'Asclepius, the healer who learned to raise the dead, is struck down by Zeus and set among the stars holding the serpent.' : sign?.myth }; }
+    case 'angle': return ANG[n] || null;
     case 'house': { const i = Number(ent.glyph) - 1; return { core: H[i][0], keys: H[i][1], rep: [] }; }
     case 'element': return EL[n] || null;
     case 'mode': return MODE[n] || null;
