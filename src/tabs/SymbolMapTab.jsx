@@ -1,10 +1,11 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { essenceOf } from '../data/symbolEssence.js';
-import { ENTITIES, OVERLAYS, KIND_ORDER, NAK_SPAN, XIU, FOUR_SYMBOLS } from '../data/symbolMap.js';
+import { ENTITIES, OVERLAYS, KIND_ORDER, NAK_SPAN, XIU, FOUR_SYMBOLS, ANGLES } from '../data/symbolMap.js';
 import { STARS, NAMED_STARS, YOGATARAS, FIGURES, XIU_FIGURES } from '../data/sky/catalogue.js';
 import { SIGNS, SIGN_SYM, SIGN_COL } from '../data/astrology/signs.js';
 import { NAKSHATRA_INFO } from '../data/astrology/nakshatras.js';
 import { julianDay, allPlanets, ayanamsa, houseOf } from '../engines/astronomy.js';
+import { Sigil, SymbolPlate, drawSigil } from '../components/sky/symbolArt.jsx';
 import { eclToEq, precessionSinceJ2000, observer, altAz, camera, easeInOut, segDist, norm } from '../components/sky/sky.js';
 
 // The symbol map: the sky as it stands over the chart's place at the chart's
@@ -13,7 +14,7 @@ import { eclToEq, precessionSinceJ2000, observer, altAz, camera, easeInOut, segD
 // lights a symbol and its correspondences; selecting one flies to it and
 // opens what the traditions tie to it.
 
-const BODIES = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto', 'Rahu', 'Ketu'];
+const BODIES = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto', 'Chiron', 'Lilith', 'Rahu', 'Ketu'];
 const posKey = (b) => (b === 'Rahu' ? 'Node' : b);
 const BODY_SIZE = { Sun: 7, Moon: 6, Venus: 3.6, Jupiter: 3.3, Mars: 3, Saturn: 2.9, Mercury: 2.6, Uranus: 1.9, Neptune: 1.7, Pluto: 1.5 };
 const FIG_TO_CONST = Object.fromEntries(Object.values(ENTITIES).filter((e) => e.kind === 'const').map((e) => [e.fig, e.id]));
@@ -74,6 +75,11 @@ function chartLine(ent, sky) {
       const bs = bodiesWhere((l) => signs.includes(signOf(l)));
       return `${label}: ${bs.length} of ${BODIES.length} bodies${bs.length ? ` (${bs.join(', ')})` : ''}.`;
     }
+    case 'angle': {
+      if (!houses) return null;
+      const lon = houses[ent.key];
+      return `${label}: ${degIn(lon)}° ${signOf(lon)}.`;
+    }
     case 'house': {
       if (!houses) return null;
       const n = Number(ent.glyph);
@@ -91,7 +97,7 @@ function chartLine(ent, sky) {
 }
 
 // Everything placed on the sky once per moment and place, as horizontal vectors.
-function buildScene({ jd, lat, lon, pos, ay }) {
+function buildScene({ jd, lat, lon, pos, ay, houses }) {
   const hv = observer(jd, lat, lon);
   const prec = precessionSinceJ2000(jd);
   const ecl = (l, b = 0) => hv(...eclToEq(l - prec, b));
@@ -105,7 +111,10 @@ function buildScene({ jd, lat, lon, pos, ay }) {
     beltN: arc(0, 360, 8), beltS: arc(0, 360, -8),
     signs: SIGNS.map((s, i) => ({ ent: `sign:${s}`, i, label: ecl(i * 30 + 15, 4.2), tick: [ecl(i * 30, 8), ecl(i * 30, -8)], n: arc(i * 30, i * 30 + 30, 8, 1), s: arc(i * 30, i * 30 + 30, -8, 1) })),
     naks: NAKSHATRA_INFO.map((n, i) => ({ ent: `nak:${n.name}`, i, tick: [ecl(i * NAK_SPAN + ay, -1.5), ecl(i * NAK_SPAN + ay, -11)], star: hv(YOGATARAS[i][0], YOGATARAS[i][1]), m: YOGATARAS[i][2] })),
-    bodies: BODIES.filter((b) => pos[posKey(b)] != null).map((b) => ({ ent: `planet:${b}`, b, v: ecl(pos[posKey(b)]) })),
+    bodies: [
+      ...BODIES.filter((b) => pos[posKey(b)] != null).map((b) => ({ ent: `planet:${b}`, b, v: ecl(pos[posKey(b)]) })),
+      ...(houses ? Object.entries(ANGLES).map(([n, a]) => ({ ent: `angle:${n}`, b: n, v: ecl(houses[a.key]) })) : []),
+    ],
     horizon: Array.from({ length: 91 }, (_, i) => { const a = (i * 4 * Math.PI) / 180; return [Math.cos(a), Math.sin(a), 0]; }),
     cardinals: [['N', [1, 0, 0.004]], ['E', [0, 1, 0.004]], ['S', [-1, 0, 0.004]], ['W', [0, -1, 0.004]]],
   };
@@ -216,7 +225,7 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut) {
       const p = project(sg.label);
       if (p) {
         if (on) { g.shadowColor = SIGN_COL[SIGNS[sg.i]]; g.shadowBlur = 14; }
-        text(SIGN_SYM[sg.i], p, SIGN_COL[SIGNS[sg.i]], 17 * Math.min(s, 1.5));
+        if (!drawSigil(g, sg.ent, p[0], p[1], 15 * Math.min(s, 1.5), SIGN_COL[SIGNS[sg.i]])) text(SIGN_SYM[sg.i], p, SIGN_COL[SIGNS[sg.i]], 17 * Math.min(s, 1.5));
         g.shadowBlur = 0;
         hits.push({ x: p[0], y: p[1], r: 13, id: sg.ent });
       }
@@ -251,7 +260,8 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut) {
       g.fill(); g.shadowBlur = 0; g.globalAlpha = 1;
     }
     if (on) { g.beginPath(); g.arc(p[0], p[1], (size || 4) * Math.min(s, 1.6) + 7, 0, 7); g.strokeStyle = e.colour; g.lineWidth = 1; g.stroke(); }
-    text(e.glyph, [p[0] + (size ? 11 : 0), p[1] - (size ? 10 : 0)], e.colour, 15 * Math.min(s, 1.4));
+    const gp = [p[0] + (size ? 11 : 0), p[1] - (size ? 10 : 0)];
+    if (!drawSigil(g, b.ent, gp[0], gp[1], 13 * Math.min(s, 1.4), e.colour)) text(e.glyph, gp, e.colour, (e.glyph.length > 1 ? 11 : 15) * Math.min(s, 1.4), e.glyph.length > 1 ? 'sans' : 'serif');
     hits.push({ x: p[0], y: p[1], r: 13, id: b.ent });
   }
 
@@ -475,7 +485,7 @@ function IntroPanel({ hover, hv, onOpen }) {
     <>
       {hover ? (
         <div className="sm-hover">
-          {hv ? <><h2><span style={{ color: hv.colour }}>{hv.glyph}</span> {hv.name}</h2><p className="sm-kind">{hv.kindLabel}</p>{essenceOf(hv)?.core && <p className="sm-core-word" style={{ '--c': hv.colour }}>{essenceOf(hv).core}</p>}<p className="sm-essence">{hv.essence}</p></>
+          {hv ? <><SymbolPlate ent={hv} size={96} /><h2><Sigil ent={hv} /> {hv.name}</h2><p className="sm-kind">{hv.kindLabel}</p>{essenceOf(hv)?.core && <p className="sm-core-word" style={{ '--c': hv.colour }}>{essenceOf(hv).core}</p>}<p className="sm-essence">{hv.essence}</p></>
             : <><h2>{hover.name}</h2><p className="sm-kind">Star or figure</p></>}
         </div>
       ) : (
@@ -492,7 +502,7 @@ function IntroPanel({ hover, hv, onOpen }) {
             <div className="sm-index-row">
               {Object.values(ENTITIES).filter((e) => e.kind === kind).map((e) => (
                 <button key={e.id} type="button" className="sge-chip" onClick={() => onOpen(e.id)}>
-                  <span style={{ color: e.colour }}>{e.glyph}</span> {e.name}
+                  <Sigil ent={e} /> {e.name}
                 </button>
               ))}
             </div>
@@ -520,8 +530,13 @@ function FocusPanel({ id, trail, sky, mode, setMode, onOpen, onBack }) {
           </span>
         ))}
       </nav>
-      <h2><span style={{ color: e.colour }}>{e.glyph}</span> {e.name}</h2>
-      <p className="sm-kind">{e.kindLabel}</p>
+      <div className="sm-head">
+        <SymbolPlate ent={e} />
+        <div>
+          <h2><Sigil ent={e} /> {e.name}</h2>
+          <p className="sm-kind">{e.kindLabel}</p>
+        </div>
+      </div>
       <div className="sm-modes" role="group" aria-label="Read it as">
         <button type="button" className="sm-mode" aria-pressed={mode === 'symbol'} onClick={() => setMode('symbol')}>What it is</button>
         <button type="button" className="sm-mode" aria-pressed={mode === 'ties'} onClick={() => setMode('ties')}>How it ties in</button>
@@ -537,7 +552,7 @@ function FocusPanel({ id, trail, sky, mode, setMode, onOpen, onBack }) {
             </dl>
           )}
           {es?.myth && <><h3>The story</h3><p className="sm-myth">{es.myth}</p></>}
-          {e.links.length > 0 && <button type="button" className="sge-chip sm-switch" onClick={() => setMode('ties')}>How it ties in: {e.links.length} correspondences</button>}
+          {e.links.length > 0 && <button type="button" className="sge-chip sm-switch" onClick={() => setMode('ties')}>How it ties in: {e.links.length} {e.links.length === 1 ? "correspondence" : "correspondences"}</button>}
         </div>
       ) : (
       <>
@@ -550,7 +565,7 @@ function FocusPanel({ id, trail, sky, mode, setMode, onOpen, onBack }) {
             <li key={l.to + l.rel} style={{ '--d': `${i * 40}ms` }}>
               <button type="button" onClick={() => onOpen(l.to)}>
                 <span className="sm-rel">{l.rel}</span>
-                <span className="sm-link-name"><span style={{ color: t.colour }}>{t.glyph}</span> {t.name}</span>
+                <span className="sm-link-name"><Sigil ent={t} /> {t.name}</span>
                 <span className="sm-link-ess">{t.essence}</span>
               </button>
             </li>
