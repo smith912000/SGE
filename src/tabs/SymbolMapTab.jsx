@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { essenceOf } from '../data/symbolEssence.js';
 import { ENTITIES, OVERLAYS, KIND_ORDER, NAK_SPAN, XIU, FOUR_SYMBOLS, ANGLES } from '../data/symbolMap.js';
 import { STARS, NAMED_STARS, YOGATARAS, FIGURES, XIU_FIGURES } from '../data/sky/catalogue.js';
+import { FIGURE_ART, FIGURE_NOTE } from '../data/sky/figureArt.js';
 import { SIGNS, SIGN_SYM, SIGN_COL } from '../data/astrology/signs.js';
 import { NAKSHATRA_INFO } from '../data/astrology/nakshatras.js';
 import { julianDay, allPlanets, ayanamsa, houseOf } from '../engines/astronomy.js';
@@ -105,7 +106,7 @@ function buildScene({ jd, lat, lon, pos, ay, houses }) {
   const scene = {
     stars: STARS.map(([ra, dec, m]) => [hv(ra, dec), m]),
     named: NAMED_STARS.map(([ra, dec, m, n]) => ({ v: hv(ra, dec), m, n })),
-    figs: FIGURES.map((f) => ({ id: f.id, name: f.name, ent: FIG_TO_CONST[f.id] || null, at: f.at ? hv(...f.at) : null, lines: f.lines.map((l) => l.map(([ra, dec]) => hv(ra, dec))) })),
+    figs: FIGURES.map((f) => ({ id: f.id, name: f.name, ent: FIG_TO_CONST[f.id] || null, at: f.at ? hv(...f.at) : null, lines: f.lines.map((l) => l.map(([ra, dec]) => hv(ra, dec))), art: (FIGURE_ART[f.id] || []).map((l) => l.map(([ra, dec]) => hv(ra, dec))) })),
     xiu: Object.entries(XIU_FIGURES).map(([k, f]) => ({ ent: XIU_BY_KEY[k], at: hv(...f.at), lines: f.lines.map((l) => l.map(([ra, dec]) => hv(ra, dec))) })).filter((x) => x.ent),
     ecliptic: arc(0, 360, 0),
     beltN: arc(0, 360, 8), beltS: arc(0, 360, -8),
@@ -133,7 +134,7 @@ function buildScene({ jd, lat, lon, pos, ay, houses }) {
   return scene;
 }
 
-function drawSky(cv, scene, view, shown, lit, focus, hitsOut) {
+function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName) {
   const dpr = window.devicePixelRatio || 1;
   const w = cv.clientWidth, h = cv.clientHeight;
   if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
@@ -172,6 +173,8 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut) {
   if (shown.const) {
     for (const f of scene.figs) {
       const on = f.ent && lit(f.ent);
+      // The figure itself, drawn over its stars while it is touched or open.
+      if (f.art.length && (on || f.name === hoverName)) for (const ln of f.art) poly(ln, `rgba(${INK.gold},0.85)`, 1.4, 8);
       const a = on ? 0.9 : f.ent ? 0.3 : 0.14;
       for (const ln of f.lines) {
         poly(ln, `rgba(${INK.fig},${a})`, on ? 1.3 : 0.8, on ? 10 : 0);
@@ -338,12 +341,12 @@ export default function SymbolMapTab({ ctx = {} }) {
   useEffect(() => {
     const cv = cvRef.current;
     if (!cv) return;
-    const paint = () => drawSky(cv, scene, view, shown, lit, focus, hitsRef);
+    const paint = () => drawSky(cv, scene, view, shown, lit, focus, hitsRef, hover?.id ? null : hover?.name);
     paint();
     const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(paint) : null;
     ro?.observe(cv);
     return () => ro?.disconnect();
-  }, [scene, view, shown, lit, focus]);
+  }, [scene, view, shown, lit, focus, hover]);
 
   const flyTo = useCallback((id) => {
     const v = scene.at[id];
@@ -486,7 +489,7 @@ function IntroPanel({ hover, hv, onOpen }) {
       {hover ? (
         <div className="sm-hover">
           {hv ? <><SymbolPlate ent={hv} size={96} /><h2><Sigil ent={hv} /> {hv.name}</h2><p className="sm-kind">{hv.kindLabel}</p>{essenceOf(hv)?.core && <p className="sm-core-word" style={{ '--c': hv.colour }}>{essenceOf(hv).core}</p>}<p className="sm-essence">{hv.essence}</p></>
-            : <><h2>{hover.name}</h2><p className="sm-kind">Star or figure</p></>}
+            : <><h2>{hover.name}</h2><p className="sm-kind">{FIGURE_NOTE[hover.name] ? 'Constellation' : 'Star or figure'}</p>{FIGURE_NOTE[hover.name] && <p className="sm-essence">{FIGURE_NOTE[hover.name]}</p>}</>}
         </div>
       ) : (
         <div className="sm-hover">
