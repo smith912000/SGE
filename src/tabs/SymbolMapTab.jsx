@@ -130,6 +130,7 @@ function buildScene({ jd, lat, lon, pos, ay, houses }) {
   scene.signs.forEach((s) => { at[s.ent] = s.label; });
   scene.asterisms.forEach((a) => { at[`ast:${a.name}`] = a.at; });
   at['star:Polaris'] = scene.polaris.v;
+  at['sym:Yellow Dragon'] = scene.polaris.v;
   scene.naks.forEach((n) => { at[n.ent] = n.star; });
   scene.xiu.forEach((x) => { at[x.ent] = x.at; });
   for (const name of Object.keys(FOUR_SYMBOLS)) {

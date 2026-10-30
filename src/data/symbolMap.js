@@ -309,6 +309,33 @@ add('star:Polaris', { kind: 'star', kindLabel: 'The North Star', name: 'Polaris'
   attrs: [['Constellation', 'Ursa Minor, the tip of the Little Bear\'s tail'], ['Find it', 'Follow Merak and Dubhe, the pointers of the Plough'], ['Other names', 'Stella Polaris, Cynosura, Dhruva in India, 勾陳一 Gōuchén Yī in China']] });
 link('star:Polaris', 'fig:UMa', 'The pointers lead to it from', 'Its pointers lead to');
 
+// The five beasts tied through: the stars each quarter holds in the West, the
+// branches of its direction, the signs of its season, its opposite, and the
+// Yellow Dragon of the centre, whose sky is the palace about the pole.
+add('sym:Yellow Dragon', { kind: 'sym', kindLabel: 'Chinese symbol of the centre', name: 'Yellow Dragon', glyph: '黃龍', colour: '#D9B44A',
+  essence: 'The dragon of the centre, earth and the turn of every season; the emperor\'s own beast.',
+  attrs: [['Direction', 'Centre'], ['Season', 'Late summer, and the last days of each season'], ['Sky', 'The Purple Forbidden Enclosure 紫微垣 about the pole, with no mansions of its own']] });
+link('sym:Yellow Dragon', 'phase:Earth', 'Its phase', 'Symbol of the centre');
+link('sym:Yellow Dragon', 'star:Polaris', 'Its palace about the pole', 'Beast of the centre it marks');
+link('sym:Yellow Dragon', 'fig:UMa', 'Its carriage, the Northern Dipper 北斗, whose handle turns the seasons', 'The centre its handle turns about');
+const QUARTER_TIES = {
+  'Azure Dragon':   { opp: 'White Tiger',    stars: ['const:Virgo', 'const:Libra', 'const:Scorpius', 'const:Sagittarius'], branches: ['Tiger', 'Rabbit', 'Dragon'], signs: ['Aries', 'Taurus', 'Gemini'], west: 'Virgo, Libra, Scorpius and the tip of Sagittarius. Spica is its horn, Antares its heart.' },
+  'Vermilion Bird': { opp: 'Black Tortoise', stars: ['const:Gemini', 'const:Cancer'], branches: ['Snake', 'Horse', 'Goat'], signs: ['Cancer', 'Leo', 'Virgo'], west: 'Gemini, Cancer, Hydra, Crater and Corvus. The Beehive is the Ghost mansion; Alphard the Bird\'s heart.' },
+  'White Tiger':    { opp: 'Azure Dragon',   stars: ['fig:And', 'const:Pisces', 'const:Aries', 'const:Taurus', 'fig:Ori', 'ast:Pleiades', 'ast:Hyades', "ast:Orion's Belt"], branches: ['Monkey', 'Rooster', 'Dog'], signs: ['Libra', 'Scorpio', 'Sagittarius'], west: 'Andromeda, Aries, the Pleiades and Hyades of Taurus, and Orion. The Belt is the Three Stars, heart of the Tiger.' },
+  'Black Tortoise': { opp: 'Vermilion Bird', stars: ['const:Sagittarius', 'const:Capricornus', 'const:Aquarius', 'fig:Peg', 'fig:And'], branches: ['Pig', 'Rat', 'Ox'], signs: ['Capricorn', 'Aquarius', 'Pisces'], west: 'Sagittarius (the Southern Dipper), Capricornus, Aquarius and the Great Square of Pegasus.' },
+};
+for (const [name, t] of Object.entries(QUARTER_TIES)) {
+  const id = `sym:${name}`;
+  E[id].attrs.push(['Western stars', t.west]);
+  t.stars.forEach((to) => link(id, to, 'Its stars in the West', 'Stars of the Chinese quarter'));
+  t.branches.forEach((a) => link(id, `branch:${a}`, 'Branch of its direction', 'Beast of its direction'));
+  t.signs.forEach((sg) => link(id, `sign:${sg}`, 'Western sign of its season', 'Chinese beast of its season'));
+  link(id, `sym:${t.opp}`, 'Faces it across the sky', 'Faces it across the sky');
+  link(id, 'sym:Yellow Dragon', 'The centre it turns about', 'One of the four about it');
+}
+link('ast:Great Square', 'xiu:Encampment', 'Chinese mansion on these stars', 'The same stars in the West');
+link('ast:Great Square', 'sym:Black Tortoise', 'Its Chinese quarter', 'Stars of the Chinese quarter');
+
 export const ENTITIES = E;
 export const KIND_ORDER = [
   ['planet', 'Planets, nodes and points'], ['angle', 'Angles'], ['sign', 'Tropical signs'], ['const', 'Constellations'], ['fig', 'Other constellations'], ['ast', 'Asterisms'], ['star', 'Stars'], ['nak', 'Nakshatras'],
