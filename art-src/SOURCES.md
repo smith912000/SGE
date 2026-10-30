@@ -52,7 +52,7 @@ Repo copy: every image downscaled to at most 1800 px wide and saved as JPEG qual
 | planets/beham-mercury.jpg | 1800x2613 | 1827x2652 | Hans Sebald Beham, The Seven Planets series, c.1530s (National Gallery of Art, Washington) | CC0 | https://commons.wikimedia.org/wiki/File:Sebald_Beham,_Mercury,_NGA_4284.jpg |
 | planets/beham-moon-luna.jpg | 1800x2690 | 1805x2697 | Hans Sebald Beham, The Seven Planets series, c.1530s (National Gallery of Art, Washington) | CC0 | https://commons.wikimedia.org/wiki/File:Sebald_Beham,_Luna,_NGA_4285.jpg |
 
-## Chinese - Four Symbols, Dunhuang chart, zodiac animals (22 files)
+## Chinese - Four Symbols, Dunhuang chart, zodiac animals (24 files)
 
 | File | Saved size | Original size | Artist / date | Licence | Source page |
 |---|---|---|---|---|---|
@@ -61,7 +61,7 @@ Repo copy: every image downscaled to at most 1800 px wide and saved as JPEG qual
 | chinese/four-symbols-goguryeo-white-tiger-1915-survey.jpg | 1354x1010 | 1354x1010 | Joseon Government-General survey (Chōsen koseki zufu), 1915, of Goguryeo tomb murals | Public domain | https://commons.wikimedia.org/wiki/File:%EB%B0%B1%ED%98%B8_%EC%A1%B0%EC%84%A0%EA%B3%A0%EC%A0%81%EB%8F%84%EB%B3%B4.jpg |
 | chinese/four-symbols-goguryeo-vermilion-bird-1915-survey.jpg | 1140x1445 | 1140x1445 | Joseon Government-General survey (Chōsen koseki zufu), 1915, of Goguryeo tomb murals | Public domain | https://commons.wikimedia.org/wiki/File:%EC%A3%BC%EC%9E%91_%EC%A1%B0%EC%84%A0%EA%B3%A0%EC%A0%81%EB%8F%84%EB%B3%B4.jpg |
 | chinese/four-symbols-goguryeo-black-tortoise-1915-survey.jpg | 1303x1040 | 1303x1040 | Joseon Government-General survey (Chōsen koseki zufu), 1915, of Goguryeo tomb murals | Public domain | https://commons.wikimedia.org/wiki/File:%ED%98%84%EB%AC%B4_%EC%A1%B0%EC%84%A0%EA%B3%A0%EC%A0%81%EB%8F%84%EB%B3%B4.jpg |
-| chinese/four-symbols-gangseo-azure-dragon.jpg | 1142x729 | 1142x729 | (not stated on Commons); (not stated on Commons) | Public domain | https://commons.wikimedia.org/wiki/File:Gangseodaemyo_Blue_Dragon.jpg |
+| chinese/four-symbols-gangseo-azure-dragon.jpg | 1142x729 | 1142x729 | (not stated on Commons) | Public domain | https://commons.wikimedia.org/wiki/File:Gangseodaemyo_Blue_Dragon.jpg |
 | chinese/four-symbols-vermilion-bird-relief.jpg | 1797x1258 | 1797x1258 | Shizhao; 200711，魏晋时期 | Public domain | https://commons.wikimedia.org/wiki/File:Vermilion_Bird_relief.JPG |
 | chinese/dunhuang-star-chart-full.jpg | 1800x1807 | 2128x2136 | (not stated on Commons); (not stated on Commons) | Public domain | https://commons.wikimedia.org/wiki/File:Dunhuang_star_map.jpg |
 | chinese/dunhuang-star-chart-panel-BLX273.jpg | 1317x1476 | 1317x1476 | unknown; early 8th century | CC0 | https://commons.wikimedia.org/wiki/File:Dunhuang_Star_Chart_BLX273_OR8210S3326R2_8.jpg |
@@ -78,6 +78,8 @@ Repo copy: every image downscaled to at most 1800 px wide and saved as JPEG qual
 | chinese/zodiac-lacma-10.jpg (likely rabbit, by elimination) | 1800x1200 | 2100x1400 | Unknown maker, Yuan dynasty, probably Yunnan (LACMA M.90.80a-l) | Public domain | https://commons.wikimedia.org/wiki/File:Funerary_Sculpture_of_the_Animals_of_the_Twelve-Year_Chinese_Zodiac_(Shengxiao)_LACMA_M.90.80a-l_(10_of_12).jpg |
 | chinese/zodiac-lacma-11-dragon.jpg | 1800x1200 | 2100x1400 | Unknown maker, Yuan dynasty, probably Yunnan (LACMA M.90.80a-l) | Public domain | https://commons.wikimedia.org/wiki/File:Funerary_Sculpture_of_the_Animals_of_the_Twelve-Year_Chinese_Zodiac_(Shengxiao)_LACMA_M.90.80a-l_(11_of_12).jpg |
 | chinese/zodiac-lacma-12.jpg (likely rat, by elimination) | 1800x1200 | 2100x1400 | Unknown maker, Yuan dynasty, probably Yunnan (LACMA M.90.80a-l) | Public domain | https://commons.wikimedia.org/wiki/File:Funerary_Sculpture_of_the_Animals_of_the_Twelve-Year_Chinese_Zodiac_(Shengxiao)_LACMA_M.90.80a-l_(12_of_12).jpg |
+| chinese/five-beasts-yellow-dragon-gangseo-ceiling.jpg | 956x934 | 956x934 | Unknown Goguryeo painter, Gangseo Great Tomb, late 6th-early 7th century; central ceiling panel, traditionally identified as the Yellow Dragon of the centre | Public domain | https://commons.wikimedia.org/wiki/File:Gangseodaemyo_ceiling.jpg |
+| chinese/suzhou-planisphere-1247-chart.jpg | 1800x2017 | 5522x6188 | Huang Shang (map), Wang Zhiyuan (engraving); 16th c. rubbing of a c. 1247 engraving of a c. 1190 original map | Public domain | https://commons.wikimedia.org/wiki/File:Soochow_Planisphere_Detail.jpg |
 
 ## Nakshatra / Indian (optional) (2 files)
 
@@ -93,4 +95,6 @@ Repo copy: every image downscaled to at most 1800 px wide and saved as JPEG qual
 - Four Symbols: no public-domain Han eaves-tile rubbings of the four creatures were found on Commons (only unlabelled CC0 photos of tile ends, and one modern 2026 redraw, which was left out). Goguryeo tomb mural material used instead: the full-wall copy plus the 1915 survey plates of each creature.
 - Dunhuang: only one high-resolution panel (north polar region, BLX273) plus a full composite (2128 px) and a low-height strip of the whole scroll are on Commons. The individual month panels were not found as separate high-resolution files.
 - Zodiac animals: the LACMA set is Yuan dynasty (1279-1368) earthenware, photographed in 3D, not Tang figurines or Ming/Qing woodcuts. Commons does not name the animal for each number. Identified by eye: 01 monkey, 02 goat, 03 rooster, 05 pig, 06 horse, 07 snake, 08 ox, 11 dragon (files renamed). Not certain, left unrenamed: 09 likely tiger; 04, 10 and 12 are dog, rabbit and rat by elimination, to confirm.
+- Yellow Dragon (centre, fifth beast): the only public-domain image found is the Gangseo Great Tomb ceiling panel (956 px, cracked, faint). Commons labels it only "ceiling"; the Yellow Dragon identification is the usual one for this panel, to confirm if it matters. No Qing woodcut of the Yellow Dragon was found.
+- Suzhou Planisphere: Commons dates the rubbing to the 16th century, from the c.1247 stone engraving of a c.1190 map by Huang Shang. It shows the circumpolar area (including the Purple Forbidden Enclosure) and the 28 mansions. Fine star detail is soft at 1800 px; the 2400 px copy is on Drive.
 - Nakshatra: no dedicated nakshatra or rashi chakra painting was found as public domain at good size; the two 1840 Sarvasiddhantatattva-cudamani folios (constellation figures and a horoscope chart) are included instead.
