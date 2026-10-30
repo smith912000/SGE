@@ -42,6 +42,19 @@ function artImage(file) {
 const GX = 8, GY = 11;
 // A picture shows for the symbol itself, or for one of these kinds tied to it,
 // so opening a beast does not light every Greek figure in its quarter.
+// The Indian sky in its own pictures: the symbol of each lunar mansion from the
+// plate engraved for Thomas Maurice, and the twelve rashi roundels of a Kangra
+// painting of Surya, drawn where each falls in the sidereal zodiac.
+const NAK_ICON = {"Ashwini": "vedic/nak-ashwini.webp", "Bharani": "vedic/nak-bharani.webp", "Krittika": "vedic/nak-krittika.webp", "Rohini": "vedic/nak-rohini.webp", "Mrigashira": "vedic/nak-mrigashira.webp", "Ardra": "vedic/nak-ardra.webp", "Punarvasu": "vedic/nak-punarvasu.webp", "Pushya": "vedic/nak-pushya.webp", "Ashlesha": "vedic/nak-ashlesha.webp", "Magha": "vedic/nak-magha.webp", "Purva Phalguni": "vedic/nak-purva-phalguni.webp", "Uttara Phalguni": "vedic/nak-uttara-phalguni.webp", "Hasta": "vedic/nak-hasta.webp", "Chitra": "vedic/nak-chitra.webp", "Swati": "vedic/nak-swati.webp", "Vishakha": "vedic/nak-vishakha.webp", "Anuradha": "vedic/nak-anuradha.webp", "Jyeshtha": "vedic/nak-jyeshtha.webp", "Mula": "vedic/nak-mula.webp", "Purva Ashadha": "vedic/nak-purva-ashadha.webp", "Uttara Ashadha": "vedic/nak-uttara-ashadha.webp", "Shravana": "vedic/nak-shravana.webp", "Dhanishta": "vedic/nak-dhanishta.webp", "Shatabhisha": "vedic/nak-shatabhisha.webp", "Purva Bhadrapada": "vedic/nak-purva-bhadrapada.webp", "Uttara Bhadrapada": "vedic/nak-uttara-bhadrapada.webp", "Revati": "vedic/nak-revati.webp"};
+function drawPicture(g, file, x, y, w, alpha, round) {
+  const im = artImage(file);
+  if (!im) return;
+  const h = w * im.naturalHeight / im.naturalWidth;
+  g.save(); g.globalAlpha = alpha;
+  if (round) { g.beginPath(); g.arc(x, y, w / 2, 0, 7); g.clip(); }
+  g.drawImage(im, x - w / 2, y - h / 2, w, h);
+  g.restore();
+}
 const CARD_FROM = ['sign', 'const', 'fig', 'ast'];
 const BEAST_FROM = ['sym', 'xiu'];
 function atlasGrid(a, hv) {
@@ -365,8 +378,11 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near) {
       poly(sg.tick, `rgba(${INK.nak},${on ? 0.8 : 0.35})`, 0.8);
       const p = project(sg.label);
       if (p) {
-        text(RASHI_INFO[sg.i].name, p, `rgba(${INK.nak},${on ? 1 : 0.7})`, (on ? 12 : 10.5) * Math.min(s, 1.4), 'sans');
-        hits.push({ x: p[0], y: p[1], r: 14, id: sg.ent });
+        const d = (on ? 54 : 30) * Math.min(s, 1.6);
+        drawPicture(g, `vedic/rashi-${SIGNS[sg.i].toLowerCase()}.webp`, p[0], p[1], d, on ? 1 : 0.72, true);
+        g.beginPath(); g.arc(p[0], p[1], d / 2, 0, 7); g.strokeStyle = `rgba(${INK.nak},${on ? 0.9 : 0.45})`; g.lineWidth = on ? 1.4 : 0.8; g.stroke();
+        text(RASHI_INFO[sg.i].name, [p[0], p[1] + d / 2 + 9], `rgba(${INK.nak},${on ? 1 : 0.7})`, (on ? 12 : 10.5) * Math.min(s, 1.4), 'sans');
+        hits.push({ x: p[0], y: p[1], r: Math.max(14, d / 2), id: sg.ent });
       }
     }
   }
@@ -378,6 +394,9 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near) {
       poly(n.tick, `rgba(${INK.nak},${on ? 0.8 : 0.3})`, 0.8);
       const p = project(n.star);
       if (!p) continue;
+      // The mansion's own symbol, set just above its junction star
+      const icon = NAK_ICON[NAKSHATRA_INFO[n.i].name];
+      if (icon && (on || view.h < 80)) { const w = (on ? 96 : 30) * Math.min(s, 1.6); drawPicture(g, icon, p[0], p[1] - w * 0.45 - 8, w, on ? 0.95 : 0.42); }
       g.beginPath(); g.arc(p[0], p[1], (on ? 7 : 5) * Math.min(s, 1.5), 0, 7);
       g.strokeStyle = `rgba(${INK.nak},${on ? 1 : 0.6})`; g.lineWidth = on ? 1.4 : 0.9;
       if (on) { g.shadowColor = `rgb(${INK.nak})`; g.shadowBlur = 12; }

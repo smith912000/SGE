@@ -11,7 +11,7 @@ export default function Footer() {
       borderTop: `1px solid ${M3.glassBorder}`, marginTop: 40,
       fontSize: '0.8rem', display: 'flex', gap: '6px 20px', flexWrap: 'wrap', justifyContent: 'space-between',
     }}>
-      <div>SGE v6.3 "Sky Atlas" is part of the <a href={HUB} style={link}>WILD membership</a>. Sixteen computation layers, deterministic, no machine learning.</div>
+      <div>SGE v6.4 "Sky Atlas" is part of the <a href={HUB} style={link}>WILD membership</a>. Sixteen computation layers, deterministic, no machine learning.</div>
       <div>
         Free software under the{' '}
         <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener noreferrer" style={link}>GNU AGPL v3</a>
