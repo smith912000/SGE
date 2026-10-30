@@ -8,6 +8,7 @@ import { NAKSHATRA_INFO, RASHI_INFO, BHAVA_INFO } from './astrology/nakshatras.j
 import { ANIMALS, BRANCHES, BRANCH_PINYIN, CN_EL_INFO } from './astrology/chinese.js';
 import { ASPECTS } from './astrology/aspects.js';
 import { FIGURE_NOTE, ASTERISMS } from './sky/asterisms.js';
+import { LORE } from './sky/constellationLore.js';
 
 const T = '︎';
 const ord = (n) => n + (n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th');
@@ -291,7 +292,25 @@ XIU.forEach(([key, han, pin, en, sym], i) => {
 
 // The great figures off the zodiac, and the named asterisms, so each can be found and opened.
 export const FIG_OFF = { Ori: 'Orion', UMa: 'Ursa Major', Cyg: 'Cygnus', Per: 'Perseus', And: 'Andromeda', Peg: 'Pegasus', Cas: 'Cassiopeia' };
-for (const [k, n] of Object.entries(FIG_OFF)) add(`fig:${k}`, { kind: 'fig', kindLabel: 'Constellation off the zodiac', name: n, glyph: '✦', colour: '#EADFC4', essence: FIGURE_NOTE[n][1], fig: k });
+// Every other constellation of the 88 can be opened too, with its story and ties.
+const FIG_NAMES = { ...FIG_OFF, Boo: 'Boötes', CVn: 'Canes Venatici', Com: 'Coma Berenices', CrB: 'Corona Borealis', Her: 'Hercules', Ser: 'Serpens', Dra: 'Draco', UMi: 'Ursa Minor',
+  Lyr: 'Lyra', Aql: 'Aquila', Sge: 'Sagitta', Vul: 'Vulpecula', Del: 'Delphinus', Equ: 'Equuleus', Lac: 'Lacerta', Cep: 'Cepheus', Cet: 'Cetus', Tri: 'Triangulum', Aur: 'Auriga',
+  Cam: 'Camelopardalis', Lyn: 'Lynx', LMi: 'Leo Minor', CMa: 'Canis Major', CMi: 'Canis Minor', Lep: 'Lepus', Eri: 'Eridanus', Mon: 'Monoceros', Col: 'Columba', Hya: 'Hydra',
+  Crv: 'Corvus', Crt: 'Crater', Sex: 'Sextans', Sct: 'Scutum', CrA: 'Corona Australis', Ara: 'Ara', Lup: 'Lupus', Nor: 'Norma', Tel: 'Telescopium', Mic: 'Microscopium', Ind: 'Indus',
+  PsA: 'Piscis Austrinus', Gru: 'Grus', Scl: 'Sculptor', Phe: 'Phoenix', For: 'Fornax', Cae: 'Caelum', Hor: 'Horologium', Ret: 'Reticulum', Pic: 'Pictor', Car: 'Carina', Pup: 'Puppis',
+  Vel: 'Vela', Pyx: 'Pyxis', Ant: 'Antlia', Cen: 'Centaurus', Cru: 'Crux', Mus: 'Musca', Cir: 'Circinus', TrA: 'Triangulum Australe', Aps: 'Apus', Pav: 'Pavo', Tuc: 'Tucana',
+  Hyi: 'Hydrus', Dor: 'Dorado', Vol: 'Volans', Cha: 'Chamaeleon', Men: 'Mensa', Oct: 'Octans' };
+for (const [k, n] of Object.entries(FIG_NAMES)) {
+  const l = LORE[k];
+  // The first sentence of the story is the line under the name; the rest is the story itself.
+  const cut = l.myth.search(/\. [A-Z]/);
+  const [line, rest] = cut < 0 ? [l.myth, null] : [l.myth.slice(0, cut + 1), l.myth.slice(cut + 2)];
+  add(`fig:${k}`, { kind: 'fig', kindLabel: FIG_OFF[k] ? 'Constellation off the zodiac' : 'Constellation', name: n, glyph: '✦', colour: '#EADFC4', fig: k,
+    essence: FIG_OFF[k] ? FIGURE_NOTE[n][1] : line, core: l.core, myth: FIG_OFF[k] ? l.myth : rest,
+    attrs: [['Brightest star', l.star], ['Set in the sky by', l.from]] });
+}
+// The ties are added once every constellation exists, so each can point at any other.
+for (const [k, l] of Object.entries(LORE)) for (const [to, rel, back] of l.ties || []) link(`fig:${k}`, to, rel, back);
 const figEnt = (k) => (FIG_OFF[k] ? `fig:${k}` : CONSTELLATIONS.find((c) => c.fig === k) && `const:${CONSTELLATIONS.find((c) => c.fig === k).id}`);
 for (const a of ASTERISMS) {
   const id = `ast:${a.name}`;
