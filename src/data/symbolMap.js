@@ -7,6 +7,7 @@ import { P_SYM, P_COL } from './astrology/planets.js';
 import { NAKSHATRA_INFO, RASHI_INFO, BHAVA_INFO } from './astrology/nakshatras.js';
 import { ANIMALS, BRANCHES, BRANCH_PINYIN, CN_EL_INFO } from './astrology/chinese.js';
 import { ASPECTS } from './astrology/aspects.js';
+import { FIGURE_NOTE, ASTERISMS } from './sky/figureArt.js';
 
 const T = '︎';
 const ord = (n) => n + (n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th');
@@ -287,9 +288,30 @@ XIU.forEach(([key, han, pin, en, sym], i) => {
 [['Hairy Head', 'Krittika'], ['Net', 'Rohini'], ['Three Stars', 'Ardra'], ['Ghost', 'Pushya'], ['Heart', 'Jyeshtha'], ['Room', 'Anuradha'], ['Tail', 'Mula'], ['Horn', 'Chitra'], ['Wall', 'Uttara Bhadrapada'], ['Encampment', 'Purva Bhadrapada'], ['Dipper', 'Uttara Ashadha'], ['Winnowing Basket', 'Purva Ashadha']]
   .forEach(([x, n]) => link(`xiu:${x}`, `nak:${n}`, 'Indian mansion on the same stars', 'Chinese mansion on the same stars'));
 
+// The great figures off the zodiac, and the named asterisms, so each can be found and opened.
+export const FIG_OFF = { Ori: 'Orion', UMa: 'Ursa Major', Cyg: 'Cygnus', Per: 'Perseus', And: 'Andromeda', Peg: 'Pegasus', Cas: 'Cassiopeia' };
+for (const [k, n] of Object.entries(FIG_OFF)) add(`fig:${k}`, { kind: 'fig', kindLabel: 'Constellation off the zodiac', name: n, glyph: '✦', colour: '#EADFC4', essence: FIGURE_NOTE[n][1], fig: k });
+const figEnt = (k) => (FIG_OFF[k] ? `fig:${k}` : CONSTELLATIONS.find((c) => c.fig === k) && `const:${CONSTELLATIONS.find((c) => c.fig === k).id}`);
+for (const a of ASTERISMS) {
+  const id = `ast:${a.name}`;
+  add(id, { kind: 'ast', kindLabel: FIGURE_NOTE[a.name][0], name: a.name, glyph: '✧', colour: '#FFECBE', essence: FIGURE_NOTE[a.name][1], fig: a.fig || null });
+  if (a.fig && figEnt(a.fig)) link(id, figEnt(a.fig), 'Part of', a.glow ? 'Holds the nebula' : 'Holds the asterism');
+}
+[["Orion's Belt", 'Three Stars'], ['Pleiades', 'Hairy Head'], ['Hyades', 'Net']].forEach(([a, x]) => link(`ast:${a}`, `xiu:${x}`, 'Chinese mansion on these stars', 'The same stars in the West'));
+link('ast:Pleiades', 'nak:Krittika', 'Indian mansion on these stars', 'The same stars in the West');
+link('fig:Ori', 'nak:Ardra', 'Indian mansion on its shoulder star', 'Western figure round its star');
+link('fig:Ori', 'xiu:Three Stars', 'Chinese mansion on its stars', 'The same stars in the West');
+
+// The pole star, which the whole sky turns about.
+export const POLARIS = { at: [37.95, 89.26], pointers: [[165.46, 56.38], [165.93, 61.75], [37.95, 89.26]] };
+add('star:Polaris', { kind: 'star', kindLabel: 'The North Star', name: 'Polaris', glyph: '✶', colour: '#FFF3D0',
+  essence: 'The pole star. Less than a degree from the north celestial pole, so it barely moves while every other star wheels round it. Its height above the horizon is your latitude.',
+  attrs: [['Constellation', 'Ursa Minor, the tip of the Little Bear\'s tail'], ['Find it', 'Follow Merak and Dubhe, the pointers of the Plough'], ['Other names', 'Stella Polaris, Cynosura, Dhruva in India, 勾陳一 Gōuchén Yī in China']] });
+link('star:Polaris', 'fig:UMa', 'The pointers lead to it from', 'Its pointers lead to');
+
 export const ENTITIES = E;
 export const KIND_ORDER = [
-  ['planet', 'Planets, nodes and points'], ['angle', 'Angles'], ['sign', 'Tropical signs'], ['const', 'Constellations'], ['nak', 'Nakshatras'],
+  ['planet', 'Planets, nodes and points'], ['angle', 'Angles'], ['sign', 'Tropical signs'], ['const', 'Constellations'], ['fig', 'Other constellations'], ['ast', 'Asterisms'], ['star', 'Stars'], ['nak', 'Nakshatras'],
   ['xiu', 'Chinese mansions'], ['sym', 'Chinese quarters'], ['branch', 'Earthly branches'], ['phase', 'Chinese phases'], ['el', 'Elements'], ['mode', 'Modes'], ['house', 'Houses'], ['asp', 'Aspects'],
 ].map(([k, label]) => ({ kind: k === 'el' ? 'element' : k === 'mode' ? 'mode' : k, label }));
 export const AYANAMSA_J2000 = AYAN_J2000;

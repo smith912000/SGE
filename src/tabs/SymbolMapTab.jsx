@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { essenceOf } from '../data/symbolEssence.js';
-import { ENTITIES, OVERLAYS, KIND_ORDER, NAK_SPAN, XIU, FOUR_SYMBOLS, ANGLES } from '../data/symbolMap.js';
+import { ENTITIES, OVERLAYS, KIND_ORDER, NAK_SPAN, XIU, FOUR_SYMBOLS, ANGLES, POLARIS } from '../data/symbolMap.js';
 import { STARS, NAMED_STARS, YOGATARAS, FIGURES, XIU_FIGURES } from '../data/sky/catalogue.js';
 import { FIGURE_ART, FIGURE_NOTE, ASTERISMS } from '../data/sky/figureArt.js';
 import { RASHI_INFO } from '../data/astrology/nakshatras.js';
@@ -19,7 +19,7 @@ import { eclToEq, precessionSinceJ2000, observer, altAz, camera, easeInOut, segD
 const BODIES = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto', 'Chiron', 'Lilith', 'Rahu', 'Ketu'];
 const posKey = (b) => (b === 'Rahu' ? 'Node' : b);
 const BODY_SIZE = { Sun: 7, Moon: 6, Venus: 3.6, Jupiter: 3.3, Mars: 3, Saturn: 2.9, Mercury: 2.6, Uranus: 1.9, Neptune: 1.7, Pluto: 1.5 };
-const FIG_TO_CONST = Object.fromEntries(Object.values(ENTITIES).filter((e) => e.kind === 'const').map((e) => [e.fig, e.id]));
+const FIG_TO_CONST = Object.fromEntries(Object.values(ENTITIES).filter((e) => e.kind === 'const' || e.kind === 'fig').map((e) => [e.fig, e.id]));
 const XIU_BY_KEY = Object.fromEntries(XIU.map((x) => [x[0], `xiu:${x[3]}`]));
 const INK = { star: '244,241,237', fig: '234,223,196', gold: '201,168,76', nak: '217,142,95', xiu: '147,184,154' };
 
@@ -119,6 +119,7 @@ function buildScene({ jd, lat, lon, pos, ay, houses }) {
       ...BODIES.filter((b) => pos[posKey(b)] != null).map((b) => ({ ent: `planet:${b}`, b, v: ecl(pos[posKey(b)]) })),
       ...(houses ? Object.entries(ANGLES).map(([n, a]) => ({ ent: `angle:${n}`, b: n, v: ecl(houses[a.key]) })) : []),
     ],
+    polaris: { v: hv(...POLARIS.at), pointers: POLARIS.pointers.map(([ra, dec]) => hv(ra, dec)) },
     horizon: Array.from({ length: 91 }, (_, i) => { const a = (i * 4 * Math.PI) / 180; return [Math.cos(a), Math.sin(a), 0]; }),
     cardinals: [['N', [1, 0, 0.004]], ['E', [0, 1, 0.004]], ['S', [-1, 0, 0.004]], ['W', [0, -1, 0.004]]],
   };
@@ -127,6 +128,8 @@ function buildScene({ jd, lat, lon, pos, ay, houses }) {
   scene.bodies.forEach((b) => { at[b.ent] = b.v; });
   scene.figs.forEach((f) => { if (f.ent && f.at) at[f.ent] = f.at; });
   scene.signs.forEach((s) => { at[s.ent] = s.label; });
+  scene.asterisms.forEach((a) => { at[`ast:${a.name}`] = a.at; });
+  at['star:Polaris'] = scene.polaris.v;
   scene.naks.forEach((n) => { at[n.ent] = n.star; });
   scene.xiu.forEach((x) => { at[x.ent] = x.at; });
   for (const name of Object.keys(FOUR_SYMBOLS)) {
@@ -199,7 +202,7 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName) {
   if (shown.const) {
     const figOn = (id) => scene.figs.some((f) => f.id === id && ((f.ent && lit(f.ent)) || f.name === hoverName));
     for (const a of scene.asterisms) {
-      const on = a.name === hoverName;
+      const on = lit(`ast:${a.name}`) || a.name === hoverName;
       if (!(view.h < 40 || on || (a.fig && figOn(a.fig)))) continue;
       const ink = `rgba(255,236,190,${on ? 0.95 : 0.7})`;
       for (const ln of a.lines) poly(ln, ink, on ? 2 : 1.5, on ? 12 : 6);
@@ -214,7 +217,7 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName) {
       }
       const [dx, dy, al] = a.lab || (a.glow ? [16, 0, 'left'] : [0, a.ring ? -16 : 12, 'center']);
       text(a.name, [p[0] + dx, p[1] + dy], ink, 10 * Math.min(s, 1.3), 'sans', al);
-      hits.push({ x: p[0], y: p[1], r: 12, name: a.name });
+      hits.push({ x: p[0], y: p[1], r: 14, id: `ast:${a.name}` });
     }
   }
 
@@ -241,6 +244,24 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName) {
     g.fill(); g.shadowBlur = 0;
   }
   for (const st of scene.named) { const p = project(st.v); if (p) { hits.push({ x: p[0], y: p[1], r: 6, name: st.n }); if (view.h < 40 && st.m < 1.6) text(st.n, [p[0] + 6, p[1] + 9], 'rgba(244,241,237,.42)', 10, 'sans', 'left'); } }
+
+  // Polaris, the North Star: always marked, with the Plough's pointers when it is touched.
+  {
+    const on = lit('star:Polaris');
+    if (on) poly(scene.polaris.pointers, 'rgba(255,236,190,.75)', 1.2, 8);
+    const p = project(scene.polaris.v);
+    if (p) {
+      const r = (on ? 11 : 8) * Math.min(s, 1.6);
+      g.save(); g.translate(p[0], p[1]);
+      g.strokeStyle = `rgba(255,236,190,${on ? 1 : 0.8})`; g.lineWidth = 1.1; g.shadowColor = '#FFE9B0'; g.shadowBlur = on ? 14 : 8;
+      g.beginPath(); for (let k = 0; k < 4; k++) { const t = (k * Math.PI) / 2; g.moveTo(Math.cos(t) * r * 0.35, Math.sin(t) * r * 0.35); g.lineTo(Math.cos(t) * r * 1.6, Math.sin(t) * r * 1.6); } g.stroke();
+      g.beginPath(); g.arc(0, 0, r, 0, 7); g.stroke();
+      g.beginPath(); g.arc(0, 0, 2.6 * s, 0, 7); g.fillStyle = '#FFF8E6'; g.fill();
+      g.restore(); g.shadowBlur = 0;
+      text('POLARIS · NORTH STAR', [p[0], p[1] + r * 1.6 + 10], `rgba(255,236,190,${on ? 1 : 0.8})`, 11 * Math.min(s, 1.4), 'sans');
+      hits.push({ x: p[0], y: p[1], r: 18, id: 'star:Polaris' });
+    }
+  }
 
   // The zodiac: the ecliptic, the belt eight degrees either side, twelve signs
   if (shown.sign) {
@@ -290,23 +311,6 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName) {
     }
   }
 
-  // The bodies
-  for (const b of scene.bodies) {
-    const p = project(b.v);
-    if (!p) continue;
-    const e = ENTITIES[b.ent], on = lit(b.ent), size = BODY_SIZE[b.b];
-    if (size) {
-      g.beginPath(); g.arc(p[0], p[1], size * Math.min(s, 1.6), 0, 7);
-      g.fillStyle = e.colour; g.globalAlpha = dim(b.v);
-      g.shadowColor = e.colour; g.shadowBlur = (b.b === 'Sun' ? 22 : 8) + (on ? 12 : 0);
-      g.fill(); g.shadowBlur = 0; g.globalAlpha = 1;
-    }
-    if (on) { g.beginPath(); g.arc(p[0], p[1], (size || 4) * Math.min(s, 1.6) + 7, 0, 7); g.strokeStyle = e.colour; g.lineWidth = 1; g.stroke(); }
-    const gp = [p[0] + (size ? 11 : 0), p[1] - (size ? 10 : 0)];
-    if (!drawSigil(g, b.ent, gp[0], gp[1], 13 * Math.min(s, 1.4), e.colour)) text(e.glyph, gp, e.colour, (e.glyph.length > 1 ? 11 : 15) * Math.min(s, 1.4), e.glyph.length > 1 ? 'sans' : 'serif');
-    hits.push({ x: p[0], y: p[1], r: 13, id: b.ent });
-  }
-
   // Ties from the symbol in focus to whatever of its correspondences is on the sky
   if (focus && scene.at[focus]) {
     const fp = project(scene.at[focus]);
@@ -343,6 +347,22 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName) {
   }
 
   for (const [c, v] of scene.cardinals) { const p = project(v); if (p) text(c, [p[0], p[1] + 12], 'rgba(234,223,196,.6)', 12, 'sans'); }
+  // The bodies, last of all so they sit in front of every other layer and are easiest to touch
+  for (const b of scene.bodies) {
+    const p = project(b.v);
+    if (!p) continue;
+    const e = ENTITIES[b.ent], on = lit(b.ent), size = BODY_SIZE[b.b];
+    if (size) {
+      g.beginPath(); g.arc(p[0], p[1], size * Math.min(s, 1.6), 0, 7);
+      g.fillStyle = e.colour; g.globalAlpha = dim(b.v);
+      g.shadowColor = e.colour; g.shadowBlur = (b.b === 'Sun' ? 22 : 8) + (on ? 12 : 0);
+      g.fill(); g.shadowBlur = 0; g.globalAlpha = 1;
+    }
+    if (on) { g.beginPath(); g.arc(p[0], p[1], (size || 4) * Math.min(s, 1.6) + 7, 0, 7); g.strokeStyle = e.colour; g.lineWidth = 1; g.stroke(); }
+    const gp = [p[0] + (size ? 11 : 0), p[1] - (size ? 10 : 0)];
+    if (!drawSigil(g, b.ent, gp[0], gp[1], 13 * Math.min(s, 1.4), e.colour)) text(e.glyph, gp, e.colour, (e.glyph.length > 1 ? 11 : 15) * Math.min(s, 1.4), e.glyph.length > 1 ? 'sans' : 'serif');
+    hits.push({ x: p[0], y: p[1], r: 16, id: b.ent, top: true });
+  }
   hitsOut.current = hits;
 }
 
@@ -392,7 +412,7 @@ export default function SymbolMapTab({ ctx = {} }) {
     if (!v) return;
     const [alt, az] = altAz(v);
     const kind = ENTITIES[id].kind;
-    const target = { alt: Math.max(alt, -15), az, h: kind === 'planet' || kind === 'nak' ? 34 : 46 };
+    const target = { alt: Math.max(alt, -60), az, h: kind === 'planet' || kind === 'nak' || kind === 'star' ? 34 : kind === 'ast' ? 22 : 46 };
     const from = viewRef.current;
     if (reduced()) { setView(target); return; }
     const dAz = ((target.az - from.az + 540) % 360) - 180;
@@ -431,6 +451,13 @@ export default function SymbolMapTab({ ctx = {} }) {
   const ptr = useRef({ pts: new Map(), start: null, moved: false });
   const pick = (x, y) => {
     let best = null, bd = Infinity;
+    // A planet or angle under the finger wins over the lines and labels behind it.
+    for (const t of hitsRef.current) {
+      if (!t.top) continue;
+      const d = Math.hypot(x - t.x, y - t.y) - t.r;
+      if (d < bd && d < 8) { bd = d; best = t; }
+    }
+    if (best) return { id: best.id, name: ENTITIES[best.id]?.name };
     for (const t of hitsRef.current) {
       const d = t.seg ? segDist(x, y, ...t.seg) + 4 : Math.hypot(x - t.x, y - t.y) - t.r;
       if (d < bd && d < (t.seg ? 9 : 6)) { bd = d; best = t; }
@@ -463,7 +490,7 @@ export default function SymbolMapTab({ ctx = {} }) {
     P.moved = true;
     const cv = cvRef.current;
     const { dpp } = camera(v0.alt, v0.az, v0.h, cv.clientWidth, cv.clientHeight);
-    const alt = Math.max(-20, Math.min(90, v0.alt + dy * dpp));
+    const alt = Math.max(-60, Math.min(90, v0.alt + dy * dpp));
     setView({ ...v0, alt, az: norm(v0.az - (dx * dpp) / Math.max(0.35, Math.cos((alt * Math.PI) / 180))) });
   };
   const onUp = (e) => {
@@ -480,7 +507,7 @@ export default function SymbolMapTab({ ctx = {} }) {
   }, []);
   const onKey = (e) => {
     const step = { ArrowLeft: [0, -6], ArrowRight: [0, 6], ArrowUp: [6, 0], ArrowDown: [-6, 0] }[e.key];
-    if (step) { e.preventDefault(); setView((v) => ({ ...v, alt: Math.max(-20, Math.min(90, v.alt + step[0])), az: norm(v.az + step[1]) })); }
+    if (step) { e.preventDefault(); setView((v) => ({ ...v, alt: Math.max(-60, Math.min(90, v.alt + step[0])), az: norm(v.az + step[1]) })); }
     else if (e.key === '+' || e.key === '=') setView((v) => ({ ...v, h: Math.max(6, v.h / 1.25) }));
     else if (e.key === '-') setView((v) => ({ ...v, h: Math.min(110, v.h * 1.25) }));
     else if (e.key === 'Escape') clear();
