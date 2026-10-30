@@ -333,10 +333,12 @@ button { font-family: inherit; }
 .sm-kind { margin: 0; color: #A6A2B0; font-size: .8125rem; letter-spacing: .04em; }
 .sm-head { display: flex; align-items: center; gap: 14px; margin: 4px 0 10px; }
 .sm-head h2 { margin: 0 0 2px; }
-.sm-plate { flex: none; display: block; }
-.sm-hover .sm-plate { margin: 0 0 8px; }
+.sm-plate { margin: 2px 0 6px; }
+.sm-plate img { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; max-height: 300px; object-fit: contain; border-radius: 6px; background: #0E0C16; box-shadow: 0 0 0 1px rgba(201,168,76,.28); }
+.sm-plate figcaption { margin-top: 6px; font-size: .75rem; line-height: 1.4; color: #A6A2B0; font-style: italic; }
+.sm-plate-compact img { max-height: 150px; width: auto; max-width: 100%; }
 .sm-sigil { display: inline-block; vertical-align: -0.12em; }
-@media (max-width: 520px) { .sm-head .sm-plate { width: 96px; height: 96px; } }
+@media (max-width: 520px) { .sm-plate img { max-height: 220px; } }
 .sm-essence { margin: 0; font-size: 1.0625rem; line-height: 1.5; color: #EADFC4; font-family: var(--wild-serif, serif); }
 .sm-hover { min-height: 8.5em; display: flex; flex-direction: column; gap: 6px; }
 .sm-index summary { cursor: pointer; color: #EADFC4; font-size: .9375rem; padding: 6px 0; }

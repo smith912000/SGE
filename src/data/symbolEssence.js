@@ -190,6 +190,7 @@ const QUARTER = {
   'Black Tortoise': { core: 'The Dark North', keys: ['winter', 'water', 'midnight', 'longevity', 'stillness'] },
   'White Tiger': { core: 'The Cutting West', keys: ['autumn', 'metal', 'dusk', 'war', 'judgement'] },
   'Vermilion Bird': { core: 'The Blazing South', keys: ['summer', 'fire', 'noon', 'renewal', 'the phoenix'] },
+  'Yellow Dragon': { core: 'The Still Centre', keys: ['earth', 'the centre', 'the turning of seasons', 'the emperor', 'the pole'] },
 };
 
 const ANG = {

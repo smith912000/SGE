@@ -2,12 +2,13 @@ import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { essenceOf } from '../data/symbolEssence.js';
 import { ENTITIES, OVERLAYS, KIND_ORDER, NAK_SPAN, XIU, FOUR_SYMBOLS, ANGLES, POLARIS } from '../data/symbolMap.js';
 import { STARS, NAMED_STARS, YOGATARAS, FIGURES, XIU_FIGURES } from '../data/sky/catalogue.js';
-import { FIGURE_ART, FIGURE_NOTE, ASTERISMS } from '../data/sky/figureArt.js';
+import { FIGURE_NOTE, ASTERISMS } from '../data/sky/asterisms.js';
+import { ATLAS_ART, BEASTS } from '../data/sky/atlasArt.js';
 import { RASHI_INFO } from '../data/astrology/nakshatras.js';
 import { SIGNS, SIGN_SYM, SIGN_COL } from '../data/astrology/signs.js';
 import { NAKSHATRA_INFO } from '../data/astrology/nakshatras.js';
 import { julianDay, allPlanets, ayanamsa, houseOf } from '../engines/astronomy.js';
-import { Sigil, SymbolPlate, drawSigil } from '../components/sky/symbolArt.jsx';
+import { Sigil, Plate, drawSigil } from '../components/sky/symbolArt.jsx';
 import { eclToEq, precessionSinceJ2000, observer, altAz, camera, easeInOut, segDist, norm } from '../components/sky/sky.js';
 
 // The symbol map: the sky as it stands over the chart's place at the chart's
@@ -22,6 +23,58 @@ const BODY_SIZE = { Sun: 7, Moon: 6, Venus: 3.6, Jupiter: 3.3, Mars: 3, Saturn: 
 const FIG_TO_CONST = Object.fromEntries(Object.values(ENTITIES).filter((e) => e.kind === 'const' || e.kind === 'fig').map((e) => [e.fig, e.id]));
 const XIU_BY_KEY = Object.fromEntries(XIU.map((x) => [x[0], `xiu:${x[3]}`]));
 const INK = { star: '244,241,237', fig: '234,223,196', gold: '201,168,76', nak: '217,142,95', xiu: '147,184,154' };
+
+// The atlas cards, loaded the first time their figure is shown.
+const ART_IMG = {};
+let artRepaint = null;
+function artImage(file) {
+  let im = ART_IMG[file];
+  if (!im) {
+    im = ART_IMG[file] = new Image();
+    im.onload = () => artRepaint?.();
+    im.src = `${import.meta.env.BASE_URL}sky-art/${file}`;
+  }
+  return im.complete && im.naturalWidth ? im : null;
+}
+// A card as a grid of points on the sky: card pixel -> azimuthal equidistant plane -> RA/Dec.
+const GX = 8, GY = 11;
+// A picture shows for the symbol itself, or for one of these kinds tied to it,
+// so opening a beast does not light every Greek figure in its quarter.
+const CARD_FROM = ['sign', 'const', 'fig', 'ast'];
+const BEAST_FROM = ['sym', 'xiu'];
+function atlasGrid(a, hv) {
+  const D = Math.PI / 180, ra0 = a.ra0 * D, d0 = a.dec0 * D, pts = [];
+  for (let j = 0; j <= GY; j++) for (let i = 0; i <= GX; i++) {
+    const u = (i / GX) * a.w, v = (j / GY) * a.h;
+    const f = a.M.length === 12 ? [u, v, 1, u * u * 1e-3, u * v * 1e-3, v * v * 1e-3] : [u, v, 1];
+    const n = f.length, x = f.reduce((t, q, k) => t + q * a.M[k], 0), y = f.reduce((t, q, k) => t + q * a.M[n + k], 0);
+    const r = Math.hypot(x, y), c = r;
+    const dec = r ? Math.asin(Math.cos(c) * Math.sin(d0) + (y * Math.sin(c) * Math.cos(d0)) / r) : d0;
+    const ra = ra0 + Math.atan2(x * Math.sin(c), r * Math.cos(d0) * Math.cos(c) - y * Math.sin(d0) * Math.sin(c));
+    pts.push([i / GX, j / GY, hv(ra / D, dec / D)]);
+  }
+  return pts;
+}
+// One triangle of the card, stretched onto its place on the sky.
+function texTri(g, img, s, d) {
+  const W = img.naturalWidth, H = img.naturalHeight;
+  const [[u0, v0], [u1, v1], [u2, v2]] = s.map(([u, v]) => [u * W, v * H]);
+  const [[x0, y0], [x1, y1], [x2, y2]] = d;
+  const den = u0 * (v1 - v2) + u1 * (v2 - v0) + u2 * (v0 - v1);
+  if (!den) return;
+  const cx = (x0 + x1 + x2) / 3, cy = (y0 + y1 + y2) / 3;
+  g.save();
+  g.beginPath();
+  d.forEach(([x, y], k) => { const L = Math.hypot(x - cx, y - cy) || 1, px = x + ((x - cx) / L) * 0.7, py = y + ((y - cy) / L) * 0.7; if (k) g.lineTo(px, py); else g.moveTo(px, py); });
+  g.closePath(); g.clip();
+  g.transform(
+    (x0 * (v1 - v2) + x1 * (v2 - v0) + x2 * (v0 - v1)) / den, (y0 * (v1 - v2) + y1 * (v2 - v0) + y2 * (v0 - v1)) / den,
+    (x0 * (u2 - u1) + x1 * (u0 - u2) + x2 * (u1 - u0)) / den, (y0 * (u2 - u1) + y1 * (u0 - u2) + y2 * (u1 - u0)) / den,
+    (x0 * (u1 * v2 - u2 * v1) + x1 * (u2 * v0 - u0 * v2) + x2 * (u0 * v1 - u1 * v0)) / den, (y0 * (u1 * v2 - u2 * v1) + y1 * (u2 * v0 - u0 * v2) + y2 * (u0 * v1 - u1 * v0)) / den,
+  );
+  g.drawImage(img, 0, 0);
+  g.restore();
+}
 
 const signOf = (lon) => SIGNS[Math.floor(norm(lon) / 30)];
 const degIn = (lon) => Math.floor(norm(lon) % 30);
@@ -107,7 +160,9 @@ function buildScene({ jd, lat, lon, pos, ay, houses }) {
   const scene = {
     stars: STARS.map(([ra, dec, m]) => [hv(ra, dec), m]),
     named: NAMED_STARS.map(([ra, dec, m, n]) => ({ v: hv(ra, dec), m, n })),
-    figs: FIGURES.map((f) => ({ id: f.id, name: f.name, ent: FIG_TO_CONST[f.id] || null, at: f.at ? hv(...f.at) : null, lines: f.lines.map((l) => l.map(([ra, dec]) => hv(ra, dec))), art: (FIGURE_ART[f.id] || []).map((l) => l.map(([ra, dec]) => hv(ra, dec))) })),
+    figs: FIGURES.map((f) => ({ id: f.id, name: f.name, ent: FIG_TO_CONST[f.id] || null, at: f.at ? hv(...f.at) : null, lines: f.lines.map((l) => l.map(([ra, dec]) => hv(ra, dec))) })),
+    atlas: Object.values(ATLAS_ART).map((a) => ({ img: a.img, figs: a.figs, grid: atlasGrid(a, hv) })),
+    beasts: Object.entries(BEASTS).map(([name, a]) => ({ img: a.img, ent: `sym:${name}`, grid: atlasGrid(a, hv) })),
     xiu: Object.entries(XIU_FIGURES).map(([k, f]) => ({ ent: XIU_BY_KEY[k], at: hv(...f.at), lines: f.lines.map((l) => l.map(([ra, dec]) => hv(ra, dec))) })).filter((x) => x.ent),
     ecliptic: arc(0, 360, 0),
     beltN: arc(0, 360, 8), beltS: arc(0, 360, -8),
@@ -130,6 +185,7 @@ function buildScene({ jd, lat, lon, pos, ay, houses }) {
   scene.signs.forEach((s) => { at[s.ent] = s.label; });
   scene.asterisms.forEach((a) => { at[`ast:${a.name}`] = a.at; });
   at['star:Polaris'] = scene.polaris.v;
+  at['sym:Yellow Dragon'] = scene.polaris.v;
   scene.naks.forEach((n) => { at[n.ent] = n.star; });
   scene.xiu.forEach((x) => { at[x.ent] = x.at; });
   for (const name of Object.keys(FOUR_SYMBOLS)) {
@@ -140,7 +196,7 @@ function buildScene({ jd, lat, lon, pos, ay, houses }) {
   return scene;
 }
 
-function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName) {
+function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near) {
   const dpr = window.devicePixelRatio || 1;
   const w = cv.clientWidth, h = cv.clientHeight;
   if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
@@ -171,16 +227,33 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName) {
     g.fillText(str, p[0], p[1]);
   };
 
+  // An old picture stretched over its stars, a triangle mesh at a time.
+  const drawCard = (a, alpha) => {
+    const img = artImage(a.img);
+    if (!img) return;
+    const P = a.grid.map(([, , v]) => project(v));
+    g.save(); g.globalAlpha = alpha;
+    for (let j = 0; j < GY; j++) for (let i = 0; i < GX; i++) {
+      const k = j * (GX + 1) + i, quad = [k, k + 1, k + GX + 1, k + GX + 2];
+      if (quad.some((q) => !P[q])) continue;
+      if (Math.abs((P[quad[3]][0] - P[k][0]) * (P[quad[3]][1] - P[k][1])) > w * h) continue;
+      texTri(g, img, [a.grid[k], a.grid[k + 1], a.grid[k + GX + 1]], [P[k], P[k + 1], P[k + GX + 1]]);
+      texTri(g, img, [a.grid[k + 1], a.grid[k + GX + 2], a.grid[k + GX + 1]], [P[k + 1], P[k + GX + 2], P[k + GX + 1]]);
+    }
+    g.restore();
+  };
+
   // A faint glow along the horizon, so up and down read at a glance.
   const hz = scene.horizon.map(project);
   if (hz.some(Boolean)) poly(scene.horizon, 'rgba(234,223,196,.28)', 1);
 
-  // Western figures
+  // Western figures: the engraved figure of the old atlas, then the star lines over it.
   if (shown.const) {
+    const figLit = (id) => scene.figs.some((f) => f.id === id && ((f.ent && near(f.ent, CARD_FROM)) || f.name === hoverName));
+    for (const a of scene.atlas) if (a.figs.some(figLit)) drawCard(a, 0.9);
     for (const f of scene.figs) {
       const on = f.ent && lit(f.ent);
       // The figure itself, drawn over its stars while it is touched or open.
-      if (f.art.length && (on || f.name === hoverName)) for (const ln of f.art) poly(ln, `rgba(${INK.gold},0.85)`, 1.4, 8);
       const a = on ? 0.9 : f.ent ? 0.3 : 0.14;
       for (const ln of f.lines) {
         poly(ln, `rgba(${INK.fig},${a})`, on ? 1.3 : 0.8, on ? 10 : 0);
@@ -221,8 +294,9 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName) {
     }
   }
 
-  // Chinese mansions
+  // Chinese mansions, with the beast of a quarter drawn along them while it or anything tied to it is touched
   if (shown.xiu) {
+    for (const b of scene.beasts) if (near(b.ent, BEAST_FROM)) drawCard(b, 0.8);
     for (const x of scene.xiu) {
       const on = lit(x.ent);
       for (const ln of x.lines) poly(ln, `rgba(${INK.xiu},${on ? 0.95 : 0.34})`, on ? 1.3 : 0.8, on ? 10 : 0);
@@ -400,8 +474,10 @@ export default function SymbolMapTab({ ctx = {} }) {
   useEffect(() => {
     const cv = cvRef.current;
     if (!cv) return;
-    const paint = () => drawSky(cv, scene, view, shown, lit, focus, hitsRef, hover?.id ? null : hover?.name);
+    const near = (id, kinds) => [hover?.id, focus].some((t) => t && (t === id || (kinds.includes(ENTITIES[t]?.kind) && ENTITIES[t].links.some((l) => l.to === id))));
+    const paint = () => drawSky(cv, scene, view, shown, lit, focus, hitsRef, hover?.id ? null : hover?.name, near);
     paint();
+    artRepaint = paint;
     const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(paint) : null;
     ro?.observe(cv);
     return () => ro?.disconnect();
@@ -554,7 +630,7 @@ function IntroPanel({ hover, hv, onOpen }) {
     <>
       {hover ? (
         <div className="sm-hover">
-          {hv ? <><SymbolPlate ent={hv} size={96} /><h2><Sigil ent={hv} /> {hv.name}</h2><p className="sm-kind">{hv.kindLabel}</p>{essenceOf(hv)?.core && <p className="sm-core-word" style={{ '--c': hv.colour }}>{essenceOf(hv).core}</p>}<p className="sm-essence">{hv.essence}</p></>
+          {hv ? <><Plate ent={hv} compact /><h2><Sigil ent={hv} /> {hv.name}</h2><p className="sm-kind">{hv.kindLabel}</p>{essenceOf(hv)?.core && <p className="sm-core-word" style={{ '--c': hv.colour }}>{essenceOf(hv).core}</p>}<p className="sm-essence">{hv.essence}</p></>
             : <><h2>{hover.name}</h2><p className="sm-kind">{FIGURE_NOTE[hover.name]?.[0] || 'Star or figure'}</p>{FIGURE_NOTE[hover.name] && <p className="sm-essence">{FIGURE_NOTE[hover.name][1]}</p>}</>}
         </div>
       ) : (
@@ -599,8 +675,8 @@ function FocusPanel({ id, trail, sky, mode, setMode, onOpen, onBack }) {
           </span>
         ))}
       </nav>
+      <Plate ent={e} />
       <div className="sm-head">
-        <SymbolPlate ent={e} />
         <div>
           <h2><Sigil ent={e} /> {e.name}</h2>
           <p className="sm-kind">{e.kindLabel}</p>
