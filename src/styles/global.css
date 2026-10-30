@@ -331,6 +331,12 @@ button { font-family: inherit; }
 .sm-panel { outline: none; display: flex; flex-direction: column; gap: 8px; }
 .sm-panel h2 { margin: 0; font-family: var(--wild-serif, serif); font-weight: 500; font-size: 1.6rem; color: #F4F1ED; }
 .sm-kind { margin: 0; color: #A6A2B0; font-size: .8125rem; letter-spacing: .04em; }
+.sm-head { display: flex; align-items: center; gap: 14px; margin: 4px 0 10px; }
+.sm-head h2 { margin: 0 0 2px; }
+.sm-plate { flex: none; display: block; }
+.sm-hover .sm-plate { margin: 0 0 8px; }
+.sm-sigil { display: inline-block; vertical-align: -0.12em; }
+@media (max-width: 520px) { .sm-head .sm-plate { width: 96px; height: 96px; } }
 .sm-essence { margin: 0; font-size: 1.0625rem; line-height: 1.5; color: #EADFC4; font-family: var(--wild-serif, serif); }
 .sm-hover { min-height: 8.5em; display: flex; flex-direction: column; gap: 6px; }
 .sm-index summary { cursor: pointer; color: #EADFC4; font-size: .9375rem; padding: 6px 0; }

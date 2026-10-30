@@ -5,7 +5,7 @@
 import { SIGNS, SIGN_SYM, SIGN_COL, ELEMENT_HUE, SIGN_INFO } from './astrology/signs.js';
 import { P_SYM, P_COL } from './astrology/planets.js';
 import { NAKSHATRA_INFO, RASHI_INFO, BHAVA_INFO } from './astrology/nakshatras.js';
-import { ANIMALS, BRANCHES, BRANCH_PINYIN, ANIMAL_INFO, CN_EL_INFO } from './astrology/chinese.js';
+import { ANIMALS, BRANCHES, BRANCH_PINYIN, CN_EL_INFO } from './astrology/chinese.js';
 import { ASPECTS } from './astrology/aspects.js';
 
 const T = '︎';
@@ -165,10 +165,9 @@ NAKSHATRA_INFO.forEach((n, i) => {
     attrs: [['Deity', n.deity], ['Symbol', n.symbol], ['Gana', n.gana], ['Yoni', n.yoni]] });
 });
 ANIMALS.forEach((a, i) => {
-  const ai = ANIMAL_INFO[a];
   const s = branchStart(i);
   add(`branch:${a}`, { kind: 'branch', kindLabel: 'Earthly branch', name: a, glyph: BRANCHES[i], colour: CN_EL_INFO[BRANCH_PHASE[i]].color, essence: BRANCH_ESSENCE[a], start: s, end: (s + 30) % 360,
-    attrs: [['Branch', `${BRANCHES[i]} ${BRANCH_PINYIN[i]}`], ['Double hour', `${String((23 + i * 2) % 24).padStart(2, '0')}:00 to ${String((1 + i * 2) % 24).padStart(2, '0')}:00`], ['Character', `${ai.emoji}`]] });
+    attrs: [['Branch', `${BRANCHES[i]} ${BRANCH_PINYIN[i]}`], ['Double hour', `${String((23 + i * 2) % 24).padStart(2, '0')}:00 to ${String((1 + i * 2) % 24).padStart(2, '0')}:00`]] });
 });
 for (const [ph, p] of Object.entries(PHASES)) add(`phase:${ph}`, { kind: 'phase', kindLabel: 'Chinese phase', name: ph, glyph: p.hanzi, colour: CN_EL_INFO[ph].color, essence: p.essence, attrs: [['Season', p.season], ['Direction', p.direction], ['Colour', p.colour]] });
 for (const [name, a] of Object.entries(ANGLES)) add(`angle:${name}`, { kind: 'angle', kindLabel: 'Angle', name, glyph: a.glyph, colour: '#E9C766', essence: a.essence, key: a.key, attrs: [['Latin', a.latin], ['Cusp of', `the ${ord(a.house)} house`]] });
