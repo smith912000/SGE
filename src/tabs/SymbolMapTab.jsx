@@ -27,16 +27,24 @@ const XIU_BY_KEY = Object.fromEntries(XIU.map((x) => [x[0], `xiu:${x[3]}`]));
 const INK = { star: '244,241,237', fig: '234,223,196', gold: '201,168,76', nak: '217,142,95', xiu: '147,184,154' };
 
 // The atlas cards, loaded the first time their figure is shown.
+// Each card is decoded once, off the main thread where the browser allows,
+// and kept as a ready bitmap so drawing it never waits on decoding.
 const ART_IMG = {};
 let artRepaint = null;
 function artImage(file) {
-  let im = ART_IMG[file];
-  if (!im) {
-    im = ART_IMG[file] = new Image();
-    im.onload = () => artRepaint?.();
+  let a = ART_IMG[file];
+  if (!a) {
+    a = ART_IMG[file] = { ready: null };
+    const im = new Image();
+    im.decoding = 'async';
+    im.onload = () => {
+      const done = (bm) => { a.ready = bm; artRepaint?.(); };
+      if (typeof createImageBitmap === 'function') createImageBitmap(im).then(done, () => done(im));
+      else done(im);
+    };
     im.src = `${import.meta.env.BASE_URL}sky-art/${file}`;
   }
-  return im.complete && im.naturalWidth ? im : null;
+  return a.ready;
 }
 // A card as a grid of points on the sky: card pixel -> azimuthal equidistant plane -> RA/Dec.
 const GX = 8, GY = 11;
@@ -49,7 +57,7 @@ const NAK_ICON = {"Ashwini": "vedic/nak-ashwini.webp", "Bharani": "vedic/nak-bha
 function drawPicture(g, file, x, y, w, alpha, round) {
   const im = artImage(file);
   if (!im) return;
-  const h = w * im.naturalHeight / im.naturalWidth;
+  const h = w * im.height / im.width;
   g.save(); g.globalAlpha = alpha;
   if (round) { g.beginPath(); g.arc(x, y, w / 2, 0, 7); g.clip(); }
   g.drawImage(im, x - w / 2, y - h / 2, w, h);
@@ -72,7 +80,7 @@ function atlasGrid(a, hv) {
 }
 // One triangle of the card, stretched onto its place on the sky.
 function texTri(g, img, s, d) {
-  const W = img.naturalWidth, H = img.naturalHeight;
+  const W = img.width, H = img.height;
   const [[u0, v0], [u1, v1], [u2, v2]] = s.map(([u, v]) => [u * W, v * H]);
   const [[x0, y0], [x1, y1], [x2, y2]] = d;
   const den = u0 * (v1 - v2) + u1 * (v2 - v0) + u2 * (v0 - v1);
@@ -211,7 +219,12 @@ function buildScene({ jd, lat, lon, pos, ay, houses }) {
   return scene;
 }
 
-function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near) {
+// While the sky is moving, the cards use a coarser mesh and the glows are left off;
+// the full drawing comes back as soon as it settles.
+const FULL_X = [...Array(GX + 1).keys()], FULL_Y = [...Array(GY + 1).keys()];
+const FAST_X = [0, 2, 4, 6, 8], FAST_Y = [0, 2, 4, 6, 8, 11];
+const SETTLE_MS = 160;
+function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near, fast) {
   const dpr = window.devicePixelRatio || 1;
   const w = cv.clientWidth, h = cv.clientHeight;
   if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
@@ -232,7 +245,7 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near) {
       if (pen) g.lineTo(p[0], p[1]); else { g.moveTo(p[0], p[1]); pen = true; }
     }
     g.strokeStyle = style; g.lineWidth = width;
-    if (glow) { g.shadowColor = style; g.shadowBlur = glow; }
+    if (glow && !fast) { g.shadowColor = style; g.shadowBlur = glow; }
     g.stroke();
     g.shadowBlur = 0;
   };
@@ -247,13 +260,15 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near) {
     const img = artImage(a.img);
     if (!img) return;
     const P = a.grid.map(([, , v]) => project(v));
+    const xs = fast ? FAST_X : FULL_X, ys = fast ? FAST_Y : FULL_Y;
     g.save(); g.globalAlpha = alpha;
-    for (let j = 0; j < GY; j++) for (let i = 0; i < GX; i++) {
-      const k = j * (GX + 1) + i, quad = [k, k + 1, k + GX + 1, k + GX + 2];
-      if (quad.some((q) => !P[q])) continue;
-      if (Math.abs((P[quad[3]][0] - P[k][0]) * (P[quad[3]][1] - P[k][1])) > w * h) continue;
-      texTri(g, img, [a.grid[k], a.grid[k + 1], a.grid[k + GX + 1]], [P[k], P[k + 1], P[k + GX + 1]]);
-      texTri(g, img, [a.grid[k + 1], a.grid[k + GX + 2], a.grid[k + GX + 1]], [P[k + 1], P[k + GX + 2], P[k + GX + 1]]);
+    for (let jj = 0; jj < ys.length - 1; jj++) for (let ii = 0; ii < xs.length - 1; ii++) {
+      const r0 = ys[jj] * (GX + 1), r1 = ys[jj + 1] * (GX + 1);
+      const k = r0 + xs[ii], k1 = r0 + xs[ii + 1], k2 = r1 + xs[ii], k3 = r1 + xs[ii + 1];
+      if (!P[k] || !P[k1] || !P[k2] || !P[k3]) continue;
+      if (Math.abs((P[k3][0] - P[k][0]) * (P[k3][1] - P[k][1])) > w * h) continue;
+      texTri(g, img, [a.grid[k], a.grid[k1], a.grid[k2]], [P[k], P[k1], P[k2]]);
+      texTri(g, img, [a.grid[k1], a.grid[k3], a.grid[k2]], [P[k1], P[k3], P[k2]]);
     }
     g.restore();
   };
@@ -277,7 +292,7 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near) {
           if (p0 && p1) hits.push({ seg: [p0[0], p0[1], p1[0], p1[1]], id: f.ent, name: f.name });
         }
       }
-      if (on) for (const ln of f.lines) for (const v of ln) { const p = project(v); if (p) { g.beginPath(); g.arc(p[0], p[1], 2.4 * s, 0, 7); g.fillStyle = '#FFF8E6'; g.shadowColor = '#FFE9B0'; g.shadowBlur = 12; g.fill(); g.shadowBlur = 0; } }
+      if (on) for (const ln of f.lines) for (const v of ln) { const p = project(v); if (p) { g.beginPath(); g.arc(p[0], p[1], 2.4 * s, 0, 7); g.fillStyle = '#FFF8E6'; g.shadowColor = '#FFE9B0'; g.shadowBlur = fast ? 0 : 12; g.fill(); g.shadowBlur = 0; } }
       const pa = f.at && project(f.at);
       if (pa && (f.major || on || view.h < 45)) {
         text(f.major || on ? f.name.toUpperCase() : f.name, pa, `rgba(${INK.fig},${on ? 0.95 : f.major ? 0.5 : 0.36})`, (f.major ? 11 : 10) * Math.min(s, 1.4), 'sans');
@@ -329,7 +344,7 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near) {
     const a = Math.min(1, 0.28 + (5.4 - m) * 0.17) * dim(v);
     g.beginPath(); g.arc(p[0], p[1], r, 0, 7);
     g.fillStyle = `rgba(${INK.star},${a})`;
-    if (m < 1.2) { g.shadowColor = 'rgba(255,248,230,.8)'; g.shadowBlur = 6; }
+    if (m < 1.2) { g.shadowColor = 'rgba(255,248,230,.8)'; g.shadowBlur = fast ? 0 : 6; }
     g.fill(); g.shadowBlur = 0;
   }
   for (const st of scene.named) { const p = project(st.v); if (p) { hits.push({ x: p[0], y: p[1], r: 6, name: st.n }); if (view.h < 40 && st.m < 1.6) text(st.n, [p[0] + 6, p[1] + 9], 'rgba(244,241,237,.42)', 10, 'sans', 'left'); } }
@@ -342,7 +357,7 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near) {
     if (p) {
       const r = (on ? 11 : 8) * Math.min(s, 1.6);
       g.save(); g.translate(p[0], p[1]);
-      g.strokeStyle = `rgba(255,236,190,${on ? 1 : 0.8})`; g.lineWidth = 1.1; g.shadowColor = '#FFE9B0'; g.shadowBlur = on ? 14 : 8;
+      g.strokeStyle = `rgba(255,236,190,${on ? 1 : 0.8})`; g.lineWidth = 1.1; g.shadowColor = '#FFE9B0'; g.shadowBlur = fast ? 0 : on ? 14 : 8;
       g.beginPath(); for (let k = 0; k < 4; k++) { const t = (k * Math.PI) / 2; g.moveTo(Math.cos(t) * r * 0.35, Math.sin(t) * r * 0.35); g.lineTo(Math.cos(t) * r * 1.6, Math.sin(t) * r * 1.6); } g.stroke();
       g.beginPath(); g.arc(0, 0, r, 0, 7); g.stroke();
       g.beginPath(); g.arc(0, 0, 2.6 * s, 0, 7); g.fillStyle = '#FFF8E6'; g.fill();
@@ -363,7 +378,7 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near) {
       if (on) { poly(sg.n, `rgba(${INK.gold},.75)`, 1.2, 8); poly(sg.s, `rgba(${INK.gold},.75)`, 1.2, 8); }
       const p = project(sg.label);
       if (p) {
-        if (on) { g.shadowColor = SIGN_COL[SIGNS[sg.i]]; g.shadowBlur = 14; }
+        if (on) { g.shadowColor = SIGN_COL[SIGNS[sg.i]]; g.shadowBlur = fast ? 0 : 14; }
         if (!drawSigil(g, sg.ent, p[0], p[1], 15 * Math.min(s, 1.5), SIGN_COL[SIGNS[sg.i]])) text(SIGN_SYM[sg.i], p, SIGN_COL[SIGNS[sg.i]], 17 * Math.min(s, 1.5));
         g.shadowBlur = 0;
         hits.push({ x: p[0], y: p[1], r: 13, id: sg.ent });
@@ -399,7 +414,7 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near) {
       if (icon && (on || view.h < 80)) { const w = (on ? 96 : 30) * Math.min(s, 1.6); drawPicture(g, icon, p[0], p[1] - w * 0.45 - 8, w, on ? 0.95 : 0.42); }
       g.beginPath(); g.arc(p[0], p[1], (on ? 7 : 5) * Math.min(s, 1.5), 0, 7);
       g.strokeStyle = `rgba(${INK.nak},${on ? 1 : 0.6})`; g.lineWidth = on ? 1.4 : 0.9;
-      if (on) { g.shadowColor = `rgb(${INK.nak})`; g.shadowBlur = 12; }
+      if (on) { g.shadowColor = `rgb(${INK.nak})`; g.shadowBlur = fast ? 0 : 12; }
       g.stroke(); g.shadowBlur = 0;
       if (on || view.h < 55) text(on ? NAKSHATRA_INFO[n.i].name : String(n.i + 1), [p[0], p[1] + 13 * Math.min(s, 1.5)], `rgba(${INK.nak},${on ? 1 : 0.7})`, (on ? 12 : 10) * Math.min(s, 1.3), 'sans');
       hits.push({ x: p[0], y: p[1], r: 10, id: n.ent });
@@ -451,7 +466,7 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near) {
     if (size) {
       g.beginPath(); g.arc(p[0], p[1], size * Math.min(s, 1.6), 0, 7);
       g.fillStyle = e.colour; g.globalAlpha = dim(b.v);
-      g.shadowColor = e.colour; g.shadowBlur = (b.b === 'Sun' ? 22 : 8) + (on ? 12 : 0);
+      g.shadowColor = e.colour; g.shadowBlur = fast ? 0 : (b.b === 'Sun' ? 22 : 8) + (on ? 12 : 0);
       g.fill(); g.shadowBlur = 0; g.globalAlpha = 1;
     }
     if (on) { g.beginPath(); g.arc(p[0], p[1], (size || 4) * Math.min(s, 1.6) + 7, 0, 7); g.strokeStyle = e.colour; g.lineWidth = 1; g.stroke(); }
@@ -484,6 +499,7 @@ export default function SymbolMapTab({ ctx = {} }) {
   const [trail, setTrail] = useState(() => (idFromHash() ? [idFromHash()] : []));
   const cvRef = useRef(null), hitsRef = useRef([]), viewRef = useRef(view), flight = useRef(0), panelRef = useRef(null);
   viewRef.current = view;
+  const paintRef = useRef({ view: null, movedAt: -Infinity });
 
   const related = useMemo(() => {
     const ids = new Set();
@@ -497,12 +513,22 @@ export default function SymbolMapTab({ ctx = {} }) {
     const cv = cvRef.current;
     if (!cv) return;
     const near = (id, kinds) => [hover?.id, focus].some((t) => t && (t === id || (kinds.includes(ENTITIES[t]?.kind) && ENTITIES[t].links.some((l) => l.to === id))));
-    const paint = () => drawSky(cv, scene, view, shown, lit, focus, hitsRef, hover?.id ? null : hover?.name, near);
+    const moved = paintRef.current.view !== view;
+    paintRef.current.view = view;
+    if (moved) paintRef.current.movedAt = performance.now();
+    let frame = 0, settle = 0;
+    const draw = () => {
+      frame = 0;
+      const fast = performance.now() - paintRef.current.movedAt < SETTLE_MS;
+      drawSky(cv, scene, view, shown, lit, focus, hitsRef, hover?.id ? null : hover?.name, near, fast);
+      if (fast) settle = setTimeout(paint, SETTLE_MS);
+    };
+    const paint = () => { clearTimeout(settle); if (!frame) frame = requestAnimationFrame(draw); };
     paint();
     artRepaint = paint;
     const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(paint) : null;
     ro?.observe(cv);
-    return () => ro?.disconnect();
+    return () => { ro?.disconnect(); cancelAnimationFrame(frame); clearTimeout(settle); };
   }, [scene, view, shown, lit, focus, hover]);
 
   const flyTo = useCallback((id) => {
