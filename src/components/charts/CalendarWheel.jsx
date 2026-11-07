@@ -28,9 +28,9 @@ function wedgePath(cx, cy, rOuter, rInner, startDeg, endDeg) {
 }
 
 const RING_PALETTES = [
-  { base: "#B9A9F0", active: "#e0b0ff", glow: "rgba(187,134,252,0.25)" },
+  { base: "#9EDCCB", active: "#e0b0ff", glow: "rgba(187,134,252,0.25)" },
   { base: "#8FC1C9", active: "#a7f3d0", glow: "rgba(128,203,196,0.22)" },
-  { base: "#E9C766", active: "#E9C766", glow: "rgba(246,200,64,0.22)" },
+  { base: "#EBA37F", active: "#EBA37F", glow: "rgba(246,200,64,0.22)" },
   { base: "#D7A6A0", active: "#D7A6A0", glow: "rgba(244,143,177,0.22)" },
 ];
 
@@ -154,7 +154,7 @@ export default function CalendarWheel({ model, size = 500, onTooltip, showOverla
                       textAnchor="middle" dominantBaseline="middle"
                       fill={isActive ? palette.active : M3.onSurfaceVariant}
                       fontSize={labelFontSize}
-                      fontFamily="'Cormorant Garamond', Georgia, serif"
+                      fontFamily="'Cinzel', Georgia, serif"
                       opacity={isActive ? 0.95 : 0.55}
                       style={{
                         userSelect: "none", pointerEvents: "none",
@@ -171,7 +171,7 @@ export default function CalendarWheel({ model, size = 500, onTooltip, showOverla
               x={cx + (ringOuter + 4) * Math.cos((-90 + 2) * RAD)}
               y={cy + (ringOuter + 4) * Math.sin((-90 + 2) * RAD)}
               fill={palette.base} fontSize={Math.max(7, R * 0.015)}
-              fontFamily="'JetBrains Mono', monospace" opacity="0.25"
+              fontFamily="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace" opacity="0.25"
               textAnchor="start" dominantBaseline="middle"
               style={{ userSelect: "none", pointerEvents: "none" }}>
               {ring.label}
@@ -194,13 +194,13 @@ export default function CalendarWheel({ model, size = 500, onTooltip, showOverla
         return (
           <g className="cw-overlay">
             <circle cx={cx} cy={cy} r={R * 0.985} fill="none"
-              stroke="#E9C766" strokeWidth="0.8" strokeDasharray="3 6" opacity="0.2" />
+              stroke="#EBA37F" strokeWidth="0.8" strokeDasharray="3 6" opacity="0.2" />
             <line x1={ix} y1={iy} x2={ox} y2={oy}
-              stroke="#E9C766" strokeWidth="1" opacity="0.85"
+              stroke="#EBA37F" strokeWidth="1" opacity="0.85"
               strokeLinecap="round"
               style={{ cursor: "pointer" }}
               onMouseMove={(e) => handleMove(e, tipInfo)} onMouseLeave={handleLeave} />
-            <circle cx={ox} cy={oy} r={S * 0.008} fill="#E9C766" opacity="0.9">
+            <circle cx={ox} cy={oy} r={S * 0.008} fill="#EBA37F" opacity="0.9">
               <animate attributeName="r" values={`${S*0.008};${S*0.011};${S*0.008}`} dur="2s" repeatCount="indefinite" />
               <animate attributeName="opacity" values="0.9;0.6;0.9" dur="2s" repeatCount="indefinite" />
             </circle>
@@ -217,7 +217,7 @@ export default function CalendarWheel({ model, size = 500, onTooltip, showOverla
         x={cx} y={cy - S * 0.016}
         textAnchor="middle" fill={M3.primary}
         fontSize={R * 0.035}
-        fontFamily="'Cormorant Garamond', Georgia, serif"
+        fontFamily="'Cinzel', Georgia, serif"
         style={{ filter: `drop-shadow(0 0 6px ${M3.primary}44)` }}>
         {model.title}
       </text>
@@ -225,7 +225,7 @@ export default function CalendarWheel({ model, size = 500, onTooltip, showOverla
         x={cx} y={cy + S * 0.018}
         textAnchor="middle" fill={M3.onSurfaceVariant}
         fontSize={R * 0.02}
-        fontFamily="'JetBrains Mono', monospace" opacity="0.6">
+        fontFamily="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace" opacity="0.6">
         {model.confidence}
       </text>
       {model.nativeRings[0]?.segments[model.nativeRings[0]?.activeIndex]?.label && (
@@ -233,7 +233,7 @@ export default function CalendarWheel({ model, size = 500, onTooltip, showOverla
           x={cx} y={cy + S * 0.04}
           textAnchor="middle" fill={RING_PALETTES[0].active}
           fontSize={R * 0.018}
-          fontFamily="'Cormorant Garamond', Georgia, serif" opacity="0.7"
+          fontFamily="'Cinzel', Georgia, serif" opacity="0.7"
           style={{ userSelect: "none" }}>
           {model.nativeRings[0].segments[model.nativeRings[0].activeIndex].label}
         </text>

@@ -4,9 +4,9 @@ export const P_SYM = Object.fromEntries(Object.entries({ Sun: "☉", Moon: "☽"
 // Muted planetary colours after the traditional metals: gold, silver,
 // quicksilver, copper, iron, tin, lead; the modern bodies in cool tones.
 export const P_COL = {
-  Sun: "#E9C766", Moon: "#D8DEE6", Mercury: "#B8C4B0", Venus: "#D7A6A0",
+  Sun: "#EBA37F", Moon: "#D8DEE6", Mercury: "#B8C4B0", Venus: "#D7A6A0",
   Mars: "#D07262", Jupiter: "#A5A9D9", Saturn: "#A89A82", Uranus: "#8FC1C9",
-  Neptune: "#7F95C9", Pluto: "#A27D9A", Chiron: "#B9A9F0", Node: "#A6A2B0", Lilith: "#B88AA8",
+  Neptune: "#7F95C9", Pluto: "#A27D9A", Chiron: "#9EDCCB", Node: "#A3B0AB", Lilith: "#B88AA8",
 };
 export const P_ROLE = {
   // Classical designations. The seven traditional bodies carry the office the

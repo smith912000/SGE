@@ -15,10 +15,10 @@ function ResonanceIndicator({ res }) {
 export default function AspectTable({ aspects }) {
   const TH = {
     padding: "5px 10px", textAlign: "left", color: M3.secondary,
-    fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem",
+    fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem",
     letterSpacing: "0.1em", borderBottom: `1px solid ${M3.outlineVariant}`
   };
-  const TD = { padding: "4px 10px", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.onSurface };
+  const TD = { padding: "4px 10px", fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", color: M3.onSurface };
   const cleanName = n => n.replace(/^(T_|B_|A_|natal_|transit_)/, "");
   return (
     <div style={{ overflowX: "auto" }}>

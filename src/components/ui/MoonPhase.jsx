@@ -13,7 +13,7 @@ export default function MoonPhase({ angle = 0, size = 40, title }) {
   const d = `M${c},${c - r} A${r},${r} 0 0,${sweepLimb} ${c},${c + r} A${rx},${r} 0 0,${sweepTerm} ${c},${c - r} Z`;
   return (
     <svg width={size} height={size} viewBox="0 0 40 40" role="img" aria-label={title}>
-      <circle cx={c} cy={c} r={r} fill="#19112B" stroke="rgba(216,222,230,.35)" strokeWidth="0.8" />
+      <circle cx={c} cy={c} r={r} fill="#172B25" stroke="rgba(216,222,230,.35)" strokeWidth="0.8" />
       <path d={d} fill="#D8DEE6" />
     </svg>
   );

@@ -250,7 +250,7 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near, f
     g.shadowBlur = 0;
   };
   const text = (str, p, colour, size, font = 'serif', align = 'center') => {
-    g.font = `${size}px ${font === 'serif' ? "'Cormorant Garamond', Georgia, serif" : "'DM Sans', system-ui, sans-serif"}`;
+    g.font = `${size}px ${font === 'serif' ? "'Cinzel', Georgia, serif" : "'DM Sans', system-ui, sans-serif"}`;
     g.textAlign = align; g.textBaseline = 'middle'; g.fillStyle = colour;
     g.fillText(str, p[0], p[1]);
   };
@@ -347,7 +347,7 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near, f
     if (m < 1.2) { g.shadowColor = 'rgba(255,248,230,.8)'; g.shadowBlur = fast ? 0 : 6; }
     g.fill(); g.shadowBlur = 0;
   }
-  for (const st of scene.named) { const p = project(st.v); if (p) { hits.push({ x: p[0], y: p[1], r: 6, name: st.n }); if (view.h < 40 && st.m < 1.6) text(st.n, [p[0] + 6, p[1] + 9], 'rgba(244,241,237,.42)', 10, 'sans', 'left'); } }
+  for (const st of scene.named) { const p = project(st.v); if (p) { hits.push({ x: p[0], y: p[1], r: 6, name: st.n }); if (view.h < 40 && st.m < 1.6) text(st.n, [p[0] + 6, p[1] + 9], 'rgba(237,239,230,.42)', 10, 'sans', 'left'); } }
 
   // Polaris, the North Star: always marked, with the Plough's pointers when it is touched.
   {

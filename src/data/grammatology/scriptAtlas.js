@@ -75,7 +75,7 @@ export const SCRIPT_ATLAS = [
     region: "Armenia, Georgia, Slavic lands, Albania, Balkans",
     era: "c. 400 – 900 CE",
     desc: "Missionary linguists created bespoke alphabets to Christianise their nations. Armenian (38 letters) and Georgian (33) were designed from scratch; Glagolitic and Cyrillic (33, Russian) were crafted for Slavic languages from Greek models. Each expanded well beyond 22 to capture unique phonemes.",
-    color: "#B9A9F0",
+    color: "#9EDCCB",
     scripts: [
       { name:"Armenian", letters:"38 (originally 36)", type:"Alphabet", status:"Living", cultures:["Armenia","Armenian diaspora"], mapped:true },
       { name:"Georgian", letters:"33", type:"Alphabet", status:"Living", cultures:["Georgia","Kartvelian peoples"], mapped:true },
@@ -274,7 +274,7 @@ export const SCRIPT_ATLAS = [
     region: "n/a",
     era: "1991 – present",
     desc: "Technical Unicode categories for characters that belong to no single script (Common) or inherit the script of their context (Inherited). Included for completeness.",
-    color: "#A6A2B0",
+    color: "#A3B0AB",
     scripts: [
       { name:"Common", letters:"n/a", type:"Meta", status:"Technical", cultures:["Unicode standard: punctuation, digits, symbols"] },
       { name:"Inherited", letters:"n/a", type:"Meta", status:"Technical", cultures:["Unicode standard: combining marks inheriting parent script"] },

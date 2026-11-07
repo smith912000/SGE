@@ -97,4 +97,4 @@ export const SIGN_INFO = {
   },
 };
 export const EL_COL = { Fire: "#D07262", Earth: "#93B89A", Air: "#8FC1C9", Water: "#7FA8C9" };
-export const MOD_COL = { Cardinal: "#D98E5F", Fixed: "#8A6FE0", Mutable: "#8FC1C9" };
+export const MOD_COL = { Cardinal: "#D98E5F", Fixed: "#4DB8A2", Mutable: "#8FC1C9" };

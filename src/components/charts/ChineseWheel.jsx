@@ -133,7 +133,7 @@ export default function ChineseWheel({ cn, size = 460, onTooltip }) {
             </g>
             <g style={{ transformOrigin:`${tx}px ${ty-R*0.01}px`, animation:"cnSpinCW 120s linear infinite" }}>
               <text x={tx} y={ty-R*0.01} textAnchor="middle" dominantBaseline="middle"
-                fill={isActive ? cream : cream+"55"} fontSize={R*0.033} fontFamily="'JetBrains Mono', monospace"
+                fill={isActive ? cream : cream+"55"} fontSize={R*0.033} fontFamily="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace"
                 fontWeight={isActive?"700":"400"} style={{userSelect:"none"}}>{animal}</text>
             </g>
             <g style={{ transformOrigin:`${bx}px ${by}px`, animation:"cnSpinCW 120s linear infinite" }}>
@@ -173,7 +173,7 @@ export default function ChineseWheel({ cn, size = 460, onTooltip }) {
             <path d={elPath} fill={isActive ? col+"25" : col+"0a"} stroke={isActive ? col : col+"33"} strokeWidth={isActive ? 1.5 : 0.5}/>
             <g style={{ transformOrigin:`${lx}px ${ly}px`, animation:"cnSpinCCW 90s linear infinite" }}>
               <text x={lx} y={ly} textAnchor="middle" dominantBaseline="middle"
-                fill={isActive ? col : col+"77"} fontSize={R*0.034} fontFamily="'JetBrains Mono', monospace"
+                fill={isActive ? col : col+"77"} fontSize={R*0.034} fontFamily="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace"
                 fontWeight={isActive?"700":"400"} style={{userSelect:"none"}}>{el}</text>
             </g>
           </g>
@@ -247,7 +247,7 @@ export default function ChineseWheel({ cn, size = 460, onTooltip }) {
       {activeIdx >= 0 && (
         <g>
           <text x={cx} y={cy + yyR + R*0.10} textAnchor="middle" dominantBaseline="middle"
-            fill={gold} fontSize={R*0.058} fontFamily="'JetBrains Mono', monospace" fontWeight="700" style={{userSelect:"none"}}>
+            fill={gold} fontSize={R*0.058} fontFamily="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace" fontWeight="700" style={{userSelect:"none"}}>
             {cn.stem}{cn.branch} · {cn.stemPinyin}-{cn.branchPinyin}
           </text>
           <text x={cx} y={cy + yyR + R*0.155} textAnchor="middle" dominantBaseline="middle"

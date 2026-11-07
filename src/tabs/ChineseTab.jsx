@@ -39,7 +39,7 @@ export default function ChineseTab({ ctx }) {
     background: cnSubTab===id ? M3.primary : "transparent",
     color: cnSubTab===id ? M3.onPrimary : M3.onSurfaceVariant,
     border: `1px solid ${cnSubTab===id ? M3.primary : M3.outlineVariant+"55"}`,
-    fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", fontWeight: cnSubTab===id ? "700" : "400",
+    fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", fontWeight: cnSubTab===id ? "700" : "400",
   });
 
   return (
@@ -55,11 +55,11 @@ export default function ChineseTab({ ctx }) {
       {/* ═══════════════════ OVERVIEW ═══════════════════ */}
       {cnSubTab==="overview" && (<>
         <Card style={{ background:`linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor:M3.outline }}>
-          <div style={{ fontFamily:"'Cormorant Garamond', Georgia, serif", fontSize:"1rem", color:M3.primary, marginBottom:4 }}>
+          <div style={{ fontFamily:"'Cinzel', Georgia, serif", fontSize:"1rem", color:M3.primary, marginBottom:4 }}>
             {CHINESE_ASTRO_INTRO?.titleEn || "Chinese Astrology: The Sexagenary Cycle"}
           </div>
           {CHINESE_ASTRO_INTRO?.titleZh && (
-            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, marginBottom:8 }}>
+            <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.secondary, marginBottom:8 }}>
               {CHINESE_ASTRO_INTRO.titleZh}
             </div>
           )}
@@ -85,23 +85,23 @@ export default function ChineseTab({ ctx }) {
               {res.cn.stemPinyin}-{res.cn.branchPinyin}
             </div>
             {ext && (
-              <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.tertiary, marginTop:4 }}>
+              <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.tertiary, marginTop:4 }}>
                 {ext.zh} · Branch: {ext.branch} · Trine {ext.trine}
               </div>
             )}
             {res.cn.lunar && (
               <div style={{ marginTop:8, padding:"6px 18px", borderRadius:20, background:M3.surfaceVariant+"66", display:"inline-block" }}>
-                <span style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.76rem", color:M3.primary, fontWeight:"700" }}>
+                <span style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.76rem", color:M3.primary, fontWeight:"700" }}>
                   Day {res.cn.lunar.day}, {res.cn.lunar.monthName} Month
                 </span>
                 <span style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", color:M3.onSurfaceVariant, marginLeft:8 }}>(lunisolar calendar)</span>
               </div>
             )}
             <div style={{ marginTop:8, display:"flex", justifyContent:"center", gap:8, flexWrap:"wrap" }}>
-              <span style={{ padding:"4px 14px", borderRadius:20, background:ei.color+"22", border:`1px solid ${ei.color}66`, color:ei.color, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", fontWeight:"700" }}>{res.cn.element}</span>
-              <span style={{ padding:"4px 14px", borderRadius:20, background:M3.primaryContainer, color:M3.onPrimaryContainer, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem" }}>{pi.label}</span>
+              <span style={{ padding:"4px 14px", borderRadius:20, background:ei.color+"22", border:`1px solid ${ei.color}66`, color:ei.color, fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", fontWeight:"700" }}>{res.cn.element}</span>
+              <span style={{ padding:"4px 14px", borderRadius:20, background:M3.primaryContainer, color:M3.onPrimaryContainer, fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem" }}>{pi.label}</span>
             </div>
-            <div style={{ color:M3.onSurfaceVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", marginTop:6 }}>
+            <div style={{ color:M3.onSurfaceVariant, fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", marginTop:6 }}>
               Position {res.cn.cycle60} of 60 in the Sexagenary Cycle
             </div>
             {res.cn.effectiveYear && res.cn.effectiveYear !== A.year && (
@@ -123,13 +123,13 @@ export default function ChineseTab({ ctx }) {
         <Card title={`${ai.emoji} The ${res.cn.animal}, ${ai.archetype}`}>
           <div style={{ display:"flex", gap:10, flexWrap:"wrap", marginBottom:12 }}>
             {(ai.trait||"").split(", ").map(t=>(
-              <span key={t} style={{ padding:"3px 12px", borderRadius:16, background:M3.primaryContainer, color:M3.onPrimaryContainer, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem" }}>{t}</span>
+              <span key={t} style={{ padding:"3px 12px", borderRadius:16, background:M3.primaryContainer, color:M3.onPrimaryContainer, fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem" }}>{t}</span>
             ))}
           </div>
           <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.82rem", lineHeight:1.7, color:M3.onSurface, margin:0 }}>{ai.desc}</p>
           {ai.shadow && (
             <div style={{ marginTop:12, padding:"10px 14px", borderRadius:10, background:"#D0726211", border:"1px solid #D0726233" }}>
-              <span style={{ color:"#DDA095", fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", fontWeight:"700" }}>ALSO ATTRIBUTED: </span>
+              <span style={{ color:"#DDA095", fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", fontWeight:"700" }}>ALSO ATTRIBUTED: </span>
               <span style={{ color:M3.onSurfaceVariant, fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem" }}>{ai.shadow}</span>
             </div>
           )}
@@ -139,24 +139,24 @@ export default function ChineseTab({ ctx }) {
         {ext && (
           <Card title={`Extended Shēngxiào Profile: ${res.cn.animal}`}>
             <div style={{ display:"flex", flexWrap:"wrap", gap:8, marginBottom:12 }}>
-              <span style={{ padding:"4px 10px", borderRadius:14, background:M3.surfaceVariant+"55", color:M3.onSurface, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem" }}>
+              <span style={{ padding:"4px 10px", borderRadius:14, background:M3.surfaceVariant+"55", color:M3.onSurface, fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem" }}>
                 {ext.zh} ({ext.pinyin})
               </span>
-              <span style={{ padding:"4px 10px", borderRadius:14, background:M3.primaryContainer, color:M3.onPrimaryContainer, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem" }}>
+              <span style={{ padding:"4px 10px", borderRadius:14, background:M3.primaryContainer, color:M3.onPrimaryContainer, fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem" }}>
                 {ext.yinYang} · {ext.fixedElement}
               </span>
-              <span style={{ padding:"4px 10px", borderRadius:14, background:M3.tertiaryContainer||M3.surfaceVariant, color:M3.onTertiaryContainer||M3.onSurface, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem" }}>
+              <span style={{ padding:"4px 10px", borderRadius:14, background:M3.tertiaryContainer||M3.surfaceVariant, color:M3.onTertiaryContainer||M3.onSurface, fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem" }}>
                 Branch: {ext.branch} · Trine {ext.trine}
               </span>
               {ext.heavenlyCreature && (
-                <span style={{ padding:"4px 10px", borderRadius:14, background:"#c9a84022", border:"1px solid #c9a84055", color:"#c9a840", fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem" }}>
+                <span style={{ padding:"4px 10px", borderRadius:14, background:"#c9a84022", border:"1px solid #c9a84055", color:"#c9a840", fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem" }}>
                   {ext.heavenlyCreature}
                 </span>
               )}
             </div>
             <div style={grid2}>
               <div>
-                <div style={{ color:M3.secondary, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", letterSpacing:"0.08em", marginBottom:4 }}>TIME / POSITION</div>
+                <div style={{ color:M3.secondary, fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", letterSpacing:"0.08em", marginBottom:4 }}>TIME / POSITION</div>
                 <p style={{ margin:"0 0 6px", color:M3.onSurfaceVariant, fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", lineHeight:1.55 }}>
                   Lunar month: {ext.lunarMonth} · Hours: {ext.hours}
                 </p>
@@ -175,7 +175,7 @@ export default function ChineseTab({ ctx }) {
                 )}
               </div>
               <div>
-                <div style={{ color:"#93B89A", fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", letterSpacing:"0.08em", marginBottom:4 }}>ATTRIBUTED BRANCH RELATIONS</div>
+                <div style={{ color:"#93B89A", fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", letterSpacing:"0.08em", marginBottom:4 }}>ATTRIBUTED BRANCH RELATIONS</div>
                 <p style={{ margin:"0 0 5px", color:M3.onSurfaceVariant, fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", lineHeight:1.55 }}><strong style={{color:"#93B89A"}}>Harmonised:</strong> {(ext.compatible||[]).join(", ")}</p>
                 <p style={{ margin:"0 0 5px", color:M3.onSurfaceVariant, fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", lineHeight:1.55 }}><strong>Neutral:</strong> {(ext.average||[]).join(", ")}</p>
                 <p style={{ margin:"0 0 5px", color:M3.onSurfaceVariant, fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", lineHeight:1.55 }}><strong style={{color:"#ffab40"}}>In tension:</strong> {(ext.conflict||[]).join(", ")}</p>
@@ -184,7 +184,7 @@ export default function ChineseTab({ ctx }) {
             </div>
             {ext.generals && (
               <div style={{ marginTop:10, padding:"8px 12px", borderRadius:8, background:M3.surfaceDim }}>
-                <span style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary }}>HEAVENLY GENERAL: </span>
+                <span style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.secondary }}>HEAVENLY GENERAL: </span>
                 <span style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", color:M3.onSurfaceVariant }}>{ext.generals.sanskrit} ({ext.generals.chinese})</span>
               </div>
             )}
@@ -201,19 +201,19 @@ export default function ChineseTab({ ctx }) {
           <Card title={`Phase of the year stem: ${res.cn.element}`}>
             <div style={{ textAlign:"center", marginBottom:10 }}>
               <div style={{ width:56, height:56, borderRadius:"50%", background:ei.color+"22", border:`2px solid ${ei.color}`, display:"inline-flex", alignItems:"center", justifyContent:"center" }}>
-                <span style={{ color:ei.color, fontFamily:"'JetBrains Mono', monospace", fontSize:"1.4rem", fontWeight:"700" }}>{res.cn.element[0]}</span>
+                <span style={{ color:ei.color, fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"1.4rem", fontWeight:"700" }}>{res.cn.element[0]}</span>
               </div>
             </div>
-            <div style={{ textAlign:"center", color:ei.color, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", fontWeight:"700", marginBottom:8 }}>{ei.trait}</div>
+            <div style={{ textAlign:"center", color:ei.color, fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", fontWeight:"700", marginBottom:8 }}>{ei.trait}</div>
             <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>{ei.desc}</p>
             {eb && (
               <div style={{ marginTop:14 }}>
                 <div style={{ padding:"10px 14px", borderRadius:10, background:"#93B89A08", border:"1px solid #93B89A18", marginBottom:8 }}>
-                  <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#93B89A", letterSpacing:"0.1em", marginBottom:4 }}>WHEN BALANCED</div>
+                  <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:"#93B89A", letterSpacing:"0.1em", marginBottom:4 }}>WHEN BALANCED</div>
                   <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{eb.balanced}</p>
                 </div>
                 <div style={{ padding:"10px 14px", borderRadius:10, background:"#D0726208", border:"1px solid #D0726218", marginBottom:8 }}>
-                  <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#D98E5F", letterSpacing:"0.1em", marginBottom:4 }}>WHEN OUT OF BALANCE</div>
+                  <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:"#D98E5F", letterSpacing:"0.1em", marginBottom:4 }}>WHEN OUT OF BALANCE</div>
                   <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>{eb.imbalanced}</p>
                 </div>
               </div>
@@ -223,7 +223,7 @@ export default function ChineseTab({ ctx }) {
           <Card title={`Polarity: ${pi.label}`}>
             <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.78rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>{pi.desc}</p>
             <div style={{ marginTop:14, padding:"10px 14px", borderRadius:10, background:M3.surfaceDim }}>
-              <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, marginBottom:4 }}>COMBINED READING</div>
+              <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.secondary, marginBottom:4 }}>COMBINED READING</div>
               <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.6, color:M3.onSurface, margin:0 }}>
                 As a <strong style={{color:ei.color}}>{res.cn.element}</strong> <strong style={{color:M3.primary}}>{res.cn.animal}</strong> in a <strong>{res.cn.polarity}</strong> year, the {res.cn.element.toLowerCase()} phase is paired with the {res.cn.animal.toLowerCase()}, to which the tradition attributes a {(ai.trait||"").split(", ")[0]?.toLowerCase()} quality. The {res.cn.polarity} polarity is read as {res.cn.polarity==="Yang"?"outward and assertive":"inward and reflective"}.
               </p>
@@ -235,14 +235,14 @@ export default function ChineseTab({ ctx }) {
         <Card title="Branch relations: harmony and clash">
           <div style={grid2}>
             <div>
-              <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#93B89A", letterSpacing:"0.1em", marginBottom:8 }}>HARMONISED BRANCHES</div>
+              <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:"#93B89A", letterSpacing:"0.1em", marginBottom:8 }}>HARMONISED BRANCHES</div>
               {(ai.compat||[]).map(a=>{
                 const inf=ANIMAL_INFO[a]||{};
                 return (
                   <div key={a} style={{ display:"flex", alignItems:"center", gap:8, padding:"6px 0", borderBottom:`1px solid ${M3.outlineVariant}22` }}>
                     <span style={{ fontSize:"1.2rem" }}>{inf.emoji}</span>
                     <div>
-                      <div style={{ color:M3.onSurface, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", fontWeight:"700" }}>{a}</div>
+                      <div style={{ color:M3.onSurface, fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", fontWeight:"700" }}>{a}</div>
                       <div style={{ color:M3.onSurfaceVariant, fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", fontStyle:"italic" }}>{inf.trait}</div>
                     </div>
                   </div>
@@ -250,14 +250,14 @@ export default function ChineseTab({ ctx }) {
               })}
             </div>
             <div>
-              <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#D07262", letterSpacing:"0.1em", marginBottom:8 }}>CLASHING BRANCHES</div>
+              <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:"#D07262", letterSpacing:"0.1em", marginBottom:8 }}>CLASHING BRANCHES</div>
               {(ai.clash||[]).map(a=>{
                 const inf=ANIMAL_INFO[a]||{};
                 return (
                   <div key={a} style={{ display:"flex", alignItems:"center", gap:8, padding:"6px 0", borderBottom:`1px solid ${M3.outlineVariant}22` }}>
                     <span style={{ fontSize:"1.2rem" }}>{inf.emoji}</span>
                     <div>
-                      <div style={{ color:M3.onSurface, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", fontWeight:"700" }}>{a}</div>
+                      <div style={{ color:M3.onSurface, fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", fontWeight:"700" }}>{a}</div>
                       <div style={{ color:M3.onSurfaceVariant, fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", fontStyle:"italic" }}>{inf.trait}</div>
                     </div>
                   </div>
@@ -276,8 +276,8 @@ export default function ChineseTab({ ctx }) {
             <div style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:6 }}>
               {Object.entries(YEAR_END_STEM_POLARITY).map(([digit,info])=>(
                 <div key={digit} style={{ padding:"6px 8px", borderRadius:8, textAlign:"center", background:M3.surfaceContainer, border:`1px solid ${M3.outlineVariant}33` }}>
-                  <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"1rem", color:M3.primary, fontWeight:"700" }}>{digit}</div>
-                  <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.onSurfaceVariant }}>{info.polarity} {info.element}</div>
+                  <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"1rem", color:M3.primary, fontWeight:"700" }}>{digit}</div>
+                  <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.onSurfaceVariant }}>{info.polarity} {info.element}</div>
                 </div>
               ))}
             </div>
@@ -293,7 +293,7 @@ export default function ChineseTab({ ctx }) {
               const inf=ANIMAL_INFO[cc.animal]||{};
               const isYou=cc.animal===res.cn.animal;
               return (
-                <div key={i} style={{ padding:"5px 8px", borderRadius:8, background:isYou?M3.primaryContainer+"44":"transparent", display:"flex", alignItems:"center", gap:6, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:isYou?M3.tertiary:M3.onSurfaceVariant }}>
+                <div key={i} style={{ padding:"5px 8px", borderRadius:8, background:isYou?M3.primaryContainer+"44":"transparent", display:"flex", alignItems:"center", gap:6, fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:isYou?M3.tertiary:M3.onSurfaceVariant }}>
                   <span style={{ fontSize:"0.9rem" }}>{inf.emoji}</span>
                   <span style={{ minWidth:24 }}>{yr}</span>
                   <span style={{ fontWeight:isYou?"700":"400" }}>{cc.animal}</span>
@@ -328,7 +328,7 @@ export default function ChineseTab({ ctx }) {
               const elCol = CN_EL_INFO[name]?.color || M3.primary;
               return (
                 <div key={name} style={{ padding:"12px", borderRadius:10, border:`1px solid ${active?elCol:M3.outlineVariant+"55"}`, background: active ? elCol+"11" : M3.surfaceContainer }}>
-                  <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:elCol, fontWeight:"700", marginBottom:6 }}>
+                  <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:elCol, fontWeight:"700", marginBottom:6 }}>
                     {name} ({p.zh})
                   </div>
                   <div style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", color:M3.onSurfaceVariant, lineHeight:1.5 }}>
@@ -369,7 +369,7 @@ export default function ChineseTab({ ctx }) {
             {Object.entries(CN_EL_INFO).map(([el,inf])=>{
               const active=res.cn.element===el;
               return (
-                <div key={el} style={{ padding:"7px 16px", borderRadius:20, background:active?inf.color+"33":"transparent", border:`1px solid ${inf.color}${active?"bb":"33"}`, color:active?inf.color:M3.onSurfaceVariant, fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", fontWeight:active?"700":"400" }}>{el}</div>
+                <div key={el} style={{ padding:"7px 16px", borderRadius:20, background:active?inf.color+"33":"transparent", border:`1px solid ${inf.color}${active?"bb":"33"}`, color:active?inf.color:M3.onSurfaceVariant, fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", fontWeight:active?"700":"400" }}>{el}</div>
               );
             })}
           </div>
@@ -386,7 +386,7 @@ export default function ChineseTab({ ctx }) {
             const isYours = tr.signs.includes(res.cn.animal);
             return (
               <div key={tr.trine} style={{ padding:"12px 14px", borderRadius:10, marginBottom:10, border:`1px solid ${isYours ? M3.primary : M3.outlineVariant+"44"}`, background: isYours ? M3.primaryContainer+"33" : M3.surfaceContainer }}>
-                <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color: isYours ? M3.primary : M3.secondary, fontWeight:"700", marginBottom:6 }}>
+                <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color: isYours ? M3.primary : M3.secondary, fontWeight:"700", marginBottom:6 }}>
                   Trine {tr.trine}: {tr.signs.map(s => `${(ANIMAL_INFO[s]||{}).emoji||""} ${s}`).join(" · ")}
                   {isYours && <span style={{ marginLeft:8, color:M3.tertiary, fontSize:"0.75rem" }}>← THIS CHART</span>}
                 </div>
@@ -395,11 +395,11 @@ export default function ChineseTab({ ctx }) {
                 </p>
                 <div style={{ display:"flex", gap:14, flexWrap:"wrap" }}>
                   <div>
-                    <span style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#93B89A", letterSpacing:"0.08em" }}>STRENGTHS: </span>
+                    <span style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:"#93B89A", letterSpacing:"0.08em" }}>STRENGTHS: </span>
                     <span style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", color:M3.onSurfaceVariant }}>{tr.strengths.join(", ")}</span>
                   </div>
                   <div>
-                    <span style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:"#DDA095", letterSpacing:"0.08em" }}>SHADOW: </span>
+                    <span style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:"#DDA095", letterSpacing:"0.08em" }}>SHADOW: </span>
                     <span style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", color:M3.onSurfaceVariant }}>{tr.shadow.join(", ")}</span>
                   </div>
                 </div>
@@ -412,7 +412,7 @@ export default function ChineseTab({ ctx }) {
       {/* ═══════════════════ ZI WEI DOU SHU ═══════════════════ */}
       {cnSubTab==="ziwei" && (<>
         <Card title={`✶ ${ZI_WEI_INFO?.name || "Zi Wei Dou Shu"}`}>
-          <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, marginBottom:8 }}>
+          <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.secondary, marginBottom:8 }}>
             {ZI_WEI_INFO?.hanzi}
           </div>
           {ZI_WEI_INFO?.notes?.map((n,i)=>(
@@ -420,7 +420,7 @@ export default function ChineseTab({ ctx }) {
           ))}
           {ZI_WEI_INFO?.etymology?.length > 0 && (
             <div style={{ marginTop:10, padding:"8px 12px", borderRadius:8, background:M3.surfaceDim }}>
-              <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, marginBottom:4 }}>ETYMOLOGY</div>
+              <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.secondary, marginBottom:4 }}>ETYMOLOGY</div>
               {ZI_WEI_INFO.etymology.map((e,i)=>(
                 <div key={i} style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", color:M3.onSurfaceVariant, lineHeight:1.5 }}>{e}</div>
               ))}
@@ -431,13 +431,13 @@ export default function ChineseTab({ ctx }) {
         <Card title="十二宮 The 12 Palaces">
           <div style={grid2}>
             <div style={{ padding:"10px 12px", borderRadius:10, background:M3.surfaceContainer }}>
-              <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, marginBottom:6 }}>CANONICAL SEQUENCE</div>
+              <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.secondary, marginBottom:6 }}>CANONICAL SEQUENCE</div>
               {(ZI_WEI_PALACES_SEQUENCES?.canonical||[]).map((name,i)=>(
                 <div key={i} style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", color:M3.onSurfaceVariant, lineHeight:1.6 }}>{i+1}. {name}</div>
               ))}
             </div>
             <div style={{ padding:"10px 12px", borderRadius:10, background:M3.surfaceContainer }}>
-              <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, marginBottom:6 }}>HOUSE-STYLE SEQUENCE</div>
+              <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.secondary, marginBottom:6 }}>HOUSE-STYLE SEQUENCE</div>
               {(ZI_WEI_PALACES_SEQUENCES?.houseStyle||[]).map((h,i)=>(
                 <div key={i} style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", color:M3.onSurfaceVariant, lineHeight:1.6 }}>
                   <strong style={{color:M3.primary}}>{h.house}</strong> {h.hanzi}: {h.title}
@@ -451,10 +451,10 @@ export default function ChineseTab({ ctx }) {
           <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))", gap:10 }}>
             {(ZI_WEI_MAJOR_STARS||[]).map((star)=>(
               <div key={star.id} style={{ padding:"10px 12px", borderRadius:10, border:`1px solid ${M3.outlineVariant}55`, background:M3.surfaceContainer }}>
-                <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.primary, fontWeight:"700" }}>
+                <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.primary, fontWeight:"700" }}>
                   {star.hanzi}: {star.title}
                 </div>
-                <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, marginTop:2 }}>{star.element}</div>
+                <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.secondary, marginTop:2 }}>{star.element}</div>
                 <div style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", color:M3.onSurfaceVariant, lineHeight:1.5, marginTop:6 }}>
                   {star.themes.join(" · ")}
                 </div>
@@ -475,11 +475,11 @@ export default function ChineseTab({ ctx }) {
               const isYours = g.linkedSign === res.cn.animal;
               return (
                 <div key={i} style={{ padding:"10px 12px", borderRadius:10, border:`1px solid ${isYours ? M3.primary : M3.outlineVariant+"44"}`, background: isYours ? M3.primaryContainer+"33" : M3.surfaceContainer }}>
-                  <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color: isYours ? M3.primary : M3.secondary, fontWeight:"700" }}>
+                  <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color: isYours ? M3.primary : M3.secondary, fontWeight:"700" }}>
                     {g.sanskrit}
                     {isYours && <span style={{ marginLeft:6, color:M3.tertiary, fontSize:"0.75rem" }}>THIS CHART</span>}
                   </div>
-                  <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.8rem", color:M3.onSurface, marginTop:2 }}>{g.chinese}</div>
+                  <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.8rem", color:M3.onSurface, marginTop:2 }}>{g.chinese}</div>
                   <div style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", color:M3.onSurfaceVariant, marginTop:4 }}>
                     Linked to: {(ANIMAL_INFO[g.linkedSign]||{}).emoji||""} {g.linkedSign}
                   </div>

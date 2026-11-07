@@ -5,11 +5,11 @@ export default function SynastryTab({ ctx }) {
   if (!res.synR) {
     return (
       <Card style={{ background:`linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor:M3.outline }}>
-        <div style={{ fontFamily:"'Cormorant Garamond', Georgia, serif", fontSize:"1rem", color:M3.primary, marginBottom:8 }}>Synastry: Relationship Chart Comparison</div>
+        <div style={{ fontFamily:"'Cinzel', Georgia, serif", fontSize:"1rem", color:M3.primary, marginBottom:8 }}>Synastry: Relationship Chart Comparison</div>
         <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.82rem", lineHeight:1.65, color:M3.onSurface, margin:"0 0 16px" }}>
           Synastry compares two people's birth charts to reveal the chemistry, harmony, and friction between them.
         </p>
-        <div style={{ textAlign:"center", color:M3.secondary, fontFamily:"'JetBrains Mono', monospace", padding:"30px 0", borderTop:`1px solid ${M3.outlineVariant}` }}>
+        <div style={{ textAlign:"center", color:M3.secondary, fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", padding:"30px 0", borderTop:`1px solid ${M3.outlineVariant}` }}>
           To use: check "Synastry" in the birth data form above, enter Person B's birth details, and click Compute.
         </div>
       </Card>
@@ -49,7 +49,7 @@ export default function SynastryTab({ ctx }) {
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
       <Card style={{ background:`linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor:M3.outline }}>
-        <div style={{ fontFamily:"'Cormorant Garamond', Georgia, serif", fontSize:"1rem", color:M3.primary, marginBottom:8 }}>Synastry: Contacts Between Two Charts</div>
+        <div style={{ fontFamily:"'Cinzel', Georgia, serif", fontSize:"1rem", color:M3.primary, marginBottom:8 }}>Synastry: Contacts Between Two Charts</div>
         <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.82rem", lineHeight:1.65, color:M3.onSurface, margin:0 }}>
           Synastry lays one chart over the other and reports the contacts between them: which body of one chart stands at a named angle to which body of the other, and at what orb.
         </p>
@@ -58,18 +58,18 @@ export default function SynastryTab({ ctx }) {
       <Card title="◈ Contact Summary">
         <div style={{ display:"flex", gap:16, flexWrap:"wrap", marginBottom:14 }}>
           <div style={{ flex:1, minWidth:140, textAlign:"center", padding:"14px 12px", borderRadius:12, background:"#93B89A0c", border:"1px solid #93B89A22" }}>
-            <div style={{ fontFamily:"'Cormorant Garamond', Georgia, serif", fontSize:"1.5rem", color:"#93B89A" }}>{ratio}%</div>
-            <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, marginTop:4 }}>SOFT / TOTAL</div>
+            <div style={{ fontFamily:"'Cinzel', Georgia, serif", fontSize:"1.5rem", color:"#93B89A" }}>{ratio}%</div>
+            <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.secondary, marginTop:4 }}>SOFT / TOTAL</div>
           </div>
           {[
-            { n:"Conjunctions", c:conj.length, col:"#E9C766", tip:"Fused energy: amplifies shared themes" },
+            { n:"Conjunctions", c:conj.length, col:"#EBA37F", tip:"Fused energy: amplifies shared themes" },
             { n:"Trines", c:trines.length, col:"#93B89A", tip:"Natural ease and flow" },
             { n:"Squares", c:squares.length, col:"#D98E5F", tip:"Creative friction and growth" },
             { n:"Oppositions", c:opps.length, col:"#D07262", tip:"Push-pull tension and awareness" },
           ].map(x=>(
             <div key={x.n} style={{ flex:1, minWidth:110, textAlign:"center", padding:"12px 8px", borderRadius:12, background:x.col+"0a", border:`1px solid ${x.col}22` }}>
-              <div style={{ fontFamily:"'Cormorant Garamond', Georgia, serif", fontSize:"1.3rem", color:x.col }}>{x.c}</div>
-              <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:x.col, marginTop:2 }}>{x.n}</div>
+              <div style={{ fontFamily:"'Cinzel', Georgia, serif", fontSize:"1.3rem", color:x.col }}>{x.c}</div>
+              <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:x.col, marginTop:2 }}>{x.n}</div>
               <div style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", color:M3.outlineVariant, marginTop:2 }}>{x.tip}</div>
             </div>
           ))}
@@ -107,8 +107,8 @@ export default function SynastryTab({ ctx }) {
                 return (
                   <div key={s.label} style={{ padding:"10px 12px", borderRadius:10, background:col+"0a", border:`1px solid ${col}22` }}>
                     <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
-                      <span style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.onSurfaceVariant }}>{s.label.toUpperCase()}</span>
-                      <span style={{ fontFamily:"'Cormorant Garamond', Georgia, serif", fontSize:"0.9rem", color:col }}>{s.score}%</span>
+                      <span style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.onSurfaceVariant }}>{s.label.toUpperCase()}</span>
+                      <span style={{ fontFamily:"'Cinzel', Georgia, serif", fontSize:"0.9rem", color:col }}>{s.score}%</span>
                     </div>
                     <div style={{ height:4, borderRadius:2, background:M3.surfaceDim, overflow:"hidden" }}>
                       <div style={{ width:`${s.score}%`, height:"100%", background:col, borderRadius:2, transition:"width 0.5s" }}/>
@@ -130,8 +130,8 @@ export default function SynastryTab({ ctx }) {
           {frictionAsp.map((a,i)=>{
             const p1=a.p1.replace(/^[AB]_/,""), p2=a.p2.replace(/^[AB]_/,"");
             return (
-              <div key={i} style={{ padding:"12px 16px", marginBottom:8, borderRadius:10, background:a.col+"0e", border:"1px solid rgba(244,241,237,.09)" }}>
-                <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.onSurface, marginBottom:4 }}>
+              <div key={i} style={{ padding:"12px 16px", marginBottom:8, borderRadius:10, background:a.col+"0e", border:"1px solid rgba(237,239,230,.09)" }}>
+                <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.onSurface, marginBottom:4 }}>
                   <span style={{color:P_COL[p1]||M3.primary}}>{P_SYM[p1]||""} A's {p1}</span>
                   <span style={{color:a.col, margin:"0 6px"}}>{a.sym} {a.name}</span>
                   <span style={{color:P_COL[p2]||M3.primary}}>{P_SYM[p2]||""} B's {p2}</span>
@@ -157,8 +157,8 @@ export default function SynastryTab({ ctx }) {
               const p1=a.p1.replace(/^[AB]_/,""), p2=a.p2.replace(/^[AB]_/,"");
               const roleDesc = `${p1} in one chart stands ${ASP_ADJ[a.name] || a.name.toLowerCase()} ${p2} in the other.`;
               return (
-                <div key={i} style={{ padding:"12px 16px", marginBottom:8, borderRadius:10, background:a.col+"0a", border:"1px solid rgba(244,241,237,.09)" }}>
-                  <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.onSurface, marginBottom:4 }}>
+                <div key={i} style={{ padding:"12px 16px", marginBottom:8, borderRadius:10, background:a.col+"0a", border:"1px solid rgba(237,239,230,.09)" }}>
+                  <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.onSurface, marginBottom:4 }}>
                     <span style={{color:P_COL[p1]||M3.primary}}>{P_SYM[p1]||""} A's {p1}</span>
                     <span style={{color:a.col, margin:"0 6px"}}>{a.sym} {a.name}</span>
                     <span style={{color:P_COL[p2]||M3.primary}}>{P_SYM[p2]||""} B's {p2}</span>
@@ -203,18 +203,18 @@ export default function SynastryTab({ ctx }) {
               </div>
               <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
                 <div style={{ padding:"14px 16px", borderRadius:12, background:M3.primaryContainer+"22", border:`1px solid ${M3.primary}22` }}>
-                  <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.primary, marginBottom:6 }}>COMPOSITE VITALITY</div>
+                  <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.primary, marginBottom:6 }}>COMPOSITE VITALITY</div>
                   <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>
                     The Composite Sun is in <strong>{ctx.zodSign(res.synR.composite.positions.Sun.longitude)}</strong>. The composite Sun is the midpoint of the two natal Suns.</p>
                 </div>
                 <div style={{ padding:"14px 16px", borderRadius:12, background:M3.tertiaryContainer+"22", border:`1px solid ${M3.tertiary}22` }}>
-                  <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.tertiary, marginBottom:6 }}>EMOTIONAL NAVIGATION</div>
+                  <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.tertiary, marginBottom:6 }}>EMOTIONAL NAVIGATION</div>
                   <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.76rem", lineHeight:1.55, color:M3.onSurface, margin:0 }}>
                     The Composite Moon is in <strong>{ctx.zodSign(res.synR.composite.positions.Moon.longitude)}</strong>. The composite Moon is the midpoint of the two natal Moons.</p>
                 </div>
                 {res.synR.composite.aspects?.length > 0 && (
                   <div style={{ padding:"14px 16px", borderRadius:12, background:M3.surfaceContainer, border:`1px solid ${M3.outlineVariant}` }}>
-                    <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, marginBottom:6 }}>KEY INTERNAL THEMES</div>
+                    <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.secondary, marginBottom:6 }}>KEY INTERNAL THEMES</div>
                     {res.synR.composite.aspects.slice(0, 3).map((a, i) => (
                       <div key={i} style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", color:M3.onSurfaceVariant, marginBottom:4 }}>
                         {a.sym} {a.p1} {a.name} {a.p2}: {a.strength > 0.7 ? "Strong theme" : "Subtle undertone"}
@@ -239,7 +239,7 @@ export default function SynastryTab({ ctx }) {
         <Card title="★ Composite Chart (Midpoint Map)">
           <div style={{ display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", height:200, background:M3.surfaceDim, borderRadius: 12, border:`1px dashed ${M3.outlineVariant}` }}>
             <span style={{ fontSize: "2rem", marginBottom: 8, opacity: 0.5 }}>⚮</span>
-            <p style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem", color:M3.secondary, letterSpacing:"0.1em" }}>GENERATING COMPOSITE DATA...</p>
+            <p style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem", color:M3.secondary, letterSpacing:"0.1em" }}>GENERATING COMPOSITE DATA...</p>
             <p style={{ fontFamily:"'DM Sans', system-ui, sans-serif", fontSize:"0.75rem", color:M3.onSurfaceVariant, marginTop: 6 }}>
               The midpoint map. Each point is the arithmetic midpoint of the two corresponding natal positions.
             </p>

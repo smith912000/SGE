@@ -18,7 +18,7 @@ export default function AspectsTab({ ctx }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
-        <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>What are aspects?</div>
+        <div style={{ fontFamily: "'Cinzel', Georgia, serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>What are aspects?</div>
         <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.83rem", lineHeight: 1.65, color: M3.onSurface, margin: "0 0 16px" }}>
           Angles between bodies, counted when the separation falls inside the orb in use.
         </p>
@@ -26,13 +26,13 @@ export default function AspectsTab({ ctx }) {
           const gSz = Math.min(400, window.innerWidth - 80);
           const gCx = gSz / 2, gCy = gSz / 2, gR = gSz * 0.42;
           const aspectDefs = [
-            { angle: 0, col: "#E9C766", sym: "☌", name: "Conjunction", tip: "0° - the two read as one", count: 12 },
-            { angle: 45, col: "#B9A9F0", sym: "∠", name: "Semisquare", tip: "45° - minor hard angle, later addition", count: 8 },
+            { angle: 0, col: "#EBA37F", sym: "☌", name: "Conjunction", tip: "0° - the two read as one", count: 12 },
+            { angle: 45, col: "#9EDCCB", sym: "∠", name: "Semisquare", tip: "45° - minor hard angle, later addition", count: 8 },
             { angle: 60, col: "#7FA8C9", sym: "⚹", name: "Sextile", tip: "60° - concordant, of the Ptolemaic five", count: 6 },
             { angle: 90, col: "#D98E5F", sym: "□", name: "Square", tip: "90° - discordant in the Ptolemaic set", count: 4 },
             { angle: 120, col: "#93B89A", sym: "△", name: "Trine", tip: "120° - concordant, of the Ptolemaic five", count: 3 },
             { angle: 135, col: "#DDA095", sym: "⚼", name: "Sesquiquadrate", tip: "135° - minor hard angle, later addition", count: 8 },
-            { angle: 150, col: "#B9A9F0", sym: "⚻", name: "Quincunx", tip: "150° - outside the Ptolemaic five", count: 12 },
+            { angle: 150, col: "#9EDCCB", sym: "⚻", name: "Quincunx", tip: "150° - outside the Ptolemaic five", count: 12 },
             { angle: 180, col: "#D07262", sym: "☍", name: "Opposition", tip: "180° - opposite points of the circle", count: 2 },
           ];
           return (
@@ -42,14 +42,14 @@ export default function AspectsTab({ ctx }) {
                   <filter id="aspGeo"><feGaussianBlur stdDeviation="1.5" /></filter>
                 </defs>
                 <circle cx={gCx} cy={gCy} r={gR + 4} fill="#0a0620" />
-                <circle cx={gCx} cy={gCy} r={gR} fill="none" stroke="#B9A9F0" strokeWidth="1" opacity="0.2" />
+                <circle cx={gCx} cy={gCy} r={gR} fill="none" stroke="#9EDCCB" strokeWidth="1" opacity="0.2" />
                 {SIGNS.map((s, i) => {
                   const a = -Math.PI / 2 + (i * 30) * RAD;
                   const [tx, ty] = [gCx + (gR + 14) * Math.cos(a), gCy + (gR + 14) * Math.sin(a)];
                   const [lx1, ly1] = [gCx + gR * Math.cos(a), gCy + gR * Math.sin(a)];
                   const [lx2, ly2] = [gCx + (gR - 8) * Math.cos(a), gCy + (gR - 8) * Math.sin(a)];
                   return <g key={s}>
-                    <line x1={lx1} y1={ly1} x2={lx2} y2={ly2} stroke="#B9A9F0" strokeWidth="0.5" opacity="0.2" />
+                    <line x1={lx1} y1={ly1} x2={lx2} y2={ly2} stroke="#9EDCCB" strokeWidth="0.5" opacity="0.2" />
                     <text x={tx} y={ty} textAnchor="middle" dominantBaseline="middle"
                       fill={SIGN_COL[s]} fontSize={gR * 0.08} fontFamily="serif" opacity="0.55"
                       style={{ userSelect: "none" }}>{SIGN_SYM[i]}</text>
@@ -86,14 +86,14 @@ export default function AspectsTab({ ctx }) {
                     ))}
                   </g>;
                 })}
-                <circle cx={gCx} cy={gCy} r="3" fill="#B9A9F0" opacity="0.3" />
+                <circle cx={gCx} cy={gCy} r="3" fill="#9EDCCB" opacity="0.3" />
               </svg>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(155px,1fr))", gap: 8, width: "100%" }}>
                 {aspectDefs.map((a) => (
                   <div key={a.name} style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 10px", borderRadius: 8, background: a.col + "11", border: `1px solid ${a.col}33` }}>
                     <span style={{ color: a.col, fontSize: "1rem", fontFamily: "serif" }}>{a.sym}</span>
                     <div>
-                      <div style={{ color: a.col, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", fontWeight: "700" }}>{a.name} {a.angle}°</div>
+                      <div style={{ color: a.col, fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", fontWeight: "700" }}>{a.name} {a.angle}°</div>
                       <div style={{ color: M3.onSurfaceVariant, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", lineHeight: 1.4 }}>{a.tip}</div>
                     </div>
                   </div>
@@ -124,9 +124,9 @@ export default function AspectsTab({ ctx }) {
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
                   <span style={{ color: def?.col, fontSize: "1.5rem", fontFamily: "serif" }}>{def?.sym}</span>
                   <div>
-                    <div style={{ color: def?.col, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", fontWeight: "700" }}>{name} {def?.angle}°</div>
+                    <div style={{ color: def?.col, fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", fontWeight: "700" }}>{name} {def?.angle}°</div>
                     <div style={{ color: M3.onSurfaceVariant, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", fontStyle: "italic" }}>{ASP_EXPLAIN[name] || ""}</div>
-                    <div style={{ color: M3.onSurfaceVariant, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem" }}>{matches.length} found{matches.length > 0 ? ` - avg ${(avgStr * 100).toFixed(0)}% strength` : ""}</div>
+                    <div style={{ color: M3.onSurfaceVariant, fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem" }}>{matches.length} found{matches.length > 0 ? ` - avg ${(avgStr * 100).toFixed(0)}% strength` : ""}</div>
                   </div>
                 </div>
                 <div style={{ height: 5, background: M3.outlineVariant, borderRadius: 3, overflow: "hidden", marginBottom: 8 }}>
@@ -137,8 +137,8 @@ export default function AspectsTab({ ctx }) {
                     <span style={{ color: P_COL[a.p1], fontSize: "0.9rem" }}>{P_SYM[a.p1]}</span>
                     <span style={{ color: def?.col, fontSize: "0.75rem" }}>{def?.sym}</span>
                     <span style={{ color: P_COL[a.p2], fontSize: "0.9rem" }}>{P_SYM[a.p2]}</span>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.onSurfaceVariant, marginLeft: "auto" }}>{a.p1}-{a.p2}</span>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: def?.col }}>{(a.strength * 100).toFixed(0)}%</span>
+                    <span style={{ fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", color: M3.onSurfaceVariant, marginLeft: "auto" }}>{a.p1}-{a.p2}</span>
+                    <span style={{ fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", color: def?.col }}>{(a.strength * 100).toFixed(0)}%</span>
                   </div>
                 )) : <div style={{ color: M3.outlineVariant, fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", fontStyle: "italic" }}>None at the orbs in use</div>}
               </div>

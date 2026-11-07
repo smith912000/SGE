@@ -17,7 +17,7 @@ export default function ProfilePanel({ trop, houses }) {
 
   return (
     <div ref={ref}>
-      <div style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:"0.75rem",
+      <div style={{ fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize:"0.75rem",
         letterSpacing:"0.2em", color:M3.secondary, marginBottom:16,
         textTransform:"uppercase" }}>✦ SUMMARY</div>
       <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
@@ -30,7 +30,7 @@ export default function ProfilePanel({ trop, houses }) {
           }}>
             <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6 }}>
               <span style={{ fontSize:"1.1rem" }}>{s.icon}</span>
-              <span style={{ color:M3.primary, fontFamily:"'JetBrains Mono', monospace",
+              <span style={{ color:M3.primary, fontFamily:"ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace",
                 fontSize:"0.75rem", fontWeight:"700", letterSpacing:"0.05em" }}>{s.title}</span>
             </div>
             <p style={{ color:M3.onSurface, fontFamily:"'DM Sans', system-ui, sans-serif",
