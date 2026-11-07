@@ -267,7 +267,7 @@ function BhavasSub({ ctx, c }) {
             const houseRashi = (ascRashi + b.n - 1) % 12;
             const planets = planetsInHouse(b.n);
             return (
-              <div key={b.n} style={{...cardBoxStyle(M3), border:"1px solid rgba(244,241,237,.09)"}}>
+              <div key={b.n} style={{...cardBoxStyle(M3), border:"1px solid rgba(237,239,230,.09)"}}>
                 <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:4 }}>
                   <span style={{ fontSize:12, fontWeight:700, letterSpacing:".1em", color:M3.onSurfaceVariant }}>H{b.n} · {b.name}</span>
                   <span style={{ fontSize:12, color:groupCol(b.group), fontWeight:700 }}>{b.group}</span>
@@ -448,7 +448,7 @@ function DashaSub({ ctx, c }) {
 
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(min(100%, 240px), 1fr))", gap:12 }}>
           <DashaBox M3={M3} label="Mahadasha" lord={dasha.mahadasha.lord} years={dasha.mahadasha.years} start={dasha.mahadasha.startJD} end={dasha.mahadasha.endJD} colour={M3.primary}/>
-          <DashaBox M3={M3} label="Antardasha" lord={dasha.antardasha.lord} years={dasha.antardasha.years} start={dasha.antardasha.startJD} end={dasha.antardasha.endJD} colour={M3.tertiary || "#B9A9F0"}/>
+          <DashaBox M3={M3} label="Antardasha" lord={dasha.antardasha.lord} years={dasha.antardasha.years} start={dasha.antardasha.startJD} end={dasha.antardasha.endJD} colour={M3.tertiary || "#9EDCCB"}/>
           <DashaBox M3={M3} label="Pratyantar" lord={currentPratyantar.lord} years={currentPratyantar.years} start={currentPratyantar.startJD} end={currentPratyantar.endJD} colour={"#D7A6A0"}/>
         </div>
 
@@ -481,8 +481,8 @@ function DashaSub({ ctx, c }) {
               {dasha.allAntardashas.map((a, i) => {
                 const isCurrent = a === dasha.antardasha;
                 return (
-                  <tr key={i} style={{ background: isCurrent ? `${M3.tertiary || "#B9A9F0"}14` : "transparent" }}>
-                    <td style={{...tdStyle(M3), fontWeight:isCurrent?700:500, color:isCurrent?(M3.tertiary || "#B9A9F0"):M3.onSurface}}>{P_SYM[a.lord]} {a.lord}{isCurrent?" ← now":""}</td>
+                  <tr key={i} style={{ background: isCurrent ? `${M3.tertiary || "#9EDCCB"}14` : "transparent" }}>
+                    <td style={{...tdStyle(M3), fontWeight:isCurrent?700:500, color:isCurrent?(M3.tertiary || "#9EDCCB"):M3.onSurface}}>{P_SYM[a.lord]} {a.lord}{isCurrent?" ← now":""}</td>
                     <td style={tdStyle(M3)}>{fmtDate(jdToDate(a.startJD))}</td>
                     <td style={tdStyle(M3)}>{fmtDate(jdToDate(a.endJD))}</td>
                     <td style={tdStyle(M3)}>{a.years.toFixed(2)}</td>
@@ -529,10 +529,10 @@ function YogasSub({ ctx, c }) {
               {yogas.map(yId => {
                 const y = YOGA_DEFS.find(d => d.id === yId); if (!y) return null;
                 return (
-                  <div key={yId} style={{...cardBoxStyle(M3), border:"1px solid rgba(244,241,237,.09)"}}>
+                  <div key={yId} style={{...cardBoxStyle(M3), border:"1px solid rgba(237,239,230,.09)"}}>
                     <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:4 }}>
                       <span style={{ fontWeight:700, fontSize:14 }}>{y.name}</span>
-                      <span style={pillStyle(M3.tertiary || "#B9A9F0", M3)}>{y.tag}</span>
+                      <span style={pillStyle(M3.tertiary || "#9EDCCB", M3)}>{y.tag}</span>
                     </div>
                     <div style={{ fontSize:13, color:M3.onSurfaceVariant, lineHeight:1.6 }}>{y.desc}</div>
                   </div>
@@ -555,7 +555,7 @@ function YogasSub({ ctx, c }) {
               {doshas.map(dId => {
                 const d = DOSHA_DEFS.find(x => x.id === dId); if (!d) return null;
                 return (
-                  <div key={dId} style={{...cardBoxStyle(M3), border:"1px solid rgba(244,241,237,.09)"}}>
+                  <div key={dId} style={{...cardBoxStyle(M3), border:"1px solid rgba(237,239,230,.09)"}}>
                     <div style={{ fontWeight:700, fontSize:14, marginBottom:4, color:"#DDA095" }}>{d.name}</div>
                     <div style={{ fontSize:13, color:M3.onSurfaceVariant, lineHeight:1.6 }}>{d.desc}</div>
                   </div>

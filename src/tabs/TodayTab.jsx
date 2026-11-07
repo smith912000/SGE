@@ -104,7 +104,7 @@ export default function TodayTab({ ctx }) {
       {/* ── Horizon & Focus Preference ── */}
       <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(280px, 1fr))", gap:12 }}>
         <div style={{ padding: "12px 16px", borderRadius: 12, background: M3.surfaceContainer, border: `1px solid ${M3.outlineVariant}` }}>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.secondary, letterSpacing: "0.12em", marginBottom: 8 }}>
+          <div style={{ fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", color: M3.secondary, letterSpacing: "0.12em", marginBottom: 8 }}>
             TIME HORIZON
           </div>
           <div style={{ display: "flex", gap: 6 }}>
@@ -124,7 +124,7 @@ export default function TodayTab({ ctx }) {
         </div>
 
         <div style={{ padding: "12px 16px", borderRadius: 12, background: M3.surfaceContainer, border: `1px solid ${M3.outlineVariant}` }}>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.secondary, letterSpacing: "0.12em", marginBottom: 8 }}>
+          <div style={{ fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", color: M3.secondary, letterSpacing: "0.12em", marginBottom: 8 }}>
             LEAD WITH
           </div>
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
@@ -151,7 +151,7 @@ export default function TodayTab({ ctx }) {
       >
         <div
           style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "'Cinzel', Georgia, serif",
             fontSize: "1rem",
             color: M3.primary,
             marginBottom: 8,
@@ -176,7 +176,7 @@ export default function TodayTab({ ctx }) {
         </p>
         <p
           style={{
-            fontFamily: "'JetBrains Mono', monospace",
+            fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace",
             fontSize: "0.75rem",
             color: M3.secondary,
             marginTop: 8,
@@ -198,7 +198,7 @@ export default function TodayTab({ ctx }) {
           >
             <div
               style={{
-                fontFamily: "'JetBrains Mono', monospace",
+                fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace",
                 fontSize: "0.75rem",
                 color: weekAnchor.col || M3.primary,
                 letterSpacing: "0.1em",
@@ -251,7 +251,7 @@ export default function TodayTab({ ctx }) {
           >
             <div
               style={{
-                fontFamily: "'JetBrains Mono', monospace",
+                fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace",
                 fontSize: "0.75rem",
                 color: M3.tertiary,
                 letterSpacing: "0.1em",
@@ -312,14 +312,14 @@ export default function TodayTab({ ctx }) {
             <Card key={cat.id} style={isPriority ? { border: `1.5px solid ${M3.primary}44`, background: `linear-gradient(135deg,${M3.primaryContainer}22,${M3.surfaceContainer})` } : {}}>
               <div
                 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "'Cinzel', Georgia, serif",
                   fontSize: isPriority ? "0.9rem" : "0.82rem",
                   color: isPriority ? M3.primary : M3.secondary,
                   marginBottom: 4,
                   display: "flex", alignItems: "center", gap: 6
                 }}
               >
-                {isPriority && <span style={{ fontSize: "0.75rem", background: M3.primary + "22", color: M3.primary, padding: "1px 8px", borderRadius: 20, fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.08em" }}>FOCUS</span>}
+                {isPriority && <span style={{ fontSize: "0.75rem", background: M3.primary + "22", color: M3.primary, padding: "1px 8px", borderRadius: 20, fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", letterSpacing: "0.08em" }}>FOCUS</span>}
                 {cat.label}
               </div>
               <p
@@ -348,7 +348,7 @@ export default function TodayTab({ ctx }) {
                 <div
                   style={{
                     marginTop: 6,
-                    fontFamily: "'JetBrains Mono', monospace",
+                    fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace",
                     fontSize: "0.75rem",
                     color: top.col || M3.secondary,
                   }}

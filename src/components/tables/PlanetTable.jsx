@@ -59,10 +59,10 @@ export default function PlanetTable({ positions, jd = null, siderealPositions = 
 
   const TH = {
     padding: "4px 6px", textAlign: "left", color: M3.secondary,
-    fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem",
+    fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem",
     letterSpacing: "0.06em", borderBottom: `1px solid ${M3.outlineVariant}`, whiteSpace: "nowrap"
   };
-  const TD = { padding: "3px 6px", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.onSurface };
+  const TD = { padding: "3px 6px", fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", color: M3.onSurface };
   const SC = { ...TD, fontSize: "0.78rem", letterSpacing: 2 };
 
   return (
@@ -79,7 +79,7 @@ export default function PlanetTable({ positions, jd = null, siderealPositions = 
           </tr>
           <tr>
             {[" ", "Name", "Governs"].map(h => <th key={h} style={{ ...TH, borderRight: h === "Governs" ? `1px solid ${M3.outlineVariant}33` : "none" }}>{h}</th>)}
-            <th style={{ ...TH, color: "#B9A9F0" }} title="Tradition 1: The Hermetic Tradition, primary Tarot correspondence">Hermetic</th>
+            <th style={{ ...TH, color: "#9EDCCB" }} title="Tradition 1: The Hermetic Tradition, primary Tarot correspondence">Hermetic</th>
             <th style={{ ...TH, color: "#8FC1C9", borderRight: `1px solid ${M3.outlineVariant}33` }} title="Tradition 2: Sefer Yetzirah planetary attribution">Yetzirah</th>
             <th style={TH}>Sign</th>
             <th style={TH} title="Zodiac sign script correspondence">Sign Script</th>

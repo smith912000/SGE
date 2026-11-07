@@ -14,23 +14,23 @@ export default function EclipticRing({ size = 240, className = '', title }) {
     const major = d % 30 === 0;
     const [x1, y1] = pt(rIn, d);
     const [x2, y2] = pt(rIn + (major ? 18 : d % 10 === 0 ? 5 : 3), d);
-    ticks.push(<line key={d} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#C9A84C"
+    ticks.push(<line key={d} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#D2825A"
       strokeWidth={major ? 0.6 : 0.35} opacity={major ? 0.55 : 0.35} />);
   }
   return (
     <svg className={className} width={size} height={size} viewBox="0 0 200 200" fill="none"
       role={title ? 'img' : undefined} aria-label={title} aria-hidden={title ? undefined : 'true'}>
-      <circle cx={c} cy={c} r={rOut} stroke="#C9A84C" strokeWidth="0.6" opacity="0.5" />
-      <circle cx={c} cy={c} r={rIn} stroke="#C9A84C" strokeWidth="0.4" opacity="0.4" />
-      <circle cx={c} cy={c} r={rIn - 22} stroke="#6349B8" strokeWidth="0.4" opacity="0.6" />
-      <line x1={c - rIn + 22} y1={c} x2={c + rIn - 22} y2={c} stroke="#6349B8" strokeWidth="0.4" opacity="0.6" />
+      <circle cx={c} cy={c} r={rOut} stroke="#D2825A" strokeWidth="0.6" opacity="0.5" />
+      <circle cx={c} cy={c} r={rIn} stroke="#D2825A" strokeWidth="0.4" opacity="0.4" />
+      <circle cx={c} cy={c} r={rIn - 22} stroke="#2F8F7C" strokeWidth="0.4" opacity="0.6" />
+      <line x1={c - rIn + 22} y1={c} x2={c + rIn - 22} y2={c} stroke="#2F8F7C" strokeWidth="0.4" opacity="0.6" />
       {ticks}
       {SIGNS.map((s, i) => {
         const [x, y] = pt(rGlyph, i * 30 + 15);
         return <text key={s} x={x} y={y} textAnchor="middle" dominantBaseline="central"
           fontSize="9" fill={SIGN_COL[s]} opacity="0.85" fontFamily="'Segoe UI Symbol','Noto Sans Symbols 2',serif">{SIGN_SYM[i]}</text>;
       })}
-      <circle cx={c} cy={c} r="2" fill="#E9C766" />
+      <circle cx={c} cy={c} r="2" fill="#EBA37F" />
     </svg>
   );
 }

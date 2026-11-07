@@ -24,8 +24,8 @@ export default function WheelTab({ ctx }) {
     { id: "cal_sambraielic", datasetId: "sambraielic", label: "Šambraielic", col: "#D7A6A0" },
     { id: "cal_vedic", datasetId: "vedic", label: "Vedic (Pañcāṅga)", col: "#E2B48A" },
     { id: "cal_islamic", datasetId: "islamic", label: "Islamic", col: "#8FC1C9" },
-    { id: "cal_jewish", datasetId: "jewish", label: "Hebrew", col: "#B9A9F0" },
-    { id: "cal_buddhist", datasetId: "buddhist", label: "Buddhist", col: "#E9C766" },
+    { id: "cal_jewish", datasetId: "jewish", label: "Hebrew", col: "#9EDCCB" },
+    { id: "cal_buddhist", datasetId: "buddhist", label: "Buddhist", col: "#EBA37F" },
     { id: "cal_egyptian", datasetId: "egyptian_ancient_solar", label: "Egyptian", col: "#DDA095" },
     { id: "cal_athenian", datasetId: "athenian_lunar", label: "Athenian", col: "#A9C3DA" },
     { id: "cal_mayan", datasetId: "mayan", label: "Maya", col: "#B5CDB8" },
@@ -35,10 +35,10 @@ export default function WheelTab({ ctx }) {
 
   const allModes = [
     { id: "western", label: "Tropical", col: M3.primary, tip: "Seasonal zodiac, measured from the March equinox. The standard frame in Western practice." },
-    { id: "sidereal", label: "Sidereal", col: "#B9A9F0", tip: "Stellar zodiac, measured from the fixed stars. Used in Vedic (Jyotish) practice; carries the precession offset." },
+    { id: "sidereal", label: "Sidereal", col: "#9EDCCB", tip: "Stellar zodiac, measured from the fixed stars. Used in Vedic (Jyotish) practice; carries the precession offset." },
     { id: "solar", label: "Solar Return", col: "#D98E5F", tip: "Chart cast for the moment the Sun regains its natal longitude, once each year." },
     { id: "transit_now", label: "Transits now", col: "#93B89A", tip: "Positions of the bodies in the sky at the present moment (transits)." },
-    { id: "chinese", label: "Chinese", col: "#E9C766", tip: "The twelve-animal year cycle: earthly branches, five phases, trigrams and yin/yang." },
+    { id: "chinese", label: "Chinese", col: "#EBA37F", tip: "The twelve-animal year cycle: earthly branches, five phases, trigrams and yin/yang." },
     ...calendarModes.map((m) => ({
       id: m.id,
       label: m.label,
@@ -116,7 +116,7 @@ export default function WheelTab({ ctx }) {
             <WheelWithTooltip positions={res.sid} houses={res.sidHouses || res.houses} size={Math.min(560, window.innerWidth - 64)} id="sidwheel" theme="vedic" />
           </div>
           <div style={{ marginTop: 12, padding: "10px 14px", borderRadius: 10, background: M3.surfaceDim, textAlign: "center" }}>
-            <span style={{ fontFamily: M3.fontBody, fontSize: "0.75rem", color: "#B9A9F0" }}>Ayanamsa offset: {ayanamsa(res.jd).toFixed(2)}°</span>
+            <span style={{ fontFamily: M3.fontBody, fontSize: "0.75rem", color: "#9EDCCB" }}>Ayanamsa offset: {ayanamsa(res.jd).toFixed(2)}°</span>
             <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", color: M3.onSurfaceVariant, marginLeft: 8 }}>- a chosen value, not an observed one; it subtracts from every tropical longitude</span>
           </div>
         </Card>
@@ -172,7 +172,7 @@ export default function WheelTab({ ctx }) {
           <div style={{ display: "flex", justifyContent: "center" }}>
             <ChineseWheelWithTooltip cn={res.cn} size={Math.min(500, window.innerWidth - 64)} />
           </div>
-          <div style={{ marginTop: 12, padding: "12px 14px", borderRadius: 10, background: M3.surfaceContainerHighest + "44", border:"1px solid rgba(244,241,237,.09)" }}>
+          <div style={{ marginTop: 12, padding: "12px 14px", borderRadius: 10, background: M3.surfaceContainerHighest + "44", border:"1px solid rgba(237,239,230,.09)" }}>
             <div style={{ fontFamily: M3.fontBody, fontSize: "0.75rem", color: M3.primary, fontWeight: "700", marginBottom: 4 }}>
               ARCHETYPE: "{ctx.ANIMAL_INFO[res.cn.animal]?.archetype || "Explorer"}"
             </div>
@@ -203,7 +203,7 @@ export default function WheelTab({ ctx }) {
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {calendarModel.nativeRings.map((ring) => (
-              <div key={ring.id} style={{ padding: "8px 12px", borderRadius: 8, background: M3.surfaceContainerHighest + "44", border:"1px solid rgba(244,241,237,.09)" }}>
+              <div key={ring.id} style={{ padding: "8px 12px", borderRadius: 8, background: M3.surfaceContainerHighest + "44", border:"1px solid rgba(237,239,230,.09)" }}>
                 <div style={{ fontFamily: M3.fontBody, fontSize: "0.75rem", color: M3.primary, textTransform: "uppercase", marginBottom: 2 }}>{ring.label}</div>
                 <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.45, color: M3.onSurface }}>
                   {ring.plain}

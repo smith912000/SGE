@@ -133,7 +133,7 @@ export default function NatalTab({ ctx }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
       <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}88,${M3.surfaceContainer})`, borderColor: M3.outline }}>
-        <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>The Natal Chart: the Sky at the Moment Named</div>
+        <div style={{ fontFamily: "'Cinzel', Georgia, serif", fontSize: "1rem", color: M3.primary, marginBottom: 8 }}>The Natal Chart: the Sky at the Moment Named</div>
         <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: M3.onSurface, margin: 0 }}>
           At the moment entered, every body held a definite position in the zodiac.
         </p>
@@ -150,8 +150,8 @@ export default function NatalTab({ ctx }) {
         return (
           <Card>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
-              <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "0.95rem", color: M3.primary }}>Transits now</div>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.tertiary, letterSpacing: "0.08em", padding: "2px 8px", borderRadius: 12, border: `1px solid ${M3.tertiary}44` }}>
+              <div style={{ fontFamily: "'Cinzel', Georgia, serif", fontSize: "0.95rem", color: M3.primary }}>Transits now</div>
+              <div style={{ fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", color: M3.tertiary, letterSpacing: "0.08em", padding: "2px 8px", borderRadius: 12, border: `1px solid ${M3.tertiary}44` }}>
                 LEADING WITH {focusLabel.toUpperCase()}
               </div>
             </div>
@@ -170,11 +170,11 @@ export default function NatalTab({ ctx }) {
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 12 }}>
         <Card style={{ background: `linear-gradient(135deg,${M3.primaryContainer}44,${M3.surfaceContainer})` }}>
-          <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "0.78rem", color: M3.primary, marginBottom: 6 }}>Chart Ruler</div>
+          <div style={{ fontFamily: "'Cinzel', Georgia, serif", fontSize: "0.78rem", color: M3.primary, marginBottom: 6 }}>Chart Ruler</div>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
             <span style={{ fontSize: "1.6rem" }}>{P_SYM[chartRuler] || ""}</span>
             <div>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.8rem", color: M3.onSurface, fontWeight: 700 }}>
+              <div style={{ fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.8rem", color: M3.onSurface, fontWeight: 700 }}>
                 {chartRuler} <span style={{ color: M3.tertiary, fontWeight: 400, fontSize: "0.75rem" }}>(rules {ascSign} rising)</span>
               </div>
               {rulerSign && (
@@ -192,12 +192,12 @@ export default function NatalTab({ ctx }) {
 
         {phase && (
           <Card style={{ background: `linear-gradient(135deg,${M3.surfaceContainer},${M3.primaryContainer}33)` }}>
-            <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "0.78rem", color: M3.primary, marginBottom: 6 }}>Moon Phase at Birth</div>
+            <div style={{ fontFamily: "'Cinzel', Georgia, serif", fontSize: "0.78rem", color: M3.primary, marginBottom: 6 }}>Moon Phase at Birth</div>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
               <MoonPhase angle={phase.angle} size={44} title={phase.name} />
               <div>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.8rem", color: M3.onSurface, fontWeight: 700 }}>{phase.name}</div>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.tertiary }}>
+                <div style={{ fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.8rem", color: M3.onSurface, fontWeight: 700 }}>{phase.name}</div>
+                <div style={{ fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", color: M3.tertiary }}>
                   {phase.angle}° separation &middot; {phase.illumination}% illumination
                 </div>
               </div>
@@ -216,15 +216,15 @@ export default function NatalTab({ ctx }) {
         )}
 
         <Card style={{ background: `linear-gradient(135deg,${M3.surfaceContainer},${M3.primaryContainer}22)` }}>
-          <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "0.78rem", color: M3.primary, marginBottom: 6 }}>Dominant Planets</div>
+          <div style={{ fontFamily: "'Cinzel', Georgia, serif", fontSize: "0.78rem", color: M3.primary, marginBottom: 6 }}>Dominant Planets</div>
           {dominant.map(([p, score], i) => (
             <div key={p} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
               <span style={{ fontSize: i === 0 ? "1.4rem" : "1rem", color: P_COL[p] || M3.primary }}>{P_SYM[p] || ""}</span>
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: i === 0 ? "0.78rem" : "0.68rem", color: i === 0 ? M3.onSurface : M3.onSurfaceVariant, fontWeight: i === 0 ? 700 : 400 }}>{p}</span>
+              <span style={{ fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: i === 0 ? "0.78rem" : "0.68rem", color: i === 0 ? M3.onSurface : M3.onSurfaceVariant, fontWeight: i === 0 ? 700 : 400 }}>{p}</span>
               <div style={{ flex: 1, height: 4, borderRadius: 2, background: M3.outlineVariant + "33", overflow: "hidden" }}>
                 <div style={{ height: "100%", width: `${Math.max(10, (score / (dominant[0]?.[1] || 1)) * 100)}%`, background: P_COL[p] || M3.primary, borderRadius: 2 }} />
               </div>
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.tertiary, minWidth: 16, textAlign: "right" }}>{score}</span>
+              <span style={{ fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", color: M3.tertiary, minWidth: 16, textAlign: "right" }}>{score}</span>
             </div>
           ))}
           <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: "6px 0 0" }}>
@@ -251,7 +251,7 @@ export default function NatalTab({ ctx }) {
               <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead><tr>
                   {["House","Cusp","Sign","Degree","Area","Planets"].map(h => (
-                    <th key={h} style={{ padding: "5px 8px", textAlign: "left", color: M3.secondary, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", letterSpacing: "0.06em", borderBottom: `1px solid ${M3.outlineVariant}`, whiteSpace: "nowrap" }}>{h}</th>
+                    <th key={h} style={{ padding: "5px 8px", textAlign: "left", color: M3.secondary, fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", letterSpacing: "0.06em", borderBottom: `1px solid ${M3.outlineVariant}`, whiteSpace: "nowrap" }}>{h}</th>
                   ))}
                 </tr></thead>
                 <tbody>
@@ -262,14 +262,14 @@ export default function NatalTab({ ctx }) {
                     const axis = AXIS_LABELS[i + 1];
                     return (
                       <tr key={i} style={{ borderBottom: `1px solid ${M3.outlineVariant}22`, background: axis ? M3.primaryContainer + "11" : "transparent" }}>
-                        <td style={{ padding: "4px 8px", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: axis ? M3.primary : M3.onSurface, fontWeight: axis ? "700" : "400" }}>
+                        <td style={{ padding: "4px 8px", fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", color: axis ? M3.primary : M3.onSurface, fontWeight: axis ? "700" : "400" }}>
                           {i + 1}{axis ? ` (${axis})` : ""}
                         </td>
-                        <td style={{ padding: "4px 8px", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.tertiary }}>{lon.toFixed(2)}°</td>
-                        <td style={{ padding: "4px 8px", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: SIGN_COL[sign], fontWeight: "600" }}>{SIGN_SYM?.[sign] || ""} {sign}</td>
-                        <td style={{ padding: "4px 8px", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.onSurfaceVariant }}>{fmtDeg(lon)}</td>
+                        <td style={{ padding: "4px 8px", fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", color: M3.tertiary }}>{lon.toFixed(2)}°</td>
+                        <td style={{ padding: "4px 8px", fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", color: SIGN_COL[sign], fontWeight: "600" }}>{SIGN_SYM?.[sign] || ""} {sign}</td>
+                        <td style={{ padding: "4px 8px", fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", color: M3.onSurfaceVariant }}>{fmtDeg(lon)}</td>
                         <td style={{ padding: "4px 8px", fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", color: M3.onSurfaceVariant, fontStyle: "italic" }}>{HOUSE_AREA[i]}</td>
-                        <td style={{ padding: "4px 8px", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.primary }}>{pls.map(p => P_SYM[p] || p).join(" ") || "—"}</td>
+                        <td style={{ padding: "4px 8px", fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", color: M3.primary }}>{pls.map(p => P_SYM[p] || p).join(" ") || "—"}</td>
                       </tr>
                     );
                   })}
@@ -288,14 +288,14 @@ export default function NatalTab({ ctx }) {
               const axis = AXIS_LABELS[i + 1];
               const hi = HOUSE_INFO?.[i];
               return (
-                <div key={i} style={{ padding: "10px 14px", marginBottom: 6, borderRadius: 10, background: SIGN_COL[sign] + "08", border: "1px solid rgba(244,241,237,.09)" }}>
+                <div key={i} style={{ padding: "10px 14px", marginBottom: 6, borderRadius: 10, background: SIGN_COL[sign] + "08", border: "1px solid rgba(237,239,230,.09)" }}>
                   <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: pls.length ? 4 : 0 }}>
-                    <span style={{ color: M3.secondary, fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", fontWeight: "700", minWidth: 22 }}>{i + 1}.</span>
-                    <span style={{ color: SIGN_COL[sign], fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", fontWeight: "700" }}>{SIGN_SYM?.[sign] || ""} {sign}</span>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.tertiary }}>{fmtDeg(h)}</span>
-                    {axis && <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.primary, fontWeight: "700", padding: "1px 6px", borderRadius: 6, background: M3.primaryContainer + "44" }}>{axis}</span>}
+                    <span style={{ color: M3.secondary, fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", fontWeight: "700", minWidth: 22 }}>{i + 1}.</span>
+                    <span style={{ color: SIGN_COL[sign], fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", fontWeight: "700" }}>{SIGN_SYM?.[sign] || ""} {sign}</span>
+                    <span style={{ fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", color: M3.tertiary }}>{fmtDeg(h)}</span>
+                    {axis && <span style={{ fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", color: M3.primary, fontWeight: "700", padding: "1px 6px", borderRadius: 6, background: M3.primaryContainer + "44" }}>{axis}</span>}
                     <span style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", fontStyle: "italic", color: M3.onSurfaceVariant }}>{HOUSE_AREA[i]}</span>
-                    {pls.length > 0 && <span style={{ marginLeft: "auto", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", color: M3.primary }}>{pls.map(p => P_SYM[p] || p).join(" ")}</span>}
+                    {pls.length > 0 && <span style={{ marginLeft: "auto", fontFamily: "ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace", fontSize: "0.75rem", color: M3.primary }}>{pls.map(p => P_SYM[p] || p).join(" ")}</span>}
                   </div>
                   <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.75rem", lineHeight: 1.5, color: M3.onSurfaceVariant, margin: 0 }}>{HOUSE_DESC[i]}</p>
                   {pls.length > 0 && pls.map(p => {

@@ -152,7 +152,7 @@ for (const [name, p] of Object.entries(PLANETS)) {
   if (p.chinese) attrs.push(['Chinese', p.chinese]);
   if (p.gods) attrs.push(['Gods', p.gods]);
   if (p.found) attrs.push(['Discovery', p.found]);
-  add(`planet:${name}`, { kind: 'planet', kindLabel: p.kindLabel || (p.modern ? 'Modern planet' : (p.node ? 'Lunar node' : 'Classical planet')), name, glyph: PLANET_GLYPH[name], colour: PLANET_COLOUR[name] || '#EADFC4', essence: p.essence, attrs });
+  add(`planet:${name}`, { kind: 'planet', kindLabel: p.kindLabel || (p.modern ? 'Modern planet' : (p.node ? 'Lunar node' : 'Classical planet')), name, glyph: PLANET_GLYPH[name], colour: PLANET_COLOUR[name] || '#F2E3D5', essence: p.essence, attrs });
 }
 SIGNS.forEach((s, i) => {
   const si = SIGN_INFO[s];
@@ -160,12 +160,12 @@ SIGNS.forEach((s, i) => {
     attrs: [['Span', `${i * 30}° to ${i * 30 + 30}°`], ['Vedic', RASHI_INFO[i].name], ['Body', RASHI_INFO[i].body], ['Hebrew letter', `${si.letterName} ${si.hebrew}`]] });
 });
 for (const [el, e] of Object.entries(ELEMENTS)) add(`el:${el}`, { kind: 'element', kindLabel: 'Element', name: el, glyph: { Fire: '△', Earth: '▽\u0336', Air: '△\u0336', Water: '▽' }[el], colour: ELEMENT_HUE[el], essence: e.essence, attrs: [] });
-for (const [m, e] of Object.entries(MODES)) add(`mode:${m}`, { kind: 'mode', kindLabel: 'Mode', name: m, glyph: e.glyph, colour: '#C9C4D4', essence: e.essence, attrs: [] });
-for (const c of CONSTELLATIONS) add(`const:${c.id}`, { kind: 'const', kindLabel: 'Constellation', name: c.latin, glyph: '✦', colour: '#EADFC4', essence: c.essence, start: c.from, end: c.to, fig: c.fig,
+for (const [m, e] of Object.entries(MODES)) add(`mode:${m}`, { kind: 'mode', kindLabel: 'Mode', name: m, glyph: e.glyph, colour: '#C4D0CB', essence: e.essence, attrs: [] });
+for (const c of CONSTELLATIONS) add(`const:${c.id}`, { kind: 'const', kindLabel: 'Constellation', name: c.latin, glyph: '✦', colour: '#F2E3D5', essence: c.essence, start: c.from, end: c.to, fig: c.fig,
   attrs: [['Ecliptic span', `${c.from}° to ${c.to}° (${Math.round((c.to - c.from + 360) % 360)}°)`], ['Brightest', c.star]] });
 NAKSHATRA_INFO.forEach((n, i) => {
   const lord = n.lord;
-  add(`nak:${n.name}`, { kind: 'nak', kindLabel: `Nakshatra ${i + 1}`, name: n.name, glyph: String(i + 1), colour: PLANET_COLOUR[lord] || '#EADFC4', essence: n.nature.split('.')[0] + '.', start: i * NAK_SPAN, end: (i + 1) * NAK_SPAN, sidereal: true,
+  add(`nak:${n.name}`, { kind: 'nak', kindLabel: `Nakshatra ${i + 1}`, name: n.name, glyph: String(i + 1), colour: PLANET_COLOUR[lord] || '#F2E3D5', essence: n.nature.split('.')[0] + '.', start: i * NAK_SPAN, end: (i + 1) * NAK_SPAN, sidereal: true,
     attrs: [['Deity', n.deity], ['Symbol', n.symbol], ['Gana', n.gana], ['Yoni', n.yoni]] });
 });
 ANIMALS.forEach((a, i) => {
@@ -174,8 +174,8 @@ ANIMALS.forEach((a, i) => {
     attrs: [['Branch', `${BRANCHES[i]} ${BRANCH_PINYIN[i]}`], ['Double hour', `${String((23 + i * 2) % 24).padStart(2, '0')}:00 to ${String((1 + i * 2) % 24).padStart(2, '0')}:00`]] });
 });
 for (const [ph, p] of Object.entries(PHASES)) add(`phase:${ph}`, { kind: 'phase', kindLabel: 'Chinese phase', name: ph, glyph: p.hanzi, colour: CN_EL_INFO[ph].color, essence: p.essence, attrs: [['Season', p.season], ['Direction', p.direction], ['Colour', p.colour]] });
-for (const [name, a] of Object.entries(ANGLES)) add(`angle:${name}`, { kind: 'angle', kindLabel: 'Angle', name, glyph: a.glyph, colour: '#E9C766', essence: a.essence, key: a.key, attrs: [['Latin', a.latin], ['Cusp of', `the ${ord(a.house)} house`]] });
-for (let h = 1; h <= 12; h++) add(`house:${h}`, { kind: 'house', kindLabel: `${HOUSE_KIND(h)} house`, name: `${ord(h)} house`, glyph: String(h), colour: '#C9C4D4', essence: HOUSE_ESSENCE[h - 1], attrs: [['Latin', HOUSE_LATIN[h - 1]], ['Vedic', `${BHAVA_INFO[h - 1].name}, ${BHAVA_INFO[h - 1].theme}`]] });
+for (const [name, a] of Object.entries(ANGLES)) add(`angle:${name}`, { kind: 'angle', kindLabel: 'Angle', name, glyph: a.glyph, colour: '#EBA37F', essence: a.essence, key: a.key, attrs: [['Latin', a.latin], ['Cusp of', `the ${ord(a.house)} house`]] });
+for (let h = 1; h <= 12; h++) add(`house:${h}`, { kind: 'house', kindLabel: `${HOUSE_KIND(h)} house`, name: `${ord(h)} house`, glyph: String(h), colour: '#C4D0CB', essence: HOUSE_ESSENCE[h - 1], attrs: [['Latin', HOUSE_LATIN[h - 1]], ['Vedic', `${BHAVA_INFO[h - 1].name}, ${BHAVA_INFO[h - 1].theme}`]] });
 for (const a of ASPECTS) add(`asp:${a.name}`, { kind: 'asp', kindLabel: 'Aspect', name: a.name, glyph: a.sym, colour: a.col, essence: ASPECT_ESSENCE[a.name], attrs: [['Angle', `${a.angle}°`], ['Orb used', `${a.orb}°`]] });
 
 // Planet links
@@ -243,7 +243,7 @@ link('asp:Trine', 'asp:Sextile', 'Halved', 'Doubled');
 export const FOUR_SYMBOLS = {
   'Azure Dragon':   { hanzi: '青龍', direction: 'East', season: 'Spring', phase: 'Wood', essence: 'The dragon of the east, rising with spring.', colour: '#93B89A' },
   'Black Tortoise': { hanzi: '玄武', direction: 'North', season: 'Winter', phase: 'Water', essence: 'The tortoise and serpent of the north, the winter dark.', colour: '#7FA8C9' },
-  'White Tiger':    { hanzi: '白虎', direction: 'West', season: 'Autumn', phase: 'Metal', essence: 'The tiger of the west, the autumn cut.', colour: '#C9C4D4' },
+  'White Tiger':    { hanzi: '白虎', direction: 'West', season: 'Autumn', phase: 'Metal', essence: 'The tiger of the west, the autumn cut.', colour: '#C4D0CB' },
   'Vermilion Bird': { hanzi: '朱雀', direction: 'South', season: 'Summer', phase: 'Fire', essence: 'The bird of the south, summer heat on the wing.', colour: '#D07262' },
 };
 export const XIU = [
@@ -305,7 +305,7 @@ for (const [k, n] of Object.entries(FIG_NAMES)) {
   // The first sentence of the story is the line under the name; the rest is the story itself.
   const cut = l.myth.search(/\. [A-Z]/);
   const [line, rest] = cut < 0 ? [l.myth, null] : [l.myth.slice(0, cut + 1), l.myth.slice(cut + 2)];
-  add(`fig:${k}`, { kind: 'fig', kindLabel: FIG_OFF[k] ? 'Constellation off the zodiac' : 'Constellation', name: n, glyph: '✦', colour: '#EADFC4', fig: k,
+  add(`fig:${k}`, { kind: 'fig', kindLabel: FIG_OFF[k] ? 'Constellation off the zodiac' : 'Constellation', name: n, glyph: '✦', colour: '#F2E3D5', fig: k,
     essence: FIG_OFF[k] ? FIGURE_NOTE[n][1] : line, core: l.core, myth: FIG_OFF[k] ? l.myth : rest,
     attrs: [['Brightest star', l.star], ['Set in the sky by', l.from]] });
 }

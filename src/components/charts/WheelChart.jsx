@@ -31,13 +31,13 @@ const zodDeg = lon => (((lon%360+360)%360)%30).toFixed(1);
    signs. Each frame changes only its accent, which marks the MC-IC axis and
    the centre, so a glance tells which zodiac is on screen. */
 const BASE_THEME = {
-  bg0: "#0F0A1A", bg1: "#050309",
-  ci0: "#0A0612", ci1: "#050309",
-  ring: "#C9A84C",
-  center0: "#0A0612",
+  bg0: "#0F0A1A", bg1: "#06100E",
+  ci0: "#0B1613", ci1: "#06100E",
+  ring: "#D2825A",
+  center0: "#0B1613",
 };
 const ACCENT = {
-  western: "#B9A9F0", solar: "#E9C766", lunar: "#A9C3DA",
+  western: "#9EDCCB", solar: "#EBA37F", lunar: "#A9C3DA",
   vedic: "#E2B48A", transit: "#93B89A", chinese: "#D07262",
 };
 const WHEEL_THEMES = Object.fromEntries(Object.entries(ACCENT).map(([k, a]) =>
@@ -168,11 +168,11 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
   const axisMC  = houses?.MC ?? 90;
   const axisIC  = norm(axisMC + 180);
   const axisPairs = [
-    { a1:lon2a(axisAC), a2:lon2a(axisDC), lbl1:"AC", lbl2:"DC", col:"#E9C766" },
+    { a1:lon2a(axisAC), a2:lon2a(axisDC), lbl1:"AC", lbl2:"DC", col:"#EBA37F" },
     { a1:lon2a(axisMC), a2:lon2a(axisIC), lbl1:"MC", lbl2:"IC", col:TH.axisAccent },
   ];
   const axisLabels = [
-    { lon:axisAC, lbl:"AC", col:"#E9C766" }, { lon:axisDC, lbl:"DC", col:"#E9C766" },
+    { lon:axisAC, lbl:"AC", col:"#EBA37F" }, { lon:axisDC, lbl:"DC", col:"#EBA37F" },
     { lon:axisMC, lbl:"MC", col:TH.axisAccent }, { lon:axisIC, lbl:"IC", col:TH.axisAccent },
   ];
 
@@ -337,7 +337,7 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
               opacity={axis ? 0.18 : 0.08}/>
             <text x={lx} y={ly} textAnchor="middle" dominantBaseline="middle"
               fill={TH.ring} fontSize={R*0.044}
-              fontFamily="'JetBrains Mono', monospace" fontWeight="600"
+              fontFamily="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace" fontWeight="600"
               opacity={axis ? 0.5 : 0.25}
               style={{userSelect:"none"}}>{n}</text>
           </g>
@@ -345,7 +345,7 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
       })}
 
       {/* ── HOUSE OF THE BODY IN FOCUS ── */}
-      {houseSector && <path d={houseSector} fill="#E9C766" opacity="0.09" stroke="#E9C766" strokeOpacity="0.35" strokeWidth="0.6" style={{pointerEvents:"none"}}/>}
+      {houseSector && <path d={houseSector} fill="#EBA37F" opacity="0.09" stroke="#EBA37F" strokeOpacity="0.35" strokeWidth="0.6" style={{pointerEvents:"none"}}/>}
 
       {/* ── AXES: AC-DC in gold, MC-IC in the frame's accent ── */}
       {axisPairs.map((pair, pi) => {
@@ -369,7 +369,7 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
             <circle cx={dotX} cy={dotY} r={R*0.006} fill="#fff" opacity="0.9"/>
             <text x={labX} y={labY}
               textAnchor="middle" dominantBaseline="middle"
-              fill={col} fontSize={R*0.054} fontFamily="'JetBrains Mono', monospace"
+              fill={col} fontSize={R*0.054} fontFamily="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace"
               fontWeight="700" opacity="0.95"
               style={{userSelect:"none"}}>{lbl}</text>
           </g>
@@ -459,7 +459,7 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
               style={{userSelect:"none", transformBox:"fill-box", transformOrigin:"center"}}>{P_SYM[planet]}</text>
             <text x={px} y={py + bubbleR + degSize*0.9} textAnchor="middle"
               fill={col} fontSize={degSize} opacity={isHovered ? 0.8 : 0.5}
-              fontFamily="'JetBrains Mono', monospace" style={{userSelect:"none", transformBox:"fill-box", transformOrigin:"center"}}>
+              fontFamily="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace" style={{userSelect:"none", transformBox:"fill-box", transformOrigin:"center"}}>
               {zodDeg(lon)}°
             </text>
           </g>

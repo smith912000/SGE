@@ -28,7 +28,7 @@ export default function StarCanvas() {
       stars.forEach(s => {
         ctx.beginPath();
         ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = s.warm ? `rgba(233,199,102,${s.a})` : `rgba(214,206,240,${s.a})`;
+        ctx.fillStyle = s.warm ? `rgba(235,163,127,${s.a})` : `rgba(214,206,240,${s.a})`;
         ctx.fill();
       });
       // The ecliptic: a shallow sine across the sky, with a tick every 30°.
@@ -36,11 +36,11 @@ export default function StarCanvas() {
       const ey = x => y0 - amp * Math.sin((x / W) * Math.PI * 2 - Math.PI / 2.6);
       ctx.beginPath();
       for (let x = 0; x <= W; x += 8) (x ? ctx.lineTo : ctx.moveTo).call(ctx, x, ey(x));
-      ctx.strokeStyle = 'rgba(201,168,76,.10)'; ctx.lineWidth = 1; ctx.stroke();
+      ctx.strokeStyle = 'rgba(210,130,90,.10)'; ctx.lineWidth = 1; ctx.stroke();
       for (let i = 0; i <= 12; i++) {
         const x = (i / 12) * W, y = ey(x);
         ctx.beginPath(); ctx.moveTo(x, y - 5); ctx.lineTo(x, y + 5);
-        ctx.strokeStyle = 'rgba(201,168,76,.16)'; ctx.stroke();
+        ctx.strokeStyle = 'rgba(210,130,90,.16)'; ctx.stroke();
       }
     };
     draw();

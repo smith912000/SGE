@@ -1,10 +1,10 @@
 export const ASPECTS = [
-  { name:"Conjunction",    angle:0,   orb:8, sym:"☌", col:"#E9C766" },
+  { name:"Conjunction",    angle:0,   orb:8, sym:"☌", col:"#EBA37F" },
   { name:"Opposition",     angle:180, orb:8, sym:"☍", col:"#D07262" },
   { name:"Trine",          angle:120, orb:6, sym:"△", col:"#7FA8C9" },
   { name:"Square",         angle:90,  orb:6, sym:"□", col:"#D98E5F" },
   { name:"Sextile",        angle:60,  orb:4, sym:"⚹", col:"#93B89A" },
-  { name:"Quincunx",       angle:150, orb:3, sym:"⚻", col:"#B9A9F0" },
+  { name:"Quincunx",       angle:150, orb:3, sym:"⚻", col:"#9EDCCB" },
   { name:"Semisquare",     angle:45,  orb:2, sym:"∠", col:"#C79A8A" },
   { name:"Sesquiquadrate", angle:135, orb:2, sym:"⚼", col:"#C9A47A" },
 ];
