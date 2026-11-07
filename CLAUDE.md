@@ -1,3 +1,7 @@
+# Performance rules (every change)
+
+Brandon, 6 Nov 2026: the WILD load speed-up applies to everything. Before and after any change, `npm run build`, then run `node scripts/measure-page-weight.js dist /SGE/ index.html` and follow `PERFORMANCE.md` (code-split tabs, lazy sized images, deferred heavy code, budgets). Put the before/after sizes in the PR.
+
 # Launch safety rules (every change, every page)
 
 These rules come from Master Principles rule 23 (web launch legal checks, 15 Oct 2026). Treat a change that breaks one as broken.
