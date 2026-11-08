@@ -149,7 +149,7 @@ def test_chinese_cycle(jd):
 def test_chronometric_engine(utc):
     print("\n=== ChronometricEngine ===")
     ce = ChronometricEngine()
-    slots = ce.compute_slots(utc)
+    slots = ce.compute_slots(utc, LAT, LON)
     check("Has day_ruler", "day_ruler" in slots)
     check("Has 24 slots", len(slots["all_slots"]) == 24)
     check("Has current_slot", "current_slot" in slots)

@@ -1,54 +1,80 @@
-from datetime import datetime
-from math_utils import vortex_mathematics_369, phi_resonance
+"""Planetary days and hours.
 
+The planetary day runs from sunrise to the next sunrise at the given place.
+Its 12 day hours divide sunrise-to-sunset into equal twelfths and its 12
+night hours divide sunset-to-next-sunrise, so the hours change length with
+season and latitude. Hour 1 belongs to the day's ruler and the rest follow
+the Chaldean order (Cassius Dio, Roman History 37.18-19).
 
-# Chaldean planetary order (descending orbital period)
-CHALDEAN_ORDER = [
-    "Saturn", "Jupiter", "Mars", "Sun", "Venus", "Mercury", "Moon",
-]
+day_start="sunset" gives the older variant in which the day begins at the
+previous sunset and the 12 night hours come first (Vettius Valens).
 
-# Traditional day rulers mapped to weekday index (Monday=0 in Python)
-DAY_RULERS = {
-    0: "Moon",
-    1: "Mars",
-    2: "Mercury",
-    3: "Jupiter",
-    4: "Venus",
-    5: "Saturn",
-    6: "Sun",
-}
+Previous version (until 8 Nov 2026) used 24 equal clock hours from UTC
+midnight and the UTC weekday, which put the wrong ruler on most hours.
+"""
+
+from datetime import datetime, timedelta, timezone
+
+from planetary_foundation import CHALDEAN_ORDER, DAY_RULERS, hour_ruler
+from sun_times import solar_date, sun_times
 
 
 class ChronometricEngine:
 
-    def compute_slots(self, dt_utc: datetime) -> dict:
-        weekday = dt_utc.weekday()
-        day_ruler = DAY_RULERS[weekday]
+    def _events(self, d, lat, lon):
+        ev = sun_times(d, lat, lon)
+        if ev["polar"]:
+            raise ValueError(f"No sunrise or sunset on {d} at latitude {lat}: {ev['polar']}")
+        return ev
 
-        # Find starting index in Chaldean order for this day's ruler
-        ruler_index = CHALDEAN_ORDER.index(day_ruler)
-
+    def _day(self, d, lat, lon, day_start):
+        prev = self._events(d - timedelta(days=1), lat, lon)
+        cur = self._events(d, lat, lon)
+        nxt = self._events(d + timedelta(days=1), lat, lon)
+        if day_start == "sunset":
+            spans = [(prev["sunset"], cur["sunrise"], "night"), (cur["sunrise"], cur["sunset"], "day")]
+        else:
+            spans = [(cur["sunrise"], cur["sunset"], "day"), (cur["sunset"], nxt["sunrise"], "night")]
+        ruler = DAY_RULERS[d.weekday()]
         slots = []
-        for slot in range(24):
-            planet_index = (ruler_index + slot) % 7
-            ruling_planet = CHALDEAN_ORDER[planet_index]
-            slots.append({
-                "slot": slot,
-                "hour_start": slot,
-                "hour_end": (slot + 1) % 24,
-                "ruler": ruling_planet,
-                "resonance": {
-                    "vortex": vortex_mathematics_369(slot),
-                    "phi": round(phi_resonance(slot, 24), 6)
+        for start, end, part in spans:
+            length = (end - start) / 12
+            for k in range(12):
+                n = len(slots) + 1
+                slots.append({
+                    "slot": n - 1,
+                    "hour_number": n,
+                    "part": part,
+                    "start": start + length * k,
+                    "end": start + length * (k + 1),
+                    "minutes": round(length.total_seconds() / 60, 2),
+                    "ruler": hour_ruler(ruler, n),
+                })
+        return {"date": d, "day_ruler": ruler, "weekday": d.weekday(),
+                "sunrise": cur["sunrise"], "sunset": cur["sunset"], "slots": slots}
+
+    def compute_slots(self, dt_utc: datetime, lat: float, lon: float,
+                      day_start: str = "sunrise") -> dict:
+        """Planetary day and hour containing dt_utc at latitude lat, longitude lon (east +)."""
+        if dt_utc.tzinfo is None:
+            dt_utc = dt_utc.replace(tzinfo=timezone.utc)
+        base = solar_date(dt_utc, lon)
+        for offset in (0, -1, 1):
+            day = self._day(base + timedelta(days=offset), lat, lon, day_start)
+            slots = day["slots"]
+            if slots[0]["start"] <= dt_utc < slots[-1]["end"]:
+                current = next(s for s in slots if s["start"] <= dt_utc < s["end"])
+                return {
+                    "day_ruler": day["day_ruler"],
+                    "weekday": day["weekday"],
+                    "solar_date": day["date"],
+                    "sunrise": day["sunrise"],
+                    "sunset": day["sunset"],
+                    "day_start": day_start,
+                    "current_slot": current,
+                    "all_slots": slots,
                 }
-            })
+        raise ValueError("Instant falls outside the computed planetary days")
 
-        current_hour = dt_utc.hour
-        current_slot = slots[current_hour]
 
-        return {
-            "day_ruler": day_ruler,
-            "weekday": weekday,
-            "current_slot": current_slot,
-            "all_slots": slots,
-        }
+__all__ = ["ChronometricEngine", "CHALDEAN_ORDER", "DAY_RULERS"]
