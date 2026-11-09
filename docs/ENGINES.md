@@ -34,7 +34,7 @@ and the `sge.py` orchestrator were removed on 2026-10-12 with Swiss Ephemeris
 | **synastry_engine.py** | Relationship chart comparison (Person A vs Person B). |
 | **harmonic_engine.py** | Harmonic chart calculations (2nd–12th). |
 | **chinese_cycle.py** | Chinese calendar cycle calculations. |
-| **chronometric_engine.py** | Planetary hour/day ruler calculations. |
+| **chronometric_engine.py** | Planetary days and hours: unequal hours from local sunrise (or sunset variant), rulers in Chaldean order. Uses sun_times.py and planetary_foundation.py; proofs in test_planetary.py. |
 | **phi_engine.py** | Golden ratio (φ) cycle calculations. |
 | **element_modality.py** | Element/modality distribution. |
 
