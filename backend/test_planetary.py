@@ -102,5 +102,20 @@ check("No modern layer overwrites a foundation key",
       all(k in ("standing", "colours", "tones", "minor", "major", "planetary", "clock", "hues")
           for layer in MODERN_LAYERS.values() for k in layer))
 
+print("Real sky (JPL elements) against published events")
+from planet_sky import sky as real_sky
+U = lambda *a: datetime(*a, tzinfo=timezone.utc)
+check("Mars opposition 16 Jan 2025: elongation > 170", real_sky(U(2025, 1, 16))["Mars"]["elongation"] > 170)
+check("Jupiter opposition 7 Dec 2024: elongation > 170", real_sky(U(2024, 12, 7))["Jupiter"]["elongation"] > 170)
+check("Saturn opposition 21 Sep 2025: elongation > 170", real_sky(U(2025, 9, 21))["Saturn"]["elongation"] > 170)
+v = real_sky(U(2025, 1, 10))["Venus"]["elongation"]
+check("Venus greatest elongation 10 Jan 2025 = 47.2 deg +-0.5", abs(v - 47.2) < 0.5, v)
+check("Venus inferior conjunction 22 Mar 2025: hidden (visibility 0)", real_sky(U(2025, 3, 22, 12))["Venus"]["visibility"] == 0)
+check("Full Moon 5 Nov 2025 13:19 UTC over 98% lit", real_sky(U(2025, 11, 5, 13, 19))["Moon"]["illuminated"] > 0.98)
+check("New Moon 21 Sep 2025 19:54 UTC under 2% lit", real_sky(U(2025, 9, 21, 19, 54))["Moon"]["illuminated"] < 0.02)
+st = [real_sky(U(2026, 11, 8, 12))[p]["strength"] for p in CHALDEAN_ORDER]
+check("Strength stays between 1/phi^2 and 1", all(1 / PHI ** 2 - 1e-12 <= x <= 1 + 1e-12 for x in st), st)
+check("Engine reports the current ruler's strength", "strength" in r["current_slot"] and "sky" in r)
+
 print(f"\nRESULTS: {PASS} passed, {FAIL} failed")
 sys.exit(1 if FAIL else 0)
