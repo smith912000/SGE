@@ -9,12 +9,18 @@ the Chaldean order (Cassius Dio, Roman History 37.18-19).
 day_start="sunset" gives the older variant in which the day begins at the
 previous sunset and the 12 night hours come first (Vettius Valens).
 
+The result also carries "sky": where each planet really is at that instant
+(planet_sky.py, JPL elements), and the current slot's "strength", which says
+how strongly the ruler shows today (hidden in the Sun's glare 0.382, at its
+brightest 1). The ruler itself never changes; only its strength does.
+
 Previous version (until 8 Nov 2026) used 24 equal clock hours from UTC
 midnight and the UTC weekday, which put the wrong ruler on most hours.
 """
 
 from datetime import datetime, timedelta, timezone
 
+from planet_sky import sky
 from planetary_foundation import CHALDEAN_ORDER, DAY_RULERS, hour_ruler
 from sun_times import solar_date, sun_times
 
@@ -63,7 +69,9 @@ class ChronometricEngine:
             day = self._day(base + timedelta(days=offset), lat, lon, day_start)
             slots = day["slots"]
             if slots[0]["start"] <= dt_utc < slots[-1]["end"]:
-                current = next(s for s in slots if s["start"] <= dt_utc < s["end"])
+                current = dict(next(s for s in slots if s["start"] <= dt_utc < s["end"]))
+                now_sky = sky(dt_utc)
+                current["strength"] = now_sky[current["ruler"]]["strength"]
                 return {
                     "day_ruler": day["day_ruler"],
                     "weekday": day["weekday"],
@@ -73,6 +81,7 @@ class ChronometricEngine:
                     "day_start": day_start,
                     "current_slot": current,
                     "all_slots": slots,
+                    "sky": now_sky,
                 }
         raise ValueError("Instant falls outside the computed planetary days")
 
