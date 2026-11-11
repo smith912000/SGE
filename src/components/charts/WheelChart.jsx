@@ -8,6 +8,7 @@ import { ASPECTS, ASP_SHORT, ASPECT_MEANINGS } from '../../data/astrology/aspect
 import { HOUSE_INFO } from '../../data/astrology/houseInfo.js';
 import { AXIS_INFO } from '../../data/astrology/axes.js';
 import Tooltip from '../ui/Tooltip.jsx';
+import SkyOverlay from '../sky/SkyOverlay.jsx';
 
 function calcAspects(pos) {
   const ks  = Object.keys(pos);
@@ -63,7 +64,7 @@ export const exportWheelAsSvg = (id) => {
   document.body.removeChild(link);
 };
 
-export default function WheelChart({ positions, houses, size = 480, id = "w", onTooltip, onReading, mode = "default", theme = "western" }) {
+export default function WheelChart({ positions, houses, size = 480, id = "w", onTooltip, onReading, mode = "default", theme = "western", sky = true }) {
   const TH = WHEEL_THEMES[theme] || WHEEL_THEMES.western;
   const svgRef = useRef(null);
   const [hoveredPlanet, setHoveredPlanet] = useState(null);
@@ -416,6 +417,9 @@ export default function WheelChart({ positions, houses, size = 480, id = "w", on
       {/* ── CENTER DOT ── */}
       <circle cx={cx} cy={cy} r={R*0.025} fill={TH.center0} stroke={TH.center1+"33"} strokeWidth="0.8"/>
       <circle cx={cx} cy={cy} r={R*0.008} fill={TH.center1} opacity="0.4"/>
+
+      {/* ── SKY TIME: the scroller's sky as a ghost ring with fading streams ── */}
+      {sky && <SkyOverlay cx={cx} cy={cy} R={R} lon2a={lon2a} frame={theme === "vedic" ? "sid" : "trop"} trailsOnly={theme === "transit"} />}
 
       {/* ── PLANETS (bubbles — hover to reveal aspect geometry) ── */}
       {planetPts.map(({ planet, lon, a, r, weight }) => {

@@ -1,4 +1,7 @@
-import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback, useDeferredValue } from 'react';
+import { useSky, trailStepDays } from '../store/skyTimeStore.js';
+import { skySamples, ghostOpacity, formatJd } from '../engines/skyTime.js';
+import { stepLabel } from '../components/sky/SkyOverlay.jsx';
 import { essenceOf } from '../data/symbolEssence.js';
 import { ENTITIES, OVERLAYS, KIND_ORDER, NAK_SPAN, XIU, FOUR_SYMBOLS, ANGLES, POLARIS } from '../data/symbolMap.js';
 import { STARS, NAMED_STARS, YOGATARAS, FIGURES, XIU_FIGURES } from '../data/sky/catalogue.js';
@@ -175,7 +178,7 @@ function chartLine(ent, sky) {
 }
 
 // Everything placed on the sky once per moment and place, as horizontal vectors.
-function buildScene({ jd, lat, lon, pos, ay, houses }) {
+function buildScene({ jd, lat, lon, pos, ay, houses, ghosts }) {
   const hv = observer(jd, lat, lon);
   const prec = precessionSinceJ2000(jd);
   const ecl = (l, b = 0) => hv(...eclToEq(l - prec, b));
@@ -197,6 +200,9 @@ function buildScene({ jd, lat, lon, pos, ay, houses }) {
       ...BODIES.filter((b) => pos[posKey(b)] != null).map((b) => ({ ent: `planet:${b}`, b, v: ecl(pos[posKey(b)]) })),
       ...(houses ? Object.entries(ANGLES).map(([n, a]) => ({ ent: `angle:${n}`, b: n, v: ecl(houses[a.key]) })) : []),
     ],
+    // Ghost streams: each earlier place of a planet, set against the stars as they stand now
+    // (a longitude of its own date is turned back to the J2000 frame the stars are in).
+    ghosts: (ghosts || []).length ? BODIES.slice(0, 10).map((b) => ({ ent: `planet:${b}`, pts: ghosts.map((sm) => hv(...eclToEq(sm.pos[posKey(b)] - precessionSinceJ2000(sm.jd), 0))) })) : [],
     polaris: { v: hv(...POLARIS.at), pointers: POLARIS.pointers.map(([ra, dec]) => hv(ra, dec)) },
     horizon: Array.from({ length: 91 }, (_, i) => { const a = (i * 4 * Math.PI) / 180; return [Math.cos(a), Math.sin(a), 0]; }),
     cardinals: [['N', [1, 0, 0.004]], ['E', [0, 1, 0.004]], ['S', [-1, 0, 0.004]], ['W', [0, -1, 0.004]]],
@@ -457,6 +463,20 @@ function drawSky(cv, scene, view, shown, lit, focus, hitsOut, hoverName, near, f
   }
 
   for (const [c, v] of scene.cardinals) { const p = project(v); if (p) text(c, [p[0], p[1] + 12], 'rgba(234,223,196,.6)', 12, 'sans'); }
+  // Ghost streams under the bodies: the newest stretch strongest, fading with age
+  if (shown.planet) {
+    for (const t of scene.ghosts) {
+      const col = ENTITIES[t.ent].colour;
+      const n = t.pts.length - 1;
+      for (let i = 0; i < n; i++) {
+        const a = project(t.pts[i]), b = project(t.pts[i + 1]);
+        if (!a || !b) continue;
+        g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]);
+        g.strokeStyle = col; g.globalAlpha = ghostOpacity(i, n) * dim(t.pts[i]); g.lineWidth = 1.2; g.stroke();
+      }
+      g.globalAlpha = 1;
+    }
+  }
   // The bodies, last of all so they sit in front of every other layer and are easiest to touch
   for (const b of scene.bodies) {
     const p = project(b.v);
@@ -481,13 +501,21 @@ export default function SymbolMapTab({ ctx = {} }) {
   const { res, A } = ctx;
 
   // The moment and place: the cast chart's, or now over the form's place.
+  const skyT = useSky();
+  const skyJd = useDeferredValue(skyT.jd);
+  const skyStep = trailStepDays(skyT);
   const moment = useMemo(() => {
     const lat = A?.lat ?? 51.5, lon = A?.lon ?? -0.1;
+    // Once the sky-time scroller has been moved, the map shows that sky, with the ghost streams.
+    if (skyT.touched) {
+      const ghosts = skyT.show && skyT.trail !== 'off' ? skySamples(skyJd, skyStep, 30) : null;
+      return { jd: skyJd, lat, lon, pos: allPlanets(skyJd), ay: ayanamsa(skyJd), label: 'In the scrolled sky', scrolled: true, ghosts };
+    }
     if (res) return { jd: res.jd, lat, lon, pos: res.trop, ay: ayanamsa(res.jd), houses: res.houses, aspects: res.aspects, cn: res.cn, label: 'In this chart' };
     const d = new Date();
     const jd = julianDay(d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate(), d.getUTCHours() + d.getUTCMinutes() / 60);
     return { jd, lat, lon, pos: allPlanets(jd), ay: ayanamsa(jd), label: 'In the sky now' };
-  }, [res, A?.lat, A?.lon]);
+  }, [res, A?.lat, A?.lon, skyT.touched, skyT.show, skyT.trail, skyJd, skyStep]);
   const sky = { ...moment, year: 2000 + (moment.jd - 2451545) / 365.25 };
   const scene = useMemo(() => buildScene(moment), [moment]);
 
@@ -638,6 +666,7 @@ export default function SymbolMapTab({ ctx = {} }) {
   };
 
   const when = new Date((moment.jd - 2440587.5) * 86400000);
+  const whenText = moment.scrolled ? formatJd(moment.jd) : `${when.toUTCString().slice(5, 22)} UT`;
   const place = `${Math.abs(moment.lat).toFixed(1)}°${moment.lat >= 0 ? 'N' : 'S'} ${Math.abs(moment.lon).toFixed(1)}°${moment.lon >= 0 ? 'E' : 'W'}`;
   const hv = hover?.id ? ENTITIES[hover.id] : null;
 
@@ -653,7 +682,7 @@ export default function SymbolMapTab({ ctx = {} }) {
       <div className="sm-grid">
         <div className="sm-skywrap">
           <canvas ref={cvRef} className="sm-sky" tabIndex={0} role="img"
-            aria-label={`The sky over ${place} on ${when.toUTCString().slice(5, 22)} UT. Drag or use the arrow keys to look round, plus and minus to zoom. Choose symbols from the list beside it.`}
+            aria-label={`The sky over ${place} on ${whenText}. Drag or use the arrow keys to look round, plus and minus to zoom. Choose symbols from the list beside it.`}
             onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp}
             onPointerLeave={() => setHover(null)} onKeyDown={onKey} />
           <div className="sm-controls">
@@ -661,7 +690,7 @@ export default function SymbolMapTab({ ctx = {} }) {
             <button type="button" className="sm-ctl" aria-label="Zoom in" onClick={() => setView((v) => ({ ...v, h: Math.max(6, v.h / 1.3) }))}>+</button>
             <button type="button" className="sm-ctl" aria-label="Zoom out" onClick={() => setView((v) => ({ ...v, h: Math.min(110, v.h * 1.3) }))}>−</button>
           </div>
-          <p className="sm-where">{moment.label === 'In this chart' ? 'The chart\'s sky' : 'The sky now'} over {place}, {when.toUTCString().slice(5, 22)} UT</p>
+          <p className="sm-where">{moment.scrolled ? 'The sky of the scroller' : moment.label === 'In this chart' ? 'The chart\'s sky' : 'The sky now'} over {place}, {whenText}{moment.ghosts ? `. Ghost streams: earlier places of each planet, ${stepLabel(skyStep)} apart` : ''}</p>
         </div>
 
         <aside className="sm-panel" ref={panelRef} tabIndex={-1} aria-live="polite">

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, lazy, Suspense } from "react";
+import { useState, useEffect, useCallback, useMemo, useDeferredValue, lazy, Suspense } from "react";
 
 // Hooks
 
@@ -30,6 +30,8 @@ import TabBar, { TAB_IDS } from './components/ui/TabBar.jsx';
 import TabContent from './components/ui/TabContent.jsx';
 import EclipticRing from './components/ui/EclipticRing.jsx';
 import StarCanvas from './components/ui/StarCanvas.jsx';
+import TimeScroller from './components/ui/TimeScroller.jsx';
+import { useSky } from './store/skyTimeStore.js';
 const ProfilePanel = lazy(() => import('./components/ui/ProfilePanel.jsx'));
 
 // Components - Layout
@@ -102,7 +104,17 @@ export default function App() {
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
-  const [res, setRes] = useState(null);
+  const [baseRes, setRes] = useState(null);
+  // The sky-time scroller drives the transit sky: once it has been moved, the transit
+  // positions and their aspects are those of the scrolled moment, not of today.
+  const skyT = useSky();
+  const skyJd = useDeferredValue(skyT.jd);
+  const res = useMemo(() => {
+    if (!baseRes || !skyT.touched) return baseRes;
+    const trPos = allPlanets(skyJd);
+    const trAsp = calcAspects({ ...baseRes.trop, ...Object.fromEntries(Object.entries(trPos).map(([k, v]) => [`T_${k}`, v])) });
+    return { ...baseRes, trPos, trAsp, skyJd };
+  }, [baseRes, skyT.touched, skyJd]);
   const [loading, setLoading] = useState(false);
   const [wheelMode, setWheelMode] = useState("western");
 
@@ -116,9 +128,9 @@ export default function App() {
 
   // On a phone the birth form sits above the chart, so bring the chart up once it exists.
   useEffect(() => {
-    if (!res || window.innerWidth >= 960) return;
+    if (!baseRes || window.innerWidth >= 960) return;
     document.querySelector('.sge-main')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, [res]);
+  }, [baseRes]);
 
   const compute = useCallback(async () => {
     setLoading(true);
@@ -166,13 +178,15 @@ export default function App() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", color: M3.onSurface, position: "relative", overflowX: "hidden" }}>
+    <div style={{ minHeight: "100vh", color: M3.onSurface, position: "relative", overflowX: "clip" }}>
 
       <StarCanvas />
 
       <div className="sge-shell">
 
         <Header />
+
+        <TimeScroller />
 
         <div className="sge-body">
 

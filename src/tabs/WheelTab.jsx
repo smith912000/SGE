@@ -1,3 +1,4 @@
+import { formatJd } from "../engines/skyTime.js";
 import { useMemo } from "react";
 import CalendarWheelWithTooltip from "../components/charts/CalendarWheelWithTooltip.jsx";
 import { CALENDAR_WHEEL_IDS, buildCalendarWheelModel } from "../engines/calendarWheelEngine.js";
@@ -154,9 +155,9 @@ export default function WheelTab({ ctx }) {
         ))}
 
       {wheelMode === "transit_now" && (
-        <Card title="⟳ Transit Sky Wheel - Planets Right Now">
+        <Card title={res.skyJd ? `⟳ Transit Sky Wheel - ${formatJd(res.skyJd)}` : "⟳ Transit Sky Wheel - Planets Right Now"}>
           <p style={{ fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: "0.78rem", lineHeight: 1.55, color: M3.onSurfaceVariant, margin: "0 0 14px" }}>
-            This wheel plots the planetary positions for the current date.
+            This wheel plots the planetary positions for the current date, or for the date set on the sky-time scroller above.
           </p>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <WheelWithTooltip positions={res.trPos} size={Math.min(560, window.innerWidth - 64)} id="transit_wheel_mode" theme="transit" />

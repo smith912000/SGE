@@ -11,13 +11,23 @@ function julianDay(year, month, day, hour = 0) {
   return Math.floor(365.25*(year+4716)) + Math.floor(30.6001*(month+1)) + day + hour/24 + B - 1524.5;
 }
 
+// Deep time: these polynomials and element rates are fits for about +-30 centuries
+// of J2000. Past that, their squared and cubed terms and the linear drift of an
+// orbit's size and shape would run away (a negative eccentricity, a mean longitude
+// off by tens of degrees), so those terms are held at their +-30-century value
+// while the mean motion goes on. Mean motions stay right; the finer corrections
+// are approximate out there. See skyTime.js, deepTimeNote.
+const T_FIT = 30;
+const fitT = T => Math.max(-T_FIT, Math.min(T_FIT, T));
+
 function sunLon(jd) {
   const T  = (jd - 2451545) / 36525;
-  const L0 = norm(280.46646 + 36000.76983*T + 0.0003032*T*T);
-  const M  = norm(357.52911 + 35999.05029*T - 0.0001537*T*T);
+  const Tq = fitT(T);
+  const L0 = norm(280.46646 + 36000.76983*T + 0.0003032*Tq*Tq);
+  const M  = norm(357.52911 + 35999.05029*T - 0.0001537*Tq*Tq);
   const Mr = M * RAD;
-  const C  = (1.9146 - 0.004817*T - 0.000014*T*T)*Math.sin(Mr)
-           + (0.019993 - 0.000101*T)*Math.sin(2*Mr)
+  const C  = (1.9146 - 0.004817*Tq - 0.000014*Tq*Tq)*Math.sin(Mr)
+           + (0.019993 - 0.000101*Tq)*Math.sin(2*Mr)
            + 0.000289*Math.sin(3*Mr);
   const om = 125.04 - 1934.136*T;
   return norm(L0 + C - 0.00569 - 0.00478*Math.sin(om*RAD));
@@ -46,7 +56,8 @@ function moonLon(jd) {
 
 function nodeLon(jd) {
   const T = (jd - 2451545) / 36525;
-  return norm(125.0445479 - 1934.1362891*T + 0.0020754*T*T + 0.00000215*T*T*T);
+  const Tq = fitT(T);
+  return norm(125.0445479 - 1934.1362891*T + 0.0020754*Tq*Tq + 0.00000215*Tq*Tq*Tq);
 }
 
 // Black Moon Lilith = mean lunar APOGEE (the empty focus, far point of the Moon's
@@ -56,7 +67,8 @@ function nodeLon(jd) {
 // Sagittarius 24°).
 function lilithLon(jd) {
   const T = (jd - 2451545) / 36525;
-  const perigee = 83.3532465 + 4069.0137287*T - 0.01032*T*T;
+  const Tq = fitT(T);
+  const perigee = 83.3532465 + 4069.0137287*T - 0.01032*Tq*Tq;
   return norm(perigee + 180);
 }
 
@@ -131,9 +143,10 @@ function planetLon(jd, name) {
   const k = KEPLER[name];
   if (!k) return 0;
 
-  const a = k.a[0] + k.a[1] * T;
-  const e = k.e[0] + k.e[1] * T;
-  const I = k.I[0] + k.I[1] * T;
+  const Tq = fitT(T);
+  const a = k.a[0] + k.a[1] * Tq;
+  const e = Math.max(0, k.e[0] + k.e[1] * Tq);
+  const I = k.I[0] + k.I[1] * Tq;
   const L = norm(k.L[0] + k.L[1] * T);
   const w = k.w[0] + k.w[1] * T;
   const O = k.O[0] + k.O[1] * T;
@@ -180,7 +193,7 @@ function chironLon(jd) {
 
   // Orbital elements (J2000.0, from JPL Horizons / IAU MPC)
   const a = 13.6483;                            // semi-major axis, AU
-  const e = 0.38226 + 0.00001 * T;              // eccentricity
+  const e = 0.38226 + 0.00001 * fitT(T);              // eccentricity
   const I = 6.9343;                             // inclination, deg
   const O = 209.395 - 0.64 * T;                 // Ω, longitude of ascending node, deg
   const w = 339.408 + 1.42 * T;                 // ω, argument of perihelion, deg
