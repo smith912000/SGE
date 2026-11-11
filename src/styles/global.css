@@ -387,3 +387,48 @@ button { font-family: inherit; }
   .sm-rel { grid-row: auto; }
   .sm-hover { min-height: 0; }
 }
+
+/* --- sky time scroller --- */
+.sge-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.sge-time {
+  position: relative; z-index: 5;
+  margin: 12px 0 0; padding: 10px 14px 12px;
+  background: rgba(11,22,19,.92); border: 1px solid rgba(47,143,124,.28); border-radius: var(--wild-r-lg);
+  backdrop-filter: blur(6px);
+}
+@media (min-width: 720px) { .sge-time { position: sticky; top: 6px; } }
+.sge-time-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font-size: .8125rem; color: var(--wild-text); }
+.sge-time-row + .sge-time-row, .sge-time-trackwrap + .sge-time-row { margin-top: 8px; }
+.sge-time-title { font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: .75rem; color: var(--wild-indigo-3); }
+.sge-time-date input { width: 9.5em; min-height: 36px; padding: 4px 8px; border-radius: 8px; border: 1px solid rgba(237,239,230,.2); background: rgba(0,0,0,.25); color: inherit; font: inherit; font-variant-numeric: tabular-nums; }
+.sge-time-read { flex: 1 1 260px; min-width: 0; }
+.sge-time-dim { opacity: .62; }
+.sge-time-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-left: auto; }
+.sge-time-step select { margin: 0; }
+.sge-time select { margin-left: 6px; min-height: 36px; padding: 2px 6px; border-radius: 8px; border: 1px solid rgba(237,239,230,.2); background: rgba(0,0,0,.3); color: inherit; font: inherit; }
+.sge-time-check { display: inline-flex; gap: 6px; align-items: center; }
+.sge-time-check input { width: 18px; height: 18px; }
+.sge-time button:disabled { opacity: .45; cursor: default; }
+.sge-time-trackwrap { position: relative; height: 44px; margin-top: 8px; touch-action: pan-y; }
+.sge-time-bands { position: absolute; inset: 8px 0 8px; border-radius: 8px; overflow: hidden; background: rgba(0,0,0,.28); }
+.sge-time-band { position: absolute; top: 0; bottom: 0; display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--c) 16%, transparent); border-left: 1px solid rgba(237,239,230,.16); overflow: hidden; }
+.sge-time-band.on { background: color-mix(in srgb, var(--c) 34%, transparent); }
+.sge-time-band i { font-style: normal; font-size: 1rem; color: var(--c); opacity: .9; font-family: 'Segoe UI Symbol','Noto Sans Symbols 2',serif; }
+.sge-time-now { position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: #EBA37F; }
+.sge-time-range { -webkit-appearance: none; appearance: none; background: transparent; width: 100%; margin: 0; }
+.sge-time-trackwrap .sge-time-range { position: absolute; inset: 0; height: 44px; cursor: ew-resize; }
+.sge-time-range::-webkit-slider-runnable-track { height: 44px; background: transparent; }
+.sge-time-range::-moz-range-track { height: 44px; background: transparent; }
+.sge-time-range::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 44px; border-radius: 6px; background: #EDEFE6; border: 2px solid #0B1613; box-shadow: 0 0 10px rgba(237,239,230,.5); }
+.sge-time-range::-moz-range-thumb { width: 10px; height: 40px; border-radius: 6px; background: #EDEFE6; border: 2px solid #0B1613; }
+.sge-time-fine { flex-wrap: nowrap; }
+.sge-time-fine label { white-space: nowrap; }
+.sge-time-fineslider { flex: 1 1 auto; min-width: 0; height: 28px; }
+.sge-time-fineslider::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: rgba(237,239,230,.22); }
+.sge-time-fineslider::-moz-range-track { height: 6px; border-radius: 3px; background: rgba(237,239,230,.22); }
+.sge-time-fineslider::-webkit-slider-thumb { height: 22px; width: 22px; border-radius: 50%; margin-top: -8px; }
+.sge-time-fineslider::-moz-range-thumb { height: 20px; width: 20px; border-radius: 50%; }
+.sge-time-help { margin-top: 8px; font-size: .75rem; line-height: 1.5; opacity: .72; }
+.sge-time-warn { margin-top: 8px; font-size: .75rem; line-height: 1.5; color: #E2B48A; }
+.sge-skycap { text-align: center; margin: 10px 0 0; font-size: .8125rem; line-height: 1.5; color: var(--wild-text); opacity: .8; }
+@media (max-width: 719px) { .sge-time-fine { flex-wrap: wrap; } }

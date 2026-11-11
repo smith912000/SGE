@@ -1,3 +1,4 @@
+import { formatJd } from "../engines/skyTime.js";
 import { ASP_ADJ } from '../data/astrology/aspects.js';
 import { useState } from "react";
 import { ASP_SHORT } from "../data/astrology/aspects.js";
@@ -97,7 +98,7 @@ export default function TodayTab({ ctx }) {
     return [...hits].sort((x, y) => (y.strength || 0) - (x.strength || 0))[0];
   };
 
-  const todayStr = horizon === "today" ? new Date().toDateString() : (horizon === "week" ? "Week of " + new Date().toLocaleDateString() : new Date().toLocaleString('default', { month: 'long', year: 'numeric' }));
+  const todayStr = res.skyJd ? formatJd(res.skyJd) : horizon === "today" ? new Date().toDateString() : (horizon === "week" ? "Week of " + new Date().toLocaleDateString() : new Date().toLocaleString('default', { month: 'long', year: 'numeric' }));
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>

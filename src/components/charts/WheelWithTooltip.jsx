@@ -2,6 +2,7 @@ import { useState, useRef, useCallback } from 'react';
 import WheelChart, { exportWheelAsSvg } from './WheelChart.jsx';
 import { M3 } from '../../theme/m3.js';
 import Tooltip from '../ui/Tooltip.jsx';
+import { SkyCaption } from '../sky/SkyOverlay.jsx';
 
 export default function WheelWithTooltip(props) {
   const [tip, setTip] = useState({ visible:false, info:null, x:0, y:0 });
@@ -29,6 +30,7 @@ export default function WheelWithTooltip(props) {
         <div className="sge-wheelcol">
           <WheelChart {...props} mode={aspMode} id={wheelId} onTooltip={handleTip} onReading={setReading} theme={theme}/>
           <WheelReading reading={reading} />
+          {props.sky !== false && <SkyCaption trailsOnly={theme === "transit"} />}
           
           <div style={{ display:"flex", gap:8, marginTop:12, alignItems:"center", flexWrap:"wrap", justifyContent:"center" }}>
             <button type="button" className="sge-chip" aria-pressed={aspMode === "aspects"}

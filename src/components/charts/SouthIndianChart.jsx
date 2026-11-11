@@ -8,7 +8,9 @@
 //   (2,0) Capricorn 9  (2,1)             (2,2)             (2,3) Leo 4
 //   (3,0) Sagittarius 8(3,1) Scorpio 7   (3,2) Libra 6     (3,3) Virgo 5
 
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useSky, trailStepDays } from '../../store/skyTimeStore.js';
+import { skySamples, TRAIL_BODIES, ghostOpacity } from '../../engines/skyTime.js';
 
 const POSITIONS = {
   11: [0,0], 0: [0,1], 1: [0,2], 2: [0,3],
@@ -38,7 +40,13 @@ export default function SouthIndianChart({
   size = 320,
   title = "Rashi (D1)",
   theme = {},                  // { bg, surface, border, text, muted, accent }
+  sky = false,                 // true: lay the sky-time scroller's sky over the chart (sidereal)
 }) {
+  const st = useSky();
+  const skyOn = sky && st.touched && st.show;
+  const skyStep = trailStepDays(st);
+  const SKY_N = 24;
+  const skyS = useMemo(() => (skyOn ? skySamples(st.jd, skyStep, st.trail === 'off' ? 0 : SKY_N) : null), [skyOn, st.jd, skyStep, st.trail]);
   const T = {
     bg:      theme.bg      || "#161420",
     surface: theme.surface || "#1f1c2c",
@@ -123,6 +131,20 @@ export default function SouthIndianChart({
                   fontSize={size * 0.026} fontFamily="-apple-system, sans-serif">
               {RASHI_SYM[sign]} {RASHI_SHORT[sign]}
             </text>
+
+            {/* sky time: ghost bodies stacked from the foot of the cell, earlier places as fading dots */}
+            {skyS && st.trail !== 'off' && TRAIL_BODIES.flatMap(b => skyS.slice(1).map((sm, i) => {
+              const l = (((sm.pos[b] - sm.ay) % 360) + 360) % 360;
+              if (Math.floor(l / 30) !== sign) return null;
+              return <circle key={`${b}${i}`} cx={x + (l % 30) / 30 * cellSize} cy={y + cellSize - 5} r={size * 0.006}
+                fill={PLANET_COL[b] || T.text} opacity={ghostOpacity(i, SKY_N)} />;
+            }))}
+            {skyS && TRAIL_BODIES.filter(b => Math.floor((((skyS[0].pos[b] - skyS[0].ay) % 360) + 360) % 360 / 30) === sign)
+              .map((b, i) => (
+                <text key={`sky${b}`} x={x + cellSize / 2} y={y + cellSize - 12 - i * (size * 0.04)} textAnchor="middle"
+                  fill={PLANET_COL[b] || T.text} fontSize={size * 0.036} fontFamily="-apple-system, sans-serif"
+                  fontStyle="italic" opacity="0.7" aria-hidden="true">{PLANET_SHORT[b]}</text>
+              ))}
 
             {/* planets — stacked from upper area */}
             {planets.map((p, i) => {

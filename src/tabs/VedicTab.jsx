@@ -8,6 +8,7 @@ import {
   DIGNITY, KARAKAS, COMBUSTION_ORB, YOGA_DEFS, DOSHA_DEFS,
 } from '../data/astrology/nakshatras.js';
 import SouthIndianChart from '../components/charts/SouthIndianChart.jsx';
+import { SkyCaption } from '../components/sky/SkyOverlay.jsx';
 
 // ── shared symbols & helpers ─────────────────────────────────────────
 const RASHI_SYM = ["♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓"].map(g => g + "\uFE0E");
@@ -138,7 +139,9 @@ function OverviewSub({ ctx, c }) {
               size={360}
               title="Rashi (D1)"
               theme={{ bg:M3.surfaceDim, surface:M3.surface, border:`${M3.outline}33`, text:M3.onSurface, muted:M3.onSurfaceVariant, accent:M3.primary }}
+              sky
             />
+            <SkyCaption />
           </div>
           <div style={{ fontSize:13.5, color:M3.onSurface, lineHeight:1.7 }}>
             <p style={{ margin:"4px 0 12px" }}>
@@ -399,7 +402,8 @@ function VargasSub({ ctx, c }) {
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(min(100%, 320px), 1fr))", gap:20 }}>
           <div>
             <div style={{ fontSize:12, fontWeight:700, letterSpacing:".12em", textTransform:"uppercase", color:M3.onSurfaceVariant, marginBottom:10 }}>D1: Rashi Chart</div>
-            <SouthIndianChart positions={sid} ascSidereal={ascSid} size={340} title="Rashi (D1)" theme={chartTheme} />
+            <SouthIndianChart positions={sid} ascSidereal={ascSid} size={340} title="Rashi (D1)" theme={chartTheme} sky />
+            <SkyCaption />
             <p style={{ fontSize:12.5, color:M3.onSurfaceVariant, marginTop:10, lineHeight:1.6 }}>
               The birth chart itself, sign by sign. The tradition assigns it body, circumstance and the general condition of a life.
             </p>

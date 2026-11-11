@@ -189,7 +189,7 @@ export default function HarmonicsTab({ ctx }) {
             The harmonic wheel. Bodies close together here stand at or near the {(360/n).toFixed(1)}° family of separations in the natal chart.
           </p>
           <div style={{ display:"flex", justifyContent:"center" }}>
-              <WheelWithTooltip positions={hPos} size={300} id={`h${n}`} theme="vedic"/>
+              <WheelWithTooltip positions={hPos} size={300} id={`h${n}`} theme="vedic" sky={false}/>
           </div>
         </Card>
       </div>
